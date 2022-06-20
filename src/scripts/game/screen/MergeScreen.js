@@ -134,6 +134,9 @@ export default class MergeScreen extends Screen {
 
 
         });
+        this.pieceGenerators.onCompleteCharge.add((slot) => {
+            this.pieceGenerators.addEntity(this.dataTiles[0])
+        });
         this.latest = 0;
 
         let panelSize = {
@@ -324,7 +327,7 @@ export default class MergeScreen extends Screen {
         }
 
         if (!this.pieceGenerators.tileData) {
-            this.pieceGenerators.startChargin()
+            this.pieceGenerators.startCharging()
         }
 
         let tempMaxTiledPlaced = utils.findMax(this.slots);
