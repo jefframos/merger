@@ -28,6 +28,7 @@ export default class Game {
 
         this.stage = new PIXI.Container();
         renderer.stage.addChild(this.stage)
+
         //this.animationLoop = new PIXI.AnimationLoop(window.renderer);
         //this.animationLoop.on('prerender', this.update.bind(this));
         this.resize();

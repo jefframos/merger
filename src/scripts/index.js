@@ -12,6 +12,7 @@ import GameScreen from './game/screen/GameScreen';
 
 import SoundManager from './soundManager/SoundManager'
 import SoundManagerCordova from './soundManager/SoundManagerCordova'
+import jsonManifest from './manifests/manifest-json'
 import imageManifest from './manifests/manifest-image'
 import audioManifest from './manifests/manifest-audio'
 import spritesheetManifest from './manifests/manifest'
@@ -68,6 +69,12 @@ function afterLoadManifests(evt) {
 
 function startLoader() {
 
+    for (var i = 0; i < jsonManifest.length; i++) {
+        jsonManifest[i].url = jsonManifest[i].url.replace(/\\/, "/")
+        let url = jsonManifest[i].url//.substr(0, jsonManifest[i].url.length - 4);
+        PIXI.loader.add(jsonManifest[i].id, url)
+    }
+ 
     for (var i = 0; i < audioManifest.length; i++) {
         audioManifest[i].url = audioManifest[i].url.replace(/\\/, "/")
         let url = audioManifest[i].url.substr(0, audioManifest[i].url.length - 4);
@@ -121,7 +128,6 @@ function configGame(evt) {
     // screenManager.forceChange('GameScreen');
     game.start();
 
-
     window.addEventListener("focus", myFocusFunction, true);
     window.addEventListener("blur", myBlurFunction, true);
 
@@ -132,9 +138,9 @@ window.onresize = function(event) {
 };
 function myFocusFunction() {
     TweenLite.killTweensOf(screenManager);
-    TweenLite.to(screenManager, 0.5, {
-        timeScale: 1
-    })
+    // TweenLite.to(screenManager, 0.5, {
+    //     timeScale: 1
+    // })
     if (GAME_DATA.mute) {
         return
     }
@@ -143,9 +149,9 @@ function myFocusFunction() {
 
 function myBlurFunction() {
     TweenLite.killTweensOf(screenManager);
-    TweenLite.to(screenManager, 0.5, {
-        timeScale: 0
-    })
+    // TweenLite.to(screenManager, 0.5, {
+    //     timeScale: 0
+    // })
 
     // SOUND_MANAGER.mute();
 }

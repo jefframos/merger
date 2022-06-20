@@ -8,6 +8,9 @@ export default class ParticleSystem extends PIXI.Container
     {
         super();
 
+        window.LABEL_POOL = [];
+        window.COINS_POOL = [];
+
         this.particles = [];
 
         this.maxParticles = 60;
@@ -89,6 +92,41 @@ export default class ParticleSystem extends PIXI.Container
     {
 
     }
+    popLabel(pos, label, delay = 0, dir = 1, scale = 1, style = {}, ease = Back.easeOut, time = 0.5) {
+		let tempLabel = null;
+		if (window.LABEL_POOL.length > 0) {
+			tempLabel = window.LABEL_POOL[0];
+			window.LABEL_POOL.shift();
+		} else {
+			tempLabel = new PIXI.Text(label);
+		}
+		tempLabel.style = style;
+		tempLabel.text = label;
+		tempLabel.fill = style.color;
+
+		this.addChild(tempLabel);
+		tempLabel.x = pos.x;
+		tempLabel.y = pos.y;
+		tempLabel.pivot.x = tempLabel.width / 2;
+		tempLabel.pivot.y = tempLabel.height / 2;
+		tempLabel.alpha = 0;
+		tempLabel.scale.set(0);
+
+		scale = Math.min(scale, 3)
+		TweenMax.to(tempLabel.scale, 0.5, { delay: delay, x: scale, y: scale, ease: ease })
+		TweenMax.to(tempLabel, 1, {
+			delay: delay, y: tempLabel.y - 50 * dir, onStartParams: [tempLabel], onStart: function (temp) {
+				temp.alpha = 1;
+				temp.parent.addChild(temp)
+			}
+		})
+		TweenMax.to(tempLabel, time, {
+			delay: time + delay, alpha: 0, onCompleteParams: [tempLabel], onComplete: function (temp) {
+				temp.parent.removeChild(temp);
+				window.LABEL_POOL.push(temp);
+			}
+		})
+	}
     show(position, tot = 10, customData = {})
     {
         
