@@ -1,0 +1,8 @@
+{
+    "default": [
+        "image/particles/particles.json",
+        "image/entities/entities.json",
+        "image/environment/environment.json",
+        "image/ui/ui.json"
+    ]
+}

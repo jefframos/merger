@@ -1,0 +1,135 @@
+{"frames": {
+
+"bigblur.png":
+{
+	"frame": {"x":1,"y":1,"w":1070,"h":1779},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":21,"w":1070,"h":1779},
+	"sourceSize": {"w":1080,"h":1800}
+},
+"button-1.png":
+{
+	"frame": {"x":1374,"y":1415,"w":54,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":54,"h":54},
+	"sourceSize": {"w":54,"h":54}
+},
+"button-2.png":
+{
+	"frame": {"x":1311,"y":1429,"w":54,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":54,"h":54},
+	"sourceSize": {"w":54,"h":54}
+},
+"button-3.png":
+{
+	"frame": {"x":1426,"y":1283,"w":54,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":54,"h":54},
+	"sourceSize": {"w":54,"h":54}
+},
+"button_off.png":
+{
+	"frame": {"x":1304,"y":1283,"w":120,"h":130},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":120,"h":130},
+	"sourceSize": {"w":120,"h":130}
+},
+"icon-close.png":
+{
+	"frame": {"x":1430,"y":1407,"w":18,"h":18},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":18,"h":18},
+	"sourceSize": {"w":22,"h":22}
+},
+"icon-home.png":
+{
+	"frame": {"x":1430,"y":1447,"w":14,"h":14},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":4,"w":14,"h":14},
+	"sourceSize": {"w":22,"h":22}
+},
+"icon-question.png":
+{
+	"frame": {"x":1448,"y":1385,"w":18,"h":18},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":18,"h":18},
+	"sourceSize": {"w":22,"h":22}
+},
+"icon-trash.png":
+{
+	"frame": {"x":1430,"y":1427,"w":16,"h":18},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":2,"w":16,"h":18},
+	"sourceSize": {"w":22,"h":22}
+},
+"panel-1.png":
+{
+	"frame": {"x":1073,"y":1283,"w":213,"h":229},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":213,"h":229},
+	"sourceSize": {"w":213,"h":229}
+},
+"party-slot.png":
+{
+	"frame": {"x":1426,"y":1339,"w":46,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":44},
+	"sourceSize": {"w":46,"h":44}
+},
+"progressbar_bar.png":
+{
+	"frame": {"x":1304,"y":1429,"w":60,"h":5},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":5},
+	"sourceSize": {"w":60,"h":5}
+},
+"progressbar_frame.png":
+{
+	"frame": {"x":1304,"y":1415,"w":68,"h":12},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":12},
+	"sourceSize": {"w":68,"h":12}
+},
+"smallButton.png":
+{
+	"frame": {"x":1426,"y":1385,"w":20,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":20},
+	"sourceSize": {"w":20,"h":20}
+},
+"vignette.png":
+{
+	"frame": {"x":1073,"y":1,"w":720,"h":1280},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":720,"h":1280},
+	"sourceSize": {"w":720,"h":1280}
+}},
+"animations": {
+	"button": ["button-1.png","button-2.png","button-3.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ui.png",
+	"format": "RGBA8888",
+	"size": {"w":1794,"h":1781},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:4b39e7c9b5034d4aa4586d5f2d2a9a7e:b4ffb2afa8e8a998b012674164085df6:5b04aa198265472a3c5f56958d78e97b$"
+}
+}
