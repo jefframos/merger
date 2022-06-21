@@ -13,6 +13,8 @@ export default class MergeScreen extends Screen {
         super(label);
 
         window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
+        this.areaConfig = window.baseConfigGame.area;
+
         this.container = new PIXI.Container()
         this.addChild(this.container);
         this.frontLayer = new PIXI.Container()
@@ -60,9 +62,9 @@ export default class MergeScreen extends Screen {
 
         this.mergeSystem1 = new MergeSystem({
             mainContainer: this.mergeSystemContainer,
-            uiContainer: this.uiContainer
+            uiContainer: this.uiContainer,
+            wrapper: this.gridWrapper
         }, window.baseConfigGame, this.dataTiles);
-        this.mergeSystem1.setWrapper(this.gridWrapper);
 
         this.mergeSystem1.onGetResources.add(this.addParticles.bind(this));
 
@@ -87,6 +89,8 @@ export default class MergeScreen extends Screen {
 
         this.particleSystem = new ParticleSystem();
         this.addChild(this.particleSystem)
+
+
 
     }
 
@@ -129,7 +133,8 @@ export default class MergeScreen extends Screen {
     resize(resolution) {
         this.mergeSystem1.resize(resolution);
         this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2
-        this.gridWrapper.y = config.height / 2 - this.gridWrapper.height / 2 - 20
+        this.gridWrapper.y = config.height * (1-this.areaConfig.bottomArea) - this.gridWrapper.height 
+        
     }
     transitionOut(nextScreen) {
         this.removeEvents();

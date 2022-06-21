@@ -13,7 +13,7 @@
         "slotSize":{
             "width": 150,
             "height": 150,
-            "distance":20
+            "distance":10
         },
         "area":{
             "bottomArea": 0.2

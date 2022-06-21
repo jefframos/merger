@@ -22,7 +22,7 @@ export default class MergeTile extends PIXI.Container {
         this.container.addChild(this.backSlot)
 
         this.label = new PIXI.Text(i + '-' + j, LABELS.LABEL1);
-        this.container.addChild(this.label)
+        //this.container.addChild(this.label)
         this.label.x = this.backSlot.width / 2 - this.label.width / 2;
 
         this.tileSprite = new PIXI.Sprite.from('');
