@@ -2,10 +2,10 @@ import * as PIXI from 'pixi.js';
 import Signals from 'signals';
 import MergeTile from './MergeTile';
 export default class ChargerTile extends MergeTile {
-    constructor(i, j, size, lockIcon) {
+    constructor(i, j, size, lockIcon, standardChargeTime = 2) {
         super(i, j, size, lockIcon);
 
-        this.defaultChargeTime = 2;
+        this.defaultChargeTime = standardChargeTime;
         this.currentChargeTime = this.defaultChargeTime;
 
         this.onCompleteCharge = new Signals();

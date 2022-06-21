@@ -8,12 +8,12 @@ export default class Game {
         // height: 736,
 
         const Renderer = (config.webgl) ? PIXI.autoDetectRenderer : PIXI.CanvasRenderer;
-        let ratio = config.width / config.height;
-        if (ratio > 0.7) {
-            config.width = config.height * 0.7
-        } else if (ratio < 0.56) {
-            config.width = config.height * 0.5
-        }
+       // let ratio = config.width / config.height;
+        // if (ratio > 0.7) {
+        //     config.width = config.height * 0.7
+        // } else if (ratio < 0.56) {
+        //     config.width = config.height * 0.5
+        // }
 
         //config.height = window.screen.height;
         this.ratio = config.width / config.height;

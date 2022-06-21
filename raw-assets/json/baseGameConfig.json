@@ -9,6 +9,14 @@
             [8,7,9,14,19],
             [23,21,20,22,24]
         ],
-        "lockIcon":"l0_spader_1_1"
+        "lockIcon":"l0_spader_1_1",
+        "slotSize":{
+            "width": 150,
+            "height": 150,
+            "distance":20
+        },
+        "area":{
+            "bottomArea": 0.2
+        }
     }
 }

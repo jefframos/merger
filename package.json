@@ -14,7 +14,7 @@
     "json": "node ./tools/json.js",
     "json:watch": "node ./tools/json-watch.js",
     "start2": "npm run image && npm run audio --progress --colors --no-info --client-log-level error",
-    "start": "npm run image && webpack-dev-server --progress --colors --no-info --client-log-level error",
+    "start": "npm run image && webpack-dev-server & npm run json:watch --progress --colors --no-info --client-log-level error",
     "serve": "webpack-dev-server --progress --colors",
     "dev:fb": "npm run assets & npm run assets:watch & npm run js:watch",
     "build": "npm run assets && npm run tiny && webpack",

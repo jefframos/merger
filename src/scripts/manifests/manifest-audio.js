@@ -20,14 +20,6 @@ const assets = [
 	"url":"assets/audio\\fx\\dropTile.mp3"
 	},
 	{
-	"id":"getCrazyOne",
-	"url":"assets/audio\\fx\\getCrazyOne.mp3"
-	},
-	{
-	"id":"getstar",
-	"url":"assets/audio\\fx\\getstar.mp3"
-	},
-	{
 	"id":"getThemAll",
 	"url":"assets/audio\\fx\\getThemAll.mp3"
 	},
@@ -36,24 +28,40 @@ const assets = [
 	"url":"assets/audio\\fx\\Harp-Flutter-02.mp3"
 	},
 	{
-	"id":"item",
-	"url":"assets/audio\\fx\\item.mp3"
+	"id":"getCrazyOne",
+	"url":"assets/audio\\fx\\getCrazyOne.mp3"
+	},
+	{
+	"id":"getstar",
+	"url":"assets/audio\\fx\\getstar.mp3"
 	},
 	{
 	"id":"kill",
 	"url":"assets/audio\\fx\\kill.mp3"
 	},
 	{
-	"id":"magic",
-	"url":"assets/audio\\fx\\magic.mp3"
+	"id":"item",
+	"url":"assets/audio\\fx\\item.mp3"
 	},
 	{
 	"id":"Ping-Slide-Down",
 	"url":"assets/audio\\fx\\Ping-Slide-Down.mp3"
 	},
 	{
+	"id":"magic",
+	"url":"assets/audio\\fx\\magic.mp3"
+	},
+	{
 	"id":"Musical-Beep-Loop-02",
 	"url":"assets/audio\\fx\\Musical-Beep-Loop-02.mp3"
+	},
+	{
+	"id":"Pop-Low-Pitch-Up-02",
+	"url":"assets/audio\\fx\\Pop-Low-Pitch-Up-02.mp3"
+	},
+	{
+	"id":"Pop-Musical",
+	"url":"assets/audio\\fx\\Pop-Musical.mp3"
 	},
 	{
 	"id":"place",
@@ -66,14 +74,6 @@ const assets = [
 	{
 	"id":"place3",
 	"url":"assets/audio\\fx\\place3.mp3"
-	},
-	{
-	"id":"Pop-Low-Pitch-Up-02",
-	"url":"assets/audio\\fx\\Pop-Low-Pitch-Up-02.mp3"
-	},
-	{
-	"id":"Pop-Musical",
-	"url":"assets/audio\\fx\\Pop-Musical.mp3"
 	},
 	{
 	"id":"Pop-Tone",
@@ -92,16 +92,16 @@ const assets = [
 	"url":"assets/audio\\fx\\shoosh.mp3"
 	},
 	{
-	"id":"Tap-01",
-	"url":"assets/audio\\fx\\Tap-01.mp3"
-	},
-	{
 	"id":"teleport",
 	"url":"assets/audio\\fx\\teleport.mp3"
 	},
 	{
 	"id":"Whoosh",
 	"url":"assets/audio\\fx\\Whoosh.mp3"
+	},
+	{
+	"id":"Tap-01",
+	"url":"assets/audio\\fx\\Tap-01.mp3"
 	}
 ];
 

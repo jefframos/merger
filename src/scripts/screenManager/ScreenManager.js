@@ -30,7 +30,7 @@ export default class ScreenManager extends PIXI.Container{
 		if(this.currentScreen){
 			this.currentScreen.transitionOut(tempScreen, param);
 		}
-		this.resize()
+		//this.resize()
 	}
 	//change between screens
 	forceChange(screenLabel, param){
@@ -51,6 +51,8 @@ export default class ScreenManager extends PIXI.Container{
 	}
 	//update manager
 	update(delta){
+		this.resolution = {width:innerWidth, height:innerHeight};
+		this.resize(this.resolution);
 		if(this.screenList != null){
 			this.currentScreen.update(delta);
 		}

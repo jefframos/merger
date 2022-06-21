@@ -1,8 +1,6 @@
 export default {
-	width: window.innerWidth,
-	// width: 414,
-	// height: 736,
-	height: window.innerHeight,
+	width: 414,
+	height: 736,
 	webgl: true,
 	effectsLayer:null,
 	colors: {

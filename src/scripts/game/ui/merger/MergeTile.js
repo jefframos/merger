@@ -60,6 +60,7 @@ export default class MergeTile extends PIXI.Container {
         this.lockIcon.visible = false;
 
         this.generate = 0;
+        this.generateTime = 2;
         this.isGenerator = false;
 
 
@@ -76,7 +77,7 @@ export default class MergeTile extends PIXI.Container {
             //console.log(dateTimeStamp - this.updatedTimestamp);
 
             this.generate = dateTimeStamp - this.updatedTimestamp
-            if(this.generate >= 2){
+            if(this.generate >= this.generateTime){
                 this.updatedTimestamp = (Date.now() / 1000 | 0);
                 this.generateResource();
             }
@@ -128,6 +129,7 @@ export default class MergeTile extends PIXI.Container {
         } else {
             this.tileData = tileData;
         }
+        this.generateTime = tileData.generateTime | 2;
         this.generatedTimeStamp = (Date.now() / 1000 | 0);
         this.updatedTimestamp = (Date.now() / 1000 | 0);
         this.tileSprite.texture = PIXI.Texture.from(this.tileData.texture);

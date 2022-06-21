@@ -20,6 +20,16 @@ export default
             let min = Math.min(sclX, sclY);
             element.scale.set(min)
         },
+        resizeToFitARCap(size, element, res, cap = 1) {
+            if (!res) {
+                res = element
+            }
+            let sclX = (size.width) / (res.width / res.scale.x);
+            let sclY = (size.height) / (res.height / res.scale.y);
+            let min = Math.min(sclX, sclY);
+            min = Math.min(min, cap);
+            element.scale.set(min)
+        },
         resizeToFit(size, element) {
             let sclX = (size.width) / (element.width / element.scale.x);
             let sclY = (size.height) / (element.height / element.scale.y);
@@ -41,13 +51,25 @@ export default
             let matrix = []
             for (let index = 0; index < target.length; index++) {
                 for (let j = 0; j < target[index].length; j++) {
-                    if(target[index][j].tileData){
+                    if (target[index][j].tileData) {
 
                         matrix.push(target[index][j].tileData.id)
                     }
                 }
             }
             return Math.max(...matrix)
+        },
+        findDPS(target) {
+            let max = 0;
+            for (let index = 0; index < target.length; index++) {
+                for (let j = 0; j < target[index].length; j++) {
+                    if (target[index][j] && target[index][j].tileData) {
+                        let data = target[index][j].tileData
+                        max += data.value / data.generateTime;
+                    }
+                }
+            }
+            return max
         },
         generateTextureFromContainer(id, content, list) {
             if (list[id]) {
@@ -88,6 +110,77 @@ export default
                 }
             }
             return value
+        },
+        trimMatrix(piecesOP, ignoreBlocker = false) {
+            if (piecesOP.length <= 0) {
+                return;
+            }
+            let pieces = this.cloneMatrix(piecesOP)
+            let colCounters = [];
+            let lineCounters = [];
+            for (let i = 0; i < pieces.length; i++) {
+                colCounters.push(0);
+            }
+            for (let i = 0; i < pieces[0].length; i++) {
+                lineCounters.push(0);
+            }
+            for (let i = 0; i < pieces.length; i++) {
+                for (let j = 0; j < pieces[i].length; j++) {
+                    const element = pieces[i][j];
+                    if (element) {
+                        lineCounters[j]++;
+                        colCounters[i]++;
+                    }
+                }
+            }
+
+            let padding = { left: 0, right: 0, top: 0, bottom: 0 }
+
+
+            for (let i = 0; i < lineCounters.length; i++) {
+                const element = lineCounters[i];
+                if (!element) {
+                    padding.left++;
+                } else {
+                    break;
+                }
+            }
+            for (let i = lineCounters.length - 1; i >= 0; i--) {
+                const element = lineCounters[i];
+                if (!element) {
+                    padding.right++;
+                } else {
+                    break;
+                }
+            }
+
+            for (let i = 0; i < colCounters.length; i++) {
+                const element = colCounters[i];
+                if (!element) {
+                    padding.top++;
+                } else {
+                    break;
+                }
+            }
+            for (let i = colCounters.length - 1; i >= 0; i--) {
+                const element = colCounters[i];
+                if (!element) {
+                    padding.bottom++;
+                } else {
+                    break;
+                }
+            }
+
+            pieces.splice(0, padding.top);
+            pieces.splice(pieces.length - padding.bottom, padding.bottom);
+
+            for (let i = 0; i < pieces.length; i++) {
+                pieces[i].splice(0, padding.left);
+                pieces[i].splice(pieces[i].length - padding.right, padding.right);
+            }
+
+
+            return padding
         },
         // formatPointsLabel2(tempPoints){
         //     let abv = ['','K','M','B','T','aa','bb','cc','dd','ee'];
