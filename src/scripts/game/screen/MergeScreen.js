@@ -7,13 +7,19 @@ import utils from '../../utils';
 import ParticleSystem from '../effects/ParticleSystem';
 import MergeSystem from '../ui/merger/MergeSystem';
 import SpaceBackground from '../effects/SpaceBackground';
+import TweenMax from 'gsap';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
 
         window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
         this.areaConfig = window.baseConfigGame.area;
-
+        if (!this.areaConfig.bottomArea) {
+            this.areaConfig.bottomArea = 0.2
+        }
+        if (!this.areaConfig.topArea) {
+            this.areaConfig.topArea = 0.2
+        }
 
         this.spaceBackground = new SpaceBackground();
         this.addChild(this.spaceBackground);
@@ -30,9 +36,9 @@ export default class MergeScreen extends Screen {
 
         this.frontLayer.addChild(this.backBlocker);
 
-        this.gridWrapper = new PIXI.Graphics().lineStyle(1,0x132215).drawRect(0, 0, config.width * 0.8, config.height * 0.6);
+        this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * 0.89, config.height * (1 - this.areaConfig.bottomArea - this.areaConfig.topArea));
         this.container.addChild(this.gridWrapper);
-        this.gridWrapper.visible = true;
+        this.gridWrapper.visible = false;
 
 
         this.mergeSystemContainer = new PIXI.Container()
@@ -44,6 +50,8 @@ export default class MergeScreen extends Screen {
         this.bottomContainer = new PIXI.Container()
         this.container.addChild(this.bottomContainer);
 
+        this.topContainer = new PIXI.Container()
+        this.container.addChild(this.topContainer);
 
         this.dataTiles = []
 
@@ -55,23 +63,55 @@ export default class MergeScreen extends Screen {
             let text = new PIXI.Text(pow, LABELS.LABEL1);
             text.style.fill = 0xFFFFFF
             text.style.fontSize = 64
-            console.log(window.baseConfigGame.entities.list[index].imageSrc)
             let tex = new PIXI.Texture.from(window.baseConfigGame.entities.list[index].imageSrc)//utils.generateTextureFromContainer('image-' + index, text, window.TILE_ASSSETS_POOL)
             this.dataTiles.push({
                 id: index,
-                value: pow,
                 texture: tex,
-                generateTime: 3
+                value: pow,
+                resources: pow * 1.5,
+                generateResourceTime: 3,
+                damage: pow * 1.5 * index,
+                generateDamageTime: 5
             })
         }
+        let d = {
+            initialCost: 4,
+            coefficient: 1.1,
+            initialTime: 0.6,
+            initialRevenue: 1,
+            coefficientProductivity: 1.1,
+            initialProductivity: 2
+        }
 
+        let mult = 1
+
+        let acc1 = 0
+        let acc2 = 0
+        for (let index = 0; index < 100; index++) {
+            //console.log(d.initialCost * Math.pow(d.coefficient, index))// * Math.pow(i, d.coefficient))
+            //console.log(d.initialProductivity * Math.pow(d.coefficientProductivity, index))// * Math.pow(i, d.coefficient))
+            let sim = d.initialProductivity * Math.pow(d.coefficientProductivity, index)
+            acc1 += sim
+            let cost = d.initialCost * Math.pow(d.coefficient, index)
+            acc2 += cost
+
+            console.log(utils.formatPointsLabel(cost), utils.formatPointsLabel(sim))
+            //console.log(d.initialProductivity * index * mult)
+        }
+        console.log(utils.formatPointsLabel(acc2), utils.formatPointsLabel(acc1))
+
+        //if own 10 nextCost=initial * (Math.pow(coefficient, 10)
+        console.log(this.dataTiles)
         this.mergeSystem1 = new MergeSystem({
             mainContainer: this.mergeSystemContainer,
             uiContainer: this.uiContainer,
-            wrapper: this.gridWrapper
+            wrapper: this.gridWrapper,
+            topContainer: this.topContainer,
         }, window.baseConfigGame, this.dataTiles);
 
-        this.mergeSystem1.onGetResources.add(this.addParticles.bind(this));
+        this.mergeSystem1.onGetResources.add(this.addResourceParticles.bind(this));
+        this.mergeSystem1.onDealDamage.add(this.addDamageParticles.bind(this));
+        this.mergeSystem1.onPopLabel.add(this.popLabel.bind(this));
 
         this.entityDragSprite = new PIXI.Sprite.from('');
         this.addChild(this.entityDragSprite);
@@ -89,19 +129,50 @@ export default class MergeScreen extends Screen {
         this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
         this.container.addChild(this.resourcesLabel)
 
+        this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
+        this.container.addChild(this.rpsLabel)
+
         this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
         this.container.addChild(this.dpsLabel)
-
+        
         this.particleSystem = new ParticleSystem();
         this.addChild(this.particleSystem)
+        
+        
+        this.speedUpToggle = new UIButton1(0xFFFFFF,'smallButton')
+        this.container.addChild(this.speedUpToggle)
+        this.speedUpToggle.y = 30
+        this.speedUpToggle.onClick.add(()=>{
+            if(window.TIME_SCALE > 1){
+                window.TIME_SCALE = 1
+            }else{
+                window.TIME_SCALE = 10
+            }
 
+            TweenMax.globalTimeScale( window.TIME_SCALE ) 
+        })
 
-
+        window.TIME_SCALE = 1
     }
+    popLabel(targetPosition, label) {
+        let toLocal = this.particleSystem.toLocal(targetPosition)
 
-    addParticles(targetPosition, customData, label) {
-        this.particleSystem.show(targetPosition, 5, customData)
-        this.particleSystem.popLabel(targetPosition, "+" + label, 0, 1, 1, LABELS.LABEL1)
+        this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL1)
+    }
+    addDamageParticles(targetPosition, customData, label, quant) {
+        let toLocal = this.particleSystem.toLocal(targetPosition)
+
+        this.particleSystem.show(toLocal, quant, customData)
+        //this.particleSystem.popLabel(targetPosition, "+" + label, 0, 1, 1, LABELS.LABEL1)
+    }
+    addResourceParticles(targetPosition, customData, label, quant) {
+        let toLocal = this.particleSystem.toLocal(targetPosition)
+        for (let index = 0; index < quant; index++) {
+
+            customData.target = { x: this.resourcesLabel.x, y: this.resourcesLabel.y, timer: 0.2 + Math.random() * 0.75 }
+            this.particleSystem.show(toLocal, 1, customData)
+        }
+        this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL1)
     }
     onMouseMove(e) {
         this.mergeSystem1.updateMouse(e)
@@ -125,13 +196,17 @@ export default class MergeScreen extends Screen {
         this.addEvents();
     }
     update(delta) {
+
+        delta *= window.TIME_SCALE;
         this.mergeSystem1.update(delta);
         this.particleSystem.update(delta)
 
         this.resourcesLabel.text = utils.formatPointsLabel(this.mergeSystem1.resources);
-        this.resourcesLabel.y = 10
-        this.dpsLabel.text = utils.formatPointsLabel(this.mergeSystem1.dps) + "/ps";
-        this.dpsLabel.y = 30
+
+        this.rpsLabel.text = utils.formatPointsLabel(this.mergeSystem1.rps) + "/rps";
+
+        this.dpsLabel.text = utils.formatPointsLabel(this.mergeSystem1.dps) + "/dps";
+
         this.timestamp = (Date.now() / 1000 | 0);
 
         this.spaceBackground.update(delta)
@@ -141,8 +216,12 @@ export default class MergeScreen extends Screen {
         this.mergeSystem1.resize(resolution);
         this.spaceBackground.resize(resolution, resolution);
         this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2
-        this.gridWrapper.y = config.height * (1-this.areaConfig.bottomArea) - this.gridWrapper.height 
-        
+        this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height
+
+        this.dpsLabel.y = config.height - 70
+        this.rpsLabel.y = config.height - 50
+        this.resourcesLabel.x = config.width - this.resourcesLabel.width;
+        this.resourcesLabel.y = config.height - 50
     }
     transitionOut(nextScreen) {
         this.removeEvents();

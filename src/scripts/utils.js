@@ -65,7 +65,19 @@ export default
                 for (let j = 0; j < target[index].length; j++) {
                     if (target[index][j] && target[index][j].tileData) {
                         let data = target[index][j].tileData
-                        max += data.value / data.generateTime;
+                        max += data.damage / data.generateDamageTime;
+                    }
+                }
+            }
+            return max
+        },
+        findRPS(target) {
+            let max = 0;
+            for (let index = 0; index < target.length; index++) {
+                for (let j = 0; j < target[index].length; j++) {
+                    if (target[index][j] && target[index][j].tileData) {
+                        let data = target[index][j].tileData
+                        max += Math.round(data.resources / data.generateResourceTime);
                     }
                 }
             }

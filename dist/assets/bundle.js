@@ -224,7 +224,7 @@ Object.defineProperty(exports, 'glCore', {
   }
 });
 
-var _Bounds = __webpack_require__(65);
+var _Bounds = __webpack_require__(66);
 
 Object.defineProperty(exports, 'Bounds', {
   enumerable: true,
@@ -269,7 +269,7 @@ Object.defineProperty(exports, 'TransformStatic', {
   }
 });
 
-var _TransformBase = __webpack_require__(67);
+var _TransformBase = __webpack_require__(68);
 
 Object.defineProperty(exports, 'TransformBase', {
   enumerable: true,
@@ -278,7 +278,7 @@ Object.defineProperty(exports, 'TransformBase', {
   }
 });
 
-var _Sprite = __webpack_require__(68);
+var _Sprite = __webpack_require__(69);
 
 Object.defineProperty(exports, 'Sprite', {
   enumerable: true,
@@ -296,7 +296,7 @@ Object.defineProperty(exports, 'CanvasSpriteRenderer', {
   }
 });
 
-var _CanvasTinter = __webpack_require__(72);
+var _CanvasTinter = __webpack_require__(73);
 
 Object.defineProperty(exports, 'CanvasTinter', {
   enumerable: true,
@@ -413,7 +413,7 @@ Object.defineProperty(exports, 'BaseTexture', {
   }
 });
 
-var _RenderTexture = __webpack_require__(71);
+var _RenderTexture = __webpack_require__(72);
 
 Object.defineProperty(exports, 'RenderTexture', {
   enumerable: true,
@@ -543,7 +543,7 @@ var _utils = __webpack_require__(3);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _ticker = __webpack_require__(70);
+var _ticker = __webpack_require__(71);
 
 var ticker = _interopRequireWildcard(_ticker);
 
@@ -966,7 +966,7 @@ var _mixin = __webpack_require__(197);
 
 var mixins = _interopRequireWildcard(_mixin);
 
-var _ismobilejs = __webpack_require__(66);
+var _ismobilejs = __webpack_require__(67);
 
 var isMobile = _interopRequireWildcard(_ismobilejs);
 
@@ -1709,7 +1709,7 @@ exports.default = {
 
 exports.__esModule = true;
 
-var _Point = __webpack_require__(61);
+var _Point = __webpack_require__(62);
 
 Object.defineProperty(exports, 'Point', {
   enumerable: true,
@@ -1727,7 +1727,7 @@ Object.defineProperty(exports, 'ObservablePoint', {
   }
 });
 
-var _Matrix = __webpack_require__(62);
+var _Matrix = __webpack_require__(63);
 
 Object.defineProperty(exports, 'Matrix', {
   enumerable: true,
@@ -1772,7 +1772,7 @@ Object.defineProperty(exports, 'Polygon', {
   }
 });
 
-var _Rectangle = __webpack_require__(63);
+var _Rectangle = __webpack_require__(64);
 
 Object.defineProperty(exports, 'Rectangle', {
   enumerable: true,
@@ -1808,7 +1808,7 @@ module.exports = { "default": __webpack_require__(314), __esModule: true };
 
 exports.__esModule = true;
 
-var _typeof2 = __webpack_require__(46);
+var _typeof2 = __webpack_require__(47);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -1839,7 +1839,7 @@ var _create = __webpack_require__(323);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _typeof2 = __webpack_require__(46);
+var _typeof2 = __webpack_require__(47);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -2883,7 +2883,7 @@ var _defineProperty2 = __webpack_require__(150);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _typeof2 = __webpack_require__(46);
+var _typeof2 = __webpack_require__(47);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -2967,7 +2967,19 @@ exports.default = (_resizeToFitMaxAR$res = {
             for (var j = 0; j < target[index].length; j++) {
                 if (target[index][j] && target[index][j].tileData) {
                     var data = target[index][j].tileData;
-                    max += data.value / data.generateTime;
+                    max += data.damage / data.generateDamageTime;
+                }
+            }
+        }
+        return max;
+    },
+    findRPS: function findRPS(target) {
+        var max = 0;
+        for (var index = 0; index < target.length; index++) {
+            for (var j = 0; j < target[index].length; j++) {
+                if (target[index][j] && target[index][j].tileData) {
+                    var data = target[index][j].tileData;
+                    max += Math.round(data.resources / data.generateResourceTime);
                 }
             }
         }
@@ -3559,7 +3571,7 @@ module.exports = exports['default'];
 
 var anObject = __webpack_require__(29);
 var IE8_DOM_DEFINE = __webpack_require__(79);
-var toPrimitive = __webpack_require__(45);
+var toPrimitive = __webpack_require__(46);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(19) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -3601,7 +3613,7 @@ module.exports = function (it, key) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = __webpack_require__(160);
-var defined = __webpack_require__(48);
+var defined = __webpack_require__(49);
 module.exports = function (it) {
   return IObject(defined(it));
 };
@@ -4471,7 +4483,7 @@ module.exports = function (it) {
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var store = __webpack_require__(54)('wks');
+var store = __webpack_require__(55)('wks');
 var uid = __webpack_require__(39);
 var Symbol = __webpack_require__(15).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
@@ -4507,7 +4519,7 @@ var _determineCrossOrigin = __webpack_require__(103);
 
 var _determineCrossOrigin2 = _interopRequireDefault(_determineCrossOrigin);
 
-var _bitTwiddle = __webpack_require__(69);
+var _bitTwiddle = __webpack_require__(70);
 
 var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
 
@@ -6526,7 +6538,7 @@ exports.default = Shader;
 /* eslint-disable no-undef */
 
 var Loader = __webpack_require__(263).default;
-var Resource = __webpack_require__(74).default;
+var Resource = __webpack_require__(75).default;
 var async = __webpack_require__(135);
 var b64 = __webpack_require__(136);
 
@@ -8497,4815 +8509,6 @@ exports.default = function get(object, property, receiver) {
 
 /***/ }),
 /* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(26);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _iterator = __webpack_require__(154);
-
-var _iterator2 = _interopRequireDefault(_iterator);
-
-var _symbol = __webpack_require__(169);
-
-var _symbol2 = _interopRequireDefault(_symbol);
-
-var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
-  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
-} : function (obj) {
-  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
-};
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports) {
-
-// 7.1.4 ToInteger
-var ceil = Math.ceil;
-var floor = Math.floor;
-module.exports = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports) {
-
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports) {
-
-module.exports = true;
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(29);
-var dPs = __webpack_require__(159);
-var enumBugKeys = __webpack_require__(55);
-var IE_PROTO = __webpack_require__(53)('IE_PROTO');
-var Empty = function () { /* empty */ };
-var PROTOTYPE = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(80)('iframe');
-  var i = enumBugKeys.length;
-  var lt = '<';
-  var gt = '>';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(164).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(83);
-var enumBugKeys = __webpack_require__(55);
-
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
-};
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var shared = __webpack_require__(54)('keys');
-var uid = __webpack_require__(39);
-module.exports = function (key) {
-  return shared[key] || (shared[key] = uid(key));
-};
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(15);
-var SHARED = '__core-js_shared__';
-var store = global[SHARED] || (global[SHARED] = {});
-module.exports = function (key) {
-  return store[key] || (store[key] = {});
-};
-
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports) {
-
-// IE 8- don't enum bug keys
-module.exports = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var def = __webpack_require__(18).f;
-var has = __webpack_require__(20);
-var TAG = __webpack_require__(27)('toStringTag');
-
-module.exports = function (it, tag, stat) {
-  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
-};
-
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports.f = __webpack_require__(27);
-
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(15);
-var core = __webpack_require__(12);
-var LIBRARY = __webpack_require__(49);
-var wksExt = __webpack_require__(57);
-var defineProperty = __webpack_require__(18).f;
-module.exports = function (name) {
-  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
-  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
-};
-
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports) {
-
-exports.f = {}.propertyIsEnumerable;
-
-
-/***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var pIE = __webpack_require__(59);
-var createDesc = __webpack_require__(38);
-var toIObject = __webpack_require__(21);
-var toPrimitive = __webpack_require__(45);
-var has = __webpack_require__(20);
-var IE8_DOM_DEFINE = __webpack_require__(79);
-var gOPD = Object.getOwnPropertyDescriptor;
-
-exports.f = __webpack_require__(19) ? gOPD : function getOwnPropertyDescriptor(O, P) {
-  O = toIObject(O);
-  P = toPrimitive(P, true);
-  if (IE8_DOM_DEFINE) try {
-    return gOPD(O, P);
-  } catch (e) { /* empty */ }
-  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
-};
-
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * The Point object represents a location in a two-dimensional coordinate system, where x represents
- * the horizontal axis and y represents the vertical axis.
- *
- * @class
- * @memberof PIXI
- */
-var Point = function () {
-  /**
-   * @param {number} [x=0] - position of the point on the x axis
-   * @param {number} [y=0] - position of the point on the y axis
-   */
-  function Point() {
-    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-    _classCallCheck(this, Point);
-
-    /**
-     * @member {number}
-     * @default 0
-     */
-    this.x = x;
-
-    /**
-     * @member {number}
-     * @default 0
-     */
-    this.y = y;
-  }
-
-  /**
-   * Creates a clone of this point
-   *
-   * @return {PIXI.Point} a copy of the point
-   */
-
-
-  Point.prototype.clone = function clone() {
-    return new Point(this.x, this.y);
-  };
-
-  /**
-   * Copies x and y from the given point
-   *
-   * @param {PIXI.Point} p - The point to copy.
-   */
-
-
-  Point.prototype.copy = function copy(p) {
-    this.set(p.x, p.y);
-  };
-
-  /**
-   * Returns true if the given point is equal to this point
-   *
-   * @param {PIXI.Point} p - The point to check
-   * @returns {boolean} Whether the given point equal to this point
-   */
-
-
-  Point.prototype.equals = function equals(p) {
-    return p.x === this.x && p.y === this.y;
-  };
-
-  /**
-   * Sets the point to a new x and y position.
-   * If y is omitted, both x and y will be set to x.
-   *
-   * @param {number} [x=0] - position of the point on the x axis
-   * @param {number} [y=0] - position of the point on the y axis
-   */
-
-
-  Point.prototype.set = function set(x, y) {
-    this.x = x || 0;
-    this.y = y || (y !== 0 ? this.x : 0);
-  };
-
-  return Point;
-}();
-
-exports.default = Point;
-//# sourceMappingURL=Point.js.map
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _Point = __webpack_require__(61);
-
-var _Point2 = _interopRequireDefault(_Point);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * The PixiJS Matrix class as an object, which makes it a lot faster,
- * here is a representation of it :
- * | a | b | tx|
- * | c | d | ty|
- * | 0 | 0 | 1 |
- *
- * @class
- * @memberof PIXI
- */
-var Matrix = function () {
-    /**
-     * @param {number} [a=1] - x scale
-     * @param {number} [b=0] - y skew
-     * @param {number} [c=0] - x skew
-     * @param {number} [d=1] - y scale
-     * @param {number} [tx=0] - x translation
-     * @param {number} [ty=0] - y translation
-     */
-    function Matrix() {
-        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-        var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-        var c = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-        var d = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
-        var tx = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-        var ty = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
-
-        _classCallCheck(this, Matrix);
-
-        /**
-         * @member {number}
-         * @default 1
-         */
-        this.a = a;
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.b = b;
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.c = c;
-
-        /**
-         * @member {number}
-         * @default 1
-         */
-        this.d = d;
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.tx = tx;
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.ty = ty;
-
-        this.array = null;
-    }
-
-    /**
-     * Creates a Matrix object based on the given array. The Element to Matrix mapping order is as follows:
-     *
-     * a = array[0]
-     * b = array[1]
-     * c = array[3]
-     * d = array[4]
-     * tx = array[2]
-     * ty = array[5]
-     *
-     * @param {number[]} array - The array that the matrix will be populated from.
-     */
-
-
-    Matrix.prototype.fromArray = function fromArray(array) {
-        this.a = array[0];
-        this.b = array[1];
-        this.c = array[3];
-        this.d = array[4];
-        this.tx = array[2];
-        this.ty = array[5];
-    };
-
-    /**
-     * sets the matrix properties
-     *
-     * @param {number} a - Matrix component
-     * @param {number} b - Matrix component
-     * @param {number} c - Matrix component
-     * @param {number} d - Matrix component
-     * @param {number} tx - Matrix component
-     * @param {number} ty - Matrix component
-     *
-     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.set = function set(a, b, c, d, tx, ty) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;
-        this.tx = tx;
-        this.ty = ty;
-
-        return this;
-    };
-
-    /**
-     * Creates an array from the current Matrix object.
-     *
-     * @param {boolean} transpose - Whether we need to transpose the matrix or not
-     * @param {Float32Array} [out=new Float32Array(9)] - If provided the array will be assigned to out
-     * @return {number[]} the newly created array which contains the matrix
-     */
-
-
-    Matrix.prototype.toArray = function toArray(transpose, out) {
-        if (!this.array) {
-            this.array = new Float32Array(9);
-        }
-
-        var array = out || this.array;
-
-        if (transpose) {
-            array[0] = this.a;
-            array[1] = this.b;
-            array[2] = 0;
-            array[3] = this.c;
-            array[4] = this.d;
-            array[5] = 0;
-            array[6] = this.tx;
-            array[7] = this.ty;
-            array[8] = 1;
-        } else {
-            array[0] = this.a;
-            array[1] = this.c;
-            array[2] = this.tx;
-            array[3] = this.b;
-            array[4] = this.d;
-            array[5] = this.ty;
-            array[6] = 0;
-            array[7] = 0;
-            array[8] = 1;
-        }
-
-        return array;
-    };
-
-    /**
-     * Get a new position with the current transformation applied.
-     * Can be used to go from a child's coordinate space to the world coordinate space. (e.g. rendering)
-     *
-     * @param {PIXI.Point} pos - The origin
-     * @param {PIXI.Point} [newPos] - The point that the new position is assigned to (allowed to be same as input)
-     * @return {PIXI.Point} The new point, transformed through this matrix
-     */
-
-
-    Matrix.prototype.apply = function apply(pos, newPos) {
-        newPos = newPos || new _Point2.default();
-
-        var x = pos.x;
-        var y = pos.y;
-
-        newPos.x = this.a * x + this.c * y + this.tx;
-        newPos.y = this.b * x + this.d * y + this.ty;
-
-        return newPos;
-    };
-
-    /**
-     * Get a new position with the inverse of the current transformation applied.
-     * Can be used to go from the world coordinate space to a child's coordinate space. (e.g. input)
-     *
-     * @param {PIXI.Point} pos - The origin
-     * @param {PIXI.Point} [newPos] - The point that the new position is assigned to (allowed to be same as input)
-     * @return {PIXI.Point} The new point, inverse-transformed through this matrix
-     */
-
-
-    Matrix.prototype.applyInverse = function applyInverse(pos, newPos) {
-        newPos = newPos || new _Point2.default();
-
-        var id = 1 / (this.a * this.d + this.c * -this.b);
-
-        var x = pos.x;
-        var y = pos.y;
-
-        newPos.x = this.d * id * x + -this.c * id * y + (this.ty * this.c - this.tx * this.d) * id;
-        newPos.y = this.a * id * y + -this.b * id * x + (-this.ty * this.a + this.tx * this.b) * id;
-
-        return newPos;
-    };
-
-    /**
-     * Translates the matrix on the x and y.
-     *
-     * @param {number} x How much to translate x by
-     * @param {number} y How much to translate y by
-     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.translate = function translate(x, y) {
-        this.tx += x;
-        this.ty += y;
-
-        return this;
-    };
-
-    /**
-     * Applies a scale transformation to the matrix.
-     *
-     * @param {number} x The amount to scale horizontally
-     * @param {number} y The amount to scale vertically
-     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.scale = function scale(x, y) {
-        this.a *= x;
-        this.d *= y;
-        this.c *= x;
-        this.b *= y;
-        this.tx *= x;
-        this.ty *= y;
-
-        return this;
-    };
-
-    /**
-     * Applies a rotation transformation to the matrix.
-     *
-     * @param {number} angle - The angle in radians.
-     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.rotate = function rotate(angle) {
-        var cos = Math.cos(angle);
-        var sin = Math.sin(angle);
-
-        var a1 = this.a;
-        var c1 = this.c;
-        var tx1 = this.tx;
-
-        this.a = a1 * cos - this.b * sin;
-        this.b = a1 * sin + this.b * cos;
-        this.c = c1 * cos - this.d * sin;
-        this.d = c1 * sin + this.d * cos;
-        this.tx = tx1 * cos - this.ty * sin;
-        this.ty = tx1 * sin + this.ty * cos;
-
-        return this;
-    };
-
-    /**
-     * Appends the given Matrix to this Matrix.
-     *
-     * @param {PIXI.Matrix} matrix - The matrix to append.
-     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.append = function append(matrix) {
-        var a1 = this.a;
-        var b1 = this.b;
-        var c1 = this.c;
-        var d1 = this.d;
-
-        this.a = matrix.a * a1 + matrix.b * c1;
-        this.b = matrix.a * b1 + matrix.b * d1;
-        this.c = matrix.c * a1 + matrix.d * c1;
-        this.d = matrix.c * b1 + matrix.d * d1;
-
-        this.tx = matrix.tx * a1 + matrix.ty * c1 + this.tx;
-        this.ty = matrix.tx * b1 + matrix.ty * d1 + this.ty;
-
-        return this;
-    };
-
-    /**
-     * Sets the matrix based on all the available properties
-     *
-     * @param {number} x - Position on the x axis
-     * @param {number} y - Position on the y axis
-     * @param {number} pivotX - Pivot on the x axis
-     * @param {number} pivotY - Pivot on the y axis
-     * @param {number} scaleX - Scale on the x axis
-     * @param {number} scaleY - Scale on the y axis
-     * @param {number} rotation - Rotation in radians
-     * @param {number} skewX - Skew on the x axis
-     * @param {number} skewY - Skew on the y axis
-     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.setTransform = function setTransform(x, y, pivotX, pivotY, scaleX, scaleY, rotation, skewX, skewY) {
-        var sr = Math.sin(rotation);
-        var cr = Math.cos(rotation);
-        var cy = Math.cos(skewY);
-        var sy = Math.sin(skewY);
-        var nsx = -Math.sin(skewX);
-        var cx = Math.cos(skewX);
-
-        var a = cr * scaleX;
-        var b = sr * scaleX;
-        var c = -sr * scaleY;
-        var d = cr * scaleY;
-
-        this.a = cy * a + sy * c;
-        this.b = cy * b + sy * d;
-        this.c = nsx * a + cx * c;
-        this.d = nsx * b + cx * d;
-
-        this.tx = x + (pivotX * a + pivotY * c);
-        this.ty = y + (pivotX * b + pivotY * d);
-
-        return this;
-    };
-
-    /**
-     * Prepends the given Matrix to this Matrix.
-     *
-     * @param {PIXI.Matrix} matrix - The matrix to prepend
-     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.prepend = function prepend(matrix) {
-        var tx1 = this.tx;
-
-        if (matrix.a !== 1 || matrix.b !== 0 || matrix.c !== 0 || matrix.d !== 1) {
-            var a1 = this.a;
-            var c1 = this.c;
-
-            this.a = a1 * matrix.a + this.b * matrix.c;
-            this.b = a1 * matrix.b + this.b * matrix.d;
-            this.c = c1 * matrix.a + this.d * matrix.c;
-            this.d = c1 * matrix.b + this.d * matrix.d;
-        }
-
-        this.tx = tx1 * matrix.a + this.ty * matrix.c + matrix.tx;
-        this.ty = tx1 * matrix.b + this.ty * matrix.d + matrix.ty;
-
-        return this;
-    };
-
-    /**
-     * Decomposes the matrix (x, y, scaleX, scaleY, and rotation) and sets the properties on to a transform.
-     *
-     * @param {PIXI.Transform|PIXI.TransformStatic} transform - The transform to apply the properties to.
-     * @return {PIXI.Transform|PIXI.TransformStatic} The transform with the newly applied properties
-     */
-
-
-    Matrix.prototype.decompose = function decompose(transform) {
-        // sort out rotation / skew..
-        var a = this.a;
-        var b = this.b;
-        var c = this.c;
-        var d = this.d;
-
-        var skewX = -Math.atan2(-c, d);
-        var skewY = Math.atan2(b, a);
-
-        var delta = Math.abs(skewX + skewY);
-
-        if (delta < 0.00001) {
-            transform.rotation = skewY;
-
-            if (a < 0 && d >= 0) {
-                transform.rotation += transform.rotation <= 0 ? Math.PI : -Math.PI;
-            }
-
-            transform.skew.x = transform.skew.y = 0;
-        } else {
-            transform.skew.x = skewX;
-            transform.skew.y = skewY;
-        }
-
-        // next set scale
-        transform.scale.x = Math.sqrt(a * a + b * b);
-        transform.scale.y = Math.sqrt(c * c + d * d);
-
-        // next set position
-        transform.position.x = this.tx;
-        transform.position.y = this.ty;
-
-        return transform;
-    };
-
-    /**
-     * Inverts this matrix
-     *
-     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.invert = function invert() {
-        var a1 = this.a;
-        var b1 = this.b;
-        var c1 = this.c;
-        var d1 = this.d;
-        var tx1 = this.tx;
-        var n = a1 * d1 - b1 * c1;
-
-        this.a = d1 / n;
-        this.b = -b1 / n;
-        this.c = -c1 / n;
-        this.d = a1 / n;
-        this.tx = (c1 * this.ty - d1 * tx1) / n;
-        this.ty = -(a1 * this.ty - b1 * tx1) / n;
-
-        return this;
-    };
-
-    /**
-     * Resets this Matix to an identity (default) matrix.
-     *
-     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.identity = function identity() {
-        this.a = 1;
-        this.b = 0;
-        this.c = 0;
-        this.d = 1;
-        this.tx = 0;
-        this.ty = 0;
-
-        return this;
-    };
-
-    /**
-     * Creates a new Matrix object with the same values as this one.
-     *
-     * @return {PIXI.Matrix} A copy of this matrix. Good for chaining method calls.
-     */
-
-
-    Matrix.prototype.clone = function clone() {
-        var matrix = new Matrix();
-
-        matrix.a = this.a;
-        matrix.b = this.b;
-        matrix.c = this.c;
-        matrix.d = this.d;
-        matrix.tx = this.tx;
-        matrix.ty = this.ty;
-
-        return matrix;
-    };
-
-    /**
-     * Changes the values of the given matrix to be the same as the ones in this matrix
-     *
-     * @param {PIXI.Matrix} matrix - The matrix to copy from.
-     * @return {PIXI.Matrix} The matrix given in parameter with its values updated.
-     */
-
-
-    Matrix.prototype.copy = function copy(matrix) {
-        matrix.a = this.a;
-        matrix.b = this.b;
-        matrix.c = this.c;
-        matrix.d = this.d;
-        matrix.tx = this.tx;
-        matrix.ty = this.ty;
-
-        return matrix;
-    };
-
-    /**
-     * A default (identity) matrix
-     *
-     * @static
-     * @const
-     */
-
-
-    _createClass(Matrix, null, [{
-        key: 'IDENTITY',
-        get: function get() {
-            return new Matrix();
-        }
-
-        /**
-         * A temp matrix
-         *
-         * @static
-         * @const
-         */
-
-    }, {
-        key: 'TEMP_MATRIX',
-        get: function get() {
-            return new Matrix();
-        }
-    }]);
-
-    return Matrix;
-}();
-
-exports.default = Matrix;
-//# sourceMappingURL=Matrix.js.map
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _const = __webpack_require__(2);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Rectangle object is an area defined by its position, as indicated by its top-left corner
- * point (x, y) and by its width and its height.
- *
- * @class
- * @memberof PIXI
- */
-var Rectangle = function () {
-    /**
-     * @param {number} [x=0] - The X coordinate of the upper-left corner of the rectangle
-     * @param {number} [y=0] - The Y coordinate of the upper-left corner of the rectangle
-     * @param {number} [width=0] - The overall width of this rectangle
-     * @param {number} [height=0] - The overall height of this rectangle
-     */
-    function Rectangle() {
-        var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-        var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-        var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-        var height = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-
-        _classCallCheck(this, Rectangle);
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.x = Number(x);
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.y = Number(y);
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.width = Number(width);
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.height = Number(height);
-
-        /**
-         * The type of the object, mainly used to avoid `instanceof` checks
-         *
-         * @member {number}
-         * @readOnly
-         * @default PIXI.SHAPES.RECT
-         * @see PIXI.SHAPES
-         */
-        this.type = _const.SHAPES.RECT;
-    }
-
-    /**
-     * returns the left edge of the rectangle
-     *
-     * @member {number}
-     */
-
-
-    /**
-     * Creates a clone of this Rectangle
-     *
-     * @return {PIXI.Rectangle} a copy of the rectangle
-     */
-    Rectangle.prototype.clone = function clone() {
-        return new Rectangle(this.x, this.y, this.width, this.height);
-    };
-
-    /**
-     * Copies another rectangle to this one.
-     *
-     * @param {PIXI.Rectangle} rectangle - The rectangle to copy.
-     * @return {PIXI.Rectangle} Returns itself.
-     */
-
-
-    Rectangle.prototype.copy = function copy(rectangle) {
-        this.x = rectangle.x;
-        this.y = rectangle.y;
-        this.width = rectangle.width;
-        this.height = rectangle.height;
-
-        return this;
-    };
-
-    /**
-     * Checks whether the x and y coordinates given are contained within this Rectangle
-     *
-     * @param {number} x - The X coordinate of the point to test
-     * @param {number} y - The Y coordinate of the point to test
-     * @return {boolean} Whether the x/y coordinates are within this Rectangle
-     */
-
-
-    Rectangle.prototype.contains = function contains(x, y) {
-        if (this.width <= 0 || this.height <= 0) {
-            return false;
-        }
-
-        if (x >= this.x && x < this.x + this.width) {
-            if (y >= this.y && y < this.y + this.height) {
-                return true;
-            }
-        }
-
-        return false;
-    };
-
-    /**
-     * Pads the rectangle making it grow in all directions.
-     *
-     * @param {number} paddingX - The horizontal padding amount.
-     * @param {number} paddingY - The vertical padding amount.
-     */
-
-
-    Rectangle.prototype.pad = function pad(paddingX, paddingY) {
-        paddingX = paddingX || 0;
-        paddingY = paddingY || (paddingY !== 0 ? paddingX : 0);
-
-        this.x -= paddingX;
-        this.y -= paddingY;
-
-        this.width += paddingX * 2;
-        this.height += paddingY * 2;
-    };
-
-    /**
-     * Fits this rectangle around the passed one.
-     *
-     * @param {PIXI.Rectangle} rectangle - The rectangle to fit.
-     */
-
-
-    Rectangle.prototype.fit = function fit(rectangle) {
-        if (this.x < rectangle.x) {
-            this.width += this.x;
-            if (this.width < 0) {
-                this.width = 0;
-            }
-
-            this.x = rectangle.x;
-        }
-
-        if (this.y < rectangle.y) {
-            this.height += this.y;
-            if (this.height < 0) {
-                this.height = 0;
-            }
-            this.y = rectangle.y;
-        }
-
-        if (this.x + this.width > rectangle.x + rectangle.width) {
-            this.width = rectangle.width - this.x;
-            if (this.width < 0) {
-                this.width = 0;
-            }
-        }
-
-        if (this.y + this.height > rectangle.y + rectangle.height) {
-            this.height = rectangle.height - this.y;
-            if (this.height < 0) {
-                this.height = 0;
-            }
-        }
-    };
-
-    /**
-     * Enlarges this rectangle to include the passed rectangle.
-     *
-     * @param {PIXI.Rectangle} rectangle - The rectangle to include.
-     */
-
-
-    Rectangle.prototype.enlarge = function enlarge(rectangle) {
-        var x1 = Math.min(this.x, rectangle.x);
-        var x2 = Math.max(this.x + this.width, rectangle.x + rectangle.width);
-        var y1 = Math.min(this.y, rectangle.y);
-        var y2 = Math.max(this.y + this.height, rectangle.y + rectangle.height);
-
-        this.x = x1;
-        this.width = x2 - x1;
-        this.y = y1;
-        this.height = y2 - y1;
-    };
-
-    _createClass(Rectangle, [{
-        key: 'left',
-        get: function get() {
-            return this.x;
-        }
-
-        /**
-         * returns the right edge of the rectangle
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'right',
-        get: function get() {
-            return this.x + this.width;
-        }
-
-        /**
-         * returns the top edge of the rectangle
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'top',
-        get: function get() {
-            return this.y;
-        }
-
-        /**
-         * returns the bottom edge of the rectangle
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'bottom',
-        get: function get() {
-            return this.y + this.height;
-        }
-
-        /**
-         * A constant empty rectangle.
-         *
-         * @static
-         * @constant
-         */
-
-    }], [{
-        key: 'EMPTY',
-        get: function get() {
-            return new Rectangle(0, 0, 0, 0);
-        }
-    }]);
-
-    return Rectangle;
-}();
-
-exports.default = Rectangle;
-//# sourceMappingURL=Rectangle.js.map
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports) {
-
-
-
-var mapType = function(gl, type) 
-{
-    if(!GL_TABLE) 
-    {
-        var typeNames = Object.keys(GL_TO_GLSL_TYPES);
-
-        GL_TABLE = {};
-
-        for(var i = 0; i < typeNames.length; ++i) 
-        {
-            var tn = typeNames[i];
-            GL_TABLE[ gl[tn] ] = GL_TO_GLSL_TYPES[tn];
-        }
-    }
-
-  return GL_TABLE[type];
-};
-
-var GL_TABLE = null;
-
-var GL_TO_GLSL_TYPES = {
-  'FLOAT':       'float',
-  'FLOAT_VEC2':  'vec2',
-  'FLOAT_VEC3':  'vec3',
-  'FLOAT_VEC4':  'vec4',
-
-  'INT':         'int',
-  'INT_VEC2':    'ivec2',
-  'INT_VEC3':    'ivec3',
-  'INT_VEC4':    'ivec4',
-  
-  'BOOL':        'bool',
-  'BOOL_VEC2':   'bvec2',
-  'BOOL_VEC3':   'bvec3',
-  'BOOL_VEC4':   'bvec4',
-  
-  'FLOAT_MAT2':  'mat2',
-  'FLOAT_MAT3':  'mat3',
-  'FLOAT_MAT4':  'mat4',
-  
-  'SAMPLER_2D':  'sampler2D'  
-};
-
-module.exports = mapType;
-
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _math = __webpack_require__(7);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * 'Builder' pattern for bounds rectangles
- * Axis-Aligned Bounding Box
- * It is not a shape! Its mutable thing, no 'EMPTY' or that kind of problems
- *
- * @class
- * @memberof PIXI
- */
-var Bounds = function () {
-    /**
-     *
-     */
-    function Bounds() {
-        _classCallCheck(this, Bounds);
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.minX = Infinity;
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.minY = Infinity;
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.maxX = -Infinity;
-
-        /**
-         * @member {number}
-         * @default 0
-         */
-        this.maxY = -Infinity;
-
-        this.rect = null;
-    }
-
-    /**
-     * Checks if bounds are empty.
-     *
-     * @return {boolean} True if empty.
-     */
-
-
-    Bounds.prototype.isEmpty = function isEmpty() {
-        return this.minX > this.maxX || this.minY > this.maxY;
-    };
-
-    /**
-     * Clears the bounds and resets.
-     *
-     */
-
-
-    Bounds.prototype.clear = function clear() {
-        this.updateID++;
-
-        this.minX = Infinity;
-        this.minY = Infinity;
-        this.maxX = -Infinity;
-        this.maxY = -Infinity;
-    };
-
-    /**
-     * Can return Rectangle.EMPTY constant, either construct new rectangle, either use your rectangle
-     * It is not guaranteed that it will return tempRect
-     *
-     * @param {PIXI.Rectangle} rect - temporary object will be used if AABB is not empty
-     * @returns {PIXI.Rectangle} A rectangle of the bounds
-     */
-
-
-    Bounds.prototype.getRectangle = function getRectangle(rect) {
-        if (this.minX > this.maxX || this.minY > this.maxY) {
-            return _math.Rectangle.EMPTY;
-        }
-
-        rect = rect || new _math.Rectangle(0, 0, 1, 1);
-
-        rect.x = this.minX;
-        rect.y = this.minY;
-        rect.width = this.maxX - this.minX;
-        rect.height = this.maxY - this.minY;
-
-        return rect;
-    };
-
-    /**
-     * This function should be inlined when its possible.
-     *
-     * @param {PIXI.Point} point - The point to add.
-     */
-
-
-    Bounds.prototype.addPoint = function addPoint(point) {
-        this.minX = Math.min(this.minX, point.x);
-        this.maxX = Math.max(this.maxX, point.x);
-        this.minY = Math.min(this.minY, point.y);
-        this.maxY = Math.max(this.maxY, point.y);
-    };
-
-    /**
-     * Adds a quad, not transformed
-     *
-     * @param {Float32Array} vertices - The verts to add.
-     */
-
-
-    Bounds.prototype.addQuad = function addQuad(vertices) {
-        var minX = this.minX;
-        var minY = this.minY;
-        var maxX = this.maxX;
-        var maxY = this.maxY;
-
-        var x = vertices[0];
-        var y = vertices[1];
-
-        minX = x < minX ? x : minX;
-        minY = y < minY ? y : minY;
-        maxX = x > maxX ? x : maxX;
-        maxY = y > maxY ? y : maxY;
-
-        x = vertices[2];
-        y = vertices[3];
-        minX = x < minX ? x : minX;
-        minY = y < minY ? y : minY;
-        maxX = x > maxX ? x : maxX;
-        maxY = y > maxY ? y : maxY;
-
-        x = vertices[4];
-        y = vertices[5];
-        minX = x < minX ? x : minX;
-        minY = y < minY ? y : minY;
-        maxX = x > maxX ? x : maxX;
-        maxY = y > maxY ? y : maxY;
-
-        x = vertices[6];
-        y = vertices[7];
-        minX = x < minX ? x : minX;
-        minY = y < minY ? y : minY;
-        maxX = x > maxX ? x : maxX;
-        maxY = y > maxY ? y : maxY;
-
-        this.minX = minX;
-        this.minY = minY;
-        this.maxX = maxX;
-        this.maxY = maxY;
-    };
-
-    /**
-     * Adds sprite frame, transformed.
-     *
-     * @param {PIXI.TransformBase} transform - TODO
-     * @param {number} x0 - TODO
-     * @param {number} y0 - TODO
-     * @param {number} x1 - TODO
-     * @param {number} y1 - TODO
-     */
-
-
-    Bounds.prototype.addFrame = function addFrame(transform, x0, y0, x1, y1) {
-        var matrix = transform.worldTransform;
-        var a = matrix.a;
-        var b = matrix.b;
-        var c = matrix.c;
-        var d = matrix.d;
-        var tx = matrix.tx;
-        var ty = matrix.ty;
-
-        var minX = this.minX;
-        var minY = this.minY;
-        var maxX = this.maxX;
-        var maxY = this.maxY;
-
-        var x = a * x0 + c * y0 + tx;
-        var y = b * x0 + d * y0 + ty;
-
-        minX = x < minX ? x : minX;
-        minY = y < minY ? y : minY;
-        maxX = x > maxX ? x : maxX;
-        maxY = y > maxY ? y : maxY;
-
-        x = a * x1 + c * y0 + tx;
-        y = b * x1 + d * y0 + ty;
-        minX = x < minX ? x : minX;
-        minY = y < minY ? y : minY;
-        maxX = x > maxX ? x : maxX;
-        maxY = y > maxY ? y : maxY;
-
-        x = a * x0 + c * y1 + tx;
-        y = b * x0 + d * y1 + ty;
-        minX = x < minX ? x : minX;
-        minY = y < minY ? y : minY;
-        maxX = x > maxX ? x : maxX;
-        maxY = y > maxY ? y : maxY;
-
-        x = a * x1 + c * y1 + tx;
-        y = b * x1 + d * y1 + ty;
-        minX = x < minX ? x : minX;
-        minY = y < minY ? y : minY;
-        maxX = x > maxX ? x : maxX;
-        maxY = y > maxY ? y : maxY;
-
-        this.minX = minX;
-        this.minY = minY;
-        this.maxX = maxX;
-        this.maxY = maxY;
-    };
-
-    /**
-     * Add an array of vertices
-     *
-     * @param {PIXI.TransformBase} transform - TODO
-     * @param {Float32Array} vertices - TODO
-     * @param {number} beginOffset - TODO
-     * @param {number} endOffset - TODO
-     */
-
-
-    Bounds.prototype.addVertices = function addVertices(transform, vertices, beginOffset, endOffset) {
-        var matrix = transform.worldTransform;
-        var a = matrix.a;
-        var b = matrix.b;
-        var c = matrix.c;
-        var d = matrix.d;
-        var tx = matrix.tx;
-        var ty = matrix.ty;
-
-        var minX = this.minX;
-        var minY = this.minY;
-        var maxX = this.maxX;
-        var maxY = this.maxY;
-
-        for (var i = beginOffset; i < endOffset; i += 2) {
-            var rawX = vertices[i];
-            var rawY = vertices[i + 1];
-            var x = a * rawX + c * rawY + tx;
-            var y = d * rawY + b * rawX + ty;
-
-            minX = x < minX ? x : minX;
-            minY = y < minY ? y : minY;
-            maxX = x > maxX ? x : maxX;
-            maxY = y > maxY ? y : maxY;
-        }
-
-        this.minX = minX;
-        this.minY = minY;
-        this.maxX = maxX;
-        this.maxY = maxY;
-    };
-
-    /**
-     * Adds other Bounds
-     *
-     * @param {PIXI.Bounds} bounds - TODO
-     */
-
-
-    Bounds.prototype.addBounds = function addBounds(bounds) {
-        var minX = this.minX;
-        var minY = this.minY;
-        var maxX = this.maxX;
-        var maxY = this.maxY;
-
-        this.minX = bounds.minX < minX ? bounds.minX : minX;
-        this.minY = bounds.minY < minY ? bounds.minY : minY;
-        this.maxX = bounds.maxX > maxX ? bounds.maxX : maxX;
-        this.maxY = bounds.maxY > maxY ? bounds.maxY : maxY;
-    };
-
-    /**
-     * Adds other Bounds, masked with Bounds
-     *
-     * @param {PIXI.Bounds} bounds - TODO
-     * @param {PIXI.Bounds} mask - TODO
-     */
-
-
-    Bounds.prototype.addBoundsMask = function addBoundsMask(bounds, mask) {
-        var _minX = bounds.minX > mask.minX ? bounds.minX : mask.minX;
-        var _minY = bounds.minY > mask.minY ? bounds.minY : mask.minY;
-        var _maxX = bounds.maxX < mask.maxX ? bounds.maxX : mask.maxX;
-        var _maxY = bounds.maxY < mask.maxY ? bounds.maxY : mask.maxY;
-
-        if (_minX <= _maxX && _minY <= _maxY) {
-            var minX = this.minX;
-            var minY = this.minY;
-            var maxX = this.maxX;
-            var maxY = this.maxY;
-
-            this.minX = _minX < minX ? _minX : minX;
-            this.minY = _minY < minY ? _minY : minY;
-            this.maxX = _maxX > maxX ? _maxX : maxX;
-            this.maxY = _maxY > maxY ? _maxY : maxY;
-        }
-    };
-
-    /**
-     * Adds other Bounds, masked with Rectangle
-     *
-     * @param {PIXI.Bounds} bounds - TODO
-     * @param {PIXI.Rectangle} area - TODO
-     */
-
-
-    Bounds.prototype.addBoundsArea = function addBoundsArea(bounds, area) {
-        var _minX = bounds.minX > area.x ? bounds.minX : area.x;
-        var _minY = bounds.minY > area.y ? bounds.minY : area.y;
-        var _maxX = bounds.maxX < area.x + area.width ? bounds.maxX : area.x + area.width;
-        var _maxY = bounds.maxY < area.y + area.height ? bounds.maxY : area.y + area.height;
-
-        if (_minX <= _maxX && _minY <= _maxY) {
-            var minX = this.minX;
-            var minY = this.minY;
-            var maxX = this.maxX;
-            var maxY = this.maxY;
-
-            this.minX = _minX < minX ? _minX : minX;
-            this.minY = _minY < minY ? _minY : minY;
-            this.maxX = _maxX > maxX ? _maxX : maxX;
-            this.maxY = _maxY > maxY ? _maxY : maxY;
-        }
-    };
-
-    return Bounds;
-}();
-
-exports.default = Bounds;
-//# sourceMappingURL=Bounds.js.map
-
-/***/ }),
-/* 66 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
- * isMobile.js v0.4.1
- *
- * A simple library to detect Apple phones and tablets,
- * Android phones and tablets, other mobile devices (like blackberry, mini-opera and windows phone),
- * and any kind of seven inch device, via user agent sniffing.
- *
- * @author: Kai Mallea (kmallea@gmail.com)
- *
- * @license: http://creativecommons.org/publicdomain/zero/1.0/
- */
-(function (global) {
-
-    var apple_phone         = /iPhone/i,
-        apple_ipod          = /iPod/i,
-        apple_tablet        = /iPad/i,
-        android_phone       = /(?=.*\bAndroid\b)(?=.*\bMobile\b)/i, // Match 'Android' AND 'Mobile'
-        android_tablet      = /Android/i,
-        amazon_phone        = /(?=.*\bAndroid\b)(?=.*\bSD4930UR\b)/i,
-        amazon_tablet       = /(?=.*\bAndroid\b)(?=.*\b(?:KFOT|KFTT|KFJWI|KFJWA|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|KFARWI|KFASWI|KFSAWI|KFSAWA)\b)/i,
-        windows_phone       = /Windows Phone/i,
-        windows_tablet      = /(?=.*\bWindows\b)(?=.*\bARM\b)/i, // Match 'Windows' AND 'ARM'
-        other_blackberry    = /BlackBerry/i,
-        other_blackberry_10 = /BB10/i,
-        other_opera         = /Opera Mini/i,
-        other_chrome        = /(CriOS|Chrome)(?=.*\bMobile\b)/i,
-        other_firefox       = /(?=.*\bFirefox\b)(?=.*\bMobile\b)/i, // Match 'Firefox' AND 'Mobile'
-        seven_inch = new RegExp(
-            '(?:' +         // Non-capturing group
-
-            'Nexus 7' +     // Nexus 7
-
-            '|' +           // OR
-
-            'BNTV250' +     // B&N Nook Tablet 7 inch
-
-            '|' +           // OR
-
-            'Kindle Fire' + // Kindle Fire
-
-            '|' +           // OR
-
-            'Silk' +        // Kindle Fire, Silk Accelerated
-
-            '|' +           // OR
-
-            'GT-P1000' +    // Galaxy Tab 7 inch
-
-            ')',            // End non-capturing group
-
-            'i');           // Case-insensitive matching
-
-    var match = function(regex, userAgent) {
-        return regex.test(userAgent);
-    };
-
-    var IsMobileClass = function(userAgent) {
-        var ua = userAgent || navigator.userAgent;
-
-        // Facebook mobile app's integrated browser adds a bunch of strings that
-        // match everything. Strip it out if it exists.
-        var tmp = ua.split('[FBAN');
-        if (typeof tmp[1] !== 'undefined') {
-            ua = tmp[0];
-        }
-
-        // Twitter mobile app's integrated browser on iPad adds a "Twitter for
-        // iPhone" string. Same probable happens on other tablet platforms.
-        // This will confuse detection so strip it out if it exists.
-        tmp = ua.split('Twitter');
-        if (typeof tmp[1] !== 'undefined') {
-            ua = tmp[0];
-        }
-
-        this.apple = {
-            phone:  match(apple_phone, ua),
-            ipod:   match(apple_ipod, ua),
-            tablet: !match(apple_phone, ua) && match(apple_tablet, ua),
-            device: match(apple_phone, ua) || match(apple_ipod, ua) || match(apple_tablet, ua)
-        };
-        this.amazon = {
-            phone:  match(amazon_phone, ua),
-            tablet: !match(amazon_phone, ua) && match(amazon_tablet, ua),
-            device: match(amazon_phone, ua) || match(amazon_tablet, ua)
-        };
-        this.android = {
-            phone:  match(amazon_phone, ua) || match(android_phone, ua),
-            tablet: !match(amazon_phone, ua) && !match(android_phone, ua) && (match(amazon_tablet, ua) || match(android_tablet, ua)),
-            device: match(amazon_phone, ua) || match(amazon_tablet, ua) || match(android_phone, ua) || match(android_tablet, ua)
-        };
-        this.windows = {
-            phone:  match(windows_phone, ua),
-            tablet: match(windows_tablet, ua),
-            device: match(windows_phone, ua) || match(windows_tablet, ua)
-        };
-        this.other = {
-            blackberry:   match(other_blackberry, ua),
-            blackberry10: match(other_blackberry_10, ua),
-            opera:        match(other_opera, ua),
-            firefox:      match(other_firefox, ua),
-            chrome:       match(other_chrome, ua),
-            device:       match(other_blackberry, ua) || match(other_blackberry_10, ua) || match(other_opera, ua) || match(other_firefox, ua) || match(other_chrome, ua)
-        };
-        this.seven_inch = match(seven_inch, ua);
-        this.any = this.apple.device || this.android.device || this.windows.device || this.other.device || this.seven_inch;
-
-        // excludes 'other' devices and ipods, targeting touchscreen phones
-        this.phone = this.apple.phone || this.android.phone || this.windows.phone;
-
-        // excludes 7 inch devices, classifying as phone or tablet is left to the user
-        this.tablet = this.apple.tablet || this.android.tablet || this.windows.tablet;
-
-        if (typeof window === 'undefined') {
-            return this;
-        }
-    };
-
-    var instantiate = function() {
-        var IM = new IsMobileClass();
-        IM.Class = IsMobileClass;
-        return IM;
-    };
-
-    if (typeof module !== 'undefined' && module.exports && typeof window === 'undefined') {
-        //node
-        module.exports = IsMobileClass;
-    } else if (typeof module !== 'undefined' && module.exports && typeof window !== 'undefined') {
-        //browserify
-        module.exports = instantiate();
-    } else if (true) {
-        //AMD
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (global.isMobile = instantiate()),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else {
-        global.isMobile = instantiate();
-    }
-
-})(this);
-
-
-/***/ }),
-/* 67 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _math = __webpack_require__(7);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Generic class to deal with traditional 2D matrix transforms
- *
- * @class
- * @memberof PIXI
- */
-var TransformBase = function () {
-  /**
-   *
-   */
-  function TransformBase() {
-    _classCallCheck(this, TransformBase);
-
-    /**
-     * The global matrix transform. It can be swapped temporarily by some functions like getLocalBounds()
-     *
-     * @member {PIXI.Matrix}
-     */
-    this.worldTransform = new _math.Matrix();
-
-    /**
-     * The local matrix transform
-     *
-     * @member {PIXI.Matrix}
-     */
-    this.localTransform = new _math.Matrix();
-
-    this._worldID = 0;
-    this._parentID = 0;
-  }
-
-  /**
-   * TransformBase does not have decomposition, so this function wont do anything
-   */
-
-
-  TransformBase.prototype.updateLocalTransform = function updateLocalTransform() {}
-  // empty
-
-
-  /**
-   * Updates the values of the object and applies the parent's transform.
-   *
-   * @param {PIXI.TransformBase} parentTransform - The transform of the parent of this object
-   */
-  ;
-
-  TransformBase.prototype.updateTransform = function updateTransform(parentTransform) {
-    var pt = parentTransform.worldTransform;
-    var wt = this.worldTransform;
-    var lt = this.localTransform;
-
-    // concat the parent matrix with the objects transform.
-    wt.a = lt.a * pt.a + lt.b * pt.c;
-    wt.b = lt.a * pt.b + lt.b * pt.d;
-    wt.c = lt.c * pt.a + lt.d * pt.c;
-    wt.d = lt.c * pt.b + lt.d * pt.d;
-    wt.tx = lt.tx * pt.a + lt.ty * pt.c + pt.tx;
-    wt.ty = lt.tx * pt.b + lt.ty * pt.d + pt.ty;
-
-    this._worldID++;
-  };
-
-  return TransformBase;
-}();
-
-/**
- * Updates the values of the object and applies the parent's transform.
- * @param  parentTransform {PIXI.Transform} The transform of the parent of this object
- *
- */
-
-
-exports.default = TransformBase;
-TransformBase.prototype.updateWorldTransform = TransformBase.prototype.updateTransform;
-
-TransformBase.IDENTITY = new TransformBase();
-//# sourceMappingURL=TransformBase.js.map
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _math = __webpack_require__(7);
-
-var _utils = __webpack_require__(3);
-
-var _const = __webpack_require__(2);
-
-var _Texture = __webpack_require__(16);
-
-var _Texture2 = _interopRequireDefault(_Texture);
-
-var _Container2 = __webpack_require__(32);
-
-var _Container3 = _interopRequireDefault(_Container2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var tempPoint = new _math.Point();
-
-/**
- * The Sprite object is the base for all textured objects that are rendered to the screen
- *
- * A sprite can be created directly from an image like this:
- *
- * ```js
- * let sprite = new PIXI.Sprite.fromImage('assets/image.png');
- * ```
- *
- * @class
- * @extends PIXI.Container
- * @memberof PIXI
- */
-
-var Sprite = function (_Container) {
-    _inherits(Sprite, _Container);
-
-    /**
-     * @param {PIXI.Texture} texture - The texture for this sprite
-     */
-    function Sprite(texture) {
-        _classCallCheck(this, Sprite);
-
-        /**
-         * The anchor sets the origin point of the texture.
-         * The default is 0,0 this means the texture's origin is the top left
-         * Setting the anchor to 0.5,0.5 means the texture's origin is centered
-         * Setting the anchor to 1,1 would mean the texture's origin point will be the bottom right corner
-         *
-         * @member {PIXI.ObservablePoint}
-         * @private
-         */
-        var _this = _possibleConstructorReturn(this, _Container.call(this));
-
-        _this._anchor = new _math.ObservablePoint(_this._onAnchorUpdate, _this);
-
-        /**
-         * The texture that the sprite is using
-         *
-         * @private
-         * @member {PIXI.Texture}
-         */
-        _this._texture = null;
-
-        /**
-         * The width of the sprite (this is initially set by the texture)
-         *
-         * @private
-         * @member {number}
-         */
-        _this._width = 0;
-
-        /**
-         * The height of the sprite (this is initially set by the texture)
-         *
-         * @private
-         * @member {number}
-         */
-        _this._height = 0;
-
-        /**
-         * The tint applied to the sprite. This is a hex value. A value of 0xFFFFFF will remove any tint effect.
-         *
-         * @private
-         * @member {number}
-         * @default 0xFFFFFF
-         */
-        _this._tint = null;
-        _this._tintRGB = null;
-        _this.tint = 0xFFFFFF;
-
-        /**
-         * The blend mode to be applied to the sprite. Apply a value of `PIXI.BLEND_MODES.NORMAL` to reset the blend mode.
-         *
-         * @member {number}
-         * @default PIXI.BLEND_MODES.NORMAL
-         * @see PIXI.BLEND_MODES
-         */
-        _this.blendMode = _const.BLEND_MODES.NORMAL;
-
-        /**
-         * The shader that will be used to render the sprite. Set to null to remove a current shader.
-         *
-         * @member {PIXI.Filter|PIXI.Shader}
-         */
-        _this.shader = null;
-
-        /**
-         * An internal cached value of the tint.
-         *
-         * @private
-         * @member {number}
-         * @default 0xFFFFFF
-         */
-        _this.cachedTint = 0xFFFFFF;
-
-        // call texture setter
-        _this.texture = texture || _Texture2.default.EMPTY;
-
-        /**
-         * this is used to store the vertex data of the sprite (basically a quad)
-         *
-         * @private
-         * @member {Float32Array}
-         */
-        _this.vertexData = new Float32Array(8);
-
-        /**
-         * This is used to calculate the bounds of the object IF it is a trimmed sprite
-         *
-         * @private
-         * @member {Float32Array}
-         */
-        _this.vertexTrimmedData = null;
-
-        _this._transformID = -1;
-        _this._textureID = -1;
-
-        _this._transformTrimmedID = -1;
-        _this._textureTrimmedID = -1;
-
-        /**
-         * Plugin that is responsible for rendering this element.
-         * Allows to customize the rendering process without overriding '_renderWebGL' & '_renderCanvas' methods.
-         *
-         * @member {string}
-         * @default 'sprite'
-         */
-        _this.pluginName = 'sprite';
-        return _this;
-    }
-
-    /**
-     * When the texture is updated, this event will fire to update the scale and frame
-     *
-     * @private
-     */
-
-
-    Sprite.prototype._onTextureUpdate = function _onTextureUpdate() {
-        this._textureID = -1;
-        this._textureTrimmedID = -1;
-        this.cachedTint = 0xFFFFFF;
-
-        // so if _width is 0 then width was not set..
-        if (this._width) {
-            this.scale.x = (0, _utils.sign)(this.scale.x) * this._width / this._texture.orig.width;
-        }
-
-        if (this._height) {
-            this.scale.y = (0, _utils.sign)(this.scale.y) * this._height / this._texture.orig.height;
-        }
-    };
-
-    /**
-     * Called when the anchor position updates.
-     *
-     * @private
-     */
-
-
-    Sprite.prototype._onAnchorUpdate = function _onAnchorUpdate() {
-        this._transformID = -1;
-        this._transformTrimmedID = -1;
-    };
-
-    /**
-     * calculates worldTransform * vertices, store it in vertexData
-     */
-
-
-    Sprite.prototype.calculateVertices = function calculateVertices() {
-        if (this._transformID === this.transform._worldID && this._textureID === this._texture._updateID) {
-            return;
-        }
-
-        this._transformID = this.transform._worldID;
-        this._textureID = this._texture._updateID;
-
-        // set the vertex data
-
-        var texture = this._texture;
-        var wt = this.transform.worldTransform;
-        var a = wt.a;
-        var b = wt.b;
-        var c = wt.c;
-        var d = wt.d;
-        var tx = wt.tx;
-        var ty = wt.ty;
-        var vertexData = this.vertexData;
-        var trim = texture.trim;
-        var orig = texture.orig;
-        var anchor = this._anchor;
-
-        var w0 = 0;
-        var w1 = 0;
-        var h0 = 0;
-        var h1 = 0;
-
-        if (trim) {
-            // if the sprite is trimmed and is not a tilingsprite then we need to add the extra
-            // space before transforming the sprite coords.
-            w1 = trim.x - anchor._x * orig.width;
-            w0 = w1 + trim.width;
-
-            h1 = trim.y - anchor._y * orig.height;
-            h0 = h1 + trim.height;
-        } else {
-            w1 = -anchor._x * orig.width;
-            w0 = w1 + orig.width;
-
-            h1 = -anchor._y * orig.height;
-            h0 = h1 + orig.height;
-        }
-
-        // xy
-        vertexData[0] = a * w1 + c * h1 + tx;
-        vertexData[1] = d * h1 + b * w1 + ty;
-
-        // xy
-        vertexData[2] = a * w0 + c * h1 + tx;
-        vertexData[3] = d * h1 + b * w0 + ty;
-
-        // xy
-        vertexData[4] = a * w0 + c * h0 + tx;
-        vertexData[5] = d * h0 + b * w0 + ty;
-
-        // xy
-        vertexData[6] = a * w1 + c * h0 + tx;
-        vertexData[7] = d * h0 + b * w1 + ty;
-    };
-
-    /**
-     * calculates worldTransform * vertices for a non texture with a trim. store it in vertexTrimmedData
-     * This is used to ensure that the true width and height of a trimmed texture is respected
-     */
-
-
-    Sprite.prototype.calculateTrimmedVertices = function calculateTrimmedVertices() {
-        if (!this.vertexTrimmedData) {
-            this.vertexTrimmedData = new Float32Array(8);
-        } else if (this._transformTrimmedID === this.transform._worldID && this._textureTrimmedID === this._texture._updateID) {
-            return;
-        }
-
-        this._transformTrimmedID = this.transform._worldID;
-        this._textureTrimmedID = this._texture._updateID;
-
-        // lets do some special trim code!
-        var texture = this._texture;
-        var vertexData = this.vertexTrimmedData;
-        var orig = texture.orig;
-        var anchor = this._anchor;
-
-        // lets calculate the new untrimmed bounds..
-        var wt = this.transform.worldTransform;
-        var a = wt.a;
-        var b = wt.b;
-        var c = wt.c;
-        var d = wt.d;
-        var tx = wt.tx;
-        var ty = wt.ty;
-
-        var w1 = -anchor._x * orig.width;
-        var w0 = w1 + orig.width;
-
-        var h1 = -anchor._y * orig.height;
-        var h0 = h1 + orig.height;
-
-        // xy
-        vertexData[0] = a * w1 + c * h1 + tx;
-        vertexData[1] = d * h1 + b * w1 + ty;
-
-        // xy
-        vertexData[2] = a * w0 + c * h1 + tx;
-        vertexData[3] = d * h1 + b * w0 + ty;
-
-        // xy
-        vertexData[4] = a * w0 + c * h0 + tx;
-        vertexData[5] = d * h0 + b * w0 + ty;
-
-        // xy
-        vertexData[6] = a * w1 + c * h0 + tx;
-        vertexData[7] = d * h0 + b * w1 + ty;
-    };
-
-    /**
-    *
-    * Renders the object using the WebGL renderer
-    *
-    * @private
-    * @param {PIXI.WebGLRenderer} renderer - The webgl renderer to use.
-    */
-
-
-    Sprite.prototype._renderWebGL = function _renderWebGL(renderer) {
-        this.calculateVertices();
-
-        renderer.setObjectRenderer(renderer.plugins[this.pluginName]);
-        renderer.plugins[this.pluginName].render(this);
-    };
-
-    /**
-    * Renders the object using the Canvas renderer
-    *
-    * @private
-    * @param {PIXI.CanvasRenderer} renderer - The renderer
-    */
-
-
-    Sprite.prototype._renderCanvas = function _renderCanvas(renderer) {
-        renderer.plugins[this.pluginName].render(this);
-    };
-
-    /**
-     * Updates the bounds of the sprite.
-     *
-     * @private
-     */
-
-
-    Sprite.prototype._calculateBounds = function _calculateBounds() {
-        var trim = this._texture.trim;
-        var orig = this._texture.orig;
-
-        // First lets check to see if the current texture has a trim..
-        if (!trim || trim.width === orig.width && trim.height === orig.height) {
-            // no trim! lets use the usual calculations..
-            this.calculateVertices();
-            this._bounds.addQuad(this.vertexData);
-        } else {
-            // lets calculate a special trimmed bounds...
-            this.calculateTrimmedVertices();
-            this._bounds.addQuad(this.vertexTrimmedData);
-        }
-    };
-
-    /**
-     * Gets the local bounds of the sprite object.
-     *
-     * @param {PIXI.Rectangle} rect - The output rectangle.
-     * @return {PIXI.Rectangle} The bounds.
-     */
-
-
-    Sprite.prototype.getLocalBounds = function getLocalBounds(rect) {
-        // we can do a fast local bounds if the sprite has no children!
-        if (this.children.length === 0) {
-            this._bounds.minX = this._texture.orig.width * -this._anchor._x;
-            this._bounds.minY = this._texture.orig.height * -this._anchor._y;
-            this._bounds.maxX = this._texture.orig.width * (1 - this._anchor._x);
-            this._bounds.maxY = this._texture.orig.height * (1 - this._anchor._y);
-
-            if (!rect) {
-                if (!this._localBoundsRect) {
-                    this._localBoundsRect = new _math.Rectangle();
-                }
-
-                rect = this._localBoundsRect;
-            }
-
-            return this._bounds.getRectangle(rect);
-        }
-
-        return _Container.prototype.getLocalBounds.call(this, rect);
-    };
-
-    /**
-     * Tests if a point is inside this sprite
-     *
-     * @param {PIXI.Point} point - the point to test
-     * @return {boolean} the result of the test
-     */
-
-
-    Sprite.prototype.containsPoint = function containsPoint(point) {
-        this.worldTransform.applyInverse(point, tempPoint);
-
-        var width = this._texture.orig.width;
-        var height = this._texture.orig.height;
-        var x1 = -width * this.anchor.x;
-        var y1 = 0;
-
-        if (tempPoint.x >= x1 && tempPoint.x < x1 + width) {
-            y1 = -height * this.anchor.y;
-
-            if (tempPoint.y >= y1 && tempPoint.y < y1 + height) {
-                return true;
-            }
-        }
-
-        return false;
-    };
-
-    /**
-     * Destroys this sprite and optionally its texture and children
-     *
-     * @param {object|boolean} [options] - Options parameter. A boolean will act as if all options
-     *  have been set to that value
-     * @param {boolean} [options.children=false] - if set to true, all the children will have their destroy
-     *      method called as well. 'options' will be passed on to those calls.
-     * @param {boolean} [options.texture=false] - Should it destroy the current texture of the sprite as well
-     * @param {boolean} [options.baseTexture=false] - Should it destroy the base texture of the sprite as well
-     */
-
-
-    Sprite.prototype.destroy = function destroy(options) {
-        _Container.prototype.destroy.call(this, options);
-
-        this._anchor = null;
-
-        var destroyTexture = typeof options === 'boolean' ? options : options && options.texture;
-
-        if (destroyTexture) {
-            var destroyBaseTexture = typeof options === 'boolean' ? options : options && options.baseTexture;
-
-            this._texture.destroy(!!destroyBaseTexture);
-        }
-
-        this._texture = null;
-        this.shader = null;
-    };
-
-    // some helper functions..
-
-    /**
-     * Helper function that creates a new sprite based on the source you provide.
-     * The source can be - frame id, image url, video url, canvas element, video element, base texture
-     *
-     * @static
-     * @param {number|string|PIXI.BaseTexture|HTMLCanvasElement|HTMLVideoElement} source Source to create texture from
-     * @return {PIXI.Sprite} The newly created sprite
-     */
-
-
-    Sprite.from = function from(source) {
-        return new Sprite(_Texture2.default.from(source));
-    };
-
-    /**
-     * Helper function that creates a sprite that will contain a texture from the TextureCache based on the frameId
-     * The frame ids are created when a Texture packer file has been loaded
-     *
-     * @static
-     * @param {string} frameId - The frame Id of the texture in the cache
-     * @return {PIXI.Sprite} A new Sprite using a texture from the texture cache matching the frameId
-     */
-
-
-    Sprite.fromFrame = function fromFrame(frameId) {
-        var texture = _utils.TextureCache[frameId];
-
-        if (!texture) {
-            throw new Error('The frameId "' + frameId + '" does not exist in the texture cache');
-        }
-
-        return new Sprite(texture);
-    };
-
-    /**
-     * Helper function that creates a sprite that will contain a texture based on an image url
-     * If the image is not in the texture cache it will be loaded
-     *
-     * @static
-     * @param {string} imageId - The image url of the texture
-     * @param {boolean} [crossorigin=(auto)] - if you want to specify the cross-origin parameter
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - if you want to specify the scale mode,
-     *  see {@link PIXI.SCALE_MODES} for possible values
-     * @return {PIXI.Sprite} A new Sprite using a texture from the texture cache matching the image id
-     */
-
-
-    Sprite.fromImage = function fromImage(imageId, crossorigin, scaleMode) {
-        return new Sprite(_Texture2.default.fromImage(imageId, crossorigin, scaleMode));
-    };
-
-    /**
-     * The width of the sprite, setting this will actually modify the scale to achieve the value set
-     *
-     * @member {number}
-     */
-
-
-    _createClass(Sprite, [{
-        key: 'width',
-        get: function get() {
-            return Math.abs(this.scale.x) * this._texture.orig.width;
-        },
-        set: function set(value) // eslint-disable-line require-jsdoc
-        {
-            var s = (0, _utils.sign)(this.scale.x) || 1;
-
-            this.scale.x = s * value / this._texture.orig.width;
-            this._width = value;
-        }
-
-        /**
-         * The height of the sprite, setting this will actually modify the scale to achieve the value set
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'height',
-        get: function get() {
-            return Math.abs(this.scale.y) * this._texture.orig.height;
-        },
-        set: function set(value) // eslint-disable-line require-jsdoc
-        {
-            var s = (0, _utils.sign)(this.scale.y) || 1;
-
-            this.scale.y = s * value / this._texture.orig.height;
-            this._height = value;
-        }
-
-        /**
-         * The anchor sets the origin point of the texture.
-         * The default is 0,0 this means the texture's origin is the top left
-         * Setting the anchor to 0.5,0.5 means the texture's origin is centered
-         * Setting the anchor to 1,1 would mean the texture's origin point will be the bottom right corner
-         *
-         * @member {PIXI.ObservablePoint}
-         */
-
-    }, {
-        key: 'anchor',
-        get: function get() {
-            return this._anchor;
-        },
-        set: function set(value) // eslint-disable-line require-jsdoc
-        {
-            this._anchor.copy(value);
-        }
-
-        /**
-         * The tint applied to the sprite. This is a hex value.
-         * A value of 0xFFFFFF will remove any tint effect.
-         *
-         * @member {number}
-         * @default 0xFFFFFF
-         */
-
-    }, {
-        key: 'tint',
-        get: function get() {
-            return this._tint;
-        },
-        set: function set(value) // eslint-disable-line require-jsdoc
-        {
-            this._tint = value;
-            this._tintRGB = (value >> 16) + (value & 0xff00) + ((value & 0xff) << 16);
-        }
-
-        /**
-         * The texture that the sprite is using
-         *
-         * @member {PIXI.Texture}
-         */
-
-    }, {
-        key: 'texture',
-        get: function get() {
-            return this._texture;
-        },
-        set: function set(value) // eslint-disable-line require-jsdoc
-        {
-            if (this._texture === value) {
-                return;
-            }
-
-            this._texture = value;
-            this.cachedTint = 0xFFFFFF;
-
-            this._textureID = -1;
-            this._textureTrimmedID = -1;
-
-            if (value) {
-                // wait for the texture to load
-                if (value.baseTexture.hasLoaded) {
-                    this._onTextureUpdate();
-                } else {
-                    value.once('update', this._onTextureUpdate, this);
-                }
-            }
-        }
-    }]);
-
-    return Sprite;
-}(_Container3.default);
-
-exports.default = Sprite;
-//# sourceMappingURL=Sprite.js.map
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Bit twiddling hacks for JavaScript.
- *
- * Author: Mikola Lysenko
- *
- * Ported from Stanford bit twiddling hack library:
- *    http://graphics.stanford.edu/~seander/bithacks.html
- */
-
- "use restrict";
-
-//Number of bits in an integer
-var INT_BITS = 32;
-
-//Constants
-exports.INT_BITS  = INT_BITS;
-exports.INT_MAX   =  0x7fffffff;
-exports.INT_MIN   = -1<<(INT_BITS-1);
-
-//Returns -1, 0, +1 depending on sign of x
-exports.sign = function(v) {
-  return (v > 0) - (v < 0);
-}
-
-//Computes absolute value of integer
-exports.abs = function(v) {
-  var mask = v >> (INT_BITS-1);
-  return (v ^ mask) - mask;
-}
-
-//Computes minimum of integers x and y
-exports.min = function(x, y) {
-  return y ^ ((x ^ y) & -(x < y));
-}
-
-//Computes maximum of integers x and y
-exports.max = function(x, y) {
-  return x ^ ((x ^ y) & -(x < y));
-}
-
-//Checks if a number is a power of two
-exports.isPow2 = function(v) {
-  return !(v & (v-1)) && (!!v);
-}
-
-//Computes log base 2 of v
-exports.log2 = function(v) {
-  var r, shift;
-  r =     (v > 0xFFFF) << 4; v >>>= r;
-  shift = (v > 0xFF  ) << 3; v >>>= shift; r |= shift;
-  shift = (v > 0xF   ) << 2; v >>>= shift; r |= shift;
-  shift = (v > 0x3   ) << 1; v >>>= shift; r |= shift;
-  return r | (v >> 1);
-}
-
-//Computes log base 10 of v
-exports.log10 = function(v) {
-  return  (v >= 1000000000) ? 9 : (v >= 100000000) ? 8 : (v >= 10000000) ? 7 :
-          (v >= 1000000) ? 6 : (v >= 100000) ? 5 : (v >= 10000) ? 4 :
-          (v >= 1000) ? 3 : (v >= 100) ? 2 : (v >= 10) ? 1 : 0;
-}
-
-//Counts number of bits
-exports.popCount = function(v) {
-  v = v - ((v >>> 1) & 0x55555555);
-  v = (v & 0x33333333) + ((v >>> 2) & 0x33333333);
-  return ((v + (v >>> 4) & 0xF0F0F0F) * 0x1010101) >>> 24;
-}
-
-//Counts number of trailing zeros
-function countTrailingZeros(v) {
-  var c = 32;
-  v &= -v;
-  if (v) c--;
-  if (v & 0x0000FFFF) c -= 16;
-  if (v & 0x00FF00FF) c -= 8;
-  if (v & 0x0F0F0F0F) c -= 4;
-  if (v & 0x33333333) c -= 2;
-  if (v & 0x55555555) c -= 1;
-  return c;
-}
-exports.countTrailingZeros = countTrailingZeros;
-
-//Rounds to next power of 2
-exports.nextPow2 = function(v) {
-  v += v === 0;
-  --v;
-  v |= v >>> 1;
-  v |= v >>> 2;
-  v |= v >>> 4;
-  v |= v >>> 8;
-  v |= v >>> 16;
-  return v + 1;
-}
-
-//Rounds down to previous power of 2
-exports.prevPow2 = function(v) {
-  v |= v >>> 1;
-  v |= v >>> 2;
-  v |= v >>> 4;
-  v |= v >>> 8;
-  v |= v >>> 16;
-  return v - (v>>>1);
-}
-
-//Computes parity of word
-exports.parity = function(v) {
-  v ^= v >>> 16;
-  v ^= v >>> 8;
-  v ^= v >>> 4;
-  v &= 0xf;
-  return (0x6996 >>> v) & 1;
-}
-
-var REVERSE_TABLE = new Array(256);
-
-(function(tab) {
-  for(var i=0; i<256; ++i) {
-    var v = i, r = i, s = 7;
-    for (v >>>= 1; v; v >>>= 1) {
-      r <<= 1;
-      r |= v & 1;
-      --s;
-    }
-    tab[i] = (r << s) & 0xff;
-  }
-})(REVERSE_TABLE);
-
-//Reverse bits in a 32 bit word
-exports.reverse = function(v) {
-  return  (REVERSE_TABLE[ v         & 0xff] << 24) |
-          (REVERSE_TABLE[(v >>> 8)  & 0xff] << 16) |
-          (REVERSE_TABLE[(v >>> 16) & 0xff] << 8)  |
-           REVERSE_TABLE[(v >>> 24) & 0xff];
-}
-
-//Interleave bits of 2 coordinates with 16 bits.  Useful for fast quadtree codes
-exports.interleave2 = function(x, y) {
-  x &= 0xFFFF;
-  x = (x | (x << 8)) & 0x00FF00FF;
-  x = (x | (x << 4)) & 0x0F0F0F0F;
-  x = (x | (x << 2)) & 0x33333333;
-  x = (x | (x << 1)) & 0x55555555;
-
-  y &= 0xFFFF;
-  y = (y | (y << 8)) & 0x00FF00FF;
-  y = (y | (y << 4)) & 0x0F0F0F0F;
-  y = (y | (y << 2)) & 0x33333333;
-  y = (y | (y << 1)) & 0x55555555;
-
-  return x | (y << 1);
-}
-
-//Extracts the nth interleaved component
-exports.deinterleave2 = function(v, n) {
-  v = (v >>> n) & 0x55555555;
-  v = (v | (v >>> 1))  & 0x33333333;
-  v = (v | (v >>> 2))  & 0x0F0F0F0F;
-  v = (v | (v >>> 4))  & 0x00FF00FF;
-  v = (v | (v >>> 16)) & 0x000FFFF;
-  return (v << 16) >> 16;
-}
-
-
-//Interleave bits of 3 coordinates, each with 10 bits.  Useful for fast octree codes
-exports.interleave3 = function(x, y, z) {
-  x &= 0x3FF;
-  x  = (x | (x<<16)) & 4278190335;
-  x  = (x | (x<<8))  & 251719695;
-  x  = (x | (x<<4))  & 3272356035;
-  x  = (x | (x<<2))  & 1227133513;
-
-  y &= 0x3FF;
-  y  = (y | (y<<16)) & 4278190335;
-  y  = (y | (y<<8))  & 251719695;
-  y  = (y | (y<<4))  & 3272356035;
-  y  = (y | (y<<2))  & 1227133513;
-  x |= (y << 1);
-  
-  z &= 0x3FF;
-  z  = (z | (z<<16)) & 4278190335;
-  z  = (z | (z<<8))  & 251719695;
-  z  = (z | (z<<4))  & 3272356035;
-  z  = (z | (z<<2))  & 1227133513;
-  
-  return x | (z << 2);
-}
-
-//Extracts nth interleaved component of a 3-tuple
-exports.deinterleave3 = function(v, n) {
-  v = (v >>> n)       & 1227133513;
-  v = (v | (v>>>2))   & 3272356035;
-  v = (v | (v>>>4))   & 251719695;
-  v = (v | (v>>>8))   & 4278190335;
-  v = (v | (v>>>16))  & 0x3FF;
-  return (v<<22)>>22;
-}
-
-//Computes next combination in colexicographic order (this is mistakenly called nextPermutation on the bit twiddling hacks page)
-exports.nextCombination = function(v) {
-  var t = v | (v - 1);
-  return (t + 1) | (((~t & -~t) - 1) >>> (countTrailingZeros(v) + 1));
-}
-
-
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.Ticker = exports.shared = undefined;
-
-var _Ticker = __webpack_require__(206);
-
-var _Ticker2 = _interopRequireDefault(_Ticker);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * The shared ticker instance used by {@link PIXI.extras.AnimatedSprite}.
- * and by {@link PIXI.interaction.InteractionManager}.
- * The property {@link PIXI.ticker.Ticker#autoStart} is set to `true`
- * for this instance. Please follow the examples for usage, including
- * how to opt-out of auto-starting the shared ticker.
- *
- * @example
- * let ticker = PIXI.ticker.shared;
- * // Set this to prevent starting this ticker when listeners are added.
- * // By default this is true only for the PIXI.ticker.shared instance.
- * ticker.autoStart = false;
- * // FYI, call this to ensure the ticker is stopped. It should be stopped
- * // if you have not attempted to render anything yet.
- * ticker.stop();
- * // Call this when you are ready for a running shared ticker.
- * ticker.start();
- *
- * @example
- * // You may use the shared ticker to render...
- * let renderer = PIXI.autoDetectRenderer(800, 600);
- * let stage = new PIXI.Container();
- * let interactionManager = PIXI.interaction.InteractionManager(renderer);
- * document.body.appendChild(renderer.view);
- * ticker.add(function (time) {
- *     renderer.render(stage);
- * });
- *
- * @example
- * // Or you can just update it manually.
- * ticker.autoStart = false;
- * ticker.stop();
- * function animate(time) {
- *     ticker.update(time);
- *     renderer.render(stage);
- *     requestAnimationFrame(animate);
- * }
- * animate(performance.now());
- *
- * @type {PIXI.ticker.Ticker}
- * @memberof PIXI.ticker
- */
-var shared = new _Ticker2.default();
-
-shared.autoStart = true;
-shared.destroy = function () {
-  // protect destroying shared ticker
-  // this is used by other internal systems
-  // like AnimatedSprite and InteractionManager
-};
-
-/**
- * This namespace contains an API for interacting with PIXI's internal global update loop.
- *
- * This ticker is used for rendering, {@link PIXI.extras.AnimatedSprite AnimatedSprite},
- * {@link PIXI.interaction.InteractionManager InteractionManager} and many other time-based PIXI systems.
- * @example
- * const ticker = new PIXI.ticker.Ticker();
- * ticker.stop();
- * ticker.add((deltaTime) => {
- *   // do something every frame
- * });
- * ticker.start();
- * @namespace PIXI.ticker
- */
-exports.shared = shared;
-exports.Ticker = _Ticker2.default;
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _BaseRenderTexture = __webpack_require__(108);
-
-var _BaseRenderTexture2 = _interopRequireDefault(_BaseRenderTexture);
-
-var _Texture2 = __webpack_require__(16);
-
-var _Texture3 = _interopRequireDefault(_Texture2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * A RenderTexture is a special texture that allows any PixiJS display object to be rendered to it.
- *
- * __Hint__: All DisplayObjects (i.e. Sprites) that render to a RenderTexture should be preloaded
- * otherwise black rectangles will be drawn instead.
- *
- * A RenderTexture takes a snapshot of any Display Object given to its render method. For example:
- *
- * ```js
- * let renderer = PIXI.autoDetectRenderer(1024, 1024, { view: canvas, ratio: 1 });
- * let renderTexture = PIXI.RenderTexture.create(800, 600);
- * let sprite = PIXI.Sprite.fromImage("spinObj_01.png");
- *
- * sprite.position.x = 800/2;
- * sprite.position.y = 600/2;
- * sprite.anchor.x = 0.5;
- * sprite.anchor.y = 0.5;
- *
- * renderer.render(sprite, renderTexture);
- * ```
- *
- * The Sprite in this case will be rendered using its local transform. To render this sprite at 0,0
- * you can clear the transform
- *
- * ```js
- *
- * sprite.setTransform()
- *
- * let renderTexture = new PIXI.RenderTexture.create(100, 100);
- *
- * renderer.render(sprite, renderTexture);  // Renders to center of RenderTexture
- * ```
- *
- * @class
- * @extends PIXI.Texture
- * @memberof PIXI
- */
-var RenderTexture = function (_Texture) {
-    _inherits(RenderTexture, _Texture);
-
-    /**
-     * @param {PIXI.BaseRenderTexture} baseRenderTexture - The renderer used for this RenderTexture
-     * @param {PIXI.Rectangle} [frame] - The rectangle frame of the texture to show
-     */
-    function RenderTexture(baseRenderTexture, frame) {
-        _classCallCheck(this, RenderTexture);
-
-        // support for legacy..
-        var _legacyRenderer = null;
-
-        if (!(baseRenderTexture instanceof _BaseRenderTexture2.default)) {
-            /* eslint-disable prefer-rest-params, no-console */
-            var width = arguments[1];
-            var height = arguments[2];
-            var scaleMode = arguments[3];
-            var resolution = arguments[4];
-
-            // we have an old render texture..
-            console.warn('Please use RenderTexture.create(' + width + ', ' + height + ') instead of the ctor directly.');
-            _legacyRenderer = arguments[0];
-            /* eslint-enable prefer-rest-params, no-console */
-
-            frame = null;
-            baseRenderTexture = new _BaseRenderTexture2.default(width, height, scaleMode, resolution);
-        }
-
-        /**
-         * The base texture object that this texture uses
-         *
-         * @member {BaseTexture}
-         */
-
-        var _this = _possibleConstructorReturn(this, _Texture.call(this, baseRenderTexture, frame));
-
-        _this.legacyRenderer = _legacyRenderer;
-
-        /**
-         * This will let the renderer know if the texture is valid. If it's not then it cannot be rendered.
-         *
-         * @member {boolean}
-         */
-        _this.valid = true;
-
-        _this._updateUvs();
-        return _this;
-    }
-
-    /**
-     * Resizes the RenderTexture.
-     *
-     * @param {number} width - The width to resize to.
-     * @param {number} height - The height to resize to.
-     * @param {boolean} doNotResizeBaseTexture - Should the baseTexture.width and height values be resized as well?
-     */
-
-
-    RenderTexture.prototype.resize = function resize(width, height, doNotResizeBaseTexture) {
-        width = Math.ceil(width);
-        height = Math.ceil(height);
-
-        // TODO - could be not required..
-        this.valid = width > 0 && height > 0;
-
-        this._frame.width = this.orig.width = width;
-        this._frame.height = this.orig.height = height;
-
-        if (!doNotResizeBaseTexture) {
-            this.baseTexture.resize(width, height);
-        }
-
-        this._updateUvs();
-    };
-
-    /**
-     * A short hand way of creating a render texture.
-     *
-     * @param {number} [width=100] - The width of the render texture
-     * @param {number} [height=100] - The height of the render texture
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {number} [resolution=1] - The resolution / device pixel ratio of the texture being generated
-     * @return {PIXI.RenderTexture} The new render texture
-     */
-
-
-    RenderTexture.create = function create(width, height, scaleMode, resolution) {
-        return new RenderTexture(new _BaseRenderTexture2.default(width, height, scaleMode, resolution));
-    };
-
-    return RenderTexture;
-}(_Texture3.default);
-
-exports.default = RenderTexture;
-//# sourceMappingURL=RenderTexture.js.map
-
-/***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _utils = __webpack_require__(3);
-
-var _canUseNewCanvasBlendModes = __webpack_require__(110);
-
-var _canUseNewCanvasBlendModes2 = _interopRequireDefault(_canUseNewCanvasBlendModes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Utility methods for Sprite/Texture tinting.
- *
- * @class
- * @memberof PIXI
- */
-var CanvasTinter = {
-    /**
-     * Basically this method just needs a sprite and a color and tints the sprite with the given color.
-     *
-     * @memberof PIXI.CanvasTinter
-     * @param {PIXI.Sprite} sprite - the sprite to tint
-     * @param {number} color - the color to use to tint the sprite with
-     * @return {HTMLCanvasElement} The tinted canvas
-     */
-    getTintedTexture: function getTintedTexture(sprite, color) {
-        var texture = sprite._texture;
-
-        color = CanvasTinter.roundColor(color);
-
-        var stringColor = '#' + ('00000' + (color | 0).toString(16)).substr(-6);
-
-        texture.tintCache = texture.tintCache || {};
-
-        var cachedTexture = texture.tintCache[stringColor];
-
-        var canvas = void 0;
-
-        if (cachedTexture) {
-            if (cachedTexture.tintId === texture._updateID) {
-                return texture.tintCache[stringColor];
-            }
-
-            canvas = texture.tintCache[stringColor];
-        } else {
-            canvas = CanvasTinter.canvas || document.createElement('canvas');
-        }
-
-        CanvasTinter.tintMethod(texture, color, canvas);
-
-        canvas.tintId = texture._updateID;
-
-        if (CanvasTinter.convertTintToImage) {
-            // is this better?
-            var tintImage = new Image();
-
-            tintImage.src = canvas.toDataURL();
-
-            texture.tintCache[stringColor] = tintImage;
-        } else {
-            texture.tintCache[stringColor] = canvas;
-            // if we are not converting the texture to an image then we need to lose the reference to the canvas
-            CanvasTinter.canvas = null;
-        }
-
-        return canvas;
-    },
-
-    /**
-     * Tint a texture using the 'multiply' operation.
-     *
-     * @memberof PIXI.CanvasTinter
-     * @param {PIXI.Texture} texture - the texture to tint
-     * @param {number} color - the color to use to tint the sprite with
-     * @param {HTMLCanvasElement} canvas - the current canvas
-     */
-    tintWithMultiply: function tintWithMultiply(texture, color, canvas) {
-        var context = canvas.getContext('2d');
-        var crop = texture._frame.clone();
-        var resolution = texture.baseTexture.resolution;
-
-        crop.x *= resolution;
-        crop.y *= resolution;
-        crop.width *= resolution;
-        crop.height *= resolution;
-
-        canvas.width = Math.ceil(crop.width);
-        canvas.height = Math.ceil(crop.height);
-
-        context.save();
-        context.fillStyle = '#' + ('00000' + (color | 0).toString(16)).substr(-6);
-
-        context.fillRect(0, 0, crop.width, crop.height);
-
-        context.globalCompositeOperation = 'multiply';
-
-        context.drawImage(texture.baseTexture.source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
-
-        context.globalCompositeOperation = 'destination-atop';
-
-        context.drawImage(texture.baseTexture.source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
-        context.restore();
-    },
-
-    /**
-     * Tint a texture using the 'overlay' operation.
-     *
-     * @memberof PIXI.CanvasTinter
-     * @param {PIXI.Texture} texture - the texture to tint
-     * @param {number} color - the color to use to tint the sprite with
-     * @param {HTMLCanvasElement} canvas - the current canvas
-     */
-    tintWithOverlay: function tintWithOverlay(texture, color, canvas) {
-        var context = canvas.getContext('2d');
-        var crop = texture._frame.clone();
-        var resolution = texture.baseTexture.resolution;
-
-        crop.x *= resolution;
-        crop.y *= resolution;
-        crop.width *= resolution;
-        crop.height *= resolution;
-
-        canvas.width = Math.ceil(crop.width);
-        canvas.height = Math.ceil(crop.height);
-
-        context.save();
-        context.globalCompositeOperation = 'copy';
-        context.fillStyle = '#' + ('00000' + (color | 0).toString(16)).substr(-6);
-        context.fillRect(0, 0, crop.width, crop.height);
-
-        context.globalCompositeOperation = 'destination-atop';
-        context.drawImage(texture.baseTexture.source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
-
-        // context.globalCompositeOperation = 'copy';
-        context.restore();
-    },
-
-
-    /**
-     * Tint a texture pixel per pixel.
-     *
-     * @memberof PIXI.CanvasTinter
-     * @param {PIXI.Texture} texture - the texture to tint
-     * @param {number} color - the color to use to tint the sprite with
-     * @param {HTMLCanvasElement} canvas - the current canvas
-     */
-    tintWithPerPixel: function tintWithPerPixel(texture, color, canvas) {
-        var context = canvas.getContext('2d');
-        var crop = texture._frame.clone();
-        var resolution = texture.baseTexture.resolution;
-
-        crop.x *= resolution;
-        crop.y *= resolution;
-        crop.width *= resolution;
-        crop.height *= resolution;
-
-        canvas.width = Math.ceil(crop.width);
-        canvas.height = Math.ceil(crop.height);
-
-        context.save();
-        context.globalCompositeOperation = 'copy';
-        context.drawImage(texture.baseTexture.source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
-        context.restore();
-
-        var rgbValues = (0, _utils.hex2rgb)(color);
-        var r = rgbValues[0];
-        var g = rgbValues[1];
-        var b = rgbValues[2];
-
-        var pixelData = context.getImageData(0, 0, crop.width, crop.height);
-
-        var pixels = pixelData.data;
-
-        for (var i = 0; i < pixels.length; i += 4) {
-            pixels[i + 0] *= r;
-            pixels[i + 1] *= g;
-            pixels[i + 2] *= b;
-        }
-
-        context.putImageData(pixelData, 0, 0);
-    },
-
-    /**
-     * Rounds the specified color according to the CanvasTinter.cacheStepsPerColorChannel.
-     *
-     * @memberof PIXI.CanvasTinter
-     * @param {number} color - the color to round, should be a hex color
-     * @return {number} The rounded color.
-     */
-    roundColor: function roundColor(color) {
-        var step = CanvasTinter.cacheStepsPerColorChannel;
-
-        var rgbValues = (0, _utils.hex2rgb)(color);
-
-        rgbValues[0] = Math.min(255, rgbValues[0] / step * step);
-        rgbValues[1] = Math.min(255, rgbValues[1] / step * step);
-        rgbValues[2] = Math.min(255, rgbValues[2] / step * step);
-
-        return (0, _utils.rgb2hex)(rgbValues);
-    },
-
-    /**
-     * Number of steps which will be used as a cap when rounding colors.
-     *
-     * @memberof PIXI.CanvasTinter
-     * @type {number}
-     */
-    cacheStepsPerColorChannel: 8,
-
-    /**
-     * Tint cache boolean flag.
-     *
-     * @memberof PIXI.CanvasTinter
-     * @type {boolean}
-     */
-    convertTintToImage: false,
-
-    /**
-     * Whether or not the Canvas BlendModes are supported, consequently the ability to tint using the multiply method.
-     *
-     * @memberof PIXI.CanvasTinter
-     * @type {boolean}
-     */
-    canUseMultiply: (0, _canUseNewCanvasBlendModes2.default)(),
-
-    /**
-     * The tinting method that will be used.
-     *
-     * @memberof PIXI.CanvasTinter
-     * @type {tintMethodFunctionType}
-     */
-    tintMethod: 0
-};
-
-CanvasTinter.tintMethod = CanvasTinter.canUseMultiply ? CanvasTinter.tintWithMultiply : CanvasTinter.tintWithPerPixel;
-
-/**
- * The tintMethod type.
- *
- * @memberof PIXI.CanvasTinter
- * @callback tintMethodFunctionType
- * @param texture {PIXI.Texture} the texture to tint
- * @param color {number} the color to use to tint the sprite with
- * @param canvas {HTMLCanvasElement} the current canvas
- */
-
-exports.default = CanvasTinter;
-//# sourceMappingURL=CanvasTinter.js.map
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.default = createIndicesForQuads;
-/**
- * Generic Mask Stack data structure
- *
- * @memberof PIXI
- * @function createIndicesForQuads
- * @private
- * @param {number} size - Number of quads
- * @return {Uint16Array} indices
- */
-function createIndicesForQuads(size) {
-    // the total number of indices in our array, there are 6 points per quad.
-
-    var totalIndices = size * 6;
-
-    var indices = new Uint16Array(totalIndices);
-
-    // fill the indices with the quads to draw
-    for (var i = 0, j = 0; i < totalIndices; i += 6, j += 4) {
-        indices[i + 0] = j + 0;
-        indices[i + 1] = j + 1;
-        indices[i + 2] = j + 2;
-        indices[i + 3] = j + 0;
-        indices[i + 4] = j + 2;
-        indices[i + 5] = j + 3;
-    }
-
-    return indices;
-}
-//# sourceMappingURL=createIndicesForQuads.js.map
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _parseUri = __webpack_require__(134);
-
-var _parseUri2 = _interopRequireDefault(_parseUri);
-
-var _miniSignals = __webpack_require__(133);
-
-var _miniSignals2 = _interopRequireDefault(_miniSignals);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// tests is CORS is supported in XHR, if not we need to use XDR
-var useXdr = !!(window.XDomainRequest && !('withCredentials' in new XMLHttpRequest()));
-var tempAnchor = null;
-
-// some status constants
-var STATUS_NONE = 0;
-var STATUS_OK = 200;
-var STATUS_EMPTY = 204;
-var STATUS_IE_BUG_EMPTY = 1223;
-var STATUS_TYPE_OK = 2;
-
-// noop
-function _noop() {} /* empty */
-
-/**
- * Manages the state and loading of a resource and all child resources.
- *
- * @class
- */
-
-var Resource = function () {
-    /**
-     * Sets the load type to be used for a specific extension.
-     *
-     * @static
-     * @param {string} extname - The extension to set the type for, e.g. "png" or "fnt"
-     * @param {Resource.LOAD_TYPE} loadType - The load type to set it to.
-     */
-    Resource.setExtensionLoadType = function setExtensionLoadType(extname, loadType) {
-        setExtMap(Resource._loadTypeMap, extname, loadType);
-    };
-
-    /**
-     * Sets the load type to be used for a specific extension.
-     *
-     * @static
-     * @param {string} extname - The extension to set the type for, e.g. "png" or "fnt"
-     * @param {Resource.XHR_RESPONSE_TYPE} xhrType - The xhr type to set it to.
-     */
-
-
-    Resource.setExtensionXhrType = function setExtensionXhrType(extname, xhrType) {
-        setExtMap(Resource._xhrTypeMap, extname, xhrType);
-    };
-
-    /**
-     * @param {string} name - The name of the resource to load.
-     * @param {string|string[]} url - The url for this resource, for audio/video loads you can pass
-     *      an array of sources.
-     * @param {object} [options] - The options for the load.
-     * @param {string|boolean} [options.crossOrigin] - Is this request cross-origin? Default is to
-     *      determine automatically.
-     * @param {Resource.LOAD_TYPE} [options.loadType=Resource.LOAD_TYPE.XHR] - How should this resource
-     *      be loaded?
-     * @param {Resource.XHR_RESPONSE_TYPE} [options.xhrType=Resource.XHR_RESPONSE_TYPE.DEFAULT] - How
-     *      should the data being loaded be interpreted when using XHR?
-     * @param {object} [options.metadata] - Extra configuration for middleware and the Resource object.
-     * @param {HTMLImageElement|HTMLAudioElement|HTMLVideoElement} [options.metadata.loadElement=null] - The
-     *      element to use for loading, instead of creating one.
-     * @param {boolean} [options.metadata.skipSource=false] - Skips adding source(s) to the load element. This
-     *      is useful if you want to pass in a `loadElement` that you already added load sources to.
-     * @param {string|string[]} [options.metadata.mimeType] - The mime type to use for the source element of a video/audio
-     *      elment. If the urls are an array, you can pass this as an array as well where each index is the mime type to
-     *      use for the corresponding url index.
-     */
-
-
-    function Resource(name, url, options) {
-        _classCallCheck(this, Resource);
-
-        if (typeof name !== 'string' || typeof url !== 'string') {
-            throw new Error('Both name and url are required for constructing a resource.');
-        }
-
-        options = options || {};
-
-        /**
-         * The state flags of this resource.
-         *
-         * @member {number}
-         */
-        this._flags = 0;
-
-        // set data url flag, needs to be set early for some _determineX checks to work.
-        this._setFlag(Resource.STATUS_FLAGS.DATA_URL, url.indexOf('data:') === 0);
-
-        /**
-         * The name of this resource.
-         *
-         * @member {string}
-         * @readonly
-         */
-        this.name = name;
-
-        /**
-         * The url used to load this resource.
-         *
-         * @member {string}
-         * @readonly
-         */
-        this.url = url;
-
-        /**
-         * The extension used to load this resource.
-         *
-         * @member {string}
-         * @readonly
-         */
-        this.extension = this._getExtension();
-
-        /**
-         * The data that was loaded by the resource.
-         *
-         * @member {any}
-         */
-        this.data = null;
-
-        /**
-         * Is this request cross-origin? If unset, determined automatically.
-         *
-         * @member {string}
-         */
-        this.crossOrigin = options.crossOrigin === true ? 'anonymous' : options.crossOrigin;
-
-        /**
-         * The method of loading to use for this resource.
-         *
-         * @member {Resource.LOAD_TYPE}
-         */
-        this.loadType = options.loadType || this._determineLoadType();
-
-        /**
-         * The type used to load the resource via XHR. If unset, determined automatically.
-         *
-         * @member {string}
-         */
-        this.xhrType = options.xhrType;
-
-        /**
-         * Extra info for middleware, and controlling specifics about how the resource loads.
-         *
-         * Note that if you pass in a `loadElement`, the Resource class takes ownership of it.
-         * Meaning it will modify it as it sees fit.
-         *
-         * @member {object}
-         * @property {HTMLImageElement|HTMLAudioElement|HTMLVideoElement} [loadElement=null] - The
-         *  element to use for loading, instead of creating one.
-         * @property {boolean} [skipSource=false] - Skips adding source(s) to the load element. This
-         *  is useful if you want to pass in a `loadElement` that you already added load sources
-         *  to.
-         */
-        this.metadata = options.metadata || {};
-
-        /**
-         * The error that occurred while loading (if any).
-         *
-         * @member {Error}
-         * @readonly
-         */
-        this.error = null;
-
-        /**
-         * The XHR object that was used to load this resource. This is only set
-         * when `loadType` is `Resource.LOAD_TYPE.XHR`.
-         *
-         * @member {XMLHttpRequest}
-         * @readonly
-         */
-        this.xhr = null;
-
-        /**
-         * The child resources this resource owns.
-         *
-         * @member {Resource[]}
-         * @readonly
-         */
-        this.children = [];
-
-        /**
-         * The resource type.
-         *
-         * @member {Resource.TYPE}
-         * @readonly
-         */
-        this.type = Resource.TYPE.UNKNOWN;
-
-        /**
-         * The progress chunk owned by this resource.
-         *
-         * @member {number}
-         * @readonly
-         */
-        this.progressChunk = 0;
-
-        /**
-         * The `dequeue` method that will be used a storage place for the async queue dequeue method
-         * used privately by the loader.
-         *
-         * @private
-         * @member {function}
-         */
-        this._dequeue = _noop;
-
-        /**
-         * Used a storage place for the on load binding used privately by the loader.
-         *
-         * @private
-         * @member {function}
-         */
-        this._onLoadBinding = null;
-
-        /**
-         * The `complete` function bound to this resource's context.
-         *
-         * @private
-         * @member {function}
-         */
-        this._boundComplete = this.complete.bind(this);
-
-        /**
-         * The `_onError` function bound to this resource's context.
-         *
-         * @private
-         * @member {function}
-         */
-        this._boundOnError = this._onError.bind(this);
-
-        /**
-         * The `_onProgress` function bound to this resource's context.
-         *
-         * @private
-         * @member {function}
-         */
-        this._boundOnProgress = this._onProgress.bind(this);
-
-        // xhr callbacks
-        this._boundXhrOnError = this._xhrOnError.bind(this);
-        this._boundXhrOnAbort = this._xhrOnAbort.bind(this);
-        this._boundXhrOnLoad = this._xhrOnLoad.bind(this);
-        this._boundXdrOnTimeout = this._xdrOnTimeout.bind(this);
-
-        /**
-         * Dispatched when the resource beings to load.
-         *
-         * The callback looks like {@link Resource.OnStartSignal}.
-         *
-         * @member {Signal}
-         */
-        this.onStart = new _miniSignals2.default();
-
-        /**
-         * Dispatched each time progress of this resource load updates.
-         * Not all resources types and loader systems can support this event
-         * so sometimes it may not be available. If the resource
-         * is being loaded on a modern browser, using XHR, and the remote server
-         * properly sets Content-Length headers, then this will be available.
-         *
-         * The callback looks like {@link Resource.OnProgressSignal}.
-         *
-         * @member {Signal}
-         */
-        this.onProgress = new _miniSignals2.default();
-
-        /**
-         * Dispatched once this resource has loaded, if there was an error it will
-         * be in the `error` property.
-         *
-         * The callback looks like {@link Resource.OnCompleteSignal}.
-         *
-         * @member {Signal}
-         */
-        this.onComplete = new _miniSignals2.default();
-
-        /**
-         * Dispatched after this resource has had all the *after* middleware run on it.
-         *
-         * The callback looks like {@link Resource.OnCompleteSignal}.
-         *
-         * @member {Signal}
-         */
-        this.onAfterMiddleware = new _miniSignals2.default();
-
-        /**
-         * When the resource starts to load.
-         *
-         * @memberof Resource
-         * @callback OnStartSignal
-         * @param {Resource} resource - The resource that the event happened on.
-         */
-
-        /**
-         * When the resource reports loading progress.
-         *
-         * @memberof Resource
-         * @callback OnProgressSignal
-         * @param {Resource} resource - The resource that the event happened on.
-         * @param {number} percentage - The progress of the load in the range [0, 1].
-         */
-
-        /**
-         * When the resource finishes loading.
-         *
-         * @memberof Resource
-         * @callback OnCompleteSignal
-         * @param {Resource} resource - The resource that the event happened on.
-         */
-    }
-
-    /**
-     * Stores whether or not this url is a data url.
-     *
-     * @member {boolean}
-     * @readonly
-     */
-
-
-    /**
-     * Marks the resource as complete.
-     *
-     */
-    Resource.prototype.complete = function complete() {
-        // TODO: Clean this up in a wrapper or something...gross....
-        if (this.data && this.data.removeEventListener) {
-            this.data.removeEventListener('error', this._boundOnError, false);
-            this.data.removeEventListener('load', this._boundComplete, false);
-            this.data.removeEventListener('progress', this._boundOnProgress, false);
-            this.data.removeEventListener('canplaythrough', this._boundComplete, false);
-        }
-
-        if (this.xhr) {
-            if (this.xhr.removeEventListener) {
-                this.xhr.removeEventListener('error', this._boundXhrOnError, false);
-                this.xhr.removeEventListener('abort', this._boundXhrOnAbort, false);
-                this.xhr.removeEventListener('progress', this._boundOnProgress, false);
-                this.xhr.removeEventListener('load', this._boundXhrOnLoad, false);
-            } else {
-                this.xhr.onerror = null;
-                this.xhr.ontimeout = null;
-                this.xhr.onprogress = null;
-                this.xhr.onload = null;
-            }
-        }
-
-        if (this.isComplete) {
-            throw new Error('Complete called again for an already completed resource.');
-        }
-
-        this._setFlag(Resource.STATUS_FLAGS.COMPLETE, true);
-        this._setFlag(Resource.STATUS_FLAGS.LOADING, false);
-
-        this.onComplete.dispatch(this);
-    };
-
-    /**
-     * Aborts the loading of this resource, with an optional message.
-     *
-     * @param {string} message - The message to use for the error
-     */
-
-
-    Resource.prototype.abort = function abort(message) {
-        // abort can be called multiple times, ignore subsequent calls.
-        if (this.error) {
-            return;
-        }
-
-        // store error
-        this.error = new Error(message);
-
-        // abort the actual loading
-        if (this.xhr) {
-            this.xhr.abort();
-        } else if (this.xdr) {
-            this.xdr.abort();
-        } else if (this.data) {
-            // single source
-            if (this.data.src) {
-                this.data.src = Resource.EMPTY_GIF;
-            }
-            // multi-source
-            else {
-                    while (this.data.firstChild) {
-                        this.data.removeChild(this.data.firstChild);
-                    }
-                }
-        }
-
-        // done now.
-        this.complete();
-    };
-
-    /**
-     * Kicks off loading of this resource. This method is asynchronous.
-     *
-     * @param {function} [cb] - Optional callback to call once the resource is loaded.
-     */
-
-
-    Resource.prototype.load = function load(cb) {
-        var _this = this;
-
-        if (this.isLoading) {
-            return;
-        }
-
-        if (this.isComplete) {
-            if (cb) {
-                setTimeout(function () {
-                    return cb(_this);
-                }, 1);
-            }
-
-            return;
-        } else if (cb) {
-            this.onComplete.once(cb);
-        }
-
-        this._setFlag(Resource.STATUS_FLAGS.LOADING, true);
-
-        this.onStart.dispatch(this);
-
-        // if unset, determine the value
-        if (this.crossOrigin === false || typeof this.crossOrigin !== 'string') {
-            this.crossOrigin = this._determineCrossOrigin(this.url);
-        }
-
-        switch (this.loadType) {
-            case Resource.LOAD_TYPE.IMAGE:
-                this.type = Resource.TYPE.IMAGE;
-                this._loadElement('image');
-                break;
-
-            case Resource.LOAD_TYPE.AUDIO:
-                this.type = Resource.TYPE.AUDIO;
-                this._loadSourceElement('audio');
-                break;
-
-            case Resource.LOAD_TYPE.VIDEO:
-                this.type = Resource.TYPE.VIDEO;
-                this._loadSourceElement('video');
-                break;
-
-            case Resource.LOAD_TYPE.XHR:
-            /* falls through */
-            default:
-                if (useXdr && this.crossOrigin) {
-                    this._loadXdr();
-                } else {
-                    this._loadXhr();
-                }
-                break;
-        }
-    };
-
-    /**
-     * Checks if the flag is set.
-     *
-     * @private
-     * @param {number} flag - The flag to check.
-     * @return {boolean} True if the flag is set.
-     */
-
-
-    Resource.prototype._hasFlag = function _hasFlag(flag) {
-        return !!(this._flags & flag);
-    };
-
-    /**
-     * (Un)Sets the flag.
-     *
-     * @private
-     * @param {number} flag - The flag to (un)set.
-     * @param {boolean} value - Whether to set or (un)set the flag.
-     */
-
-
-    Resource.prototype._setFlag = function _setFlag(flag, value) {
-        this._flags = value ? this._flags | flag : this._flags & ~flag;
-    };
-
-    /**
-     * Loads this resources using an element that has a single source,
-     * like an HTMLImageElement.
-     *
-     * @private
-     * @param {string} type - The type of element to use.
-     */
-
-
-    Resource.prototype._loadElement = function _loadElement(type) {
-        if (this.metadata.loadElement) {
-            this.data = this.metadata.loadElement;
-        } else if (type === 'image' && typeof window.Image !== 'undefined') {
-            this.data = new Image();
-        } else {
-            this.data = document.createElement(type);
-        }
-
-        if (this.crossOrigin) {
-            this.data.crossOrigin = this.crossOrigin;
-        }
-
-        if (!this.metadata.skipSource) {
-            this.data.src = this.url;
-        }
-
-        this.data.addEventListener('error', this._boundOnError, false);
-        this.data.addEventListener('load', this._boundComplete, false);
-        this.data.addEventListener('progress', this._boundOnProgress, false);
-    };
-
-    /**
-     * Loads this resources using an element that has multiple sources,
-     * like an HTMLAudioElement or HTMLVideoElement.
-     *
-     * @private
-     * @param {string} type - The type of element to use.
-     */
-
-
-    Resource.prototype._loadSourceElement = function _loadSourceElement(type) {
-        if (this.metadata.loadElement) {
-            this.data = this.metadata.loadElement;
-        } else if (type === 'audio' && typeof window.Audio !== 'undefined') {
-            this.data = new Audio();
-        } else {
-            this.data = document.createElement(type);
-        }
-
-        if (this.data === null) {
-            this.abort('Unsupported element: ' + type);
-
-            return;
-        }
-
-        if (!this.metadata.skipSource) {
-            // support for CocoonJS Canvas+ runtime, lacks document.createElement('source')
-            if (navigator.isCocoonJS) {
-                this.data.src = Array.isArray(this.url) ? this.url[0] : this.url;
-            } else if (Array.isArray(this.url)) {
-                var mimeTypes = this.metadata.mimeType;
-
-                for (var i = 0; i < this.url.length; ++i) {
-                    this.data.appendChild(this._createSource(type, this.url[i], Array.isArray(mimeTypes) ? mimeTypes[i] : mimeTypes));
-                }
-            } else {
-                var _mimeTypes = this.metadata.mimeType;
-
-                this.data.appendChild(this._createSource(type, this.url, Array.isArray(_mimeTypes) ? _mimeTypes[0] : _mimeTypes));
-            }
-        }
-
-        this.data.addEventListener('error', this._boundOnError, false);
-        this.data.addEventListener('load', this._boundComplete, false);
-        this.data.addEventListener('progress', this._boundOnProgress, false);
-        this.data.addEventListener('canplaythrough', this._boundComplete, false);
-
-        this.data.load();
-    };
-
-    /**
-     * Loads this resources using an XMLHttpRequest.
-     *
-     * @private
-     */
-
-
-    Resource.prototype._loadXhr = function _loadXhr() {
-        // if unset, determine the value
-        if (typeof this.xhrType !== 'string') {
-            this.xhrType = this._determineXhrType();
-        }
-
-        var xhr = this.xhr = new XMLHttpRequest();
-
-        // set the request type and url
-        xhr.open('GET', this.url, true);
-
-        // load json as text and parse it ourselves. We do this because some browsers
-        // *cough* safari *cough* can't deal with it.
-        if (this.xhrType === Resource.XHR_RESPONSE_TYPE.JSON || this.xhrType === Resource.XHR_RESPONSE_TYPE.DOCUMENT) {
-            xhr.responseType = Resource.XHR_RESPONSE_TYPE.TEXT;
-        } else {
-            xhr.responseType = this.xhrType;
-        }
-
-        xhr.addEventListener('error', this._boundXhrOnError, false);
-        xhr.addEventListener('abort', this._boundXhrOnAbort, false);
-        xhr.addEventListener('progress', this._boundOnProgress, false);
-        xhr.addEventListener('load', this._boundXhrOnLoad, false);
-
-        xhr.send();
-    };
-
-    /**
-     * Loads this resources using an XDomainRequest. This is here because we need to support IE9 (gross).
-     *
-     * @private
-     */
-
-
-    Resource.prototype._loadXdr = function _loadXdr() {
-        // if unset, determine the value
-        if (typeof this.xhrType !== 'string') {
-            this.xhrType = this._determineXhrType();
-        }
-
-        var xdr = this.xhr = new XDomainRequest();
-
-        // XDomainRequest has a few quirks. Occasionally it will abort requests
-        // A way to avoid this is to make sure ALL callbacks are set even if not used
-        // More info here: http://stackoverflow.com/questions/15786966/xdomainrequest-aborts-post-on-ie-9
-        xdr.timeout = 5000;
-
-        xdr.onerror = this._boundXhrOnError;
-        xdr.ontimeout = this._boundXdrOnTimeout;
-        xdr.onprogress = this._boundOnProgress;
-        xdr.onload = this._boundXhrOnLoad;
-
-        xdr.open('GET', this.url, true);
-
-        // Note: The xdr.send() call is wrapped in a timeout to prevent an
-        // issue with the interface where some requests are lost if multiple
-        // XDomainRequests are being sent at the same time.
-        // Some info here: https://github.com/photonstorm/phaser/issues/1248
-        setTimeout(function () {
-            return xdr.send();
-        }, 1);
-    };
-
-    /**
-     * Creates a source used in loading via an element.
-     *
-     * @private
-     * @param {string} type - The element type (video or audio).
-     * @param {string} url - The source URL to load from.
-     * @param {string} [mime] - The mime type of the video
-     * @return {HTMLSourceElement} The source element.
-     */
-
-
-    Resource.prototype._createSource = function _createSource(type, url, mime) {
-        if (!mime) {
-            mime = type + '/' + this._getExtension(url);
-        }
-
-        var source = document.createElement('source');
-
-        source.src = url;
-        source.type = mime;
-
-        return source;
-    };
-
-    /**
-     * Called if a load errors out.
-     *
-     * @param {Event} event - The error event from the element that emits it.
-     * @private
-     */
-
-
-    Resource.prototype._onError = function _onError(event) {
-        this.abort('Failed to load element using: ' + event.target.nodeName);
-    };
-
-    /**
-     * Called if a load progress event fires for xhr/xdr.
-     *
-     * @private
-     * @param {XMLHttpRequestProgressEvent|Event} event - Progress event.
-     */
-
-
-    Resource.prototype._onProgress = function _onProgress(event) {
-        if (event && event.lengthComputable) {
-            this.onProgress.dispatch(this, event.loaded / event.total);
-        }
-    };
-
-    /**
-     * Called if an error event fires for xhr/xdr.
-     *
-     * @private
-     * @param {XMLHttpRequestErrorEvent|Event} event - Error event.
-     */
-
-
-    Resource.prototype._xhrOnError = function _xhrOnError() {
-        var xhr = this.xhr;
-
-        this.abort(reqType(xhr) + ' Request failed. Status: ' + xhr.status + ', text: "' + xhr.statusText + '"');
-    };
-
-    /**
-     * Called if an abort event fires for xhr.
-     *
-     * @private
-     * @param {XMLHttpRequestAbortEvent} event - Abort Event
-     */
-
-
-    Resource.prototype._xhrOnAbort = function _xhrOnAbort() {
-        this.abort(reqType(this.xhr) + ' Request was aborted by the user.');
-    };
-
-    /**
-     * Called if a timeout event fires for xdr.
-     *
-     * @private
-     * @param {Event} event - Timeout event.
-     */
-
-
-    Resource.prototype._xdrOnTimeout = function _xdrOnTimeout() {
-        this.abort(reqType(this.xhr) + ' Request timed out.');
-    };
-
-    /**
-     * Called when data successfully loads from an xhr/xdr request.
-     *
-     * @private
-     * @param {XMLHttpRequestLoadEvent|Event} event - Load event
-     */
-
-
-    Resource.prototype._xhrOnLoad = function _xhrOnLoad() {
-        var xhr = this.xhr;
-        var text = '';
-        var status = typeof xhr.status === 'undefined' ? STATUS_OK : xhr.status; // XDR has no `.status`, assume 200.
-
-        // responseText is accessible only if responseType is '' or 'text' and on older browsers
-        if (xhr.responseType === '' || xhr.responseType === 'text' || typeof xhr.responseType === 'undefined') {
-            text = xhr.responseText;
-        }
-
-        // status can be 0 when using the `file://` protocol so we also check if a response is set.
-        // If it has a response, we assume 200; otherwise a 0 status code with no contents is an aborted request.
-        if (status === STATUS_NONE && (text.length > 0 || xhr.responseType === Resource.XHR_RESPONSE_TYPE.BUFFER)) {
-            status = STATUS_OK;
-        }
-        // handle IE9 bug: http://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
-        else if (status === STATUS_IE_BUG_EMPTY) {
-                status = STATUS_EMPTY;
-            }
-
-        var statusType = status / 100 | 0;
-
-        if (statusType === STATUS_TYPE_OK) {
-            // if text, just return it
-            if (this.xhrType === Resource.XHR_RESPONSE_TYPE.TEXT) {
-                this.data = text;
-                this.type = Resource.TYPE.TEXT;
-            }
-            // if json, parse into json object
-            else if (this.xhrType === Resource.XHR_RESPONSE_TYPE.JSON) {
-                    try {
-                        this.data = JSON.parse(text);
-                        this.type = Resource.TYPE.JSON;
-                    } catch (e) {
-                        this.abort('Error trying to parse loaded json: ' + e);
-
-                        return;
-                    }
-                }
-                // if xml, parse into an xml document or div element
-                else if (this.xhrType === Resource.XHR_RESPONSE_TYPE.DOCUMENT) {
-                        try {
-                            if (window.DOMParser) {
-                                var domparser = new DOMParser();
-
-                                this.data = domparser.parseFromString(text, 'text/xml');
-                            } else {
-                                var div = document.createElement('div');
-
-                                div.innerHTML = text;
-
-                                this.data = div;
-                            }
-
-                            this.type = Resource.TYPE.XML;
-                        } catch (e) {
-                            this.abort('Error trying to parse loaded xml: ' + e);
-
-                            return;
-                        }
-                    }
-                    // other types just return the response
-                    else {
-                            this.data = xhr.response || text;
-                        }
-        } else {
-            this.abort('[' + xhr.status + '] ' + xhr.statusText + ': ' + xhr.responseURL);
-
-            return;
-        }
-
-        this.complete();
-    };
-
-    /**
-     * Sets the `crossOrigin` property for this resource based on if the url
-     * for this resource is cross-origin. If crossOrigin was manually set, this
-     * function does nothing.
-     *
-     * @private
-     * @param {string} url - The url to test.
-     * @param {object} [loc=window.location] - The location object to test against.
-     * @return {string} The crossOrigin value to use (or empty string for none).
-     */
-
-
-    Resource.prototype._determineCrossOrigin = function _determineCrossOrigin(url, loc) {
-        // data: and javascript: urls are considered same-origin
-        if (url.indexOf('data:') === 0) {
-            return '';
-        }
-
-        // default is window.location
-        loc = loc || window.location;
-
-        if (!tempAnchor) {
-            tempAnchor = document.createElement('a');
-        }
-
-        // let the browser determine the full href for the url of this resource and then
-        // parse with the node url lib, we can't use the properties of the anchor element
-        // because they don't work in IE9 :(
-        tempAnchor.href = url;
-        url = (0, _parseUri2.default)(tempAnchor.href, { strictMode: true });
-
-        var samePort = !url.port && loc.port === '' || url.port === loc.port;
-        var protocol = url.protocol ? url.protocol + ':' : '';
-
-        // if cross origin
-        if (url.host !== loc.hostname || !samePort || protocol !== loc.protocol) {
-            return 'anonymous';
-        }
-
-        return '';
-    };
-
-    /**
-     * Determines the responseType of an XHR request based on the extension of the
-     * resource being loaded.
-     *
-     * @private
-     * @return {Resource.XHR_RESPONSE_TYPE} The responseType to use.
-     */
-
-
-    Resource.prototype._determineXhrType = function _determineXhrType() {
-        return Resource._xhrTypeMap[this.extension] || Resource.XHR_RESPONSE_TYPE.TEXT;
-    };
-
-    /**
-     * Determines the loadType of a resource based on the extension of the
-     * resource being loaded.
-     *
-     * @private
-     * @return {Resource.LOAD_TYPE} The loadType to use.
-     */
-
-
-    Resource.prototype._determineLoadType = function _determineLoadType() {
-        return Resource._loadTypeMap[this.extension] || Resource.LOAD_TYPE.XHR;
-    };
-
-    /**
-     * Extracts the extension (sans '.') of the file being loaded by the resource.
-     *
-     * @private
-     * @return {string} The extension.
-     */
-
-
-    Resource.prototype._getExtension = function _getExtension() {
-        var url = this.url;
-        var ext = '';
-
-        if (this.isDataUrl) {
-            var slashIndex = url.indexOf('/');
-
-            ext = url.substring(slashIndex + 1, url.indexOf(';', slashIndex));
-        } else {
-            var queryStart = url.indexOf('?');
-            var hashStart = url.indexOf('#');
-            var index = Math.min(queryStart > -1 ? queryStart : url.length, hashStart > -1 ? hashStart : url.length);
-
-            url = url.substring(0, index);
-            ext = url.substring(url.lastIndexOf('.') + 1);
-        }
-
-        return ext.toLowerCase();
-    };
-
-    /**
-     * Determines the mime type of an XHR request based on the responseType of
-     * resource being loaded.
-     *
-     * @private
-     * @param {Resource.XHR_RESPONSE_TYPE} type - The type to get a mime type for.
-     * @return {string} The mime type to use.
-     */
-
-
-    Resource.prototype._getMimeFromXhrType = function _getMimeFromXhrType(type) {
-        switch (type) {
-            case Resource.XHR_RESPONSE_TYPE.BUFFER:
-                return 'application/octet-binary';
-
-            case Resource.XHR_RESPONSE_TYPE.BLOB:
-                return 'application/blob';
-
-            case Resource.XHR_RESPONSE_TYPE.DOCUMENT:
-                return 'application/xml';
-
-            case Resource.XHR_RESPONSE_TYPE.JSON:
-                return 'application/json';
-
-            case Resource.XHR_RESPONSE_TYPE.DEFAULT:
-            case Resource.XHR_RESPONSE_TYPE.TEXT:
-            /* falls through */
-            default:
-                return 'text/plain';
-
-        }
-    };
-
-    _createClass(Resource, [{
-        key: 'isDataUrl',
-        get: function get() {
-            return this._hasFlag(Resource.STATUS_FLAGS.DATA_URL);
-        }
-
-        /**
-         * Describes if this resource has finished loading. Is true when the resource has completely
-         * loaded.
-         *
-         * @member {boolean}
-         * @readonly
-         */
-
-    }, {
-        key: 'isComplete',
-        get: function get() {
-            return this._hasFlag(Resource.STATUS_FLAGS.COMPLETE);
-        }
-
-        /**
-         * Describes if this resource is currently loading. Is true when the resource starts loading,
-         * and is false again when complete.
-         *
-         * @member {boolean}
-         * @readonly
-         */
-
-    }, {
-        key: 'isLoading',
-        get: function get() {
-            return this._hasFlag(Resource.STATUS_FLAGS.LOADING);
-        }
-    }]);
-
-    return Resource;
-}();
-
-/**
- * The types of resources a resource could represent.
- *
- * @static
- * @readonly
- * @enum {number}
- */
-
-
-exports.default = Resource;
-Resource.STATUS_FLAGS = {
-    NONE: 0,
-    DATA_URL: 1 << 0,
-    COMPLETE: 1 << 1,
-    LOADING: 1 << 2
-};
-
-/**
- * The types of resources a resource could represent.
- *
- * @static
- * @readonly
- * @enum {number}
- */
-Resource.TYPE = {
-    UNKNOWN: 0,
-    JSON: 1,
-    XML: 2,
-    IMAGE: 3,
-    AUDIO: 4,
-    VIDEO: 5,
-    TEXT: 6
-};
-
-/**
- * The types of loading a resource can use.
- *
- * @static
- * @readonly
- * @enum {number}
- */
-Resource.LOAD_TYPE = {
-    /** Uses XMLHttpRequest to load the resource. */
-    XHR: 1,
-    /** Uses an `Image` object to load the resource. */
-    IMAGE: 2,
-    /** Uses an `Audio` object to load the resource. */
-    AUDIO: 3,
-    /** Uses a `Video` object to load the resource. */
-    VIDEO: 4
-};
-
-/**
- * The XHR ready states, used internally.
- *
- * @static
- * @readonly
- * @enum {string}
- */
-Resource.XHR_RESPONSE_TYPE = {
-    /** string */
-    DEFAULT: 'text',
-    /** ArrayBuffer */
-    BUFFER: 'arraybuffer',
-    /** Blob */
-    BLOB: 'blob',
-    /** Document */
-    DOCUMENT: 'document',
-    /** Object */
-    JSON: 'json',
-    /** String */
-    TEXT: 'text'
-};
-
-Resource._loadTypeMap = {
-    // images
-    gif: Resource.LOAD_TYPE.IMAGE,
-    png: Resource.LOAD_TYPE.IMAGE,
-    bmp: Resource.LOAD_TYPE.IMAGE,
-    jpg: Resource.LOAD_TYPE.IMAGE,
-    jpeg: Resource.LOAD_TYPE.IMAGE,
-    tif: Resource.LOAD_TYPE.IMAGE,
-    tiff: Resource.LOAD_TYPE.IMAGE,
-    webp: Resource.LOAD_TYPE.IMAGE,
-    tga: Resource.LOAD_TYPE.IMAGE,
-    svg: Resource.LOAD_TYPE.IMAGE,
-    'svg+xml': Resource.LOAD_TYPE.IMAGE, // for SVG data urls
-
-    // audio
-    mp3: Resource.LOAD_TYPE.AUDIO,
-    ogg: Resource.LOAD_TYPE.AUDIO,
-    wav: Resource.LOAD_TYPE.AUDIO,
-
-    // videos
-    mp4: Resource.LOAD_TYPE.VIDEO,
-    webm: Resource.LOAD_TYPE.VIDEO
-};
-
-Resource._xhrTypeMap = {
-    // xml
-    xhtml: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
-    html: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
-    htm: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
-    xml: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
-    tmx: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
-    svg: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
-
-    // This was added to handle Tiled Tileset XML, but .tsx is also a TypeScript React Component.
-    // Since it is way less likely for people to be loading TypeScript files instead of Tiled files,
-    // this should probably be fine.
-    tsx: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
-
-    // images
-    gif: Resource.XHR_RESPONSE_TYPE.BLOB,
-    png: Resource.XHR_RESPONSE_TYPE.BLOB,
-    bmp: Resource.XHR_RESPONSE_TYPE.BLOB,
-    jpg: Resource.XHR_RESPONSE_TYPE.BLOB,
-    jpeg: Resource.XHR_RESPONSE_TYPE.BLOB,
-    tif: Resource.XHR_RESPONSE_TYPE.BLOB,
-    tiff: Resource.XHR_RESPONSE_TYPE.BLOB,
-    webp: Resource.XHR_RESPONSE_TYPE.BLOB,
-    tga: Resource.XHR_RESPONSE_TYPE.BLOB,
-
-    // json
-    json: Resource.XHR_RESPONSE_TYPE.JSON,
-
-    // text
-    text: Resource.XHR_RESPONSE_TYPE.TEXT,
-    txt: Resource.XHR_RESPONSE_TYPE.TEXT,
-
-    // fonts
-    ttf: Resource.XHR_RESPONSE_TYPE.BUFFER,
-    otf: Resource.XHR_RESPONSE_TYPE.BUFFER
-};
-
-// We can't set the `src` attribute to empty string, so on abort we set it to this 1px transparent gif
-Resource.EMPTY_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
-
-/**
- * Quick helper to set a value on one of the extension maps. Ensures there is no
- * dot at the start of the extension.
- *
- * @ignore
- * @param {object} map - The map to set on.
- * @param {string} extname - The extension (or key) to set.
- * @param {number} val - The value to set.
- */
-function setExtMap(map, extname, val) {
-    if (extname && extname.indexOf('.') === 0) {
-        extname = extname.substring(1);
-    }
-
-    if (!extname) {
-        return;
-    }
-
-    map[extname] = val;
-}
-
-/**
- * Quick helper to get string xhr type.
- *
- * @ignore
- * @param {XMLHttpRequest|XDomainRequest} xhr - The request to check.
- * @return {string} The type.
- */
-function reqType(xhr) {
-    return xhr.toString().replace('object ', '');
-}
-//# sourceMappingURL=Resource.js.map
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _core = __webpack_require__(1);
-
-var core = _interopRequireWildcard(_core);
-
-var _CountLimiter = __webpack_require__(140);
-
-var _CountLimiter2 = _interopRequireDefault(_CountLimiter);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var SharedTicker = core.ticker.shared;
-
-/**
- * Default number of uploads per frame using prepare plugin.
- *
- * @static
- * @memberof PIXI.settings
- * @name UPLOADS_PER_FRAME
- * @type {number}
- * @default 4
- */
-core.settings.UPLOADS_PER_FRAME = 4;
-
-/**
- * The prepare manager provides functionality to upload content to the GPU. BasePrepare handles
- * basic queuing functionality and is extended by {@link PIXI.prepare.WebGLPrepare} and {@link PIXI.prepare.CanvasPrepare}
- * to provide preparation capabilities specific to their respective renderers.
- *
- * @example
- * // Create a sprite
- * const sprite = new PIXI.Sprite.fromImage('something.png');
- *
- * // Load object into GPU
- * app.renderer.plugins.prepare.upload(sprite, () => {
- *
- *     //Texture(s) has been uploaded to GPU
- *     app.stage.addChild(sprite);
- *
- * })
- *
- * @abstract
- * @class
- * @memberof PIXI.prepare
- */
-
-var BasePrepare = function () {
-    /**
-     * @param {PIXI.SystemRenderer} renderer - A reference to the current renderer
-     */
-    function BasePrepare(renderer) {
-        var _this = this;
-
-        _classCallCheck(this, BasePrepare);
-
-        /**
-         * The limiter to be used to control how quickly items are prepared.
-         * @type {PIXI.prepare.CountLimiter|PIXI.prepare.TimeLimiter}
-         */
-        this.limiter = new _CountLimiter2.default(core.settings.UPLOADS_PER_FRAME);
-
-        /**
-         * Reference to the renderer.
-         * @type {PIXI.SystemRenderer}
-         * @protected
-         */
-        this.renderer = renderer;
-
-        /**
-         * The only real difference between CanvasPrepare and WebGLPrepare is what they pass
-         * to upload hooks. That different parameter is stored here.
-         * @type {PIXI.prepare.CanvasPrepare|PIXI.WebGLRenderer}
-         * @protected
-         */
-        this.uploadHookHelper = null;
-
-        /**
-         * Collection of items to uploads at once.
-         * @type {Array<*>}
-         * @private
-         */
-        this.queue = [];
-
-        /**
-         * Collection of additional hooks for finding assets.
-         * @type {Array<Function>}
-         * @private
-         */
-        this.addHooks = [];
-
-        /**
-         * Collection of additional hooks for processing assets.
-         * @type {Array<Function>}
-         * @private
-         */
-        this.uploadHooks = [];
-
-        /**
-         * Callback to call after completed.
-         * @type {Array<Function>}
-         * @private
-         */
-        this.completes = [];
-
-        /**
-         * If prepare is ticking (running).
-         * @type {boolean}
-         * @private
-         */
-        this.ticking = false;
-
-        /**
-         * 'bound' call for prepareItems().
-         * @type {Function}
-         * @private
-         */
-        this.delayedTick = function () {
-            // unlikely, but in case we were destroyed between tick() and delayedTick()
-            if (!_this.queue) {
-                return;
-            }
-            _this.prepareItems();
-        };
-
-        // hooks to find the correct texture
-        this.registerFindHook(findText);
-        this.registerFindHook(findTextStyle);
-        this.registerFindHook(findMultipleBaseTextures);
-        this.registerFindHook(findBaseTexture);
-        this.registerFindHook(findTexture);
-
-        // upload hooks
-        this.registerUploadHook(drawText);
-        this.registerUploadHook(calculateTextStyle);
-    }
-
-    /**
-     * Upload all the textures and graphics to the GPU.
-     *
-     * @param {Function|PIXI.DisplayObject|PIXI.Container|PIXI.BaseTexture|PIXI.Texture|PIXI.Graphics|PIXI.Text} item -
-     *        Either the container or display object to search for items to upload, the items to upload themselves,
-     *        or the callback function, if items have been added using `prepare.add`.
-     * @param {Function} [done] - Optional callback when all queued uploads have completed
-     */
-
-
-    BasePrepare.prototype.upload = function upload(item, done) {
-        if (typeof item === 'function') {
-            done = item;
-            item = null;
-        }
-
-        // If a display object, search for items
-        // that we could upload
-        if (item) {
-            this.add(item);
-        }
-
-        // Get the items for upload from the display
-        if (this.queue.length) {
-            if (done) {
-                this.completes.push(done);
-            }
-
-            if (!this.ticking) {
-                this.ticking = true;
-                SharedTicker.addOnce(this.tick, this, core.UPDATE_PRIORITY.UTILITY);
-            }
-        } else if (done) {
-            done();
-        }
-    };
-
-    /**
-     * Handle tick update
-     *
-     * @private
-     */
-
-
-    BasePrepare.prototype.tick = function tick() {
-        setTimeout(this.delayedTick, 0);
-    };
-
-    /**
-     * Actually prepare items. This is handled outside of the tick because it will take a while
-     * and we do NOT want to block the current animation frame from rendering.
-     *
-     * @private
-     */
-
-
-    BasePrepare.prototype.prepareItems = function prepareItems() {
-        this.limiter.beginFrame();
-        // Upload the graphics
-        while (this.queue.length && this.limiter.allowedToUpload()) {
-            var item = this.queue[0];
-            var uploaded = false;
-
-            if (item && !item._destroyed) {
-                for (var i = 0, len = this.uploadHooks.length; i < len; i++) {
-                    if (this.uploadHooks[i](this.uploadHookHelper, item)) {
-                        this.queue.shift();
-                        uploaded = true;
-                        break;
-                    }
-                }
-            }
-
-            if (!uploaded) {
-                this.queue.shift();
-            }
-        }
-
-        // We're finished
-        if (!this.queue.length) {
-            this.ticking = false;
-
-            var completes = this.completes.slice(0);
-
-            this.completes.length = 0;
-
-            for (var _i = 0, _len = completes.length; _i < _len; _i++) {
-                completes[_i]();
-            }
-        } else {
-            // if we are not finished, on the next rAF do this again
-            SharedTicker.addOnce(this.tick, this, core.UPDATE_PRIORITY.UTILITY);
-        }
-    };
-
-    /**
-     * Adds hooks for finding items.
-     *
-     * @param {Function} addHook - Function call that takes two parameters: `item:*, queue:Array`
-     *          function must return `true` if it was able to add item to the queue.
-     * @return {PIXI.BasePrepare} Instance of plugin for chaining.
-     */
-
-
-    BasePrepare.prototype.registerFindHook = function registerFindHook(addHook) {
-        if (addHook) {
-            this.addHooks.push(addHook);
-        }
-
-        return this;
-    };
-
-    /**
-     * Adds hooks for uploading items.
-     *
-     * @param {Function} uploadHook - Function call that takes two parameters: `prepare:CanvasPrepare, item:*` and
-     *          function must return `true` if it was able to handle upload of item.
-     * @return {PIXI.BasePrepare} Instance of plugin for chaining.
-     */
-
-
-    BasePrepare.prototype.registerUploadHook = function registerUploadHook(uploadHook) {
-        if (uploadHook) {
-            this.uploadHooks.push(uploadHook);
-        }
-
-        return this;
-    };
-
-    /**
-     * Manually add an item to the uploading queue.
-     *
-     * @param {PIXI.DisplayObject|PIXI.Container|PIXI.BaseTexture|PIXI.Texture|PIXI.Graphics|PIXI.Text|*} item - Object to
-     *        add to the queue
-     * @return {PIXI.CanvasPrepare} Instance of plugin for chaining.
-     */
-
-
-    BasePrepare.prototype.add = function add(item) {
-        // Add additional hooks for finding elements on special
-        // types of objects that
-        for (var i = 0, len = this.addHooks.length; i < len; i++) {
-            if (this.addHooks[i](item, this.queue)) {
-                break;
-            }
-        }
-
-        // Get childen recursively
-        if (item instanceof core.Container) {
-            for (var _i2 = item.children.length - 1; _i2 >= 0; _i2--) {
-                this.add(item.children[_i2]);
-            }
-        }
-
-        return this;
-    };
-
-    /**
-     * Destroys the plugin, don't use after this.
-     *
-     */
-
-
-    BasePrepare.prototype.destroy = function destroy() {
-        if (this.ticking) {
-            SharedTicker.remove(this.tick, this);
-        }
-        this.ticking = false;
-        this.addHooks = null;
-        this.uploadHooks = null;
-        this.renderer = null;
-        this.completes = null;
-        this.queue = null;
-        this.limiter = null;
-        this.uploadHookHelper = null;
-    };
-
-    return BasePrepare;
-}();
-
-/**
- * Built-in hook to find multiple textures from objects like AnimatedSprites.
- *
- * @private
- * @param {PIXI.DisplayObject} item - Display object to check
- * @param {Array<*>} queue - Collection of items to upload
- * @return {boolean} if a PIXI.Texture object was found.
- */
-
-
-exports.default = BasePrepare;
-function findMultipleBaseTextures(item, queue) {
-    var result = false;
-
-    // Objects with mutliple textures
-    if (item && item._textures && item._textures.length) {
-        for (var i = 0; i < item._textures.length; i++) {
-            if (item._textures[i] instanceof core.Texture) {
-                var baseTexture = item._textures[i].baseTexture;
-
-                if (queue.indexOf(baseTexture) === -1) {
-                    queue.push(baseTexture);
-                    result = true;
-                }
-            }
-        }
-    }
-
-    return result;
-}
-
-/**
- * Built-in hook to find BaseTextures from Sprites.
- *
- * @private
- * @param {PIXI.DisplayObject} item - Display object to check
- * @param {Array<*>} queue - Collection of items to upload
- * @return {boolean} if a PIXI.Texture object was found.
- */
-function findBaseTexture(item, queue) {
-    // Objects with textures, like Sprites/Text
-    if (item instanceof core.BaseTexture) {
-        if (queue.indexOf(item) === -1) {
-            queue.push(item);
-        }
-
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * Built-in hook to find textures from objects.
- *
- * @private
- * @param {PIXI.DisplayObject} item - Display object to check
- * @param {Array<*>} queue - Collection of items to upload
- * @return {boolean} if a PIXI.Texture object was found.
- */
-function findTexture(item, queue) {
-    if (item._texture && item._texture instanceof core.Texture) {
-        var texture = item._texture.baseTexture;
-
-        if (queue.indexOf(texture) === -1) {
-            queue.push(texture);
-        }
-
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * Built-in hook to draw PIXI.Text to its texture.
- *
- * @private
- * @param {PIXI.WebGLRenderer|PIXI.CanvasPrepare} helper - Not used by this upload handler
- * @param {PIXI.DisplayObject} item - Item to check
- * @return {boolean} If item was uploaded.
- */
-function drawText(helper, item) {
-    if (item instanceof core.Text) {
-        // updating text will return early if it is not dirty
-        item.updateText(true);
-
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * Built-in hook to calculate a text style for a PIXI.Text object.
- *
- * @private
- * @param {PIXI.WebGLRenderer|PIXI.CanvasPrepare} helper - Not used by this upload handler
- * @param {PIXI.DisplayObject} item - Item to check
- * @return {boolean} If item was uploaded.
- */
-function calculateTextStyle(helper, item) {
-    if (item instanceof core.TextStyle) {
-        var font = item.toFontString();
-
-        core.TextMetrics.measureFont(font);
-
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * Built-in hook to find Text objects.
- *
- * @private
- * @param {PIXI.DisplayObject} item - Display object to check
- * @param {Array<*>} queue - Collection of items to upload
- * @return {boolean} if a PIXI.Text object was found.
- */
-function findText(item, queue) {
-    if (item instanceof core.Text) {
-        // push the text style to prepare it - this can be really expensive
-        if (queue.indexOf(item.style) === -1) {
-            queue.push(item.style);
-        }
-        // also push the text object so that we can render it (to canvas/texture) if needed
-        if (queue.indexOf(item) === -1) {
-            queue.push(item);
-        }
-        // also push the Text's texture for upload to GPU
-        var texture = item._texture.baseTexture;
-
-        if (queue.indexOf(texture) === -1) {
-            queue.push(texture);
-        }
-
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * Built-in hook to find TextStyle objects.
- *
- * @private
- * @param {PIXI.TextStyle} item - Display object to check
- * @param {Array<*>} queue - Collection of items to upload
- * @return {boolean} if a PIXI.TextStyle object was found.
- */
-function findTextStyle(item, queue) {
-    if (item instanceof core.TextStyle) {
-        if (queue.indexOf(item) === -1) {
-            queue.push(item);
-        }
-
-        return true;
-    }
-
-    return false;
-}
-//# sourceMappingURL=BasePrepare.js.map
-
-/***/ }),
-/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -21289,6 +16492,4815 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)))
 
 /***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(26);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _iterator = __webpack_require__(154);
+
+var _iterator2 = _interopRequireDefault(_iterator);
+
+var _symbol = __webpack_require__(169);
+
+var _symbol2 = _interopRequireDefault(_symbol);
+
+var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports) {
+
+// 7.1.4 ToInteger
+var ceil = Math.ceil;
+var floor = Math.floor;
+module.exports = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports) {
+
+module.exports = true;
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject = __webpack_require__(29);
+var dPs = __webpack_require__(159);
+var enumBugKeys = __webpack_require__(56);
+var IE_PROTO = __webpack_require__(54)('IE_PROTO');
+var Empty = function () { /* empty */ };
+var PROTOTYPE = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = __webpack_require__(80)('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(164).appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys = __webpack_require__(83);
+var enumBugKeys = __webpack_require__(56);
+
+module.exports = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys);
+};
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var shared = __webpack_require__(55)('keys');
+var uid = __webpack_require__(39);
+module.exports = function (key) {
+  return shared[key] || (shared[key] = uid(key));
+};
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(15);
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || (global[SHARED] = {});
+module.exports = function (key) {
+  return store[key] || (store[key] = {});
+};
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
+
+// IE 8- don't enum bug keys
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var def = __webpack_require__(18).f;
+var has = __webpack_require__(20);
+var TAG = __webpack_require__(27)('toStringTag');
+
+module.exports = function (it, tag, stat) {
+  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
+};
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports.f = __webpack_require__(27);
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(15);
+var core = __webpack_require__(12);
+var LIBRARY = __webpack_require__(50);
+var wksExt = __webpack_require__(58);
+var defineProperty = __webpack_require__(18).f;
+module.exports = function (name) {
+  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
+  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
+};
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports) {
+
+exports.f = {}.propertyIsEnumerable;
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pIE = __webpack_require__(60);
+var createDesc = __webpack_require__(38);
+var toIObject = __webpack_require__(21);
+var toPrimitive = __webpack_require__(46);
+var has = __webpack_require__(20);
+var IE8_DOM_DEFINE = __webpack_require__(79);
+var gOPD = Object.getOwnPropertyDescriptor;
+
+exports.f = __webpack_require__(19) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+  O = toIObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return gOPD(O, P);
+  } catch (e) { /* empty */ }
+  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
+};
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * The Point object represents a location in a two-dimensional coordinate system, where x represents
+ * the horizontal axis and y represents the vertical axis.
+ *
+ * @class
+ * @memberof PIXI
+ */
+var Point = function () {
+  /**
+   * @param {number} [x=0] - position of the point on the x axis
+   * @param {number} [y=0] - position of the point on the y axis
+   */
+  function Point() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    _classCallCheck(this, Point);
+
+    /**
+     * @member {number}
+     * @default 0
+     */
+    this.x = x;
+
+    /**
+     * @member {number}
+     * @default 0
+     */
+    this.y = y;
+  }
+
+  /**
+   * Creates a clone of this point
+   *
+   * @return {PIXI.Point} a copy of the point
+   */
+
+
+  Point.prototype.clone = function clone() {
+    return new Point(this.x, this.y);
+  };
+
+  /**
+   * Copies x and y from the given point
+   *
+   * @param {PIXI.Point} p - The point to copy.
+   */
+
+
+  Point.prototype.copy = function copy(p) {
+    this.set(p.x, p.y);
+  };
+
+  /**
+   * Returns true if the given point is equal to this point
+   *
+   * @param {PIXI.Point} p - The point to check
+   * @returns {boolean} Whether the given point equal to this point
+   */
+
+
+  Point.prototype.equals = function equals(p) {
+    return p.x === this.x && p.y === this.y;
+  };
+
+  /**
+   * Sets the point to a new x and y position.
+   * If y is omitted, both x and y will be set to x.
+   *
+   * @param {number} [x=0] - position of the point on the x axis
+   * @param {number} [y=0] - position of the point on the y axis
+   */
+
+
+  Point.prototype.set = function set(x, y) {
+    this.x = x || 0;
+    this.y = y || (y !== 0 ? this.x : 0);
+  };
+
+  return Point;
+}();
+
+exports.default = Point;
+//# sourceMappingURL=Point.js.map
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Point = __webpack_require__(62);
+
+var _Point2 = _interopRequireDefault(_Point);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * The PixiJS Matrix class as an object, which makes it a lot faster,
+ * here is a representation of it :
+ * | a | b | tx|
+ * | c | d | ty|
+ * | 0 | 0 | 1 |
+ *
+ * @class
+ * @memberof PIXI
+ */
+var Matrix = function () {
+    /**
+     * @param {number} [a=1] - x scale
+     * @param {number} [b=0] - y skew
+     * @param {number} [c=0] - x skew
+     * @param {number} [d=1] - y scale
+     * @param {number} [tx=0] - x translation
+     * @param {number} [ty=0] - y translation
+     */
+    function Matrix() {
+        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+        var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        var c = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+        var d = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+        var tx = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
+        var ty = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+
+        _classCallCheck(this, Matrix);
+
+        /**
+         * @member {number}
+         * @default 1
+         */
+        this.a = a;
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.b = b;
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.c = c;
+
+        /**
+         * @member {number}
+         * @default 1
+         */
+        this.d = d;
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.tx = tx;
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.ty = ty;
+
+        this.array = null;
+    }
+
+    /**
+     * Creates a Matrix object based on the given array. The Element to Matrix mapping order is as follows:
+     *
+     * a = array[0]
+     * b = array[1]
+     * c = array[3]
+     * d = array[4]
+     * tx = array[2]
+     * ty = array[5]
+     *
+     * @param {number[]} array - The array that the matrix will be populated from.
+     */
+
+
+    Matrix.prototype.fromArray = function fromArray(array) {
+        this.a = array[0];
+        this.b = array[1];
+        this.c = array[3];
+        this.d = array[4];
+        this.tx = array[2];
+        this.ty = array[5];
+    };
+
+    /**
+     * sets the matrix properties
+     *
+     * @param {number} a - Matrix component
+     * @param {number} b - Matrix component
+     * @param {number} c - Matrix component
+     * @param {number} d - Matrix component
+     * @param {number} tx - Matrix component
+     * @param {number} ty - Matrix component
+     *
+     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.set = function set(a, b, c, d, tx, ty) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.tx = tx;
+        this.ty = ty;
+
+        return this;
+    };
+
+    /**
+     * Creates an array from the current Matrix object.
+     *
+     * @param {boolean} transpose - Whether we need to transpose the matrix or not
+     * @param {Float32Array} [out=new Float32Array(9)] - If provided the array will be assigned to out
+     * @return {number[]} the newly created array which contains the matrix
+     */
+
+
+    Matrix.prototype.toArray = function toArray(transpose, out) {
+        if (!this.array) {
+            this.array = new Float32Array(9);
+        }
+
+        var array = out || this.array;
+
+        if (transpose) {
+            array[0] = this.a;
+            array[1] = this.b;
+            array[2] = 0;
+            array[3] = this.c;
+            array[4] = this.d;
+            array[5] = 0;
+            array[6] = this.tx;
+            array[7] = this.ty;
+            array[8] = 1;
+        } else {
+            array[0] = this.a;
+            array[1] = this.c;
+            array[2] = this.tx;
+            array[3] = this.b;
+            array[4] = this.d;
+            array[5] = this.ty;
+            array[6] = 0;
+            array[7] = 0;
+            array[8] = 1;
+        }
+
+        return array;
+    };
+
+    /**
+     * Get a new position with the current transformation applied.
+     * Can be used to go from a child's coordinate space to the world coordinate space. (e.g. rendering)
+     *
+     * @param {PIXI.Point} pos - The origin
+     * @param {PIXI.Point} [newPos] - The point that the new position is assigned to (allowed to be same as input)
+     * @return {PIXI.Point} The new point, transformed through this matrix
+     */
+
+
+    Matrix.prototype.apply = function apply(pos, newPos) {
+        newPos = newPos || new _Point2.default();
+
+        var x = pos.x;
+        var y = pos.y;
+
+        newPos.x = this.a * x + this.c * y + this.tx;
+        newPos.y = this.b * x + this.d * y + this.ty;
+
+        return newPos;
+    };
+
+    /**
+     * Get a new position with the inverse of the current transformation applied.
+     * Can be used to go from the world coordinate space to a child's coordinate space. (e.g. input)
+     *
+     * @param {PIXI.Point} pos - The origin
+     * @param {PIXI.Point} [newPos] - The point that the new position is assigned to (allowed to be same as input)
+     * @return {PIXI.Point} The new point, inverse-transformed through this matrix
+     */
+
+
+    Matrix.prototype.applyInverse = function applyInverse(pos, newPos) {
+        newPos = newPos || new _Point2.default();
+
+        var id = 1 / (this.a * this.d + this.c * -this.b);
+
+        var x = pos.x;
+        var y = pos.y;
+
+        newPos.x = this.d * id * x + -this.c * id * y + (this.ty * this.c - this.tx * this.d) * id;
+        newPos.y = this.a * id * y + -this.b * id * x + (-this.ty * this.a + this.tx * this.b) * id;
+
+        return newPos;
+    };
+
+    /**
+     * Translates the matrix on the x and y.
+     *
+     * @param {number} x How much to translate x by
+     * @param {number} y How much to translate y by
+     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.translate = function translate(x, y) {
+        this.tx += x;
+        this.ty += y;
+
+        return this;
+    };
+
+    /**
+     * Applies a scale transformation to the matrix.
+     *
+     * @param {number} x The amount to scale horizontally
+     * @param {number} y The amount to scale vertically
+     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.scale = function scale(x, y) {
+        this.a *= x;
+        this.d *= y;
+        this.c *= x;
+        this.b *= y;
+        this.tx *= x;
+        this.ty *= y;
+
+        return this;
+    };
+
+    /**
+     * Applies a rotation transformation to the matrix.
+     *
+     * @param {number} angle - The angle in radians.
+     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.rotate = function rotate(angle) {
+        var cos = Math.cos(angle);
+        var sin = Math.sin(angle);
+
+        var a1 = this.a;
+        var c1 = this.c;
+        var tx1 = this.tx;
+
+        this.a = a1 * cos - this.b * sin;
+        this.b = a1 * sin + this.b * cos;
+        this.c = c1 * cos - this.d * sin;
+        this.d = c1 * sin + this.d * cos;
+        this.tx = tx1 * cos - this.ty * sin;
+        this.ty = tx1 * sin + this.ty * cos;
+
+        return this;
+    };
+
+    /**
+     * Appends the given Matrix to this Matrix.
+     *
+     * @param {PIXI.Matrix} matrix - The matrix to append.
+     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.append = function append(matrix) {
+        var a1 = this.a;
+        var b1 = this.b;
+        var c1 = this.c;
+        var d1 = this.d;
+
+        this.a = matrix.a * a1 + matrix.b * c1;
+        this.b = matrix.a * b1 + matrix.b * d1;
+        this.c = matrix.c * a1 + matrix.d * c1;
+        this.d = matrix.c * b1 + matrix.d * d1;
+
+        this.tx = matrix.tx * a1 + matrix.ty * c1 + this.tx;
+        this.ty = matrix.tx * b1 + matrix.ty * d1 + this.ty;
+
+        return this;
+    };
+
+    /**
+     * Sets the matrix based on all the available properties
+     *
+     * @param {number} x - Position on the x axis
+     * @param {number} y - Position on the y axis
+     * @param {number} pivotX - Pivot on the x axis
+     * @param {number} pivotY - Pivot on the y axis
+     * @param {number} scaleX - Scale on the x axis
+     * @param {number} scaleY - Scale on the y axis
+     * @param {number} rotation - Rotation in radians
+     * @param {number} skewX - Skew on the x axis
+     * @param {number} skewY - Skew on the y axis
+     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.setTransform = function setTransform(x, y, pivotX, pivotY, scaleX, scaleY, rotation, skewX, skewY) {
+        var sr = Math.sin(rotation);
+        var cr = Math.cos(rotation);
+        var cy = Math.cos(skewY);
+        var sy = Math.sin(skewY);
+        var nsx = -Math.sin(skewX);
+        var cx = Math.cos(skewX);
+
+        var a = cr * scaleX;
+        var b = sr * scaleX;
+        var c = -sr * scaleY;
+        var d = cr * scaleY;
+
+        this.a = cy * a + sy * c;
+        this.b = cy * b + sy * d;
+        this.c = nsx * a + cx * c;
+        this.d = nsx * b + cx * d;
+
+        this.tx = x + (pivotX * a + pivotY * c);
+        this.ty = y + (pivotX * b + pivotY * d);
+
+        return this;
+    };
+
+    /**
+     * Prepends the given Matrix to this Matrix.
+     *
+     * @param {PIXI.Matrix} matrix - The matrix to prepend
+     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.prepend = function prepend(matrix) {
+        var tx1 = this.tx;
+
+        if (matrix.a !== 1 || matrix.b !== 0 || matrix.c !== 0 || matrix.d !== 1) {
+            var a1 = this.a;
+            var c1 = this.c;
+
+            this.a = a1 * matrix.a + this.b * matrix.c;
+            this.b = a1 * matrix.b + this.b * matrix.d;
+            this.c = c1 * matrix.a + this.d * matrix.c;
+            this.d = c1 * matrix.b + this.d * matrix.d;
+        }
+
+        this.tx = tx1 * matrix.a + this.ty * matrix.c + matrix.tx;
+        this.ty = tx1 * matrix.b + this.ty * matrix.d + matrix.ty;
+
+        return this;
+    };
+
+    /**
+     * Decomposes the matrix (x, y, scaleX, scaleY, and rotation) and sets the properties on to a transform.
+     *
+     * @param {PIXI.Transform|PIXI.TransformStatic} transform - The transform to apply the properties to.
+     * @return {PIXI.Transform|PIXI.TransformStatic} The transform with the newly applied properties
+     */
+
+
+    Matrix.prototype.decompose = function decompose(transform) {
+        // sort out rotation / skew..
+        var a = this.a;
+        var b = this.b;
+        var c = this.c;
+        var d = this.d;
+
+        var skewX = -Math.atan2(-c, d);
+        var skewY = Math.atan2(b, a);
+
+        var delta = Math.abs(skewX + skewY);
+
+        if (delta < 0.00001) {
+            transform.rotation = skewY;
+
+            if (a < 0 && d >= 0) {
+                transform.rotation += transform.rotation <= 0 ? Math.PI : -Math.PI;
+            }
+
+            transform.skew.x = transform.skew.y = 0;
+        } else {
+            transform.skew.x = skewX;
+            transform.skew.y = skewY;
+        }
+
+        // next set scale
+        transform.scale.x = Math.sqrt(a * a + b * b);
+        transform.scale.y = Math.sqrt(c * c + d * d);
+
+        // next set position
+        transform.position.x = this.tx;
+        transform.position.y = this.ty;
+
+        return transform;
+    };
+
+    /**
+     * Inverts this matrix
+     *
+     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.invert = function invert() {
+        var a1 = this.a;
+        var b1 = this.b;
+        var c1 = this.c;
+        var d1 = this.d;
+        var tx1 = this.tx;
+        var n = a1 * d1 - b1 * c1;
+
+        this.a = d1 / n;
+        this.b = -b1 / n;
+        this.c = -c1 / n;
+        this.d = a1 / n;
+        this.tx = (c1 * this.ty - d1 * tx1) / n;
+        this.ty = -(a1 * this.ty - b1 * tx1) / n;
+
+        return this;
+    };
+
+    /**
+     * Resets this Matix to an identity (default) matrix.
+     *
+     * @return {PIXI.Matrix} This matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.identity = function identity() {
+        this.a = 1;
+        this.b = 0;
+        this.c = 0;
+        this.d = 1;
+        this.tx = 0;
+        this.ty = 0;
+
+        return this;
+    };
+
+    /**
+     * Creates a new Matrix object with the same values as this one.
+     *
+     * @return {PIXI.Matrix} A copy of this matrix. Good for chaining method calls.
+     */
+
+
+    Matrix.prototype.clone = function clone() {
+        var matrix = new Matrix();
+
+        matrix.a = this.a;
+        matrix.b = this.b;
+        matrix.c = this.c;
+        matrix.d = this.d;
+        matrix.tx = this.tx;
+        matrix.ty = this.ty;
+
+        return matrix;
+    };
+
+    /**
+     * Changes the values of the given matrix to be the same as the ones in this matrix
+     *
+     * @param {PIXI.Matrix} matrix - The matrix to copy from.
+     * @return {PIXI.Matrix} The matrix given in parameter with its values updated.
+     */
+
+
+    Matrix.prototype.copy = function copy(matrix) {
+        matrix.a = this.a;
+        matrix.b = this.b;
+        matrix.c = this.c;
+        matrix.d = this.d;
+        matrix.tx = this.tx;
+        matrix.ty = this.ty;
+
+        return matrix;
+    };
+
+    /**
+     * A default (identity) matrix
+     *
+     * @static
+     * @const
+     */
+
+
+    _createClass(Matrix, null, [{
+        key: 'IDENTITY',
+        get: function get() {
+            return new Matrix();
+        }
+
+        /**
+         * A temp matrix
+         *
+         * @static
+         * @const
+         */
+
+    }, {
+        key: 'TEMP_MATRIX',
+        get: function get() {
+            return new Matrix();
+        }
+    }]);
+
+    return Matrix;
+}();
+
+exports.default = Matrix;
+//# sourceMappingURL=Matrix.js.map
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _const = __webpack_require__(2);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Rectangle object is an area defined by its position, as indicated by its top-left corner
+ * point (x, y) and by its width and its height.
+ *
+ * @class
+ * @memberof PIXI
+ */
+var Rectangle = function () {
+    /**
+     * @param {number} [x=0] - The X coordinate of the upper-left corner of the rectangle
+     * @param {number} [y=0] - The Y coordinate of the upper-left corner of the rectangle
+     * @param {number} [width=0] - The overall width of this rectangle
+     * @param {number} [height=0] - The overall height of this rectangle
+     */
+    function Rectangle() {
+        var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+        var height = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+
+        _classCallCheck(this, Rectangle);
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.x = Number(x);
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.y = Number(y);
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.width = Number(width);
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.height = Number(height);
+
+        /**
+         * The type of the object, mainly used to avoid `instanceof` checks
+         *
+         * @member {number}
+         * @readOnly
+         * @default PIXI.SHAPES.RECT
+         * @see PIXI.SHAPES
+         */
+        this.type = _const.SHAPES.RECT;
+    }
+
+    /**
+     * returns the left edge of the rectangle
+     *
+     * @member {number}
+     */
+
+
+    /**
+     * Creates a clone of this Rectangle
+     *
+     * @return {PIXI.Rectangle} a copy of the rectangle
+     */
+    Rectangle.prototype.clone = function clone() {
+        return new Rectangle(this.x, this.y, this.width, this.height);
+    };
+
+    /**
+     * Copies another rectangle to this one.
+     *
+     * @param {PIXI.Rectangle} rectangle - The rectangle to copy.
+     * @return {PIXI.Rectangle} Returns itself.
+     */
+
+
+    Rectangle.prototype.copy = function copy(rectangle) {
+        this.x = rectangle.x;
+        this.y = rectangle.y;
+        this.width = rectangle.width;
+        this.height = rectangle.height;
+
+        return this;
+    };
+
+    /**
+     * Checks whether the x and y coordinates given are contained within this Rectangle
+     *
+     * @param {number} x - The X coordinate of the point to test
+     * @param {number} y - The Y coordinate of the point to test
+     * @return {boolean} Whether the x/y coordinates are within this Rectangle
+     */
+
+
+    Rectangle.prototype.contains = function contains(x, y) {
+        if (this.width <= 0 || this.height <= 0) {
+            return false;
+        }
+
+        if (x >= this.x && x < this.x + this.width) {
+            if (y >= this.y && y < this.y + this.height) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    /**
+     * Pads the rectangle making it grow in all directions.
+     *
+     * @param {number} paddingX - The horizontal padding amount.
+     * @param {number} paddingY - The vertical padding amount.
+     */
+
+
+    Rectangle.prototype.pad = function pad(paddingX, paddingY) {
+        paddingX = paddingX || 0;
+        paddingY = paddingY || (paddingY !== 0 ? paddingX : 0);
+
+        this.x -= paddingX;
+        this.y -= paddingY;
+
+        this.width += paddingX * 2;
+        this.height += paddingY * 2;
+    };
+
+    /**
+     * Fits this rectangle around the passed one.
+     *
+     * @param {PIXI.Rectangle} rectangle - The rectangle to fit.
+     */
+
+
+    Rectangle.prototype.fit = function fit(rectangle) {
+        if (this.x < rectangle.x) {
+            this.width += this.x;
+            if (this.width < 0) {
+                this.width = 0;
+            }
+
+            this.x = rectangle.x;
+        }
+
+        if (this.y < rectangle.y) {
+            this.height += this.y;
+            if (this.height < 0) {
+                this.height = 0;
+            }
+            this.y = rectangle.y;
+        }
+
+        if (this.x + this.width > rectangle.x + rectangle.width) {
+            this.width = rectangle.width - this.x;
+            if (this.width < 0) {
+                this.width = 0;
+            }
+        }
+
+        if (this.y + this.height > rectangle.y + rectangle.height) {
+            this.height = rectangle.height - this.y;
+            if (this.height < 0) {
+                this.height = 0;
+            }
+        }
+    };
+
+    /**
+     * Enlarges this rectangle to include the passed rectangle.
+     *
+     * @param {PIXI.Rectangle} rectangle - The rectangle to include.
+     */
+
+
+    Rectangle.prototype.enlarge = function enlarge(rectangle) {
+        var x1 = Math.min(this.x, rectangle.x);
+        var x2 = Math.max(this.x + this.width, rectangle.x + rectangle.width);
+        var y1 = Math.min(this.y, rectangle.y);
+        var y2 = Math.max(this.y + this.height, rectangle.y + rectangle.height);
+
+        this.x = x1;
+        this.width = x2 - x1;
+        this.y = y1;
+        this.height = y2 - y1;
+    };
+
+    _createClass(Rectangle, [{
+        key: 'left',
+        get: function get() {
+            return this.x;
+        }
+
+        /**
+         * returns the right edge of the rectangle
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'right',
+        get: function get() {
+            return this.x + this.width;
+        }
+
+        /**
+         * returns the top edge of the rectangle
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'top',
+        get: function get() {
+            return this.y;
+        }
+
+        /**
+         * returns the bottom edge of the rectangle
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'bottom',
+        get: function get() {
+            return this.y + this.height;
+        }
+
+        /**
+         * A constant empty rectangle.
+         *
+         * @static
+         * @constant
+         */
+
+    }], [{
+        key: 'EMPTY',
+        get: function get() {
+            return new Rectangle(0, 0, 0, 0);
+        }
+    }]);
+
+    return Rectangle;
+}();
+
+exports.default = Rectangle;
+//# sourceMappingURL=Rectangle.js.map
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports) {
+
+
+
+var mapType = function(gl, type) 
+{
+    if(!GL_TABLE) 
+    {
+        var typeNames = Object.keys(GL_TO_GLSL_TYPES);
+
+        GL_TABLE = {};
+
+        for(var i = 0; i < typeNames.length; ++i) 
+        {
+            var tn = typeNames[i];
+            GL_TABLE[ gl[tn] ] = GL_TO_GLSL_TYPES[tn];
+        }
+    }
+
+  return GL_TABLE[type];
+};
+
+var GL_TABLE = null;
+
+var GL_TO_GLSL_TYPES = {
+  'FLOAT':       'float',
+  'FLOAT_VEC2':  'vec2',
+  'FLOAT_VEC3':  'vec3',
+  'FLOAT_VEC4':  'vec4',
+
+  'INT':         'int',
+  'INT_VEC2':    'ivec2',
+  'INT_VEC3':    'ivec3',
+  'INT_VEC4':    'ivec4',
+  
+  'BOOL':        'bool',
+  'BOOL_VEC2':   'bvec2',
+  'BOOL_VEC3':   'bvec3',
+  'BOOL_VEC4':   'bvec4',
+  
+  'FLOAT_MAT2':  'mat2',
+  'FLOAT_MAT3':  'mat3',
+  'FLOAT_MAT4':  'mat4',
+  
+  'SAMPLER_2D':  'sampler2D'  
+};
+
+module.exports = mapType;
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _math = __webpack_require__(7);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * 'Builder' pattern for bounds rectangles
+ * Axis-Aligned Bounding Box
+ * It is not a shape! Its mutable thing, no 'EMPTY' or that kind of problems
+ *
+ * @class
+ * @memberof PIXI
+ */
+var Bounds = function () {
+    /**
+     *
+     */
+    function Bounds() {
+        _classCallCheck(this, Bounds);
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.minX = Infinity;
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.minY = Infinity;
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.maxX = -Infinity;
+
+        /**
+         * @member {number}
+         * @default 0
+         */
+        this.maxY = -Infinity;
+
+        this.rect = null;
+    }
+
+    /**
+     * Checks if bounds are empty.
+     *
+     * @return {boolean} True if empty.
+     */
+
+
+    Bounds.prototype.isEmpty = function isEmpty() {
+        return this.minX > this.maxX || this.minY > this.maxY;
+    };
+
+    /**
+     * Clears the bounds and resets.
+     *
+     */
+
+
+    Bounds.prototype.clear = function clear() {
+        this.updateID++;
+
+        this.minX = Infinity;
+        this.minY = Infinity;
+        this.maxX = -Infinity;
+        this.maxY = -Infinity;
+    };
+
+    /**
+     * Can return Rectangle.EMPTY constant, either construct new rectangle, either use your rectangle
+     * It is not guaranteed that it will return tempRect
+     *
+     * @param {PIXI.Rectangle} rect - temporary object will be used if AABB is not empty
+     * @returns {PIXI.Rectangle} A rectangle of the bounds
+     */
+
+
+    Bounds.prototype.getRectangle = function getRectangle(rect) {
+        if (this.minX > this.maxX || this.minY > this.maxY) {
+            return _math.Rectangle.EMPTY;
+        }
+
+        rect = rect || new _math.Rectangle(0, 0, 1, 1);
+
+        rect.x = this.minX;
+        rect.y = this.minY;
+        rect.width = this.maxX - this.minX;
+        rect.height = this.maxY - this.minY;
+
+        return rect;
+    };
+
+    /**
+     * This function should be inlined when its possible.
+     *
+     * @param {PIXI.Point} point - The point to add.
+     */
+
+
+    Bounds.prototype.addPoint = function addPoint(point) {
+        this.minX = Math.min(this.minX, point.x);
+        this.maxX = Math.max(this.maxX, point.x);
+        this.minY = Math.min(this.minY, point.y);
+        this.maxY = Math.max(this.maxY, point.y);
+    };
+
+    /**
+     * Adds a quad, not transformed
+     *
+     * @param {Float32Array} vertices - The verts to add.
+     */
+
+
+    Bounds.prototype.addQuad = function addQuad(vertices) {
+        var minX = this.minX;
+        var minY = this.minY;
+        var maxX = this.maxX;
+        var maxY = this.maxY;
+
+        var x = vertices[0];
+        var y = vertices[1];
+
+        minX = x < minX ? x : minX;
+        minY = y < minY ? y : minY;
+        maxX = x > maxX ? x : maxX;
+        maxY = y > maxY ? y : maxY;
+
+        x = vertices[2];
+        y = vertices[3];
+        minX = x < minX ? x : minX;
+        minY = y < minY ? y : minY;
+        maxX = x > maxX ? x : maxX;
+        maxY = y > maxY ? y : maxY;
+
+        x = vertices[4];
+        y = vertices[5];
+        minX = x < minX ? x : minX;
+        minY = y < minY ? y : minY;
+        maxX = x > maxX ? x : maxX;
+        maxY = y > maxY ? y : maxY;
+
+        x = vertices[6];
+        y = vertices[7];
+        minX = x < minX ? x : minX;
+        minY = y < minY ? y : minY;
+        maxX = x > maxX ? x : maxX;
+        maxY = y > maxY ? y : maxY;
+
+        this.minX = minX;
+        this.minY = minY;
+        this.maxX = maxX;
+        this.maxY = maxY;
+    };
+
+    /**
+     * Adds sprite frame, transformed.
+     *
+     * @param {PIXI.TransformBase} transform - TODO
+     * @param {number} x0 - TODO
+     * @param {number} y0 - TODO
+     * @param {number} x1 - TODO
+     * @param {number} y1 - TODO
+     */
+
+
+    Bounds.prototype.addFrame = function addFrame(transform, x0, y0, x1, y1) {
+        var matrix = transform.worldTransform;
+        var a = matrix.a;
+        var b = matrix.b;
+        var c = matrix.c;
+        var d = matrix.d;
+        var tx = matrix.tx;
+        var ty = matrix.ty;
+
+        var minX = this.minX;
+        var minY = this.minY;
+        var maxX = this.maxX;
+        var maxY = this.maxY;
+
+        var x = a * x0 + c * y0 + tx;
+        var y = b * x0 + d * y0 + ty;
+
+        minX = x < minX ? x : minX;
+        minY = y < minY ? y : minY;
+        maxX = x > maxX ? x : maxX;
+        maxY = y > maxY ? y : maxY;
+
+        x = a * x1 + c * y0 + tx;
+        y = b * x1 + d * y0 + ty;
+        minX = x < minX ? x : minX;
+        minY = y < minY ? y : minY;
+        maxX = x > maxX ? x : maxX;
+        maxY = y > maxY ? y : maxY;
+
+        x = a * x0 + c * y1 + tx;
+        y = b * x0 + d * y1 + ty;
+        minX = x < minX ? x : minX;
+        minY = y < minY ? y : minY;
+        maxX = x > maxX ? x : maxX;
+        maxY = y > maxY ? y : maxY;
+
+        x = a * x1 + c * y1 + tx;
+        y = b * x1 + d * y1 + ty;
+        minX = x < minX ? x : minX;
+        minY = y < minY ? y : minY;
+        maxX = x > maxX ? x : maxX;
+        maxY = y > maxY ? y : maxY;
+
+        this.minX = minX;
+        this.minY = minY;
+        this.maxX = maxX;
+        this.maxY = maxY;
+    };
+
+    /**
+     * Add an array of vertices
+     *
+     * @param {PIXI.TransformBase} transform - TODO
+     * @param {Float32Array} vertices - TODO
+     * @param {number} beginOffset - TODO
+     * @param {number} endOffset - TODO
+     */
+
+
+    Bounds.prototype.addVertices = function addVertices(transform, vertices, beginOffset, endOffset) {
+        var matrix = transform.worldTransform;
+        var a = matrix.a;
+        var b = matrix.b;
+        var c = matrix.c;
+        var d = matrix.d;
+        var tx = matrix.tx;
+        var ty = matrix.ty;
+
+        var minX = this.minX;
+        var minY = this.minY;
+        var maxX = this.maxX;
+        var maxY = this.maxY;
+
+        for (var i = beginOffset; i < endOffset; i += 2) {
+            var rawX = vertices[i];
+            var rawY = vertices[i + 1];
+            var x = a * rawX + c * rawY + tx;
+            var y = d * rawY + b * rawX + ty;
+
+            minX = x < minX ? x : minX;
+            minY = y < minY ? y : minY;
+            maxX = x > maxX ? x : maxX;
+            maxY = y > maxY ? y : maxY;
+        }
+
+        this.minX = minX;
+        this.minY = minY;
+        this.maxX = maxX;
+        this.maxY = maxY;
+    };
+
+    /**
+     * Adds other Bounds
+     *
+     * @param {PIXI.Bounds} bounds - TODO
+     */
+
+
+    Bounds.prototype.addBounds = function addBounds(bounds) {
+        var minX = this.minX;
+        var minY = this.minY;
+        var maxX = this.maxX;
+        var maxY = this.maxY;
+
+        this.minX = bounds.minX < minX ? bounds.minX : minX;
+        this.minY = bounds.minY < minY ? bounds.minY : minY;
+        this.maxX = bounds.maxX > maxX ? bounds.maxX : maxX;
+        this.maxY = bounds.maxY > maxY ? bounds.maxY : maxY;
+    };
+
+    /**
+     * Adds other Bounds, masked with Bounds
+     *
+     * @param {PIXI.Bounds} bounds - TODO
+     * @param {PIXI.Bounds} mask - TODO
+     */
+
+
+    Bounds.prototype.addBoundsMask = function addBoundsMask(bounds, mask) {
+        var _minX = bounds.minX > mask.minX ? bounds.minX : mask.minX;
+        var _minY = bounds.minY > mask.minY ? bounds.minY : mask.minY;
+        var _maxX = bounds.maxX < mask.maxX ? bounds.maxX : mask.maxX;
+        var _maxY = bounds.maxY < mask.maxY ? bounds.maxY : mask.maxY;
+
+        if (_minX <= _maxX && _minY <= _maxY) {
+            var minX = this.minX;
+            var minY = this.minY;
+            var maxX = this.maxX;
+            var maxY = this.maxY;
+
+            this.minX = _minX < minX ? _minX : minX;
+            this.minY = _minY < minY ? _minY : minY;
+            this.maxX = _maxX > maxX ? _maxX : maxX;
+            this.maxY = _maxY > maxY ? _maxY : maxY;
+        }
+    };
+
+    /**
+     * Adds other Bounds, masked with Rectangle
+     *
+     * @param {PIXI.Bounds} bounds - TODO
+     * @param {PIXI.Rectangle} area - TODO
+     */
+
+
+    Bounds.prototype.addBoundsArea = function addBoundsArea(bounds, area) {
+        var _minX = bounds.minX > area.x ? bounds.minX : area.x;
+        var _minY = bounds.minY > area.y ? bounds.minY : area.y;
+        var _maxX = bounds.maxX < area.x + area.width ? bounds.maxX : area.x + area.width;
+        var _maxY = bounds.maxY < area.y + area.height ? bounds.maxY : area.y + area.height;
+
+        if (_minX <= _maxX && _minY <= _maxY) {
+            var minX = this.minX;
+            var minY = this.minY;
+            var maxX = this.maxX;
+            var maxY = this.maxY;
+
+            this.minX = _minX < minX ? _minX : minX;
+            this.minY = _minY < minY ? _minY : minY;
+            this.maxX = _maxX > maxX ? _maxX : maxX;
+            this.maxY = _maxY > maxY ? _maxY : maxY;
+        }
+    };
+
+    return Bounds;
+}();
+
+exports.default = Bounds;
+//# sourceMappingURL=Bounds.js.map
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+ * isMobile.js v0.4.1
+ *
+ * A simple library to detect Apple phones and tablets,
+ * Android phones and tablets, other mobile devices (like blackberry, mini-opera and windows phone),
+ * and any kind of seven inch device, via user agent sniffing.
+ *
+ * @author: Kai Mallea (kmallea@gmail.com)
+ *
+ * @license: http://creativecommons.org/publicdomain/zero/1.0/
+ */
+(function (global) {
+
+    var apple_phone         = /iPhone/i,
+        apple_ipod          = /iPod/i,
+        apple_tablet        = /iPad/i,
+        android_phone       = /(?=.*\bAndroid\b)(?=.*\bMobile\b)/i, // Match 'Android' AND 'Mobile'
+        android_tablet      = /Android/i,
+        amazon_phone        = /(?=.*\bAndroid\b)(?=.*\bSD4930UR\b)/i,
+        amazon_tablet       = /(?=.*\bAndroid\b)(?=.*\b(?:KFOT|KFTT|KFJWI|KFJWA|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|KFARWI|KFASWI|KFSAWI|KFSAWA)\b)/i,
+        windows_phone       = /Windows Phone/i,
+        windows_tablet      = /(?=.*\bWindows\b)(?=.*\bARM\b)/i, // Match 'Windows' AND 'ARM'
+        other_blackberry    = /BlackBerry/i,
+        other_blackberry_10 = /BB10/i,
+        other_opera         = /Opera Mini/i,
+        other_chrome        = /(CriOS|Chrome)(?=.*\bMobile\b)/i,
+        other_firefox       = /(?=.*\bFirefox\b)(?=.*\bMobile\b)/i, // Match 'Firefox' AND 'Mobile'
+        seven_inch = new RegExp(
+            '(?:' +         // Non-capturing group
+
+            'Nexus 7' +     // Nexus 7
+
+            '|' +           // OR
+
+            'BNTV250' +     // B&N Nook Tablet 7 inch
+
+            '|' +           // OR
+
+            'Kindle Fire' + // Kindle Fire
+
+            '|' +           // OR
+
+            'Silk' +        // Kindle Fire, Silk Accelerated
+
+            '|' +           // OR
+
+            'GT-P1000' +    // Galaxy Tab 7 inch
+
+            ')',            // End non-capturing group
+
+            'i');           // Case-insensitive matching
+
+    var match = function(regex, userAgent) {
+        return regex.test(userAgent);
+    };
+
+    var IsMobileClass = function(userAgent) {
+        var ua = userAgent || navigator.userAgent;
+
+        // Facebook mobile app's integrated browser adds a bunch of strings that
+        // match everything. Strip it out if it exists.
+        var tmp = ua.split('[FBAN');
+        if (typeof tmp[1] !== 'undefined') {
+            ua = tmp[0];
+        }
+
+        // Twitter mobile app's integrated browser on iPad adds a "Twitter for
+        // iPhone" string. Same probable happens on other tablet platforms.
+        // This will confuse detection so strip it out if it exists.
+        tmp = ua.split('Twitter');
+        if (typeof tmp[1] !== 'undefined') {
+            ua = tmp[0];
+        }
+
+        this.apple = {
+            phone:  match(apple_phone, ua),
+            ipod:   match(apple_ipod, ua),
+            tablet: !match(apple_phone, ua) && match(apple_tablet, ua),
+            device: match(apple_phone, ua) || match(apple_ipod, ua) || match(apple_tablet, ua)
+        };
+        this.amazon = {
+            phone:  match(amazon_phone, ua),
+            tablet: !match(amazon_phone, ua) && match(amazon_tablet, ua),
+            device: match(amazon_phone, ua) || match(amazon_tablet, ua)
+        };
+        this.android = {
+            phone:  match(amazon_phone, ua) || match(android_phone, ua),
+            tablet: !match(amazon_phone, ua) && !match(android_phone, ua) && (match(amazon_tablet, ua) || match(android_tablet, ua)),
+            device: match(amazon_phone, ua) || match(amazon_tablet, ua) || match(android_phone, ua) || match(android_tablet, ua)
+        };
+        this.windows = {
+            phone:  match(windows_phone, ua),
+            tablet: match(windows_tablet, ua),
+            device: match(windows_phone, ua) || match(windows_tablet, ua)
+        };
+        this.other = {
+            blackberry:   match(other_blackberry, ua),
+            blackberry10: match(other_blackberry_10, ua),
+            opera:        match(other_opera, ua),
+            firefox:      match(other_firefox, ua),
+            chrome:       match(other_chrome, ua),
+            device:       match(other_blackberry, ua) || match(other_blackberry_10, ua) || match(other_opera, ua) || match(other_firefox, ua) || match(other_chrome, ua)
+        };
+        this.seven_inch = match(seven_inch, ua);
+        this.any = this.apple.device || this.android.device || this.windows.device || this.other.device || this.seven_inch;
+
+        // excludes 'other' devices and ipods, targeting touchscreen phones
+        this.phone = this.apple.phone || this.android.phone || this.windows.phone;
+
+        // excludes 7 inch devices, classifying as phone or tablet is left to the user
+        this.tablet = this.apple.tablet || this.android.tablet || this.windows.tablet;
+
+        if (typeof window === 'undefined') {
+            return this;
+        }
+    };
+
+    var instantiate = function() {
+        var IM = new IsMobileClass();
+        IM.Class = IsMobileClass;
+        return IM;
+    };
+
+    if (typeof module !== 'undefined' && module.exports && typeof window === 'undefined') {
+        //node
+        module.exports = IsMobileClass;
+    } else if (typeof module !== 'undefined' && module.exports && typeof window !== 'undefined') {
+        //browserify
+        module.exports = instantiate();
+    } else if (true) {
+        //AMD
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (global.isMobile = instantiate()),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {
+        global.isMobile = instantiate();
+    }
+
+})(this);
+
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _math = __webpack_require__(7);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Generic class to deal with traditional 2D matrix transforms
+ *
+ * @class
+ * @memberof PIXI
+ */
+var TransformBase = function () {
+  /**
+   *
+   */
+  function TransformBase() {
+    _classCallCheck(this, TransformBase);
+
+    /**
+     * The global matrix transform. It can be swapped temporarily by some functions like getLocalBounds()
+     *
+     * @member {PIXI.Matrix}
+     */
+    this.worldTransform = new _math.Matrix();
+
+    /**
+     * The local matrix transform
+     *
+     * @member {PIXI.Matrix}
+     */
+    this.localTransform = new _math.Matrix();
+
+    this._worldID = 0;
+    this._parentID = 0;
+  }
+
+  /**
+   * TransformBase does not have decomposition, so this function wont do anything
+   */
+
+
+  TransformBase.prototype.updateLocalTransform = function updateLocalTransform() {}
+  // empty
+
+
+  /**
+   * Updates the values of the object and applies the parent's transform.
+   *
+   * @param {PIXI.TransformBase} parentTransform - The transform of the parent of this object
+   */
+  ;
+
+  TransformBase.prototype.updateTransform = function updateTransform(parentTransform) {
+    var pt = parentTransform.worldTransform;
+    var wt = this.worldTransform;
+    var lt = this.localTransform;
+
+    // concat the parent matrix with the objects transform.
+    wt.a = lt.a * pt.a + lt.b * pt.c;
+    wt.b = lt.a * pt.b + lt.b * pt.d;
+    wt.c = lt.c * pt.a + lt.d * pt.c;
+    wt.d = lt.c * pt.b + lt.d * pt.d;
+    wt.tx = lt.tx * pt.a + lt.ty * pt.c + pt.tx;
+    wt.ty = lt.tx * pt.b + lt.ty * pt.d + pt.ty;
+
+    this._worldID++;
+  };
+
+  return TransformBase;
+}();
+
+/**
+ * Updates the values of the object and applies the parent's transform.
+ * @param  parentTransform {PIXI.Transform} The transform of the parent of this object
+ *
+ */
+
+
+exports.default = TransformBase;
+TransformBase.prototype.updateWorldTransform = TransformBase.prototype.updateTransform;
+
+TransformBase.IDENTITY = new TransformBase();
+//# sourceMappingURL=TransformBase.js.map
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _math = __webpack_require__(7);
+
+var _utils = __webpack_require__(3);
+
+var _const = __webpack_require__(2);
+
+var _Texture = __webpack_require__(16);
+
+var _Texture2 = _interopRequireDefault(_Texture);
+
+var _Container2 = __webpack_require__(32);
+
+var _Container3 = _interopRequireDefault(_Container2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var tempPoint = new _math.Point();
+
+/**
+ * The Sprite object is the base for all textured objects that are rendered to the screen
+ *
+ * A sprite can be created directly from an image like this:
+ *
+ * ```js
+ * let sprite = new PIXI.Sprite.fromImage('assets/image.png');
+ * ```
+ *
+ * @class
+ * @extends PIXI.Container
+ * @memberof PIXI
+ */
+
+var Sprite = function (_Container) {
+    _inherits(Sprite, _Container);
+
+    /**
+     * @param {PIXI.Texture} texture - The texture for this sprite
+     */
+    function Sprite(texture) {
+        _classCallCheck(this, Sprite);
+
+        /**
+         * The anchor sets the origin point of the texture.
+         * The default is 0,0 this means the texture's origin is the top left
+         * Setting the anchor to 0.5,0.5 means the texture's origin is centered
+         * Setting the anchor to 1,1 would mean the texture's origin point will be the bottom right corner
+         *
+         * @member {PIXI.ObservablePoint}
+         * @private
+         */
+        var _this = _possibleConstructorReturn(this, _Container.call(this));
+
+        _this._anchor = new _math.ObservablePoint(_this._onAnchorUpdate, _this);
+
+        /**
+         * The texture that the sprite is using
+         *
+         * @private
+         * @member {PIXI.Texture}
+         */
+        _this._texture = null;
+
+        /**
+         * The width of the sprite (this is initially set by the texture)
+         *
+         * @private
+         * @member {number}
+         */
+        _this._width = 0;
+
+        /**
+         * The height of the sprite (this is initially set by the texture)
+         *
+         * @private
+         * @member {number}
+         */
+        _this._height = 0;
+
+        /**
+         * The tint applied to the sprite. This is a hex value. A value of 0xFFFFFF will remove any tint effect.
+         *
+         * @private
+         * @member {number}
+         * @default 0xFFFFFF
+         */
+        _this._tint = null;
+        _this._tintRGB = null;
+        _this.tint = 0xFFFFFF;
+
+        /**
+         * The blend mode to be applied to the sprite. Apply a value of `PIXI.BLEND_MODES.NORMAL` to reset the blend mode.
+         *
+         * @member {number}
+         * @default PIXI.BLEND_MODES.NORMAL
+         * @see PIXI.BLEND_MODES
+         */
+        _this.blendMode = _const.BLEND_MODES.NORMAL;
+
+        /**
+         * The shader that will be used to render the sprite. Set to null to remove a current shader.
+         *
+         * @member {PIXI.Filter|PIXI.Shader}
+         */
+        _this.shader = null;
+
+        /**
+         * An internal cached value of the tint.
+         *
+         * @private
+         * @member {number}
+         * @default 0xFFFFFF
+         */
+        _this.cachedTint = 0xFFFFFF;
+
+        // call texture setter
+        _this.texture = texture || _Texture2.default.EMPTY;
+
+        /**
+         * this is used to store the vertex data of the sprite (basically a quad)
+         *
+         * @private
+         * @member {Float32Array}
+         */
+        _this.vertexData = new Float32Array(8);
+
+        /**
+         * This is used to calculate the bounds of the object IF it is a trimmed sprite
+         *
+         * @private
+         * @member {Float32Array}
+         */
+        _this.vertexTrimmedData = null;
+
+        _this._transformID = -1;
+        _this._textureID = -1;
+
+        _this._transformTrimmedID = -1;
+        _this._textureTrimmedID = -1;
+
+        /**
+         * Plugin that is responsible for rendering this element.
+         * Allows to customize the rendering process without overriding '_renderWebGL' & '_renderCanvas' methods.
+         *
+         * @member {string}
+         * @default 'sprite'
+         */
+        _this.pluginName = 'sprite';
+        return _this;
+    }
+
+    /**
+     * When the texture is updated, this event will fire to update the scale and frame
+     *
+     * @private
+     */
+
+
+    Sprite.prototype._onTextureUpdate = function _onTextureUpdate() {
+        this._textureID = -1;
+        this._textureTrimmedID = -1;
+        this.cachedTint = 0xFFFFFF;
+
+        // so if _width is 0 then width was not set..
+        if (this._width) {
+            this.scale.x = (0, _utils.sign)(this.scale.x) * this._width / this._texture.orig.width;
+        }
+
+        if (this._height) {
+            this.scale.y = (0, _utils.sign)(this.scale.y) * this._height / this._texture.orig.height;
+        }
+    };
+
+    /**
+     * Called when the anchor position updates.
+     *
+     * @private
+     */
+
+
+    Sprite.prototype._onAnchorUpdate = function _onAnchorUpdate() {
+        this._transformID = -1;
+        this._transformTrimmedID = -1;
+    };
+
+    /**
+     * calculates worldTransform * vertices, store it in vertexData
+     */
+
+
+    Sprite.prototype.calculateVertices = function calculateVertices() {
+        if (this._transformID === this.transform._worldID && this._textureID === this._texture._updateID) {
+            return;
+        }
+
+        this._transformID = this.transform._worldID;
+        this._textureID = this._texture._updateID;
+
+        // set the vertex data
+
+        var texture = this._texture;
+        var wt = this.transform.worldTransform;
+        var a = wt.a;
+        var b = wt.b;
+        var c = wt.c;
+        var d = wt.d;
+        var tx = wt.tx;
+        var ty = wt.ty;
+        var vertexData = this.vertexData;
+        var trim = texture.trim;
+        var orig = texture.orig;
+        var anchor = this._anchor;
+
+        var w0 = 0;
+        var w1 = 0;
+        var h0 = 0;
+        var h1 = 0;
+
+        if (trim) {
+            // if the sprite is trimmed and is not a tilingsprite then we need to add the extra
+            // space before transforming the sprite coords.
+            w1 = trim.x - anchor._x * orig.width;
+            w0 = w1 + trim.width;
+
+            h1 = trim.y - anchor._y * orig.height;
+            h0 = h1 + trim.height;
+        } else {
+            w1 = -anchor._x * orig.width;
+            w0 = w1 + orig.width;
+
+            h1 = -anchor._y * orig.height;
+            h0 = h1 + orig.height;
+        }
+
+        // xy
+        vertexData[0] = a * w1 + c * h1 + tx;
+        vertexData[1] = d * h1 + b * w1 + ty;
+
+        // xy
+        vertexData[2] = a * w0 + c * h1 + tx;
+        vertexData[3] = d * h1 + b * w0 + ty;
+
+        // xy
+        vertexData[4] = a * w0 + c * h0 + tx;
+        vertexData[5] = d * h0 + b * w0 + ty;
+
+        // xy
+        vertexData[6] = a * w1 + c * h0 + tx;
+        vertexData[7] = d * h0 + b * w1 + ty;
+    };
+
+    /**
+     * calculates worldTransform * vertices for a non texture with a trim. store it in vertexTrimmedData
+     * This is used to ensure that the true width and height of a trimmed texture is respected
+     */
+
+
+    Sprite.prototype.calculateTrimmedVertices = function calculateTrimmedVertices() {
+        if (!this.vertexTrimmedData) {
+            this.vertexTrimmedData = new Float32Array(8);
+        } else if (this._transformTrimmedID === this.transform._worldID && this._textureTrimmedID === this._texture._updateID) {
+            return;
+        }
+
+        this._transformTrimmedID = this.transform._worldID;
+        this._textureTrimmedID = this._texture._updateID;
+
+        // lets do some special trim code!
+        var texture = this._texture;
+        var vertexData = this.vertexTrimmedData;
+        var orig = texture.orig;
+        var anchor = this._anchor;
+
+        // lets calculate the new untrimmed bounds..
+        var wt = this.transform.worldTransform;
+        var a = wt.a;
+        var b = wt.b;
+        var c = wt.c;
+        var d = wt.d;
+        var tx = wt.tx;
+        var ty = wt.ty;
+
+        var w1 = -anchor._x * orig.width;
+        var w0 = w1 + orig.width;
+
+        var h1 = -anchor._y * orig.height;
+        var h0 = h1 + orig.height;
+
+        // xy
+        vertexData[0] = a * w1 + c * h1 + tx;
+        vertexData[1] = d * h1 + b * w1 + ty;
+
+        // xy
+        vertexData[2] = a * w0 + c * h1 + tx;
+        vertexData[3] = d * h1 + b * w0 + ty;
+
+        // xy
+        vertexData[4] = a * w0 + c * h0 + tx;
+        vertexData[5] = d * h0 + b * w0 + ty;
+
+        // xy
+        vertexData[6] = a * w1 + c * h0 + tx;
+        vertexData[7] = d * h0 + b * w1 + ty;
+    };
+
+    /**
+    *
+    * Renders the object using the WebGL renderer
+    *
+    * @private
+    * @param {PIXI.WebGLRenderer} renderer - The webgl renderer to use.
+    */
+
+
+    Sprite.prototype._renderWebGL = function _renderWebGL(renderer) {
+        this.calculateVertices();
+
+        renderer.setObjectRenderer(renderer.plugins[this.pluginName]);
+        renderer.plugins[this.pluginName].render(this);
+    };
+
+    /**
+    * Renders the object using the Canvas renderer
+    *
+    * @private
+    * @param {PIXI.CanvasRenderer} renderer - The renderer
+    */
+
+
+    Sprite.prototype._renderCanvas = function _renderCanvas(renderer) {
+        renderer.plugins[this.pluginName].render(this);
+    };
+
+    /**
+     * Updates the bounds of the sprite.
+     *
+     * @private
+     */
+
+
+    Sprite.prototype._calculateBounds = function _calculateBounds() {
+        var trim = this._texture.trim;
+        var orig = this._texture.orig;
+
+        // First lets check to see if the current texture has a trim..
+        if (!trim || trim.width === orig.width && trim.height === orig.height) {
+            // no trim! lets use the usual calculations..
+            this.calculateVertices();
+            this._bounds.addQuad(this.vertexData);
+        } else {
+            // lets calculate a special trimmed bounds...
+            this.calculateTrimmedVertices();
+            this._bounds.addQuad(this.vertexTrimmedData);
+        }
+    };
+
+    /**
+     * Gets the local bounds of the sprite object.
+     *
+     * @param {PIXI.Rectangle} rect - The output rectangle.
+     * @return {PIXI.Rectangle} The bounds.
+     */
+
+
+    Sprite.prototype.getLocalBounds = function getLocalBounds(rect) {
+        // we can do a fast local bounds if the sprite has no children!
+        if (this.children.length === 0) {
+            this._bounds.minX = this._texture.orig.width * -this._anchor._x;
+            this._bounds.minY = this._texture.orig.height * -this._anchor._y;
+            this._bounds.maxX = this._texture.orig.width * (1 - this._anchor._x);
+            this._bounds.maxY = this._texture.orig.height * (1 - this._anchor._y);
+
+            if (!rect) {
+                if (!this._localBoundsRect) {
+                    this._localBoundsRect = new _math.Rectangle();
+                }
+
+                rect = this._localBoundsRect;
+            }
+
+            return this._bounds.getRectangle(rect);
+        }
+
+        return _Container.prototype.getLocalBounds.call(this, rect);
+    };
+
+    /**
+     * Tests if a point is inside this sprite
+     *
+     * @param {PIXI.Point} point - the point to test
+     * @return {boolean} the result of the test
+     */
+
+
+    Sprite.prototype.containsPoint = function containsPoint(point) {
+        this.worldTransform.applyInverse(point, tempPoint);
+
+        var width = this._texture.orig.width;
+        var height = this._texture.orig.height;
+        var x1 = -width * this.anchor.x;
+        var y1 = 0;
+
+        if (tempPoint.x >= x1 && tempPoint.x < x1 + width) {
+            y1 = -height * this.anchor.y;
+
+            if (tempPoint.y >= y1 && tempPoint.y < y1 + height) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    /**
+     * Destroys this sprite and optionally its texture and children
+     *
+     * @param {object|boolean} [options] - Options parameter. A boolean will act as if all options
+     *  have been set to that value
+     * @param {boolean} [options.children=false] - if set to true, all the children will have their destroy
+     *      method called as well. 'options' will be passed on to those calls.
+     * @param {boolean} [options.texture=false] - Should it destroy the current texture of the sprite as well
+     * @param {boolean} [options.baseTexture=false] - Should it destroy the base texture of the sprite as well
+     */
+
+
+    Sprite.prototype.destroy = function destroy(options) {
+        _Container.prototype.destroy.call(this, options);
+
+        this._anchor = null;
+
+        var destroyTexture = typeof options === 'boolean' ? options : options && options.texture;
+
+        if (destroyTexture) {
+            var destroyBaseTexture = typeof options === 'boolean' ? options : options && options.baseTexture;
+
+            this._texture.destroy(!!destroyBaseTexture);
+        }
+
+        this._texture = null;
+        this.shader = null;
+    };
+
+    // some helper functions..
+
+    /**
+     * Helper function that creates a new sprite based on the source you provide.
+     * The source can be - frame id, image url, video url, canvas element, video element, base texture
+     *
+     * @static
+     * @param {number|string|PIXI.BaseTexture|HTMLCanvasElement|HTMLVideoElement} source Source to create texture from
+     * @return {PIXI.Sprite} The newly created sprite
+     */
+
+
+    Sprite.from = function from(source) {
+        return new Sprite(_Texture2.default.from(source));
+    };
+
+    /**
+     * Helper function that creates a sprite that will contain a texture from the TextureCache based on the frameId
+     * The frame ids are created when a Texture packer file has been loaded
+     *
+     * @static
+     * @param {string} frameId - The frame Id of the texture in the cache
+     * @return {PIXI.Sprite} A new Sprite using a texture from the texture cache matching the frameId
+     */
+
+
+    Sprite.fromFrame = function fromFrame(frameId) {
+        var texture = _utils.TextureCache[frameId];
+
+        if (!texture) {
+            throw new Error('The frameId "' + frameId + '" does not exist in the texture cache');
+        }
+
+        return new Sprite(texture);
+    };
+
+    /**
+     * Helper function that creates a sprite that will contain a texture based on an image url
+     * If the image is not in the texture cache it will be loaded
+     *
+     * @static
+     * @param {string} imageId - The image url of the texture
+     * @param {boolean} [crossorigin=(auto)] - if you want to specify the cross-origin parameter
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - if you want to specify the scale mode,
+     *  see {@link PIXI.SCALE_MODES} for possible values
+     * @return {PIXI.Sprite} A new Sprite using a texture from the texture cache matching the image id
+     */
+
+
+    Sprite.fromImage = function fromImage(imageId, crossorigin, scaleMode) {
+        return new Sprite(_Texture2.default.fromImage(imageId, crossorigin, scaleMode));
+    };
+
+    /**
+     * The width of the sprite, setting this will actually modify the scale to achieve the value set
+     *
+     * @member {number}
+     */
+
+
+    _createClass(Sprite, [{
+        key: 'width',
+        get: function get() {
+            return Math.abs(this.scale.x) * this._texture.orig.width;
+        },
+        set: function set(value) // eslint-disable-line require-jsdoc
+        {
+            var s = (0, _utils.sign)(this.scale.x) || 1;
+
+            this.scale.x = s * value / this._texture.orig.width;
+            this._width = value;
+        }
+
+        /**
+         * The height of the sprite, setting this will actually modify the scale to achieve the value set
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'height',
+        get: function get() {
+            return Math.abs(this.scale.y) * this._texture.orig.height;
+        },
+        set: function set(value) // eslint-disable-line require-jsdoc
+        {
+            var s = (0, _utils.sign)(this.scale.y) || 1;
+
+            this.scale.y = s * value / this._texture.orig.height;
+            this._height = value;
+        }
+
+        /**
+         * The anchor sets the origin point of the texture.
+         * The default is 0,0 this means the texture's origin is the top left
+         * Setting the anchor to 0.5,0.5 means the texture's origin is centered
+         * Setting the anchor to 1,1 would mean the texture's origin point will be the bottom right corner
+         *
+         * @member {PIXI.ObservablePoint}
+         */
+
+    }, {
+        key: 'anchor',
+        get: function get() {
+            return this._anchor;
+        },
+        set: function set(value) // eslint-disable-line require-jsdoc
+        {
+            this._anchor.copy(value);
+        }
+
+        /**
+         * The tint applied to the sprite. This is a hex value.
+         * A value of 0xFFFFFF will remove any tint effect.
+         *
+         * @member {number}
+         * @default 0xFFFFFF
+         */
+
+    }, {
+        key: 'tint',
+        get: function get() {
+            return this._tint;
+        },
+        set: function set(value) // eslint-disable-line require-jsdoc
+        {
+            this._tint = value;
+            this._tintRGB = (value >> 16) + (value & 0xff00) + ((value & 0xff) << 16);
+        }
+
+        /**
+         * The texture that the sprite is using
+         *
+         * @member {PIXI.Texture}
+         */
+
+    }, {
+        key: 'texture',
+        get: function get() {
+            return this._texture;
+        },
+        set: function set(value) // eslint-disable-line require-jsdoc
+        {
+            if (this._texture === value) {
+                return;
+            }
+
+            this._texture = value;
+            this.cachedTint = 0xFFFFFF;
+
+            this._textureID = -1;
+            this._textureTrimmedID = -1;
+
+            if (value) {
+                // wait for the texture to load
+                if (value.baseTexture.hasLoaded) {
+                    this._onTextureUpdate();
+                } else {
+                    value.once('update', this._onTextureUpdate, this);
+                }
+            }
+        }
+    }]);
+
+    return Sprite;
+}(_Container3.default);
+
+exports.default = Sprite;
+//# sourceMappingURL=Sprite.js.map
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Bit twiddling hacks for JavaScript.
+ *
+ * Author: Mikola Lysenko
+ *
+ * Ported from Stanford bit twiddling hack library:
+ *    http://graphics.stanford.edu/~seander/bithacks.html
+ */
+
+ "use restrict";
+
+//Number of bits in an integer
+var INT_BITS = 32;
+
+//Constants
+exports.INT_BITS  = INT_BITS;
+exports.INT_MAX   =  0x7fffffff;
+exports.INT_MIN   = -1<<(INT_BITS-1);
+
+//Returns -1, 0, +1 depending on sign of x
+exports.sign = function(v) {
+  return (v > 0) - (v < 0);
+}
+
+//Computes absolute value of integer
+exports.abs = function(v) {
+  var mask = v >> (INT_BITS-1);
+  return (v ^ mask) - mask;
+}
+
+//Computes minimum of integers x and y
+exports.min = function(x, y) {
+  return y ^ ((x ^ y) & -(x < y));
+}
+
+//Computes maximum of integers x and y
+exports.max = function(x, y) {
+  return x ^ ((x ^ y) & -(x < y));
+}
+
+//Checks if a number is a power of two
+exports.isPow2 = function(v) {
+  return !(v & (v-1)) && (!!v);
+}
+
+//Computes log base 2 of v
+exports.log2 = function(v) {
+  var r, shift;
+  r =     (v > 0xFFFF) << 4; v >>>= r;
+  shift = (v > 0xFF  ) << 3; v >>>= shift; r |= shift;
+  shift = (v > 0xF   ) << 2; v >>>= shift; r |= shift;
+  shift = (v > 0x3   ) << 1; v >>>= shift; r |= shift;
+  return r | (v >> 1);
+}
+
+//Computes log base 10 of v
+exports.log10 = function(v) {
+  return  (v >= 1000000000) ? 9 : (v >= 100000000) ? 8 : (v >= 10000000) ? 7 :
+          (v >= 1000000) ? 6 : (v >= 100000) ? 5 : (v >= 10000) ? 4 :
+          (v >= 1000) ? 3 : (v >= 100) ? 2 : (v >= 10) ? 1 : 0;
+}
+
+//Counts number of bits
+exports.popCount = function(v) {
+  v = v - ((v >>> 1) & 0x55555555);
+  v = (v & 0x33333333) + ((v >>> 2) & 0x33333333);
+  return ((v + (v >>> 4) & 0xF0F0F0F) * 0x1010101) >>> 24;
+}
+
+//Counts number of trailing zeros
+function countTrailingZeros(v) {
+  var c = 32;
+  v &= -v;
+  if (v) c--;
+  if (v & 0x0000FFFF) c -= 16;
+  if (v & 0x00FF00FF) c -= 8;
+  if (v & 0x0F0F0F0F) c -= 4;
+  if (v & 0x33333333) c -= 2;
+  if (v & 0x55555555) c -= 1;
+  return c;
+}
+exports.countTrailingZeros = countTrailingZeros;
+
+//Rounds to next power of 2
+exports.nextPow2 = function(v) {
+  v += v === 0;
+  --v;
+  v |= v >>> 1;
+  v |= v >>> 2;
+  v |= v >>> 4;
+  v |= v >>> 8;
+  v |= v >>> 16;
+  return v + 1;
+}
+
+//Rounds down to previous power of 2
+exports.prevPow2 = function(v) {
+  v |= v >>> 1;
+  v |= v >>> 2;
+  v |= v >>> 4;
+  v |= v >>> 8;
+  v |= v >>> 16;
+  return v - (v>>>1);
+}
+
+//Computes parity of word
+exports.parity = function(v) {
+  v ^= v >>> 16;
+  v ^= v >>> 8;
+  v ^= v >>> 4;
+  v &= 0xf;
+  return (0x6996 >>> v) & 1;
+}
+
+var REVERSE_TABLE = new Array(256);
+
+(function(tab) {
+  for(var i=0; i<256; ++i) {
+    var v = i, r = i, s = 7;
+    for (v >>>= 1; v; v >>>= 1) {
+      r <<= 1;
+      r |= v & 1;
+      --s;
+    }
+    tab[i] = (r << s) & 0xff;
+  }
+})(REVERSE_TABLE);
+
+//Reverse bits in a 32 bit word
+exports.reverse = function(v) {
+  return  (REVERSE_TABLE[ v         & 0xff] << 24) |
+          (REVERSE_TABLE[(v >>> 8)  & 0xff] << 16) |
+          (REVERSE_TABLE[(v >>> 16) & 0xff] << 8)  |
+           REVERSE_TABLE[(v >>> 24) & 0xff];
+}
+
+//Interleave bits of 2 coordinates with 16 bits.  Useful for fast quadtree codes
+exports.interleave2 = function(x, y) {
+  x &= 0xFFFF;
+  x = (x | (x << 8)) & 0x00FF00FF;
+  x = (x | (x << 4)) & 0x0F0F0F0F;
+  x = (x | (x << 2)) & 0x33333333;
+  x = (x | (x << 1)) & 0x55555555;
+
+  y &= 0xFFFF;
+  y = (y | (y << 8)) & 0x00FF00FF;
+  y = (y | (y << 4)) & 0x0F0F0F0F;
+  y = (y | (y << 2)) & 0x33333333;
+  y = (y | (y << 1)) & 0x55555555;
+
+  return x | (y << 1);
+}
+
+//Extracts the nth interleaved component
+exports.deinterleave2 = function(v, n) {
+  v = (v >>> n) & 0x55555555;
+  v = (v | (v >>> 1))  & 0x33333333;
+  v = (v | (v >>> 2))  & 0x0F0F0F0F;
+  v = (v | (v >>> 4))  & 0x00FF00FF;
+  v = (v | (v >>> 16)) & 0x000FFFF;
+  return (v << 16) >> 16;
+}
+
+
+//Interleave bits of 3 coordinates, each with 10 bits.  Useful for fast octree codes
+exports.interleave3 = function(x, y, z) {
+  x &= 0x3FF;
+  x  = (x | (x<<16)) & 4278190335;
+  x  = (x | (x<<8))  & 251719695;
+  x  = (x | (x<<4))  & 3272356035;
+  x  = (x | (x<<2))  & 1227133513;
+
+  y &= 0x3FF;
+  y  = (y | (y<<16)) & 4278190335;
+  y  = (y | (y<<8))  & 251719695;
+  y  = (y | (y<<4))  & 3272356035;
+  y  = (y | (y<<2))  & 1227133513;
+  x |= (y << 1);
+  
+  z &= 0x3FF;
+  z  = (z | (z<<16)) & 4278190335;
+  z  = (z | (z<<8))  & 251719695;
+  z  = (z | (z<<4))  & 3272356035;
+  z  = (z | (z<<2))  & 1227133513;
+  
+  return x | (z << 2);
+}
+
+//Extracts nth interleaved component of a 3-tuple
+exports.deinterleave3 = function(v, n) {
+  v = (v >>> n)       & 1227133513;
+  v = (v | (v>>>2))   & 3272356035;
+  v = (v | (v>>>4))   & 251719695;
+  v = (v | (v>>>8))   & 4278190335;
+  v = (v | (v>>>16))  & 0x3FF;
+  return (v<<22)>>22;
+}
+
+//Computes next combination in colexicographic order (this is mistakenly called nextPermutation on the bit twiddling hacks page)
+exports.nextCombination = function(v) {
+  var t = v | (v - 1);
+  return (t + 1) | (((~t & -~t) - 1) >>> (countTrailingZeros(v) + 1));
+}
+
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Ticker = exports.shared = undefined;
+
+var _Ticker = __webpack_require__(206);
+
+var _Ticker2 = _interopRequireDefault(_Ticker);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * The shared ticker instance used by {@link PIXI.extras.AnimatedSprite}.
+ * and by {@link PIXI.interaction.InteractionManager}.
+ * The property {@link PIXI.ticker.Ticker#autoStart} is set to `true`
+ * for this instance. Please follow the examples for usage, including
+ * how to opt-out of auto-starting the shared ticker.
+ *
+ * @example
+ * let ticker = PIXI.ticker.shared;
+ * // Set this to prevent starting this ticker when listeners are added.
+ * // By default this is true only for the PIXI.ticker.shared instance.
+ * ticker.autoStart = false;
+ * // FYI, call this to ensure the ticker is stopped. It should be stopped
+ * // if you have not attempted to render anything yet.
+ * ticker.stop();
+ * // Call this when you are ready for a running shared ticker.
+ * ticker.start();
+ *
+ * @example
+ * // You may use the shared ticker to render...
+ * let renderer = PIXI.autoDetectRenderer(800, 600);
+ * let stage = new PIXI.Container();
+ * let interactionManager = PIXI.interaction.InteractionManager(renderer);
+ * document.body.appendChild(renderer.view);
+ * ticker.add(function (time) {
+ *     renderer.render(stage);
+ * });
+ *
+ * @example
+ * // Or you can just update it manually.
+ * ticker.autoStart = false;
+ * ticker.stop();
+ * function animate(time) {
+ *     ticker.update(time);
+ *     renderer.render(stage);
+ *     requestAnimationFrame(animate);
+ * }
+ * animate(performance.now());
+ *
+ * @type {PIXI.ticker.Ticker}
+ * @memberof PIXI.ticker
+ */
+var shared = new _Ticker2.default();
+
+shared.autoStart = true;
+shared.destroy = function () {
+  // protect destroying shared ticker
+  // this is used by other internal systems
+  // like AnimatedSprite and InteractionManager
+};
+
+/**
+ * This namespace contains an API for interacting with PIXI's internal global update loop.
+ *
+ * This ticker is used for rendering, {@link PIXI.extras.AnimatedSprite AnimatedSprite},
+ * {@link PIXI.interaction.InteractionManager InteractionManager} and many other time-based PIXI systems.
+ * @example
+ * const ticker = new PIXI.ticker.Ticker();
+ * ticker.stop();
+ * ticker.add((deltaTime) => {
+ *   // do something every frame
+ * });
+ * ticker.start();
+ * @namespace PIXI.ticker
+ */
+exports.shared = shared;
+exports.Ticker = _Ticker2.default;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _BaseRenderTexture = __webpack_require__(108);
+
+var _BaseRenderTexture2 = _interopRequireDefault(_BaseRenderTexture);
+
+var _Texture2 = __webpack_require__(16);
+
+var _Texture3 = _interopRequireDefault(_Texture2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * A RenderTexture is a special texture that allows any PixiJS display object to be rendered to it.
+ *
+ * __Hint__: All DisplayObjects (i.e. Sprites) that render to a RenderTexture should be preloaded
+ * otherwise black rectangles will be drawn instead.
+ *
+ * A RenderTexture takes a snapshot of any Display Object given to its render method. For example:
+ *
+ * ```js
+ * let renderer = PIXI.autoDetectRenderer(1024, 1024, { view: canvas, ratio: 1 });
+ * let renderTexture = PIXI.RenderTexture.create(800, 600);
+ * let sprite = PIXI.Sprite.fromImage("spinObj_01.png");
+ *
+ * sprite.position.x = 800/2;
+ * sprite.position.y = 600/2;
+ * sprite.anchor.x = 0.5;
+ * sprite.anchor.y = 0.5;
+ *
+ * renderer.render(sprite, renderTexture);
+ * ```
+ *
+ * The Sprite in this case will be rendered using its local transform. To render this sprite at 0,0
+ * you can clear the transform
+ *
+ * ```js
+ *
+ * sprite.setTransform()
+ *
+ * let renderTexture = new PIXI.RenderTexture.create(100, 100);
+ *
+ * renderer.render(sprite, renderTexture);  // Renders to center of RenderTexture
+ * ```
+ *
+ * @class
+ * @extends PIXI.Texture
+ * @memberof PIXI
+ */
+var RenderTexture = function (_Texture) {
+    _inherits(RenderTexture, _Texture);
+
+    /**
+     * @param {PIXI.BaseRenderTexture} baseRenderTexture - The renderer used for this RenderTexture
+     * @param {PIXI.Rectangle} [frame] - The rectangle frame of the texture to show
+     */
+    function RenderTexture(baseRenderTexture, frame) {
+        _classCallCheck(this, RenderTexture);
+
+        // support for legacy..
+        var _legacyRenderer = null;
+
+        if (!(baseRenderTexture instanceof _BaseRenderTexture2.default)) {
+            /* eslint-disable prefer-rest-params, no-console */
+            var width = arguments[1];
+            var height = arguments[2];
+            var scaleMode = arguments[3];
+            var resolution = arguments[4];
+
+            // we have an old render texture..
+            console.warn('Please use RenderTexture.create(' + width + ', ' + height + ') instead of the ctor directly.');
+            _legacyRenderer = arguments[0];
+            /* eslint-enable prefer-rest-params, no-console */
+
+            frame = null;
+            baseRenderTexture = new _BaseRenderTexture2.default(width, height, scaleMode, resolution);
+        }
+
+        /**
+         * The base texture object that this texture uses
+         *
+         * @member {BaseTexture}
+         */
+
+        var _this = _possibleConstructorReturn(this, _Texture.call(this, baseRenderTexture, frame));
+
+        _this.legacyRenderer = _legacyRenderer;
+
+        /**
+         * This will let the renderer know if the texture is valid. If it's not then it cannot be rendered.
+         *
+         * @member {boolean}
+         */
+        _this.valid = true;
+
+        _this._updateUvs();
+        return _this;
+    }
+
+    /**
+     * Resizes the RenderTexture.
+     *
+     * @param {number} width - The width to resize to.
+     * @param {number} height - The height to resize to.
+     * @param {boolean} doNotResizeBaseTexture - Should the baseTexture.width and height values be resized as well?
+     */
+
+
+    RenderTexture.prototype.resize = function resize(width, height, doNotResizeBaseTexture) {
+        width = Math.ceil(width);
+        height = Math.ceil(height);
+
+        // TODO - could be not required..
+        this.valid = width > 0 && height > 0;
+
+        this._frame.width = this.orig.width = width;
+        this._frame.height = this.orig.height = height;
+
+        if (!doNotResizeBaseTexture) {
+            this.baseTexture.resize(width, height);
+        }
+
+        this._updateUvs();
+    };
+
+    /**
+     * A short hand way of creating a render texture.
+     *
+     * @param {number} [width=100] - The width of the render texture
+     * @param {number} [height=100] - The height of the render texture
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {number} [resolution=1] - The resolution / device pixel ratio of the texture being generated
+     * @return {PIXI.RenderTexture} The new render texture
+     */
+
+
+    RenderTexture.create = function create(width, height, scaleMode, resolution) {
+        return new RenderTexture(new _BaseRenderTexture2.default(width, height, scaleMode, resolution));
+    };
+
+    return RenderTexture;
+}(_Texture3.default);
+
+exports.default = RenderTexture;
+//# sourceMappingURL=RenderTexture.js.map
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _utils = __webpack_require__(3);
+
+var _canUseNewCanvasBlendModes = __webpack_require__(110);
+
+var _canUseNewCanvasBlendModes2 = _interopRequireDefault(_canUseNewCanvasBlendModes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Utility methods for Sprite/Texture tinting.
+ *
+ * @class
+ * @memberof PIXI
+ */
+var CanvasTinter = {
+    /**
+     * Basically this method just needs a sprite and a color and tints the sprite with the given color.
+     *
+     * @memberof PIXI.CanvasTinter
+     * @param {PIXI.Sprite} sprite - the sprite to tint
+     * @param {number} color - the color to use to tint the sprite with
+     * @return {HTMLCanvasElement} The tinted canvas
+     */
+    getTintedTexture: function getTintedTexture(sprite, color) {
+        var texture = sprite._texture;
+
+        color = CanvasTinter.roundColor(color);
+
+        var stringColor = '#' + ('00000' + (color | 0).toString(16)).substr(-6);
+
+        texture.tintCache = texture.tintCache || {};
+
+        var cachedTexture = texture.tintCache[stringColor];
+
+        var canvas = void 0;
+
+        if (cachedTexture) {
+            if (cachedTexture.tintId === texture._updateID) {
+                return texture.tintCache[stringColor];
+            }
+
+            canvas = texture.tintCache[stringColor];
+        } else {
+            canvas = CanvasTinter.canvas || document.createElement('canvas');
+        }
+
+        CanvasTinter.tintMethod(texture, color, canvas);
+
+        canvas.tintId = texture._updateID;
+
+        if (CanvasTinter.convertTintToImage) {
+            // is this better?
+            var tintImage = new Image();
+
+            tintImage.src = canvas.toDataURL();
+
+            texture.tintCache[stringColor] = tintImage;
+        } else {
+            texture.tintCache[stringColor] = canvas;
+            // if we are not converting the texture to an image then we need to lose the reference to the canvas
+            CanvasTinter.canvas = null;
+        }
+
+        return canvas;
+    },
+
+    /**
+     * Tint a texture using the 'multiply' operation.
+     *
+     * @memberof PIXI.CanvasTinter
+     * @param {PIXI.Texture} texture - the texture to tint
+     * @param {number} color - the color to use to tint the sprite with
+     * @param {HTMLCanvasElement} canvas - the current canvas
+     */
+    tintWithMultiply: function tintWithMultiply(texture, color, canvas) {
+        var context = canvas.getContext('2d');
+        var crop = texture._frame.clone();
+        var resolution = texture.baseTexture.resolution;
+
+        crop.x *= resolution;
+        crop.y *= resolution;
+        crop.width *= resolution;
+        crop.height *= resolution;
+
+        canvas.width = Math.ceil(crop.width);
+        canvas.height = Math.ceil(crop.height);
+
+        context.save();
+        context.fillStyle = '#' + ('00000' + (color | 0).toString(16)).substr(-6);
+
+        context.fillRect(0, 0, crop.width, crop.height);
+
+        context.globalCompositeOperation = 'multiply';
+
+        context.drawImage(texture.baseTexture.source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+
+        context.globalCompositeOperation = 'destination-atop';
+
+        context.drawImage(texture.baseTexture.source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+        context.restore();
+    },
+
+    /**
+     * Tint a texture using the 'overlay' operation.
+     *
+     * @memberof PIXI.CanvasTinter
+     * @param {PIXI.Texture} texture - the texture to tint
+     * @param {number} color - the color to use to tint the sprite with
+     * @param {HTMLCanvasElement} canvas - the current canvas
+     */
+    tintWithOverlay: function tintWithOverlay(texture, color, canvas) {
+        var context = canvas.getContext('2d');
+        var crop = texture._frame.clone();
+        var resolution = texture.baseTexture.resolution;
+
+        crop.x *= resolution;
+        crop.y *= resolution;
+        crop.width *= resolution;
+        crop.height *= resolution;
+
+        canvas.width = Math.ceil(crop.width);
+        canvas.height = Math.ceil(crop.height);
+
+        context.save();
+        context.globalCompositeOperation = 'copy';
+        context.fillStyle = '#' + ('00000' + (color | 0).toString(16)).substr(-6);
+        context.fillRect(0, 0, crop.width, crop.height);
+
+        context.globalCompositeOperation = 'destination-atop';
+        context.drawImage(texture.baseTexture.source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+
+        // context.globalCompositeOperation = 'copy';
+        context.restore();
+    },
+
+
+    /**
+     * Tint a texture pixel per pixel.
+     *
+     * @memberof PIXI.CanvasTinter
+     * @param {PIXI.Texture} texture - the texture to tint
+     * @param {number} color - the color to use to tint the sprite with
+     * @param {HTMLCanvasElement} canvas - the current canvas
+     */
+    tintWithPerPixel: function tintWithPerPixel(texture, color, canvas) {
+        var context = canvas.getContext('2d');
+        var crop = texture._frame.clone();
+        var resolution = texture.baseTexture.resolution;
+
+        crop.x *= resolution;
+        crop.y *= resolution;
+        crop.width *= resolution;
+        crop.height *= resolution;
+
+        canvas.width = Math.ceil(crop.width);
+        canvas.height = Math.ceil(crop.height);
+
+        context.save();
+        context.globalCompositeOperation = 'copy';
+        context.drawImage(texture.baseTexture.source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+        context.restore();
+
+        var rgbValues = (0, _utils.hex2rgb)(color);
+        var r = rgbValues[0];
+        var g = rgbValues[1];
+        var b = rgbValues[2];
+
+        var pixelData = context.getImageData(0, 0, crop.width, crop.height);
+
+        var pixels = pixelData.data;
+
+        for (var i = 0; i < pixels.length; i += 4) {
+            pixels[i + 0] *= r;
+            pixels[i + 1] *= g;
+            pixels[i + 2] *= b;
+        }
+
+        context.putImageData(pixelData, 0, 0);
+    },
+
+    /**
+     * Rounds the specified color according to the CanvasTinter.cacheStepsPerColorChannel.
+     *
+     * @memberof PIXI.CanvasTinter
+     * @param {number} color - the color to round, should be a hex color
+     * @return {number} The rounded color.
+     */
+    roundColor: function roundColor(color) {
+        var step = CanvasTinter.cacheStepsPerColorChannel;
+
+        var rgbValues = (0, _utils.hex2rgb)(color);
+
+        rgbValues[0] = Math.min(255, rgbValues[0] / step * step);
+        rgbValues[1] = Math.min(255, rgbValues[1] / step * step);
+        rgbValues[2] = Math.min(255, rgbValues[2] / step * step);
+
+        return (0, _utils.rgb2hex)(rgbValues);
+    },
+
+    /**
+     * Number of steps which will be used as a cap when rounding colors.
+     *
+     * @memberof PIXI.CanvasTinter
+     * @type {number}
+     */
+    cacheStepsPerColorChannel: 8,
+
+    /**
+     * Tint cache boolean flag.
+     *
+     * @memberof PIXI.CanvasTinter
+     * @type {boolean}
+     */
+    convertTintToImage: false,
+
+    /**
+     * Whether or not the Canvas BlendModes are supported, consequently the ability to tint using the multiply method.
+     *
+     * @memberof PIXI.CanvasTinter
+     * @type {boolean}
+     */
+    canUseMultiply: (0, _canUseNewCanvasBlendModes2.default)(),
+
+    /**
+     * The tinting method that will be used.
+     *
+     * @memberof PIXI.CanvasTinter
+     * @type {tintMethodFunctionType}
+     */
+    tintMethod: 0
+};
+
+CanvasTinter.tintMethod = CanvasTinter.canUseMultiply ? CanvasTinter.tintWithMultiply : CanvasTinter.tintWithPerPixel;
+
+/**
+ * The tintMethod type.
+ *
+ * @memberof PIXI.CanvasTinter
+ * @callback tintMethodFunctionType
+ * @param texture {PIXI.Texture} the texture to tint
+ * @param color {number} the color to use to tint the sprite with
+ * @param canvas {HTMLCanvasElement} the current canvas
+ */
+
+exports.default = CanvasTinter;
+//# sourceMappingURL=CanvasTinter.js.map
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = createIndicesForQuads;
+/**
+ * Generic Mask Stack data structure
+ *
+ * @memberof PIXI
+ * @function createIndicesForQuads
+ * @private
+ * @param {number} size - Number of quads
+ * @return {Uint16Array} indices
+ */
+function createIndicesForQuads(size) {
+    // the total number of indices in our array, there are 6 points per quad.
+
+    var totalIndices = size * 6;
+
+    var indices = new Uint16Array(totalIndices);
+
+    // fill the indices with the quads to draw
+    for (var i = 0, j = 0; i < totalIndices; i += 6, j += 4) {
+        indices[i + 0] = j + 0;
+        indices[i + 1] = j + 1;
+        indices[i + 2] = j + 2;
+        indices[i + 3] = j + 0;
+        indices[i + 4] = j + 2;
+        indices[i + 5] = j + 3;
+    }
+
+    return indices;
+}
+//# sourceMappingURL=createIndicesForQuads.js.map
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _parseUri = __webpack_require__(134);
+
+var _parseUri2 = _interopRequireDefault(_parseUri);
+
+var _miniSignals = __webpack_require__(133);
+
+var _miniSignals2 = _interopRequireDefault(_miniSignals);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// tests is CORS is supported in XHR, if not we need to use XDR
+var useXdr = !!(window.XDomainRequest && !('withCredentials' in new XMLHttpRequest()));
+var tempAnchor = null;
+
+// some status constants
+var STATUS_NONE = 0;
+var STATUS_OK = 200;
+var STATUS_EMPTY = 204;
+var STATUS_IE_BUG_EMPTY = 1223;
+var STATUS_TYPE_OK = 2;
+
+// noop
+function _noop() {} /* empty */
+
+/**
+ * Manages the state and loading of a resource and all child resources.
+ *
+ * @class
+ */
+
+var Resource = function () {
+    /**
+     * Sets the load type to be used for a specific extension.
+     *
+     * @static
+     * @param {string} extname - The extension to set the type for, e.g. "png" or "fnt"
+     * @param {Resource.LOAD_TYPE} loadType - The load type to set it to.
+     */
+    Resource.setExtensionLoadType = function setExtensionLoadType(extname, loadType) {
+        setExtMap(Resource._loadTypeMap, extname, loadType);
+    };
+
+    /**
+     * Sets the load type to be used for a specific extension.
+     *
+     * @static
+     * @param {string} extname - The extension to set the type for, e.g. "png" or "fnt"
+     * @param {Resource.XHR_RESPONSE_TYPE} xhrType - The xhr type to set it to.
+     */
+
+
+    Resource.setExtensionXhrType = function setExtensionXhrType(extname, xhrType) {
+        setExtMap(Resource._xhrTypeMap, extname, xhrType);
+    };
+
+    /**
+     * @param {string} name - The name of the resource to load.
+     * @param {string|string[]} url - The url for this resource, for audio/video loads you can pass
+     *      an array of sources.
+     * @param {object} [options] - The options for the load.
+     * @param {string|boolean} [options.crossOrigin] - Is this request cross-origin? Default is to
+     *      determine automatically.
+     * @param {Resource.LOAD_TYPE} [options.loadType=Resource.LOAD_TYPE.XHR] - How should this resource
+     *      be loaded?
+     * @param {Resource.XHR_RESPONSE_TYPE} [options.xhrType=Resource.XHR_RESPONSE_TYPE.DEFAULT] - How
+     *      should the data being loaded be interpreted when using XHR?
+     * @param {object} [options.metadata] - Extra configuration for middleware and the Resource object.
+     * @param {HTMLImageElement|HTMLAudioElement|HTMLVideoElement} [options.metadata.loadElement=null] - The
+     *      element to use for loading, instead of creating one.
+     * @param {boolean} [options.metadata.skipSource=false] - Skips adding source(s) to the load element. This
+     *      is useful if you want to pass in a `loadElement` that you already added load sources to.
+     * @param {string|string[]} [options.metadata.mimeType] - The mime type to use for the source element of a video/audio
+     *      elment. If the urls are an array, you can pass this as an array as well where each index is the mime type to
+     *      use for the corresponding url index.
+     */
+
+
+    function Resource(name, url, options) {
+        _classCallCheck(this, Resource);
+
+        if (typeof name !== 'string' || typeof url !== 'string') {
+            throw new Error('Both name and url are required for constructing a resource.');
+        }
+
+        options = options || {};
+
+        /**
+         * The state flags of this resource.
+         *
+         * @member {number}
+         */
+        this._flags = 0;
+
+        // set data url flag, needs to be set early for some _determineX checks to work.
+        this._setFlag(Resource.STATUS_FLAGS.DATA_URL, url.indexOf('data:') === 0);
+
+        /**
+         * The name of this resource.
+         *
+         * @member {string}
+         * @readonly
+         */
+        this.name = name;
+
+        /**
+         * The url used to load this resource.
+         *
+         * @member {string}
+         * @readonly
+         */
+        this.url = url;
+
+        /**
+         * The extension used to load this resource.
+         *
+         * @member {string}
+         * @readonly
+         */
+        this.extension = this._getExtension();
+
+        /**
+         * The data that was loaded by the resource.
+         *
+         * @member {any}
+         */
+        this.data = null;
+
+        /**
+         * Is this request cross-origin? If unset, determined automatically.
+         *
+         * @member {string}
+         */
+        this.crossOrigin = options.crossOrigin === true ? 'anonymous' : options.crossOrigin;
+
+        /**
+         * The method of loading to use for this resource.
+         *
+         * @member {Resource.LOAD_TYPE}
+         */
+        this.loadType = options.loadType || this._determineLoadType();
+
+        /**
+         * The type used to load the resource via XHR. If unset, determined automatically.
+         *
+         * @member {string}
+         */
+        this.xhrType = options.xhrType;
+
+        /**
+         * Extra info for middleware, and controlling specifics about how the resource loads.
+         *
+         * Note that if you pass in a `loadElement`, the Resource class takes ownership of it.
+         * Meaning it will modify it as it sees fit.
+         *
+         * @member {object}
+         * @property {HTMLImageElement|HTMLAudioElement|HTMLVideoElement} [loadElement=null] - The
+         *  element to use for loading, instead of creating one.
+         * @property {boolean} [skipSource=false] - Skips adding source(s) to the load element. This
+         *  is useful if you want to pass in a `loadElement` that you already added load sources
+         *  to.
+         */
+        this.metadata = options.metadata || {};
+
+        /**
+         * The error that occurred while loading (if any).
+         *
+         * @member {Error}
+         * @readonly
+         */
+        this.error = null;
+
+        /**
+         * The XHR object that was used to load this resource. This is only set
+         * when `loadType` is `Resource.LOAD_TYPE.XHR`.
+         *
+         * @member {XMLHttpRequest}
+         * @readonly
+         */
+        this.xhr = null;
+
+        /**
+         * The child resources this resource owns.
+         *
+         * @member {Resource[]}
+         * @readonly
+         */
+        this.children = [];
+
+        /**
+         * The resource type.
+         *
+         * @member {Resource.TYPE}
+         * @readonly
+         */
+        this.type = Resource.TYPE.UNKNOWN;
+
+        /**
+         * The progress chunk owned by this resource.
+         *
+         * @member {number}
+         * @readonly
+         */
+        this.progressChunk = 0;
+
+        /**
+         * The `dequeue` method that will be used a storage place for the async queue dequeue method
+         * used privately by the loader.
+         *
+         * @private
+         * @member {function}
+         */
+        this._dequeue = _noop;
+
+        /**
+         * Used a storage place for the on load binding used privately by the loader.
+         *
+         * @private
+         * @member {function}
+         */
+        this._onLoadBinding = null;
+
+        /**
+         * The `complete` function bound to this resource's context.
+         *
+         * @private
+         * @member {function}
+         */
+        this._boundComplete = this.complete.bind(this);
+
+        /**
+         * The `_onError` function bound to this resource's context.
+         *
+         * @private
+         * @member {function}
+         */
+        this._boundOnError = this._onError.bind(this);
+
+        /**
+         * The `_onProgress` function bound to this resource's context.
+         *
+         * @private
+         * @member {function}
+         */
+        this._boundOnProgress = this._onProgress.bind(this);
+
+        // xhr callbacks
+        this._boundXhrOnError = this._xhrOnError.bind(this);
+        this._boundXhrOnAbort = this._xhrOnAbort.bind(this);
+        this._boundXhrOnLoad = this._xhrOnLoad.bind(this);
+        this._boundXdrOnTimeout = this._xdrOnTimeout.bind(this);
+
+        /**
+         * Dispatched when the resource beings to load.
+         *
+         * The callback looks like {@link Resource.OnStartSignal}.
+         *
+         * @member {Signal}
+         */
+        this.onStart = new _miniSignals2.default();
+
+        /**
+         * Dispatched each time progress of this resource load updates.
+         * Not all resources types and loader systems can support this event
+         * so sometimes it may not be available. If the resource
+         * is being loaded on a modern browser, using XHR, and the remote server
+         * properly sets Content-Length headers, then this will be available.
+         *
+         * The callback looks like {@link Resource.OnProgressSignal}.
+         *
+         * @member {Signal}
+         */
+        this.onProgress = new _miniSignals2.default();
+
+        /**
+         * Dispatched once this resource has loaded, if there was an error it will
+         * be in the `error` property.
+         *
+         * The callback looks like {@link Resource.OnCompleteSignal}.
+         *
+         * @member {Signal}
+         */
+        this.onComplete = new _miniSignals2.default();
+
+        /**
+         * Dispatched after this resource has had all the *after* middleware run on it.
+         *
+         * The callback looks like {@link Resource.OnCompleteSignal}.
+         *
+         * @member {Signal}
+         */
+        this.onAfterMiddleware = new _miniSignals2.default();
+
+        /**
+         * When the resource starts to load.
+         *
+         * @memberof Resource
+         * @callback OnStartSignal
+         * @param {Resource} resource - The resource that the event happened on.
+         */
+
+        /**
+         * When the resource reports loading progress.
+         *
+         * @memberof Resource
+         * @callback OnProgressSignal
+         * @param {Resource} resource - The resource that the event happened on.
+         * @param {number} percentage - The progress of the load in the range [0, 1].
+         */
+
+        /**
+         * When the resource finishes loading.
+         *
+         * @memberof Resource
+         * @callback OnCompleteSignal
+         * @param {Resource} resource - The resource that the event happened on.
+         */
+    }
+
+    /**
+     * Stores whether or not this url is a data url.
+     *
+     * @member {boolean}
+     * @readonly
+     */
+
+
+    /**
+     * Marks the resource as complete.
+     *
+     */
+    Resource.prototype.complete = function complete() {
+        // TODO: Clean this up in a wrapper or something...gross....
+        if (this.data && this.data.removeEventListener) {
+            this.data.removeEventListener('error', this._boundOnError, false);
+            this.data.removeEventListener('load', this._boundComplete, false);
+            this.data.removeEventListener('progress', this._boundOnProgress, false);
+            this.data.removeEventListener('canplaythrough', this._boundComplete, false);
+        }
+
+        if (this.xhr) {
+            if (this.xhr.removeEventListener) {
+                this.xhr.removeEventListener('error', this._boundXhrOnError, false);
+                this.xhr.removeEventListener('abort', this._boundXhrOnAbort, false);
+                this.xhr.removeEventListener('progress', this._boundOnProgress, false);
+                this.xhr.removeEventListener('load', this._boundXhrOnLoad, false);
+            } else {
+                this.xhr.onerror = null;
+                this.xhr.ontimeout = null;
+                this.xhr.onprogress = null;
+                this.xhr.onload = null;
+            }
+        }
+
+        if (this.isComplete) {
+            throw new Error('Complete called again for an already completed resource.');
+        }
+
+        this._setFlag(Resource.STATUS_FLAGS.COMPLETE, true);
+        this._setFlag(Resource.STATUS_FLAGS.LOADING, false);
+
+        this.onComplete.dispatch(this);
+    };
+
+    /**
+     * Aborts the loading of this resource, with an optional message.
+     *
+     * @param {string} message - The message to use for the error
+     */
+
+
+    Resource.prototype.abort = function abort(message) {
+        // abort can be called multiple times, ignore subsequent calls.
+        if (this.error) {
+            return;
+        }
+
+        // store error
+        this.error = new Error(message);
+
+        // abort the actual loading
+        if (this.xhr) {
+            this.xhr.abort();
+        } else if (this.xdr) {
+            this.xdr.abort();
+        } else if (this.data) {
+            // single source
+            if (this.data.src) {
+                this.data.src = Resource.EMPTY_GIF;
+            }
+            // multi-source
+            else {
+                    while (this.data.firstChild) {
+                        this.data.removeChild(this.data.firstChild);
+                    }
+                }
+        }
+
+        // done now.
+        this.complete();
+    };
+
+    /**
+     * Kicks off loading of this resource. This method is asynchronous.
+     *
+     * @param {function} [cb] - Optional callback to call once the resource is loaded.
+     */
+
+
+    Resource.prototype.load = function load(cb) {
+        var _this = this;
+
+        if (this.isLoading) {
+            return;
+        }
+
+        if (this.isComplete) {
+            if (cb) {
+                setTimeout(function () {
+                    return cb(_this);
+                }, 1);
+            }
+
+            return;
+        } else if (cb) {
+            this.onComplete.once(cb);
+        }
+
+        this._setFlag(Resource.STATUS_FLAGS.LOADING, true);
+
+        this.onStart.dispatch(this);
+
+        // if unset, determine the value
+        if (this.crossOrigin === false || typeof this.crossOrigin !== 'string') {
+            this.crossOrigin = this._determineCrossOrigin(this.url);
+        }
+
+        switch (this.loadType) {
+            case Resource.LOAD_TYPE.IMAGE:
+                this.type = Resource.TYPE.IMAGE;
+                this._loadElement('image');
+                break;
+
+            case Resource.LOAD_TYPE.AUDIO:
+                this.type = Resource.TYPE.AUDIO;
+                this._loadSourceElement('audio');
+                break;
+
+            case Resource.LOAD_TYPE.VIDEO:
+                this.type = Resource.TYPE.VIDEO;
+                this._loadSourceElement('video');
+                break;
+
+            case Resource.LOAD_TYPE.XHR:
+            /* falls through */
+            default:
+                if (useXdr && this.crossOrigin) {
+                    this._loadXdr();
+                } else {
+                    this._loadXhr();
+                }
+                break;
+        }
+    };
+
+    /**
+     * Checks if the flag is set.
+     *
+     * @private
+     * @param {number} flag - The flag to check.
+     * @return {boolean} True if the flag is set.
+     */
+
+
+    Resource.prototype._hasFlag = function _hasFlag(flag) {
+        return !!(this._flags & flag);
+    };
+
+    /**
+     * (Un)Sets the flag.
+     *
+     * @private
+     * @param {number} flag - The flag to (un)set.
+     * @param {boolean} value - Whether to set or (un)set the flag.
+     */
+
+
+    Resource.prototype._setFlag = function _setFlag(flag, value) {
+        this._flags = value ? this._flags | flag : this._flags & ~flag;
+    };
+
+    /**
+     * Loads this resources using an element that has a single source,
+     * like an HTMLImageElement.
+     *
+     * @private
+     * @param {string} type - The type of element to use.
+     */
+
+
+    Resource.prototype._loadElement = function _loadElement(type) {
+        if (this.metadata.loadElement) {
+            this.data = this.metadata.loadElement;
+        } else if (type === 'image' && typeof window.Image !== 'undefined') {
+            this.data = new Image();
+        } else {
+            this.data = document.createElement(type);
+        }
+
+        if (this.crossOrigin) {
+            this.data.crossOrigin = this.crossOrigin;
+        }
+
+        if (!this.metadata.skipSource) {
+            this.data.src = this.url;
+        }
+
+        this.data.addEventListener('error', this._boundOnError, false);
+        this.data.addEventListener('load', this._boundComplete, false);
+        this.data.addEventListener('progress', this._boundOnProgress, false);
+    };
+
+    /**
+     * Loads this resources using an element that has multiple sources,
+     * like an HTMLAudioElement or HTMLVideoElement.
+     *
+     * @private
+     * @param {string} type - The type of element to use.
+     */
+
+
+    Resource.prototype._loadSourceElement = function _loadSourceElement(type) {
+        if (this.metadata.loadElement) {
+            this.data = this.metadata.loadElement;
+        } else if (type === 'audio' && typeof window.Audio !== 'undefined') {
+            this.data = new Audio();
+        } else {
+            this.data = document.createElement(type);
+        }
+
+        if (this.data === null) {
+            this.abort('Unsupported element: ' + type);
+
+            return;
+        }
+
+        if (!this.metadata.skipSource) {
+            // support for CocoonJS Canvas+ runtime, lacks document.createElement('source')
+            if (navigator.isCocoonJS) {
+                this.data.src = Array.isArray(this.url) ? this.url[0] : this.url;
+            } else if (Array.isArray(this.url)) {
+                var mimeTypes = this.metadata.mimeType;
+
+                for (var i = 0; i < this.url.length; ++i) {
+                    this.data.appendChild(this._createSource(type, this.url[i], Array.isArray(mimeTypes) ? mimeTypes[i] : mimeTypes));
+                }
+            } else {
+                var _mimeTypes = this.metadata.mimeType;
+
+                this.data.appendChild(this._createSource(type, this.url, Array.isArray(_mimeTypes) ? _mimeTypes[0] : _mimeTypes));
+            }
+        }
+
+        this.data.addEventListener('error', this._boundOnError, false);
+        this.data.addEventListener('load', this._boundComplete, false);
+        this.data.addEventListener('progress', this._boundOnProgress, false);
+        this.data.addEventListener('canplaythrough', this._boundComplete, false);
+
+        this.data.load();
+    };
+
+    /**
+     * Loads this resources using an XMLHttpRequest.
+     *
+     * @private
+     */
+
+
+    Resource.prototype._loadXhr = function _loadXhr() {
+        // if unset, determine the value
+        if (typeof this.xhrType !== 'string') {
+            this.xhrType = this._determineXhrType();
+        }
+
+        var xhr = this.xhr = new XMLHttpRequest();
+
+        // set the request type and url
+        xhr.open('GET', this.url, true);
+
+        // load json as text and parse it ourselves. We do this because some browsers
+        // *cough* safari *cough* can't deal with it.
+        if (this.xhrType === Resource.XHR_RESPONSE_TYPE.JSON || this.xhrType === Resource.XHR_RESPONSE_TYPE.DOCUMENT) {
+            xhr.responseType = Resource.XHR_RESPONSE_TYPE.TEXT;
+        } else {
+            xhr.responseType = this.xhrType;
+        }
+
+        xhr.addEventListener('error', this._boundXhrOnError, false);
+        xhr.addEventListener('abort', this._boundXhrOnAbort, false);
+        xhr.addEventListener('progress', this._boundOnProgress, false);
+        xhr.addEventListener('load', this._boundXhrOnLoad, false);
+
+        xhr.send();
+    };
+
+    /**
+     * Loads this resources using an XDomainRequest. This is here because we need to support IE9 (gross).
+     *
+     * @private
+     */
+
+
+    Resource.prototype._loadXdr = function _loadXdr() {
+        // if unset, determine the value
+        if (typeof this.xhrType !== 'string') {
+            this.xhrType = this._determineXhrType();
+        }
+
+        var xdr = this.xhr = new XDomainRequest();
+
+        // XDomainRequest has a few quirks. Occasionally it will abort requests
+        // A way to avoid this is to make sure ALL callbacks are set even if not used
+        // More info here: http://stackoverflow.com/questions/15786966/xdomainrequest-aborts-post-on-ie-9
+        xdr.timeout = 5000;
+
+        xdr.onerror = this._boundXhrOnError;
+        xdr.ontimeout = this._boundXdrOnTimeout;
+        xdr.onprogress = this._boundOnProgress;
+        xdr.onload = this._boundXhrOnLoad;
+
+        xdr.open('GET', this.url, true);
+
+        // Note: The xdr.send() call is wrapped in a timeout to prevent an
+        // issue with the interface where some requests are lost if multiple
+        // XDomainRequests are being sent at the same time.
+        // Some info here: https://github.com/photonstorm/phaser/issues/1248
+        setTimeout(function () {
+            return xdr.send();
+        }, 1);
+    };
+
+    /**
+     * Creates a source used in loading via an element.
+     *
+     * @private
+     * @param {string} type - The element type (video or audio).
+     * @param {string} url - The source URL to load from.
+     * @param {string} [mime] - The mime type of the video
+     * @return {HTMLSourceElement} The source element.
+     */
+
+
+    Resource.prototype._createSource = function _createSource(type, url, mime) {
+        if (!mime) {
+            mime = type + '/' + this._getExtension(url);
+        }
+
+        var source = document.createElement('source');
+
+        source.src = url;
+        source.type = mime;
+
+        return source;
+    };
+
+    /**
+     * Called if a load errors out.
+     *
+     * @param {Event} event - The error event from the element that emits it.
+     * @private
+     */
+
+
+    Resource.prototype._onError = function _onError(event) {
+        this.abort('Failed to load element using: ' + event.target.nodeName);
+    };
+
+    /**
+     * Called if a load progress event fires for xhr/xdr.
+     *
+     * @private
+     * @param {XMLHttpRequestProgressEvent|Event} event - Progress event.
+     */
+
+
+    Resource.prototype._onProgress = function _onProgress(event) {
+        if (event && event.lengthComputable) {
+            this.onProgress.dispatch(this, event.loaded / event.total);
+        }
+    };
+
+    /**
+     * Called if an error event fires for xhr/xdr.
+     *
+     * @private
+     * @param {XMLHttpRequestErrorEvent|Event} event - Error event.
+     */
+
+
+    Resource.prototype._xhrOnError = function _xhrOnError() {
+        var xhr = this.xhr;
+
+        this.abort(reqType(xhr) + ' Request failed. Status: ' + xhr.status + ', text: "' + xhr.statusText + '"');
+    };
+
+    /**
+     * Called if an abort event fires for xhr.
+     *
+     * @private
+     * @param {XMLHttpRequestAbortEvent} event - Abort Event
+     */
+
+
+    Resource.prototype._xhrOnAbort = function _xhrOnAbort() {
+        this.abort(reqType(this.xhr) + ' Request was aborted by the user.');
+    };
+
+    /**
+     * Called if a timeout event fires for xdr.
+     *
+     * @private
+     * @param {Event} event - Timeout event.
+     */
+
+
+    Resource.prototype._xdrOnTimeout = function _xdrOnTimeout() {
+        this.abort(reqType(this.xhr) + ' Request timed out.');
+    };
+
+    /**
+     * Called when data successfully loads from an xhr/xdr request.
+     *
+     * @private
+     * @param {XMLHttpRequestLoadEvent|Event} event - Load event
+     */
+
+
+    Resource.prototype._xhrOnLoad = function _xhrOnLoad() {
+        var xhr = this.xhr;
+        var text = '';
+        var status = typeof xhr.status === 'undefined' ? STATUS_OK : xhr.status; // XDR has no `.status`, assume 200.
+
+        // responseText is accessible only if responseType is '' or 'text' and on older browsers
+        if (xhr.responseType === '' || xhr.responseType === 'text' || typeof xhr.responseType === 'undefined') {
+            text = xhr.responseText;
+        }
+
+        // status can be 0 when using the `file://` protocol so we also check if a response is set.
+        // If it has a response, we assume 200; otherwise a 0 status code with no contents is an aborted request.
+        if (status === STATUS_NONE && (text.length > 0 || xhr.responseType === Resource.XHR_RESPONSE_TYPE.BUFFER)) {
+            status = STATUS_OK;
+        }
+        // handle IE9 bug: http://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
+        else if (status === STATUS_IE_BUG_EMPTY) {
+                status = STATUS_EMPTY;
+            }
+
+        var statusType = status / 100 | 0;
+
+        if (statusType === STATUS_TYPE_OK) {
+            // if text, just return it
+            if (this.xhrType === Resource.XHR_RESPONSE_TYPE.TEXT) {
+                this.data = text;
+                this.type = Resource.TYPE.TEXT;
+            }
+            // if json, parse into json object
+            else if (this.xhrType === Resource.XHR_RESPONSE_TYPE.JSON) {
+                    try {
+                        this.data = JSON.parse(text);
+                        this.type = Resource.TYPE.JSON;
+                    } catch (e) {
+                        this.abort('Error trying to parse loaded json: ' + e);
+
+                        return;
+                    }
+                }
+                // if xml, parse into an xml document or div element
+                else if (this.xhrType === Resource.XHR_RESPONSE_TYPE.DOCUMENT) {
+                        try {
+                            if (window.DOMParser) {
+                                var domparser = new DOMParser();
+
+                                this.data = domparser.parseFromString(text, 'text/xml');
+                            } else {
+                                var div = document.createElement('div');
+
+                                div.innerHTML = text;
+
+                                this.data = div;
+                            }
+
+                            this.type = Resource.TYPE.XML;
+                        } catch (e) {
+                            this.abort('Error trying to parse loaded xml: ' + e);
+
+                            return;
+                        }
+                    }
+                    // other types just return the response
+                    else {
+                            this.data = xhr.response || text;
+                        }
+        } else {
+            this.abort('[' + xhr.status + '] ' + xhr.statusText + ': ' + xhr.responseURL);
+
+            return;
+        }
+
+        this.complete();
+    };
+
+    /**
+     * Sets the `crossOrigin` property for this resource based on if the url
+     * for this resource is cross-origin. If crossOrigin was manually set, this
+     * function does nothing.
+     *
+     * @private
+     * @param {string} url - The url to test.
+     * @param {object} [loc=window.location] - The location object to test against.
+     * @return {string} The crossOrigin value to use (or empty string for none).
+     */
+
+
+    Resource.prototype._determineCrossOrigin = function _determineCrossOrigin(url, loc) {
+        // data: and javascript: urls are considered same-origin
+        if (url.indexOf('data:') === 0) {
+            return '';
+        }
+
+        // default is window.location
+        loc = loc || window.location;
+
+        if (!tempAnchor) {
+            tempAnchor = document.createElement('a');
+        }
+
+        // let the browser determine the full href for the url of this resource and then
+        // parse with the node url lib, we can't use the properties of the anchor element
+        // because they don't work in IE9 :(
+        tempAnchor.href = url;
+        url = (0, _parseUri2.default)(tempAnchor.href, { strictMode: true });
+
+        var samePort = !url.port && loc.port === '' || url.port === loc.port;
+        var protocol = url.protocol ? url.protocol + ':' : '';
+
+        // if cross origin
+        if (url.host !== loc.hostname || !samePort || protocol !== loc.protocol) {
+            return 'anonymous';
+        }
+
+        return '';
+    };
+
+    /**
+     * Determines the responseType of an XHR request based on the extension of the
+     * resource being loaded.
+     *
+     * @private
+     * @return {Resource.XHR_RESPONSE_TYPE} The responseType to use.
+     */
+
+
+    Resource.prototype._determineXhrType = function _determineXhrType() {
+        return Resource._xhrTypeMap[this.extension] || Resource.XHR_RESPONSE_TYPE.TEXT;
+    };
+
+    /**
+     * Determines the loadType of a resource based on the extension of the
+     * resource being loaded.
+     *
+     * @private
+     * @return {Resource.LOAD_TYPE} The loadType to use.
+     */
+
+
+    Resource.prototype._determineLoadType = function _determineLoadType() {
+        return Resource._loadTypeMap[this.extension] || Resource.LOAD_TYPE.XHR;
+    };
+
+    /**
+     * Extracts the extension (sans '.') of the file being loaded by the resource.
+     *
+     * @private
+     * @return {string} The extension.
+     */
+
+
+    Resource.prototype._getExtension = function _getExtension() {
+        var url = this.url;
+        var ext = '';
+
+        if (this.isDataUrl) {
+            var slashIndex = url.indexOf('/');
+
+            ext = url.substring(slashIndex + 1, url.indexOf(';', slashIndex));
+        } else {
+            var queryStart = url.indexOf('?');
+            var hashStart = url.indexOf('#');
+            var index = Math.min(queryStart > -1 ? queryStart : url.length, hashStart > -1 ? hashStart : url.length);
+
+            url = url.substring(0, index);
+            ext = url.substring(url.lastIndexOf('.') + 1);
+        }
+
+        return ext.toLowerCase();
+    };
+
+    /**
+     * Determines the mime type of an XHR request based on the responseType of
+     * resource being loaded.
+     *
+     * @private
+     * @param {Resource.XHR_RESPONSE_TYPE} type - The type to get a mime type for.
+     * @return {string} The mime type to use.
+     */
+
+
+    Resource.prototype._getMimeFromXhrType = function _getMimeFromXhrType(type) {
+        switch (type) {
+            case Resource.XHR_RESPONSE_TYPE.BUFFER:
+                return 'application/octet-binary';
+
+            case Resource.XHR_RESPONSE_TYPE.BLOB:
+                return 'application/blob';
+
+            case Resource.XHR_RESPONSE_TYPE.DOCUMENT:
+                return 'application/xml';
+
+            case Resource.XHR_RESPONSE_TYPE.JSON:
+                return 'application/json';
+
+            case Resource.XHR_RESPONSE_TYPE.DEFAULT:
+            case Resource.XHR_RESPONSE_TYPE.TEXT:
+            /* falls through */
+            default:
+                return 'text/plain';
+
+        }
+    };
+
+    _createClass(Resource, [{
+        key: 'isDataUrl',
+        get: function get() {
+            return this._hasFlag(Resource.STATUS_FLAGS.DATA_URL);
+        }
+
+        /**
+         * Describes if this resource has finished loading. Is true when the resource has completely
+         * loaded.
+         *
+         * @member {boolean}
+         * @readonly
+         */
+
+    }, {
+        key: 'isComplete',
+        get: function get() {
+            return this._hasFlag(Resource.STATUS_FLAGS.COMPLETE);
+        }
+
+        /**
+         * Describes if this resource is currently loading. Is true when the resource starts loading,
+         * and is false again when complete.
+         *
+         * @member {boolean}
+         * @readonly
+         */
+
+    }, {
+        key: 'isLoading',
+        get: function get() {
+            return this._hasFlag(Resource.STATUS_FLAGS.LOADING);
+        }
+    }]);
+
+    return Resource;
+}();
+
+/**
+ * The types of resources a resource could represent.
+ *
+ * @static
+ * @readonly
+ * @enum {number}
+ */
+
+
+exports.default = Resource;
+Resource.STATUS_FLAGS = {
+    NONE: 0,
+    DATA_URL: 1 << 0,
+    COMPLETE: 1 << 1,
+    LOADING: 1 << 2
+};
+
+/**
+ * The types of resources a resource could represent.
+ *
+ * @static
+ * @readonly
+ * @enum {number}
+ */
+Resource.TYPE = {
+    UNKNOWN: 0,
+    JSON: 1,
+    XML: 2,
+    IMAGE: 3,
+    AUDIO: 4,
+    VIDEO: 5,
+    TEXT: 6
+};
+
+/**
+ * The types of loading a resource can use.
+ *
+ * @static
+ * @readonly
+ * @enum {number}
+ */
+Resource.LOAD_TYPE = {
+    /** Uses XMLHttpRequest to load the resource. */
+    XHR: 1,
+    /** Uses an `Image` object to load the resource. */
+    IMAGE: 2,
+    /** Uses an `Audio` object to load the resource. */
+    AUDIO: 3,
+    /** Uses a `Video` object to load the resource. */
+    VIDEO: 4
+};
+
+/**
+ * The XHR ready states, used internally.
+ *
+ * @static
+ * @readonly
+ * @enum {string}
+ */
+Resource.XHR_RESPONSE_TYPE = {
+    /** string */
+    DEFAULT: 'text',
+    /** ArrayBuffer */
+    BUFFER: 'arraybuffer',
+    /** Blob */
+    BLOB: 'blob',
+    /** Document */
+    DOCUMENT: 'document',
+    /** Object */
+    JSON: 'json',
+    /** String */
+    TEXT: 'text'
+};
+
+Resource._loadTypeMap = {
+    // images
+    gif: Resource.LOAD_TYPE.IMAGE,
+    png: Resource.LOAD_TYPE.IMAGE,
+    bmp: Resource.LOAD_TYPE.IMAGE,
+    jpg: Resource.LOAD_TYPE.IMAGE,
+    jpeg: Resource.LOAD_TYPE.IMAGE,
+    tif: Resource.LOAD_TYPE.IMAGE,
+    tiff: Resource.LOAD_TYPE.IMAGE,
+    webp: Resource.LOAD_TYPE.IMAGE,
+    tga: Resource.LOAD_TYPE.IMAGE,
+    svg: Resource.LOAD_TYPE.IMAGE,
+    'svg+xml': Resource.LOAD_TYPE.IMAGE, // for SVG data urls
+
+    // audio
+    mp3: Resource.LOAD_TYPE.AUDIO,
+    ogg: Resource.LOAD_TYPE.AUDIO,
+    wav: Resource.LOAD_TYPE.AUDIO,
+
+    // videos
+    mp4: Resource.LOAD_TYPE.VIDEO,
+    webm: Resource.LOAD_TYPE.VIDEO
+};
+
+Resource._xhrTypeMap = {
+    // xml
+    xhtml: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
+    html: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
+    htm: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
+    xml: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
+    tmx: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
+    svg: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
+
+    // This was added to handle Tiled Tileset XML, but .tsx is also a TypeScript React Component.
+    // Since it is way less likely for people to be loading TypeScript files instead of Tiled files,
+    // this should probably be fine.
+    tsx: Resource.XHR_RESPONSE_TYPE.DOCUMENT,
+
+    // images
+    gif: Resource.XHR_RESPONSE_TYPE.BLOB,
+    png: Resource.XHR_RESPONSE_TYPE.BLOB,
+    bmp: Resource.XHR_RESPONSE_TYPE.BLOB,
+    jpg: Resource.XHR_RESPONSE_TYPE.BLOB,
+    jpeg: Resource.XHR_RESPONSE_TYPE.BLOB,
+    tif: Resource.XHR_RESPONSE_TYPE.BLOB,
+    tiff: Resource.XHR_RESPONSE_TYPE.BLOB,
+    webp: Resource.XHR_RESPONSE_TYPE.BLOB,
+    tga: Resource.XHR_RESPONSE_TYPE.BLOB,
+
+    // json
+    json: Resource.XHR_RESPONSE_TYPE.JSON,
+
+    // text
+    text: Resource.XHR_RESPONSE_TYPE.TEXT,
+    txt: Resource.XHR_RESPONSE_TYPE.TEXT,
+
+    // fonts
+    ttf: Resource.XHR_RESPONSE_TYPE.BUFFER,
+    otf: Resource.XHR_RESPONSE_TYPE.BUFFER
+};
+
+// We can't set the `src` attribute to empty string, so on abort we set it to this 1px transparent gif
+Resource.EMPTY_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+
+/**
+ * Quick helper to set a value on one of the extension maps. Ensures there is no
+ * dot at the start of the extension.
+ *
+ * @ignore
+ * @param {object} map - The map to set on.
+ * @param {string} extname - The extension (or key) to set.
+ * @param {number} val - The value to set.
+ */
+function setExtMap(map, extname, val) {
+    if (extname && extname.indexOf('.') === 0) {
+        extname = extname.substring(1);
+    }
+
+    if (!extname) {
+        return;
+    }
+
+    map[extname] = val;
+}
+
+/**
+ * Quick helper to get string xhr type.
+ *
+ * @ignore
+ * @param {XMLHttpRequest|XDomainRequest} xhr - The request to check.
+ * @return {string} The type.
+ */
+function reqType(xhr) {
+    return xhr.toString().replace('object ', '');
+}
+//# sourceMappingURL=Resource.js.map
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _core = __webpack_require__(1);
+
+var core = _interopRequireWildcard(_core);
+
+var _CountLimiter = __webpack_require__(140);
+
+var _CountLimiter2 = _interopRequireDefault(_CountLimiter);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var SharedTicker = core.ticker.shared;
+
+/**
+ * Default number of uploads per frame using prepare plugin.
+ *
+ * @static
+ * @memberof PIXI.settings
+ * @name UPLOADS_PER_FRAME
+ * @type {number}
+ * @default 4
+ */
+core.settings.UPLOADS_PER_FRAME = 4;
+
+/**
+ * The prepare manager provides functionality to upload content to the GPU. BasePrepare handles
+ * basic queuing functionality and is extended by {@link PIXI.prepare.WebGLPrepare} and {@link PIXI.prepare.CanvasPrepare}
+ * to provide preparation capabilities specific to their respective renderers.
+ *
+ * @example
+ * // Create a sprite
+ * const sprite = new PIXI.Sprite.fromImage('something.png');
+ *
+ * // Load object into GPU
+ * app.renderer.plugins.prepare.upload(sprite, () => {
+ *
+ *     //Texture(s) has been uploaded to GPU
+ *     app.stage.addChild(sprite);
+ *
+ * })
+ *
+ * @abstract
+ * @class
+ * @memberof PIXI.prepare
+ */
+
+var BasePrepare = function () {
+    /**
+     * @param {PIXI.SystemRenderer} renderer - A reference to the current renderer
+     */
+    function BasePrepare(renderer) {
+        var _this = this;
+
+        _classCallCheck(this, BasePrepare);
+
+        /**
+         * The limiter to be used to control how quickly items are prepared.
+         * @type {PIXI.prepare.CountLimiter|PIXI.prepare.TimeLimiter}
+         */
+        this.limiter = new _CountLimiter2.default(core.settings.UPLOADS_PER_FRAME);
+
+        /**
+         * Reference to the renderer.
+         * @type {PIXI.SystemRenderer}
+         * @protected
+         */
+        this.renderer = renderer;
+
+        /**
+         * The only real difference between CanvasPrepare and WebGLPrepare is what they pass
+         * to upload hooks. That different parameter is stored here.
+         * @type {PIXI.prepare.CanvasPrepare|PIXI.WebGLRenderer}
+         * @protected
+         */
+        this.uploadHookHelper = null;
+
+        /**
+         * Collection of items to uploads at once.
+         * @type {Array<*>}
+         * @private
+         */
+        this.queue = [];
+
+        /**
+         * Collection of additional hooks for finding assets.
+         * @type {Array<Function>}
+         * @private
+         */
+        this.addHooks = [];
+
+        /**
+         * Collection of additional hooks for processing assets.
+         * @type {Array<Function>}
+         * @private
+         */
+        this.uploadHooks = [];
+
+        /**
+         * Callback to call after completed.
+         * @type {Array<Function>}
+         * @private
+         */
+        this.completes = [];
+
+        /**
+         * If prepare is ticking (running).
+         * @type {boolean}
+         * @private
+         */
+        this.ticking = false;
+
+        /**
+         * 'bound' call for prepareItems().
+         * @type {Function}
+         * @private
+         */
+        this.delayedTick = function () {
+            // unlikely, but in case we were destroyed between tick() and delayedTick()
+            if (!_this.queue) {
+                return;
+            }
+            _this.prepareItems();
+        };
+
+        // hooks to find the correct texture
+        this.registerFindHook(findText);
+        this.registerFindHook(findTextStyle);
+        this.registerFindHook(findMultipleBaseTextures);
+        this.registerFindHook(findBaseTexture);
+        this.registerFindHook(findTexture);
+
+        // upload hooks
+        this.registerUploadHook(drawText);
+        this.registerUploadHook(calculateTextStyle);
+    }
+
+    /**
+     * Upload all the textures and graphics to the GPU.
+     *
+     * @param {Function|PIXI.DisplayObject|PIXI.Container|PIXI.BaseTexture|PIXI.Texture|PIXI.Graphics|PIXI.Text} item -
+     *        Either the container or display object to search for items to upload, the items to upload themselves,
+     *        or the callback function, if items have been added using `prepare.add`.
+     * @param {Function} [done] - Optional callback when all queued uploads have completed
+     */
+
+
+    BasePrepare.prototype.upload = function upload(item, done) {
+        if (typeof item === 'function') {
+            done = item;
+            item = null;
+        }
+
+        // If a display object, search for items
+        // that we could upload
+        if (item) {
+            this.add(item);
+        }
+
+        // Get the items for upload from the display
+        if (this.queue.length) {
+            if (done) {
+                this.completes.push(done);
+            }
+
+            if (!this.ticking) {
+                this.ticking = true;
+                SharedTicker.addOnce(this.tick, this, core.UPDATE_PRIORITY.UTILITY);
+            }
+        } else if (done) {
+            done();
+        }
+    };
+
+    /**
+     * Handle tick update
+     *
+     * @private
+     */
+
+
+    BasePrepare.prototype.tick = function tick() {
+        setTimeout(this.delayedTick, 0);
+    };
+
+    /**
+     * Actually prepare items. This is handled outside of the tick because it will take a while
+     * and we do NOT want to block the current animation frame from rendering.
+     *
+     * @private
+     */
+
+
+    BasePrepare.prototype.prepareItems = function prepareItems() {
+        this.limiter.beginFrame();
+        // Upload the graphics
+        while (this.queue.length && this.limiter.allowedToUpload()) {
+            var item = this.queue[0];
+            var uploaded = false;
+
+            if (item && !item._destroyed) {
+                for (var i = 0, len = this.uploadHooks.length; i < len; i++) {
+                    if (this.uploadHooks[i](this.uploadHookHelper, item)) {
+                        this.queue.shift();
+                        uploaded = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!uploaded) {
+                this.queue.shift();
+            }
+        }
+
+        // We're finished
+        if (!this.queue.length) {
+            this.ticking = false;
+
+            var completes = this.completes.slice(0);
+
+            this.completes.length = 0;
+
+            for (var _i = 0, _len = completes.length; _i < _len; _i++) {
+                completes[_i]();
+            }
+        } else {
+            // if we are not finished, on the next rAF do this again
+            SharedTicker.addOnce(this.tick, this, core.UPDATE_PRIORITY.UTILITY);
+        }
+    };
+
+    /**
+     * Adds hooks for finding items.
+     *
+     * @param {Function} addHook - Function call that takes two parameters: `item:*, queue:Array`
+     *          function must return `true` if it was able to add item to the queue.
+     * @return {PIXI.BasePrepare} Instance of plugin for chaining.
+     */
+
+
+    BasePrepare.prototype.registerFindHook = function registerFindHook(addHook) {
+        if (addHook) {
+            this.addHooks.push(addHook);
+        }
+
+        return this;
+    };
+
+    /**
+     * Adds hooks for uploading items.
+     *
+     * @param {Function} uploadHook - Function call that takes two parameters: `prepare:CanvasPrepare, item:*` and
+     *          function must return `true` if it was able to handle upload of item.
+     * @return {PIXI.BasePrepare} Instance of plugin for chaining.
+     */
+
+
+    BasePrepare.prototype.registerUploadHook = function registerUploadHook(uploadHook) {
+        if (uploadHook) {
+            this.uploadHooks.push(uploadHook);
+        }
+
+        return this;
+    };
+
+    /**
+     * Manually add an item to the uploading queue.
+     *
+     * @param {PIXI.DisplayObject|PIXI.Container|PIXI.BaseTexture|PIXI.Texture|PIXI.Graphics|PIXI.Text|*} item - Object to
+     *        add to the queue
+     * @return {PIXI.CanvasPrepare} Instance of plugin for chaining.
+     */
+
+
+    BasePrepare.prototype.add = function add(item) {
+        // Add additional hooks for finding elements on special
+        // types of objects that
+        for (var i = 0, len = this.addHooks.length; i < len; i++) {
+            if (this.addHooks[i](item, this.queue)) {
+                break;
+            }
+        }
+
+        // Get childen recursively
+        if (item instanceof core.Container) {
+            for (var _i2 = item.children.length - 1; _i2 >= 0; _i2--) {
+                this.add(item.children[_i2]);
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Destroys the plugin, don't use after this.
+     *
+     */
+
+
+    BasePrepare.prototype.destroy = function destroy() {
+        if (this.ticking) {
+            SharedTicker.remove(this.tick, this);
+        }
+        this.ticking = false;
+        this.addHooks = null;
+        this.uploadHooks = null;
+        this.renderer = null;
+        this.completes = null;
+        this.queue = null;
+        this.limiter = null;
+        this.uploadHookHelper = null;
+    };
+
+    return BasePrepare;
+}();
+
+/**
+ * Built-in hook to find multiple textures from objects like AnimatedSprites.
+ *
+ * @private
+ * @param {PIXI.DisplayObject} item - Display object to check
+ * @param {Array<*>} queue - Collection of items to upload
+ * @return {boolean} if a PIXI.Texture object was found.
+ */
+
+
+exports.default = BasePrepare;
+function findMultipleBaseTextures(item, queue) {
+    var result = false;
+
+    // Objects with mutliple textures
+    if (item && item._textures && item._textures.length) {
+        for (var i = 0; i < item._textures.length; i++) {
+            if (item._textures[i] instanceof core.Texture) {
+                var baseTexture = item._textures[i].baseTexture;
+
+                if (queue.indexOf(baseTexture) === -1) {
+                    queue.push(baseTexture);
+                    result = true;
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
+/**
+ * Built-in hook to find BaseTextures from Sprites.
+ *
+ * @private
+ * @param {PIXI.DisplayObject} item - Display object to check
+ * @param {Array<*>} queue - Collection of items to upload
+ * @return {boolean} if a PIXI.Texture object was found.
+ */
+function findBaseTexture(item, queue) {
+    // Objects with textures, like Sprites/Text
+    if (item instanceof core.BaseTexture) {
+        if (queue.indexOf(item) === -1) {
+            queue.push(item);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Built-in hook to find textures from objects.
+ *
+ * @private
+ * @param {PIXI.DisplayObject} item - Display object to check
+ * @param {Array<*>} queue - Collection of items to upload
+ * @return {boolean} if a PIXI.Texture object was found.
+ */
+function findTexture(item, queue) {
+    if (item._texture && item._texture instanceof core.Texture) {
+        var texture = item._texture.baseTexture;
+
+        if (queue.indexOf(texture) === -1) {
+            queue.push(texture);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Built-in hook to draw PIXI.Text to its texture.
+ *
+ * @private
+ * @param {PIXI.WebGLRenderer|PIXI.CanvasPrepare} helper - Not used by this upload handler
+ * @param {PIXI.DisplayObject} item - Item to check
+ * @return {boolean} If item was uploaded.
+ */
+function drawText(helper, item) {
+    if (item instanceof core.Text) {
+        // updating text will return early if it is not dirty
+        item.updateText(true);
+
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Built-in hook to calculate a text style for a PIXI.Text object.
+ *
+ * @private
+ * @param {PIXI.WebGLRenderer|PIXI.CanvasPrepare} helper - Not used by this upload handler
+ * @param {PIXI.DisplayObject} item - Item to check
+ * @return {boolean} If item was uploaded.
+ */
+function calculateTextStyle(helper, item) {
+    if (item instanceof core.TextStyle) {
+        var font = item.toFontString();
+
+        core.TextMetrics.measureFont(font);
+
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Built-in hook to find Text objects.
+ *
+ * @private
+ * @param {PIXI.DisplayObject} item - Display object to check
+ * @param {Array<*>} queue - Collection of items to upload
+ * @return {boolean} if a PIXI.Text object was found.
+ */
+function findText(item, queue) {
+    if (item instanceof core.Text) {
+        // push the text style to prepare it - this can be really expensive
+        if (queue.indexOf(item.style) === -1) {
+            queue.push(item.style);
+        }
+        // also push the text object so that we can render it (to canvas/texture) if needed
+        if (queue.indexOf(item) === -1) {
+            queue.push(item);
+        }
+        // also push the Text's texture for upload to GPU
+        var texture = item._texture.baseTexture;
+
+        if (queue.indexOf(texture) === -1) {
+            queue.push(texture);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Built-in hook to find TextStyle objects.
+ *
+ * @private
+ * @param {PIXI.TextStyle} item - Display object to check
+ * @param {Array<*>} queue - Collection of items to upload
+ * @return {boolean} if a PIXI.TextStyle object was found.
+ */
+function findTextStyle(item, queue) {
+    if (item instanceof core.TextStyle) {
+        if (queue.indexOf(item) === -1) {
+            queue.push(item);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+//# sourceMappingURL=BasePrepare.js.map
+
+/***/ }),
 /* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21348,14 +21360,14 @@ module.exports = function (it) {
 
 "use strict";
 
-var LIBRARY = __webpack_require__(49);
+var LIBRARY = __webpack_require__(50);
 var $export = __webpack_require__(24);
 var redefine = __webpack_require__(82);
 var hide = __webpack_require__(25);
 var has = __webpack_require__(20);
-var Iterators = __webpack_require__(50);
+var Iterators = __webpack_require__(51);
 var $iterCreate = __webpack_require__(158);
-var setToStringTag = __webpack_require__(56);
+var setToStringTag = __webpack_require__(57);
 var getPrototypeOf = __webpack_require__(85);
 var ITERATOR = __webpack_require__(27)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
@@ -21433,7 +21445,7 @@ module.exports = __webpack_require__(25);
 var has = __webpack_require__(20);
 var toIObject = __webpack_require__(21);
 var arrayIndexOf = __webpack_require__(161)(false);
-var IE_PROTO = __webpack_require__(53)('IE_PROTO');
+var IE_PROTO = __webpack_require__(54)('IE_PROTO');
 
 module.exports = function (object, names) {
   var O = toIObject(object);
@@ -21467,7 +21479,7 @@ module.exports = function (it) {
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(20);
 var toObject = __webpack_require__(86);
-var IE_PROTO = __webpack_require__(53)('IE_PROTO');
+var IE_PROTO = __webpack_require__(54)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function (O) {
@@ -21484,7 +21496,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(48);
+var defined = __webpack_require__(49);
 module.exports = function (it) {
   return Object(defined(it));
 };
@@ -21503,7 +21515,7 @@ exports.f = Object.getOwnPropertySymbols;
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
 var $keys = __webpack_require__(83);
-var hiddenKeys = __webpack_require__(55).concat('length', 'prototype');
+var hiddenKeys = __webpack_require__(56).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
@@ -21641,7 +21653,7 @@ exports.default = ObservablePoint;
 
 exports.__esModule = true;
 
-var _Matrix = __webpack_require__(62);
+var _Matrix = __webpack_require__(63);
 
 var _Matrix2 = _interopRequireDefault(_Matrix);
 
@@ -22321,7 +22333,7 @@ module.exports = compileProgram;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var mapType = __webpack_require__(64);
+var mapType = __webpack_require__(65);
 var mapSize = __webpack_require__(95);
 
 /**
@@ -22409,7 +22421,7 @@ module.exports = mapSize;
 /* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mapType = __webpack_require__(64);
+var mapType = __webpack_require__(65);
 var defaultValue = __webpack_require__(97);
 
 /**
@@ -22710,7 +22722,7 @@ var _Transform = __webpack_require__(102);
 
 var _Transform2 = _interopRequireDefault(_Transform);
 
-var _Bounds = __webpack_require__(65);
+var _Bounds = __webpack_require__(66);
 
 var _Bounds2 = _interopRequireDefault(_Bounds);
 
@@ -23393,7 +23405,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _math = __webpack_require__(7);
 
-var _TransformBase2 = __webpack_require__(67);
+var _TransformBase2 = __webpack_require__(68);
 
 var _TransformBase3 = _interopRequireDefault(_TransformBase2);
 
@@ -23608,7 +23620,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _math = __webpack_require__(7);
 
-var _TransformBase2 = __webpack_require__(67);
+var _TransformBase2 = __webpack_require__(68);
 
 var _TransformBase3 = _interopRequireDefault(_TransformBase2);
 
@@ -24598,7 +24610,7 @@ var _BaseTexture3 = _interopRequireDefault(_BaseTexture2);
 
 var _utils = __webpack_require__(3);
 
-var _ticker = __webpack_require__(70);
+var _ticker = __webpack_require__(71);
 
 var _const = __webpack_require__(2);
 
@@ -25063,7 +25075,7 @@ var _Container = __webpack_require__(32);
 
 var _Container2 = _interopRequireDefault(_Container);
 
-var _RenderTexture = __webpack_require__(71);
+var _RenderTexture = __webpack_require__(72);
 
 var _RenderTexture2 = _interopRequireDefault(_RenderTexture);
 
@@ -26075,7 +26087,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Matrix = __webpack_require__(62);
+var _Matrix = __webpack_require__(63);
 
 var _Matrix2 = _interopRequireDefault(_Matrix);
 
@@ -26246,7 +26258,7 @@ var _pixiGlCore = __webpack_require__(11);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _createIndicesForQuads = __webpack_require__(73);
+var _createIndicesForQuads = __webpack_require__(74);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
@@ -28349,7 +28361,7 @@ var _Container = __webpack_require__(32);
 
 var _Container2 = _interopRequireDefault(_Container);
 
-var _ticker = __webpack_require__(70);
+var _ticker = __webpack_require__(71);
 
 var _settings = __webpack_require__(6);
 
@@ -30976,6 +30988,9 @@ var ParticleSystem = function (_PIXI$Container) {
                             if (coin.parent) {
                                 coin.parent.removeChild(coin);
                             }
+                            if (coin.callback) {
+                                coin.callback();
+                            }
                             window.COINS_POOL.push(coin);
                             this.particles.splice(i, 1);
                         }
@@ -31059,13 +31074,14 @@ var ParticleSystem = function (_PIXI$Container) {
                 coin.alphaDecress = customData.alphaDecress != undefined ? customData.alphaDecress : 1;
                 coin.x = position.x;
                 coin.y = position.y;
+                coin.callback = customData.callback;
                 coin.angSpeed = customData.angSpeed || 0;
                 coin.rotation = 0;
                 coin.anchor.set(0.5);
                 coin.scale.set(1);
                 coin.delay = customData.delay != undefined ? customData.delay : 0;
                 var scl = customData.scale || 0.03;
-                coin.timer = 0;
+                coin.timer = customData.timer != undefined ? customData.timer : 0;
                 coin.target = customData.target;
                 if (coin.target) {
                     coin.timer = coin.target.timer;
@@ -31174,6 +31190,7 @@ var MergeTile = function (_PIXI$Container) {
         _this.onUp = new _signals2.default();
         _this.onEndHold = new _signals2.default();
         _this.onGenerateResource = new _signals2.default();
+        _this.onGenerateDamage = new _signals2.default();
 
         _this.backSlot.buttonMode = true;
         _this.backSlot.interactive = true;
@@ -31194,12 +31211,14 @@ var MergeTile = function (_PIXI$Container) {
         _this.container.addChild(_this.lockIcon);
         _this.lockIcon.visible = false;
 
-        _this.generate = 0;
-        _this.generateTime = 2;
+        _this.generateResource = 0;
+        _this.generateResourceTime = -1;
         _this.isGenerator = false;
 
-        _this.positionOffset = { x: 0, y: 0 };
+        _this.generateDamage = 0;
+        _this.generateDamageTime = -1;
 
+        _this.positionOffset = { x: 0, y: 0 };
         _this.sin = Math.random();
 
         return _this;
@@ -31219,38 +31238,42 @@ var MergeTile = function (_PIXI$Container) {
             if (this.animSprite) {
                 this.sin += delta;
                 this.sin %= Math.PI * 2;
-                // this.tileSprite.scale.x = (this.entityScale * this.dir) + Math.sin(this.sin) * 0.02
-                //this.tileSprite.scale.y = this.entityScale + Math.cos(this.sin) * 0.02
-
-                //this.positionOffset.y = Math.round(this.positionOffset.y)
-
                 this.updatePosition();
             }
+            //console.log(this.generateResourceTime)
+            if (this.generateResourceTime > 0) {
 
-            if (this.updatedTimestamp) {
-                //console.log(dateTimeStamp - this.updatedTimestamp);
+                if (this.updatedResourceTimestamp) {
+                    this.generateResource = dateTimeStamp - this.updatedResourceTimestamp;
+                    if (this.generateResource >= this.generateResourceTime / window.TIME_SCALE) {
+                        this.updatedResourceTimestamp = Date.now() / 1000 | 0;
+                        this.resourceReady();
+                    }
+                }
+            }
+            if (this.generateDamageTime > 0) {
 
-                this.generate = dateTimeStamp - this.updatedTimestamp;
-                if (this.generate >= this.generateTime) {
-                    this.updatedTimestamp = Date.now() / 1000 | 0;
-                    this.generateResource();
+                if (this.updatedDamageTimestamp) {
+                    this.generateDamage = dateTimeStamp - this.updatedDamageTimestamp;
+                    if (this.generateDamage >= this.generateDamageTime / window.TIME_SCALE) {
+                        this.updatedDamageTimestamp = Date.now() / 1000 | 0;
+                        this.damageReady();
+                    }
                 }
             }
         }
     }, {
         key: 'updateDir',
-        value: function updateDir(mousePos) {
-            // let local = this.toLocal(mousePos)
-            // if(local.x < this.backSlot.width / 2){
-            // 	this.dir = -1;
-            // }else{
-            // 	this.dir = 1;
-            // }
+        value: function updateDir(mousePos) {}
+    }, {
+        key: 'resourceReady',
+        value: function resourceReady() {
+            this.onGenerateResource.dispatch(this, this.tileData);
         }
     }, {
-        key: 'generateResource',
-        value: function generateResource() {
-            this.onGenerateResource.dispatch(this, this.tileData);
+        key: 'damageReady',
+        value: function damageReady() {
+            this.onGenerateDamage.dispatch(this, this.tileData);
         }
     }, {
         key: 'showSprite',
@@ -31268,8 +31291,11 @@ var MergeTile = function (_PIXI$Container) {
             this.tileData = null;
             this.tileSprite.visible = false;
             this.animSprite = false;
-            this.updatedTimestamp = null;
-            this.generatedTimeStamp = null;
+            this.updatedResourceTimestamp = null;
+            this.updatedDamageTimestamp = null;
+            this.generateResourceTimeStamp = null;
+            this.generateResourceTimeStamp = null;
+            this.generateDamageTimeStamp = null;
             this.label.text = '';
         }
     }, {
@@ -31300,9 +31326,12 @@ var MergeTile = function (_PIXI$Container) {
             } else {
                 this.tileData = tileData;
             }
-            this.generateTime = tileData.generateTime | 2;
-            this.generatedTimeStamp = Date.now() / 1000 | 0;
-            this.updatedTimestamp = Date.now() / 1000 | 0;
+            this.generateDamageTime = tileData.generateDamageTime | 0;
+            this.generateResourceTime = tileData.generateResourceTime | 0;
+            this.generateDamageTimeStamp = Date.now() / 1000 | 0;
+            this.generateResourceTimeStamp = Date.now() / 1000 | 0;
+            this.updatedResourceTimestamp = Date.now() / 1000 | 0;
+            this.updatedDamageTimestamp = Date.now() / 1000 | 0;
             this.tileSprite.texture = PIXI.Texture.from(this.tileData.texture);
             this.updatePosition();
             this.entityScale = 1.5; //Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
@@ -31786,7 +31815,7 @@ module.exports = { "default": __webpack_require__(155), __esModule: true };
 
 __webpack_require__(156);
 __webpack_require__(165);
-module.exports = __webpack_require__(57).f('iterator');
+module.exports = __webpack_require__(58).f('iterator');
 
 
 /***/ }),
@@ -31817,8 +31846,8 @@ __webpack_require__(81)(String, 'String', function (iterated) {
 /* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(47);
-var defined = __webpack_require__(48);
+var toInteger = __webpack_require__(48);
+var defined = __webpack_require__(49);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function (TO_STRING) {
@@ -31842,9 +31871,9 @@ module.exports = function (TO_STRING) {
 
 "use strict";
 
-var create = __webpack_require__(51);
+var create = __webpack_require__(52);
 var descriptor = __webpack_require__(38);
-var setToStringTag = __webpack_require__(56);
+var setToStringTag = __webpack_require__(57);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
@@ -31862,7 +31891,7 @@ module.exports = function (Constructor, NAME, next) {
 
 var dP = __webpack_require__(18);
 var anObject = __webpack_require__(29);
-var getKeys = __webpack_require__(52);
+var getKeys = __webpack_require__(53);
 
 module.exports = __webpack_require__(19) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -31921,7 +31950,7 @@ module.exports = function (IS_INCLUDES) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(47);
+var toInteger = __webpack_require__(48);
 var min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
@@ -31932,7 +31961,7 @@ module.exports = function (it) {
 /* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(47);
+var toInteger = __webpack_require__(48);
 var max = Math.max;
 var min = Math.min;
 module.exports = function (index, length) {
@@ -31956,7 +31985,7 @@ module.exports = document && document.documentElement;
 __webpack_require__(166);
 var global = __webpack_require__(15);
 var hide = __webpack_require__(25);
-var Iterators = __webpack_require__(50);
+var Iterators = __webpack_require__(51);
 var TO_STRING_TAG = __webpack_require__(27)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
@@ -31982,7 +32011,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 var addToUnscopables = __webpack_require__(167);
 var step = __webpack_require__(168);
-var Iterators = __webpack_require__(50);
+var Iterators = __webpack_require__(51);
 var toIObject = __webpack_require__(21);
 
 // 22.1.3.4 Array.prototype.entries()
@@ -32062,24 +32091,24 @@ var $export = __webpack_require__(24);
 var redefine = __webpack_require__(82);
 var META = __webpack_require__(172).KEY;
 var $fails = __webpack_require__(30);
-var shared = __webpack_require__(54);
-var setToStringTag = __webpack_require__(56);
+var shared = __webpack_require__(55);
+var setToStringTag = __webpack_require__(57);
 var uid = __webpack_require__(39);
 var wks = __webpack_require__(27);
-var wksExt = __webpack_require__(57);
-var wksDefine = __webpack_require__(58);
+var wksExt = __webpack_require__(58);
+var wksDefine = __webpack_require__(59);
 var enumKeys = __webpack_require__(173);
 var isArray = __webpack_require__(174);
 var anObject = __webpack_require__(29);
 var isObject = __webpack_require__(26);
 var toIObject = __webpack_require__(21);
-var toPrimitive = __webpack_require__(45);
+var toPrimitive = __webpack_require__(46);
 var createDesc = __webpack_require__(38);
-var _create = __webpack_require__(51);
+var _create = __webpack_require__(52);
 var gOPNExt = __webpack_require__(175);
-var $GOPD = __webpack_require__(60);
+var $GOPD = __webpack_require__(61);
 var $DP = __webpack_require__(18);
-var $keys = __webpack_require__(52);
+var $keys = __webpack_require__(53);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -32203,10 +32232,10 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(88).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(59).f = $propertyIsEnumerable;
+  __webpack_require__(60).f = $propertyIsEnumerable;
   __webpack_require__(87).f = $getOwnPropertySymbols;
 
-  if (DESCRIPTORS && !__webpack_require__(49)) {
+  if (DESCRIPTORS && !__webpack_require__(50)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -32353,9 +32382,9 @@ var meta = module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(52);
+var getKeys = __webpack_require__(53);
 var gOPS = __webpack_require__(87);
-var pIE = __webpack_require__(59);
+var pIE = __webpack_require__(60);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -32415,14 +32444,14 @@ module.exports.f = function getOwnPropertyNames(it) {
 /* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(58)('asyncIterator');
+__webpack_require__(59)('asyncIterator');
 
 
 /***/ }),
 /* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(58)('observable');
+__webpack_require__(59)('observable');
 
 
 /***/ }),
@@ -32685,7 +32714,7 @@ if (!Math.sign) {
 
 exports.__esModule = true;
 
-var _Rectangle = __webpack_require__(63);
+var _Rectangle = __webpack_require__(64);
 
 var _Rectangle2 = _interopRequireDefault(_Rectangle);
 
@@ -32804,7 +32833,7 @@ exports.default = Circle;
 
 exports.__esModule = true;
 
-var _Rectangle = __webpack_require__(63);
+var _Rectangle = __webpack_require__(64);
 
 var _Rectangle2 = _interopRequireDefault(_Rectangle);
 
@@ -32931,7 +32960,7 @@ exports.default = Ellipse;
 
 exports.__esModule = true;
 
-var _Point = __webpack_require__(61);
+var _Point = __webpack_require__(62);
 
 var _Point2 = _interopRequireDefault(_Point);
 
@@ -33969,7 +33998,7 @@ module.exports = {
     generateUniformAccessObject: __webpack_require__(99),
     setPrecision: __webpack_require__(98),
     mapSize: __webpack_require__(95),
-    mapType: __webpack_require__(64)
+    mapType: __webpack_require__(65)
 };
 
 /***/ }),
@@ -33982,7 +34011,7 @@ module.exports = {
 exports.__esModule = true;
 exports.default = maxRecommendedTextures;
 
-var _ismobilejs = __webpack_require__(66);
+var _ismobilejs = __webpack_require__(67);
 
 var _ismobilejs2 = _interopRequireDefault(_ismobilejs);
 
@@ -35697,7 +35726,7 @@ var _const = __webpack_require__(2);
 
 var _math = __webpack_require__(7);
 
-var _CanvasTinter = __webpack_require__(72);
+var _CanvasTinter = __webpack_require__(73);
 
 var _CanvasTinter2 = _interopRequireDefault(_CanvasTinter);
 
@@ -36106,7 +36135,7 @@ var _WebGLRenderer = __webpack_require__(41);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
-var _createIndicesForQuads = __webpack_require__(73);
+var _createIndicesForQuads = __webpack_require__(74);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
@@ -36132,7 +36161,7 @@ var _pixiGlCore = __webpack_require__(11);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _bitTwiddle = __webpack_require__(69);
+var _bitTwiddle = __webpack_require__(70);
 
 var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
 
@@ -37306,7 +37335,7 @@ var _filterTransforms = __webpack_require__(217);
 
 var filterTransforms = _interopRequireWildcard(_filterTransforms);
 
-var _bitTwiddle = __webpack_require__(69);
+var _bitTwiddle = __webpack_require__(70);
 
 var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
 
@@ -38939,7 +38968,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Sprite2 = __webpack_require__(68);
+var _Sprite2 = __webpack_require__(69);
 
 var _Sprite3 = _interopRequireDefault(_Sprite2);
 
@@ -39682,7 +39711,7 @@ var _Container2 = __webpack_require__(32);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
-var _RenderTexture = __webpack_require__(71);
+var _RenderTexture = __webpack_require__(72);
 
 var _RenderTexture2 = _interopRequireDefault(_RenderTexture);
 
@@ -39694,7 +39723,7 @@ var _GraphicsData = __webpack_require__(117);
 
 var _GraphicsData2 = _interopRequireDefault(_GraphicsData);
 
-var _Sprite = __webpack_require__(68);
+var _Sprite = __webpack_require__(69);
 
 var _Sprite2 = _interopRequireDefault(_Sprite);
 
@@ -39704,7 +39733,7 @@ var _utils = __webpack_require__(3);
 
 var _const = __webpack_require__(2);
 
-var _Bounds = __webpack_require__(65);
+var _Bounds = __webpack_require__(66);
 
 var _Bounds2 = _interopRequireDefault(_Bounds);
 
@@ -43569,7 +43598,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _ismobilejs = __webpack_require__(66);
+var _ismobilejs = __webpack_require__(67);
 
 var _ismobilejs2 = _interopRequireDefault(_ismobilejs);
 
@@ -44939,7 +44968,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _CanvasTinter = __webpack_require__(72);
+var _CanvasTinter = __webpack_require__(73);
 
 var _CanvasTinter2 = _interopRequireDefault(_CanvasTinter);
 
@@ -49799,7 +49828,7 @@ var _async = __webpack_require__(135);
 
 var async = _interopRequireWildcard(_async);
 
-var _Resource = __webpack_require__(74);
+var _Resource = __webpack_require__(75);
 
 var _Resource2 = _interopRequireDefault(_Resource);
 
@@ -50621,7 +50650,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.blobMiddlewareFactory = blobMiddlewareFactory;
 
-var _Resource = __webpack_require__(74);
+var _Resource = __webpack_require__(75);
 
 var _Resource2 = _interopRequireDefault(_Resource);
 
@@ -52804,7 +52833,7 @@ var _pixiGlCore = __webpack_require__(11);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _createIndicesForQuads = __webpack_require__(73);
+var _createIndicesForQuads = __webpack_require__(74);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
@@ -53070,7 +53099,7 @@ Object.defineProperty(exports, 'canvas', {
   }
 });
 
-var _BasePrepare = __webpack_require__(75);
+var _BasePrepare = __webpack_require__(76);
 
 Object.defineProperty(exports, 'BasePrepare', {
   enumerable: true,
@@ -53113,7 +53142,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _BasePrepare2 = __webpack_require__(75);
+var _BasePrepare2 = __webpack_require__(76);
 
 var _BasePrepare3 = _interopRequireDefault(_BasePrepare2);
 
@@ -53240,7 +53269,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _BasePrepare2 = __webpack_require__(75);
+var _BasePrepare2 = __webpack_require__(76);
 
 var _BasePrepare3 = _interopRequireDefault(_BasePrepare2);
 
@@ -54007,43 +54036,41 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Game = function () {
     function Game(config, screenManager) {
+        var _this = this;
+
         (0, _classCallCheck3.default)(this, Game);
 
-        //config.width = window.screen.width;
         this.screenManager = screenManager;
-        //  width: 414,
-        // height: 736,
 
         var Renderer = config.webgl ? PIXI.autoDetectRenderer : PIXI.CanvasRenderer;
-        // let ratio = config.width / config.height;
-        // if (ratio > 0.7) {
-        //     config.width = config.height * 0.7
-        // } else if (ratio < 0.56) {
-        //     config.width = config.height * 0.5
-        // }
 
-        //config.height = window.screen.height;
+        this.desktopResolution = {
+            width: config.width,
+            height: config.height
+        };
+
         this.ratio = config.width / config.height;
         window.renderer = new PIXI.Application({
             width: config.width,
             height: config.height,
-            resolution: Math.min(window.devicePixelRatio, 1.5),
+            resolution: Math.max(window.devicePixelRatio, 2),
             antialias: false
-            // config.width || 800, config.height || 600, config.rendererOptions
-        }); //new Renderer(config.width || 800, config.height || 600, config.rendererOptions);
+        });
         document.body.appendChild(window.renderer.view);
 
         this.stage = new PIXI.Container();
-        renderer.stage.addChild(this.stage);
+        window.renderer.stage.addChild(this.stage);
 
-        //this.animationLoop = new PIXI.AnimationLoop(window.renderer);
-        //this.animationLoop.on('prerender', this.update.bind(this));
         this.resize();
 
         this.frameskip = 1;
         this.lastUpdate = Date.now();
 
         PIXI.ticker.shared.add(this._onTickEvent, this);
+
+        setTimeout(function () {
+            _this.resize();
+        }, 10);
     }
 
     (0, _createClass3.default)(Game, [{
@@ -54057,13 +54084,52 @@ var Game = function () {
         value: function resize() {
             if (window.innerWidth / window.innerHeight >= this.ratio) {
                 var w = window.innerHeight * this.ratio;
-                var h = window.innerHeight;
             } else {
-                var w = window.innerWidth;
                 var h = window.innerWidth / this.ratio;
             }
-            window.renderer.view.style.width = w + 'px';
-            window.renderer.view.style.height = h + 'px';
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+            window.renderer.view.style.position = 'absolute';
+            this.innerResolution = { width: window.innerWidth, height: window.innerHeight };
+
+            var sclX = window.innerWidth < this.desktopResolution.width ? window.innerWidth / this.desktopResolution.width : 10;
+            var sclY = window.innerHeight / this.desktopResolution.height; // window.innerHeight < this.desktopResolution.height ? window.innerHeight / this.desktopResolution.height : 1;
+
+            var scl = Math.min(sclX, sclY);
+
+            window.renderer.view.style.position = 'absolute';
+
+            var newSize = {
+                width: window.innerWidth, //* scl,
+                height: this.desktopResolution.height * scl
+            };
+
+            window.renderer.view.style.width = newSize.width + 'px';
+            window.renderer.view.style.height = newSize.height + 'px';
+
+            if (newSize.height < window.innerHeight) {
+                window.renderer.view.style.top = window.innerHeight / 2 - newSize.height / 2 + 'px';
+            }
+            if (newSize.width < window.innerWidth) {}
+            window.renderer.view.style.left = window.innerWidth / 2 - newSize.width / 2 + 'px';
+
+            if (this.screenManager) {
+                this.screenManager.resize(newSize);
+
+                this.screenManager.scale.x = config.width / newSize.width / (config.height / window.innerHeight);
+                this.screenManager.pivot.x = config.width / 2;
+                var s = newSize.width / config.width;
+                this.screenManager.x = window.innerWidth / 2 / s;
+            }
+            // if (window.innerWidth / window.innerHeight >= this.ratio) {
+            //     var w = window.innerHeight * this.ratio;
+            //     var h = window.innerHeight;
+            // } else {
+            //     var w = window.innerWidth;
+            //     var h = window.innerWidth / this.ratio;
+            // }
+            // window.renderer.view.style.width = w + 'px';
+            // window.renderer.view.style.height = h + 'px';
         }
     }, {
         key: 'update',
@@ -54574,7 +54640,7 @@ module.exports = function getOwnPropertyDescriptor(it, key) {
 
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
 var toIObject = __webpack_require__(21);
-var $getOwnPropertyDescriptor = __webpack_require__(60).f;
+var $getOwnPropertyDescriptor = __webpack_require__(61).f;
 
 __webpack_require__(144)('getOwnPropertyDescriptor', function () {
   return function getOwnPropertyDescriptor(it, key) {
@@ -54622,7 +54688,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
     function (test, buggy, set) {
       try {
-        set = __webpack_require__(78)(Function.call, __webpack_require__(60).f(Object.prototype, '__proto__').set, 2);
+        set = __webpack_require__(78)(Function.call, __webpack_require__(61).f(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) { buggy = true; }
@@ -54660,7 +54726,7 @@ module.exports = function create(P, D) {
 
 var $export = __webpack_require__(24);
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', { create: __webpack_require__(51) });
+$export($export.S, 'Object', { create: __webpack_require__(52) });
 
 
 /***/ }),
@@ -54865,6 +54931,10 @@ var _SpaceBackground = __webpack_require__(333);
 
 var _SpaceBackground2 = _interopRequireDefault(_SpaceBackground);
 
+var _gsap = __webpack_require__(45);
+
+var _gsap2 = _interopRequireDefault(_gsap);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -54879,6 +54949,12 @@ var MergeScreen = function (_Screen) {
 
                 window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
                 _this.areaConfig = window.baseConfigGame.area;
+                if (!_this.areaConfig.bottomArea) {
+                        _this.areaConfig.bottomArea = 0.2;
+                }
+                if (!_this.areaConfig.topArea) {
+                        _this.areaConfig.topArea = 0.2;
+                }
 
                 _this.spaceBackground = new _SpaceBackground2.default();
                 _this.addChild(_this.spaceBackground);
@@ -54895,9 +54971,9 @@ var MergeScreen = function (_Screen) {
 
                 _this.frontLayer.addChild(_this.backBlocker);
 
-                _this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * 0.8, config.height * 0.6);
+                _this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * 0.89, config.height * (1 - _this.areaConfig.bottomArea - _this.areaConfig.topArea));
                 _this.container.addChild(_this.gridWrapper);
-                _this.gridWrapper.visible = true;
+                _this.gridWrapper.visible = false;
 
                 _this.mergeSystemContainer = new PIXI.Container();
                 _this.container.addChild(_this.mergeSystemContainer);
@@ -54907,6 +54983,9 @@ var MergeScreen = function (_Screen) {
 
                 _this.bottomContainer = new PIXI.Container();
                 _this.container.addChild(_this.bottomContainer);
+
+                _this.topContainer = new PIXI.Container();
+                _this.container.addChild(_this.topContainer);
 
                 _this.dataTiles = [];
 
@@ -54918,23 +54997,55 @@ var MergeScreen = function (_Screen) {
                         var text = new PIXI.Text(pow, LABELS.LABEL1);
                         text.style.fill = 0xFFFFFF;
                         text.style.fontSize = 64;
-                        console.log(window.baseConfigGame.entities.list[index].imageSrc);
                         var tex = new PIXI.Texture.from(window.baseConfigGame.entities.list[index].imageSrc); //utils.generateTextureFromContainer('image-' + index, text, window.TILE_ASSSETS_POOL)
                         _this.dataTiles.push({
                                 id: index,
-                                value: pow,
                                 texture: tex,
-                                generateTime: 3
+                                value: pow,
+                                resources: pow * 1.5,
+                                generateResourceTime: 3,
+                                damage: pow * 1.5 * index,
+                                generateDamageTime: 5
                         });
                 }
+                var d = {
+                        initialCost: 4,
+                        coefficient: 1.1,
+                        initialTime: 0.6,
+                        initialRevenue: 1,
+                        coefficientProductivity: 1.1,
+                        initialProductivity: 2
+                };
 
+                var mult = 1;
+
+                var acc1 = 0;
+                var acc2 = 0;
+                for (var _index = 0; _index < 100; _index++) {
+                        //console.log(d.initialCost * Math.pow(d.coefficient, index))// * Math.pow(i, d.coefficient))
+                        //console.log(d.initialProductivity * Math.pow(d.coefficientProductivity, index))// * Math.pow(i, d.coefficient))
+                        var sim = d.initialProductivity * Math.pow(d.coefficientProductivity, _index);
+                        acc1 += sim;
+                        var cost = d.initialCost * Math.pow(d.coefficient, _index);
+                        acc2 += cost;
+
+                        console.log(_utils2.default.formatPointsLabel(cost), _utils2.default.formatPointsLabel(sim));
+                        //console.log(d.initialProductivity * index * mult)
+                }
+                console.log(_utils2.default.formatPointsLabel(acc2), _utils2.default.formatPointsLabel(acc1));
+
+                //if own 10 nextCost=initial * (Math.pow(coefficient, 10)
+                console.log(_this.dataTiles);
                 _this.mergeSystem1 = new _MergeSystem2.default({
                         mainContainer: _this.mergeSystemContainer,
                         uiContainer: _this.uiContainer,
-                        wrapper: _this.gridWrapper
+                        wrapper: _this.gridWrapper,
+                        topContainer: _this.topContainer
                 }, window.baseConfigGame, _this.dataTiles);
 
-                _this.mergeSystem1.onGetResources.add(_this.addParticles.bind(_this));
+                _this.mergeSystem1.onGetResources.add(_this.addResourceParticles.bind(_this));
+                _this.mergeSystem1.onDealDamage.add(_this.addDamageParticles.bind(_this));
+                _this.mergeSystem1.onPopLabel.add(_this.popLabel.bind(_this));
 
                 _this.entityDragSprite = new PIXI.Sprite.from('');
                 _this.addChild(_this.entityDragSprite);
@@ -54951,20 +55062,57 @@ var MergeScreen = function (_Screen) {
                 _this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
                 _this.container.addChild(_this.resourcesLabel);
 
+                _this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
+                _this.container.addChild(_this.rpsLabel);
+
                 _this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
                 _this.container.addChild(_this.dpsLabel);
 
                 _this.particleSystem = new _ParticleSystem2.default();
                 _this.addChild(_this.particleSystem);
 
+                _this.speedUpToggle = new _UIButton2.default(0xFFFFFF, 'smallButton');
+                _this.container.addChild(_this.speedUpToggle);
+                _this.speedUpToggle.y = 30;
+                _this.speedUpToggle.onClick.add(function () {
+                        if (window.TIME_SCALE > 1) {
+                                window.TIME_SCALE = 1;
+                        } else {
+                                window.TIME_SCALE = 10;
+                        }
+
+                        _gsap2.default.globalTimeScale(window.TIME_SCALE);
+                });
+
+                window.TIME_SCALE = 1;
                 return _this;
         }
 
         (0, _createClass3.default)(MergeScreen, [{
-                key: 'addParticles',
-                value: function addParticles(targetPosition, customData, label) {
-                        this.particleSystem.show(targetPosition, 5, customData);
-                        this.particleSystem.popLabel(targetPosition, "+" + label, 0, 1, 1, LABELS.LABEL1);
+                key: 'popLabel',
+                value: function popLabel(targetPosition, label) {
+                        var toLocal = this.particleSystem.toLocal(targetPosition);
+
+                        this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL1);
+                }
+        }, {
+                key: 'addDamageParticles',
+                value: function addDamageParticles(targetPosition, customData, label, quant) {
+                        var toLocal = this.particleSystem.toLocal(targetPosition);
+
+                        this.particleSystem.show(toLocal, quant, customData);
+                        //this.particleSystem.popLabel(targetPosition, "+" + label, 0, 1, 1, LABELS.LABEL1)
+                }
+        }, {
+                key: 'addResourceParticles',
+                value: function addResourceParticles(targetPosition, customData, label, quant) {
+                        var toLocal = this.particleSystem.toLocal(targetPosition);
+                        for (var index = 0; index < quant; index++) {
+
+                                customData.target = { x: this.resourcesLabel.x, y: this.resourcesLabel.y, timer: 0.2 + Math.random() * 0.75 };
+                                this.particleSystem.show(toLocal, 1, customData);
+                        }
+                        this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL1);
                 }
         }, {
                 key: 'onMouseMove',
@@ -54991,13 +55139,17 @@ var MergeScreen = function (_Screen) {
         }, {
                 key: 'update',
                 value: function update(delta) {
+
+                        delta *= window.TIME_SCALE;
                         this.mergeSystem1.update(delta);
                         this.particleSystem.update(delta);
 
                         this.resourcesLabel.text = _utils2.default.formatPointsLabel(this.mergeSystem1.resources);
-                        this.resourcesLabel.y = 10;
-                        this.dpsLabel.text = _utils2.default.formatPointsLabel(this.mergeSystem1.dps) + "/ps";
-                        this.dpsLabel.y = 30;
+
+                        this.rpsLabel.text = _utils2.default.formatPointsLabel(this.mergeSystem1.rps) + "/rps";
+
+                        this.dpsLabel.text = _utils2.default.formatPointsLabel(this.mergeSystem1.dps) + "/dps";
+
                         this.timestamp = Date.now() / 1000 | 0;
 
                         this.spaceBackground.update(delta);
@@ -55009,6 +55161,11 @@ var MergeScreen = function (_Screen) {
                         this.spaceBackground.resize(resolution, resolution);
                         this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2;
                         this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height;
+
+                        this.dpsLabel.y = config.height - 70;
+                        this.rpsLabel.y = config.height - 50;
+                        this.resourcesLabel.x = config.width - this.resourcesLabel.width;
+                        this.resourcesLabel.y = config.height - 50;
                 }
         }, {
                 key: 'transitionOut',
@@ -55230,7 +55387,7 @@ var _signals = __webpack_require__(23);
 
 var signals = _interopRequireWildcard(_signals);
 
-var _gsap = __webpack_require__(76);
+var _gsap = __webpack_require__(45);
 
 var _gsap2 = _interopRequireDefault(_gsap);
 
@@ -55494,19 +55651,23 @@ var MergeSystem = function () {
 
         (0, _classCallCheck3.default)(this, MergeSystem);
 
+
+        this.gameplayData = data.general;
+
         this.container = containers.mainContainer;
         this.uiContainer = containers.uiContainer;
         this.wrapper = containers.wrapper;
+        this.topContainer = containers.topContainer;
 
         this.slotSize = data.slotSize;
         this.area = data.area;
         this.onGetResources = new _signals2.default();
+        this.onDealDamage = new _signals2.default();
+        this.onPopLabel = new _signals2.default();
 
         this.slotsContainer = new PIXI.Container();
         this.container.addChild(this.slotsContainer);
 
-        this.topContainer = new PIXI.Container();
-        this.container.addChild(this.topContainer);
         this.dataTiles = dataTiles;
         var matrix = _utils2.default.cloneMatrix(data.gameMap);
 
@@ -55538,6 +55699,7 @@ var MergeSystem = function () {
         };
         this.resources = 0;
         this.dps = 0;
+        this.rps = 0;
         this.slots = [];
 
         for (var i = 0; i < matrix.length; i++) {
@@ -55559,8 +55721,11 @@ var MergeSystem = function () {
 
         this.addPieceGenerator();
         this.addPieceGenerator();
-
         this.adjustSlotsPosition();
+
+        this.enemy = new PIXI.Sprite.from('capital_ship_05');
+        this.topContainer.addChild(this.enemy);
+        this.enemy.anchor.set(0.5);
 
         this.entityDragSprite = new PIXI.Sprite.from('');
         this.uiContainer.addChild(this.entityDragSprite);
@@ -55577,7 +55742,7 @@ var MergeSystem = function () {
         value: function addPieceGenerator() {
             var _this2 = this;
 
-            var piece = new _ChargerTile2.default(0, 0, this.slotSize.width, 'spark2', 1);
+            var piece = new _ChargerTile2.default(0, 0, this.slotSize.width, 'spark2', this.gameplayData.entityGeneratorBaseTime);
             piece.isGenerator = true;
 
             var targetScale = _config2.default.height * 0.2 / piece.height;
@@ -55586,13 +55751,17 @@ var MergeSystem = function () {
             this.uiContainer.addChild(piece);
 
             piece.onHold.add(function (slot) {
+                if (!slot.tileData) {
+                    return;
+                }
                 _this2.startDrag(slot);
             });
             piece.onEndHold.add(function (slot) {
+                if (!slot.tileData) {
+                    return;
+                }
                 _this2.endDrag(slot);
-
                 setTimeout(function () {
-
                     if (!slot.tileData) {
                         slot.startCharging();
                     }
@@ -55621,14 +55790,6 @@ var MergeSystem = function () {
     }, {
         key: 'adjustSlotsPosition',
         value: function adjustSlotsPosition() {
-            var lastLine = this.slots[this.slots.length - 1][0];
-            var diff = 0; //
-            // for (var i = 0; i < this.slots.length; i++) {
-            //     for (var j = 0; j < this.slots[i].length; j++) {
-            //         if (this.slots[i][j])
-            //             this.slots[i][j].y += diff * 0.5
-            //     }
-            // }
             this.updateAllData();
         }
     }, {
@@ -55686,18 +55847,45 @@ var MergeSystem = function () {
                 _this3.releaseEntity(slot);
             });
             slot.onGenerateResource.add(function (slot, data) {
-                _this3.resources += data.value;
+
+                _this3.resources += data.resources;
 
                 var customData = {};
                 customData.texture = 'spark2';
                 customData.scale = 0.01;
+                customData.alphaDecress = 0.1;
+                // customData.gravity = 0
+                // customData.alphaDecress = 0
+                // customData.forceX = 0
+                // customData.forceY = 200
+
                 var targetPos = slot.tileSprite.getGlobalPosition();
-                _this3.onGetResources.dispatch(targetPos, customData, data.value);
+                _this3.onGetResources.dispatch(targetPos, customData, data.resources, 5);
+            });
+            slot.onGenerateDamage.add(function (slot, data) {
+                var customData = {};
+                customData.texture = 'spark2';
+                customData.scale = 0.01;
+
+                customData.gravity = 0;
+                customData.alphaDecress = 0;
+                customData.target = { x: _this3.enemy.x, y: _this3.enemy.y, timer: 0.2 };
+                customData.forceX = 0;
+                customData.forceY = 200;
+                customData.tint = 0x5588FF;
+                customData.callback = _this3.dispatchDamageParticle.bind(_this3, data);
+                var targetPos = slot.tileSprite.getGlobalPosition();
+                _this3.onDealDamage.dispatch(targetPos, customData, data.damage, 1);
             });
 
             this.slotsContainer.addChild(slot);
 
             this.adjustSlotsPosition();
+        }
+    }, {
+        key: 'dispatchDamageParticle',
+        value: function dispatchDamageParticle(data) {
+            this.onPopLabel.dispatch(this.enemy.getGlobalPosition(), data.damage);
         }
     }, {
         key: 'startDrag',
@@ -55791,6 +55979,7 @@ var MergeSystem = function () {
         key: 'updateAllData',
         value: function updateAllData() {
             this.dps = _utils2.default.findDPS(this.slots);
+            this.rps = _utils2.default.findRPS(this.slots);
 
             var clone = _utils2.default.cloneMatrix(this.slots);
 
@@ -55832,6 +56021,11 @@ var MergeSystem = function () {
             }
             this.currentResolution.width = resolution.width;
             this.currentResolution.height = resolution.height;
+
+            this.enemy.x = _config2.default.width / 2;
+            this.enemy.y = _config2.default.height * this.area.topArea * 0.5;
+
+            //console.log(resolution, this.area)
 
             this.updateGridPosition();
         }
@@ -55946,6 +56140,8 @@ var ChargerTile = function (_MergeTile) {
         _this.addChild(_this.progressBar);
         _this.progressBar.visible = false;
 
+        _this.progressBar.y = size;
+
         return _this;
     }
 
@@ -55965,6 +56161,7 @@ var ChargerTile = function (_MergeTile) {
     }, {
         key: 'startCharging',
         value: function startCharging() {
+            this.tileData = null;
             this.currentChargeTime = this.defaultChargeTime;
             this.progressBar.visible = true;
             this.progressBar.setProgressBar(0, 0xFF00ff);
@@ -56012,7 +56209,7 @@ var _inherits2 = __webpack_require__(10);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _gsap = __webpack_require__(76);
+var _gsap = __webpack_require__(45);
 
 var _gsap2 = _interopRequireDefault(_gsap);
 
@@ -56136,7 +56333,8 @@ var ProgressBar = function (_PIXI$Container) {
             }
 
             this.loadingBarFill.visible = true;
-            value = Math.max(value, 0.1);
+            value = Math.max(value, 0);
+            this.loadingBarFill.visible = value > 0.075;
             this.currentValue = value;
             this.loadingBarFill.tint = color;
             this.loadingBarFill.width = (this.sizeWidth - this.round / 2) * value;
@@ -56195,7 +56393,7 @@ var _StarParticle = __webpack_require__(334);
 
 var _StarParticle2 = _interopRequireDefault(_StarParticle);
 
-var _gsap = __webpack_require__(76);
+var _gsap = __webpack_require__(45);
 
 var _gsap2 = _interopRequireDefault(_gsap);
 
@@ -56245,9 +56443,9 @@ var SpaceBackground = function (_PIXI$Container) {
 
 		(0, _createClass3.default)(SpaceBackground, [{
 				key: 'resize',
-				value: function resize(scaledResolution, innerResolution) {
+				value: function resize(innerResolution) {
 
-						//this.innerResolution = innerResolution;
+						this.innerResolution = innerResolution;
 						this.background.width = innerResolution.width;
 						this.background.height = innerResolution.height;
 
@@ -60183,11 +60381,11 @@ var assets = [{
 	"id": "dream2",
 	"url": "assets/audio\\dream2.mp3"
 }, {
-	"id": "coins_04",
-	"url": "assets/audio\\fx\\coins_04.mp3"
-}, {
 	"id": "Assets_Audio_dashSimple",
 	"url": "assets/audio\\fx\\Assets_Audio_dashSimple.mp3"
+}, {
+	"id": "coins_04",
+	"url": "assets/audio\\fx\\coins_04.mp3"
 }, {
 	"id": "dropTile",
 	"url": "assets/audio\\fx\\dropTile.mp3"
@@ -60198,14 +60396,14 @@ var assets = [{
 	"id": "getstar",
 	"url": "assets/audio\\fx\\getstar.mp3"
 }, {
+	"id": "getThemAll",
+	"url": "assets/audio\\fx\\getThemAll.mp3"
+}, {
 	"id": "Harp-Flutter-02",
 	"url": "assets/audio\\fx\\Harp-Flutter-02.mp3"
 }, {
 	"id": "item",
 	"url": "assets/audio\\fx\\item.mp3"
-}, {
-	"id": "getThemAll",
-	"url": "assets/audio\\fx\\getThemAll.mp3"
 }, {
 	"id": "kill",
 	"url": "assets/audio\\fx\\kill.mp3"
@@ -60216,29 +60414,29 @@ var assets = [{
 	"id": "Musical-Beep-Loop-02",
 	"url": "assets/audio\\fx\\Musical-Beep-Loop-02.mp3"
 }, {
-	"id": "place",
-	"url": "assets/audio\\fx\\place.mp3"
-}, {
-	"id": "place2",
-	"url": "assets/audio\\fx\\place2.mp3"
-}, {
 	"id": "Ping-Slide-Down",
 	"url": "assets/audio\\fx\\Ping-Slide-Down.mp3"
+}, {
+	"id": "place",
+	"url": "assets/audio\\fx\\place.mp3"
 }, {
 	"id": "place3",
 	"url": "assets/audio\\fx\\place3.mp3"
 }, {
-	"id": "Pop-Low-Pitch-Up-02",
-	"url": "assets/audio\\fx\\Pop-Low-Pitch-Up-02.mp3"
+	"id": "place2",
+	"url": "assets/audio\\fx\\place2.mp3"
 }, {
 	"id": "Pop-Musical",
 	"url": "assets/audio\\fx\\Pop-Musical.mp3"
 }, {
-	"id": "pop",
-	"url": "assets/audio\\fx\\pop.mp3"
-}, {
 	"id": "Pop-Tone",
 	"url": "assets/audio\\fx\\Pop-Tone.mp3"
+}, {
+	"id": "Pop-Low-Pitch-Up-02",
+	"url": "assets/audio\\fx\\Pop-Low-Pitch-Up-02.mp3"
+}, {
+	"id": "pop",
+	"url": "assets/audio\\fx\\pop.mp3"
 }, {
 	"id": "pop2",
 	"url": "assets/audio\\fx\\pop2.mp3"
@@ -60246,14 +60444,14 @@ var assets = [{
 	"id": "shoosh",
 	"url": "assets/audio\\fx\\shoosh.mp3"
 }, {
+	"id": "teleport",
+	"url": "assets/audio\\fx\\teleport.mp3"
+}, {
 	"id": "Tap-01",
 	"url": "assets/audio\\fx\\Tap-01.mp3"
 }, {
 	"id": "Whoosh",
 	"url": "assets/audio\\fx\\Whoosh.mp3"
-}, {
-	"id": "teleport",
-	"url": "assets/audio\\fx\\teleport.mp3"
 }];
 
 exports.default = assets;

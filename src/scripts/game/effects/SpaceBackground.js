@@ -43,9 +43,9 @@ export default class SpaceBackground extends PIXI.Container {
 		window.fxSpeed = 1;
 	}
 	
-	resize(scaledResolution, innerResolution) {
+	resize(innerResolution) {
 
-		//this.innerResolution = innerResolution;
+		this.innerResolution = innerResolution;
 		this.background.width = innerResolution.width
 		this.background.height = innerResolution.height
 

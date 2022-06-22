@@ -79,6 +79,9 @@ export default class ParticleSystem extends PIXI.Container
                         {
                             coin.parent.removeChild(coin);
                         }
+                        if(coin.callback){
+                            coin.callback();
+                        }
                         window.COINS_POOL.push(coin);
                         this.particles.splice(i, 1)
                     }
@@ -154,13 +157,14 @@ export default class ParticleSystem extends PIXI.Container
             coin.alphaDecress = (customData.alphaDecress != undefined ? customData.alphaDecress : 1)
             coin.x = position.x;
             coin.y = position.y;
+            coin.callback = customData.callback;
             coin.angSpeed = customData.angSpeed || 0
             coin.rotation = 0;
             coin.anchor.set(0.5)
             coin.scale.set(1)
             coin.delay = (customData.delay != undefined ? customData.delay : 0)
             let scl = customData.scale || 0.03
-            coin.timer = 0;
+            coin.timer =  (customData.timer != undefined ? customData.timer : 0)
             coin.target = customData.target
             if (coin.target)
             {

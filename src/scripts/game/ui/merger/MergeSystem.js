@@ -7,19 +7,23 @@ import MergeTile from './MergeTile';
 
 export default class MergeSystem {
     constructor(containers, data, dataTiles) {
+
+        this.gameplayData = data.general;
+
         this.container = containers.mainContainer;
         this.uiContainer = containers.uiContainer;
         this.wrapper = containers.wrapper;
+        this.topContainer = containers.topContainer;
 
         this.slotSize = data.slotSize;
         this.area = data.area;
         this.onGetResources = new Signals();
+        this.onDealDamage = new Signals();
+        this.onPopLabel = new Signals();
 
         this.slotsContainer = new PIXI.Container();
         this.container.addChild(this.slotsContainer)
 
-        this.topContainer = new PIXI.Container();
-        this.container.addChild(this.topContainer)
         this.dataTiles = dataTiles;
         let matrix = utils.cloneMatrix(data.gameMap)
 
@@ -52,6 +56,7 @@ export default class MergeSystem {
         }
         this.resources = 0;
         this.dps = 0;
+        this.rps = 0;
         this.slots = [];
 
         for (var i = 0; i < matrix.length; i++) {
@@ -73,9 +78,12 @@ export default class MergeSystem {
 
         this.addPieceGenerator();
         this.addPieceGenerator();
+        this.adjustSlotsPosition();
 
-        this.adjustSlotsPosition()
 
+        this.enemy = new PIXI.Sprite.from('capital_ship_05');
+        this.topContainer.addChild(this.enemy);
+        this.enemy.anchor.set(0.5)
 
         this.entityDragSprite = new PIXI.Sprite.from('');
         this.uiContainer.addChild(this.entityDragSprite);
@@ -87,8 +95,9 @@ export default class MergeSystem {
         }, 1);
     }
     addPieceGenerator() {
-        let piece = new ChargerTile(0, 0, this.slotSize.width, 'spark2', 1);
+        let piece = new ChargerTile(0, 0, this.slotSize.width, 'spark2', this.gameplayData.entityGeneratorBaseTime);
         piece.isGenerator = true;
+        
 
         let targetScale = config.height * 0.2 / piece.height
         piece.scale.set(Math.min(targetScale, 1))
@@ -96,13 +105,17 @@ export default class MergeSystem {
         this.uiContainer.addChild(piece);
 
         piece.onHold.add((slot) => {
+            if(!slot.tileData){
+                return;
+            }
             this.startDrag(slot)
         });
         piece.onEndHold.add((slot) => {
+            if(!slot.tileData){
+                return;
+            }
             this.endDrag(slot)
-
             setTimeout(() => {
-
                 if (!slot.tileData) {
                     slot.startCharging()
                 }
@@ -128,14 +141,6 @@ export default class MergeSystem {
         }
     }
     adjustSlotsPosition() {
-        let lastLine = this.slots[this.slots.length - 1][0]
-        let diff = 0//
-        // for (var i = 0; i < this.slots.length; i++) {
-        //     for (var j = 0; j < this.slots[i].length; j++) {
-        //         if (this.slots[i][j])
-        //             this.slots[i][j].y += diff * 0.5
-        //     }
-        // }
         this.updateAllData()
     }
     levelUp() {
@@ -188,19 +193,46 @@ export default class MergeSystem {
             this.releaseEntity(slot)
         });
         slot.onGenerateResource.add((slot, data) => {
-            this.resources += data.value
+
+            this.resources += data.resources
 
             let customData = {}
             customData.texture = 'spark2'
             customData.scale = 0.01
+            customData.alphaDecress = 0.1
+            // customData.gravity = 0
+            // customData.alphaDecress = 0
+            // customData.forceX = 0
+            // customData.forceY = 200
+
             let targetPos = slot.tileSprite.getGlobalPosition()
-            this.onGetResources.dispatch(targetPos, customData, data.value)
+            this.onGetResources.dispatch(targetPos, customData, data.resources, 5)
+
+        });
+        slot.onGenerateDamage.add((slot, data) => {
+            let customData = {}
+            customData.texture = 'spark2'
+            customData.scale = 0.01
+
+            customData.gravity = 0
+            customData.alphaDecress = 0
+            customData.target = { x: this.enemy.x, y: this.enemy.y, timer: 0.2 }
+            customData.forceX = 0
+            customData.forceY = 200
+            customData.tint = 0x5588FF
+            customData.callback = this.dispatchDamageParticle.bind(this, data)
+            let targetPos = slot.tileSprite.getGlobalPosition()
+            this.onDealDamage.dispatch(targetPos, customData, data.damage, 1)
 
         });
 
         this.slotsContainer.addChild(slot);
 
         this.adjustSlotsPosition()
+    }
+    dispatchDamageParticle(data){
+        this.onPopLabel.dispatch(this.enemy.getGlobalPosition(), data.damage)
+
     }
     startDrag(slot) {
         this.draggingEntity = true;
@@ -289,6 +321,7 @@ export default class MergeSystem {
     }
     updateAllData() {
         this.dps = utils.findDPS(this.slots);
+        this.rps = utils.findRPS(this.slots);
 
         let clone = utils.cloneMatrix(this.slots)
 
@@ -329,6 +362,11 @@ export default class MergeSystem {
         }
         this.currentResolution.width = resolution.width;
         this.currentResolution.height = resolution.height;
+
+        this.enemy.x = config.width / 2;
+        this.enemy.y = config.height * this.area.topArea*0.5;
+
+        //console.log(resolution, this.area)
 
         this.updateGridPosition();
 
