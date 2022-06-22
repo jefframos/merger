@@ -65,15 +65,15 @@ export default class MergeSystem {
         for (var i = 0; i < matrix.length; i++) {
             for (var j = 0; j < matrix[i].length; j++) {
                 let slotID = matrix[i][j];
-                if (slotID >= 0) {
+                if (slotID == 0) {
                     this.addSlot(i, j);
                 }
             }
         }
-        
+
         this.addPieceGenerator();
         this.addPieceGenerator();
-        
+
         this.adjustSlotsPosition()
 
 
@@ -82,12 +82,12 @@ export default class MergeSystem {
         this.entityDragSprite.visible = false;
 
         //force to resize
-        setTimeout(() => {            
+        setTimeout(() => {
             this.resize(config, true)
         }, 1);
     }
     addPieceGenerator() {
-        let piece = new ChargerTile(0, 0, this.slotSize.width, 'l0_spader_1_1', 1);
+        let piece = new ChargerTile(0, 0, this.slotSize.width, 'spark2', 1);
         piece.isGenerator = true;
 
         let targetScale = config.height * 0.2 / piece.height
@@ -149,7 +149,7 @@ export default class MergeSystem {
             }
         }
 
-        
+
     }
     update(delta) {
         this.pieceGeneratorsList.forEach(piece => {
@@ -171,7 +171,7 @@ export default class MergeSystem {
         this.updateBottomPosition();
     }
     addSlot(i, j, type) {
-        let slot = new MergeTile(i, j, this.slotSize.width, 'l0_spader_1_1');
+        let slot = new MergeTile(i, j, this.slotSize.width, 'spark2');
         this.slots[i][j] = slot;
 
         slot.x = (this.slotSize.width + this.slotSize.distance) * j - this.slotSize.distance
@@ -209,8 +209,12 @@ export default class MergeSystem {
         this.entityDragSprite.texture = tex;
         this.entityDragSprite.visible = true;
         this.entityDragSprite.scale.set(slot.tileSprite.scale.y);
-        this.entityDragSprite.anchor.set(0.5, 0.5);
-        this.entityDragSprite.alpha = 0.5
+        if (window.isMobile) {
+            this.entityDragSprite.anchor.set(0.5, 2);
+        } else {
+            this.entityDragSprite.anchor.set(0.5, 0.5);
+        }
+        this.entityDragSprite.alpha = 0.85
         this.updateMouse();
     }
     endDrag(slot) {
@@ -305,10 +309,10 @@ export default class MergeSystem {
 
                     slot.y = ((this.slotSize.height + this.slotSize.distance)) * i
 
-                    let scale = ((slot.y + this.slotSize.distance)  / this.fixedSize.height) * 0.3 + 0.7
+                    let scale = ((slot.y + this.slotSize.distance) / this.fixedSize.height) * this.area.perspective + (1 - this.area.perspective)
                     slot.scale.set(scale)
-                    slot.x = ((this.slotSize.width + this.slotSize.distance)* scale) * j + (horizontal * this.slotSize.width*( 1 -scale)) / 2 - this.slotSize.distance
-                    slot.y = ((this.slotSize.height + this.slotSize.distance) * scale) * i + (this.slotSize.distance * scale)*vertical +  this.slotSize.distance
+                    slot.x = ((this.slotSize.width + this.slotSize.distance) * scale) * j + (horizontal * this.slotSize.width * (1 - scale)) / 2 - this.slotSize.distance
+                    slot.y = ((this.slotSize.height + this.slotSize.distance) * scale) * i + (this.slotSize.distance * scale) * vertical + this.slotSize.distance
                 }
             }
         }
@@ -327,7 +331,7 @@ export default class MergeSystem {
         this.currentResolution.height = resolution.height;
 
         this.updateGridPosition();
-        
+
     }
     updateGridPosition() {
 

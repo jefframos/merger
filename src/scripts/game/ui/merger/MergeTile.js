@@ -21,8 +21,8 @@ export default class MergeTile extends PIXI.Container {
 
         this.container.addChild(this.backSlot)
 
-        this.label = new PIXI.Text(i + '-' + j, LABELS.LABEL1);
-        //this.container.addChild(this.label)
+        this.label = new PIXI.Text('', LABELS.LABEL1);
+        this.container.addChild(this.label)
         this.label.x = this.backSlot.width / 2 - this.label.width / 2;
 
         this.tileSprite = new PIXI.Sprite.from('');
@@ -63,33 +63,50 @@ export default class MergeTile extends PIXI.Container {
         this.generateTime = 2;
         this.isGenerator = false;
 
+        this.positionOffset = { x: 0, y: 0 }
 
+        this.sin = Math.random();
+
+
+    }
+
+    updatePosition(){
+        this.positionOffset.y = this.entityScale + Math.cos(this.sin) * 4
+
+        this.tileSprite.x = this.backSlot.width / 2;
+        this.tileSprite.y = this.backSlot.height / 2 + this.positionOffset.y;
     }
     update(delta, dateTimeStamp) {
         if (this.animSprite) {
-            this.sin += delta * 5;
+            this.sin += delta;
             this.sin %= Math.PI * 2;
-            this.tileSprite.scale.x = (this.entityScale * this.dir) + Math.sin(this.sin) * 0.02
-            this.tileSprite.scale.y = this.entityScale + Math.cos(this.sin) * 0.02
+            // this.tileSprite.scale.x = (this.entityScale * this.dir) + Math.sin(this.sin) * 0.02
+            //this.tileSprite.scale.y = this.entityScale + Math.cos(this.sin) * 0.02
+
+            //this.positionOffset.y = Math.round(this.positionOffset.y)
+
+        this.updatePosition();
+           
+
         }
 
-        if(this.updatedTimestamp){
+        if (this.updatedTimestamp) {
             //console.log(dateTimeStamp - this.updatedTimestamp);
 
             this.generate = dateTimeStamp - this.updatedTimestamp
-            if(this.generate >= this.generateTime){
+            if (this.generate >= this.generateTime) {
                 this.updatedTimestamp = (Date.now() / 1000 | 0);
                 this.generateResource();
             }
         }
     }
     updateDir(mousePos) {
-    	// let local = this.toLocal(mousePos)
-    	// if(local.x < this.backSlot.width / 2){
-    	// 	this.dir = -1;
-    	// }else{
-    	// 	this.dir = 1;
-    	// }
+        // let local = this.toLocal(mousePos)
+        // if(local.x < this.backSlot.width / 2){
+        // 	this.dir = -1;
+        // }else{
+        // 	this.dir = 1;
+        // }
     }
     generateResource() {
         this.onGenerateResource.dispatch(this, this.tileData);
@@ -108,8 +125,9 @@ export default class MergeTile extends PIXI.Container {
         this.animSprite = false;
         this.updatedTimestamp = null;
         this.generatedTimeStamp = null;
+        this.label.text = ''
     }
-    isEmpty(){
+    isEmpty() {
         if (!this.tileData) {
             return true;
         }
@@ -123,7 +141,7 @@ export default class MergeTile extends PIXI.Container {
         return this.tileSprite.texture;
     }
     addEntity(tileData) {
-    	//console.log(tileData);
+        //console.log(tileData);
         if (this.tileData) {
             return;
         } else {
@@ -133,18 +151,19 @@ export default class MergeTile extends PIXI.Container {
         this.generatedTimeStamp = (Date.now() / 1000 | 0);
         this.updatedTimestamp = (Date.now() / 1000 | 0);
         this.tileSprite.texture = PIXI.Texture.from(this.tileData.texture);
-        this.tileSprite.x = this.backSlot.width / 2;
-        this.tileSprite.y = this.backSlot.height / 2;
-        this.entityScale = 1//Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
+        this.updatePosition()
+        this.entityScale = 1.5//Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
         this.tileSprite.scale.set(0, 2);
+        this.tileSprite.anchor.set(0.5)
         this.sin = Math.random();
+        this.label.text = this.tileData.value
         this.showSprite()
         TweenLite.to(this.tileSprite.scale, 0.5, {
-            x: this.entityScale * this.dir,
+            x: this.entityScale,
             y: this.entityScale,
             ease: Elastic.easeOut,
-            onComplete:()=>{
-            	this.animSprite = true;
+            onComplete: () => {
+                this.animSprite = true;
             }
         })
 
@@ -192,16 +211,16 @@ export default class MergeTile extends PIXI.Container {
     }
     onMouseDown(e) {
         this.mouseDown = true;
-        if(this.lockIcon.visible){
+        if (this.lockIcon.visible) {
             this.lockIcon.visible = false;
-        }else{
+        } else {
             this.hold();
         }
         // this.holdTimeout = setTimeout(() => {
         // }, 200);
     }
 
-    addLocker(){
+    addLocker() {
         this.lockIcon.visible = true;
     }
 
@@ -209,12 +228,14 @@ export default class MergeTile extends PIXI.Container {
         this.holding = false;
         this.onEndHold.dispatch(this);
         this.backSlot.tint = 0xFFFFFF
+        this.label.visible = true
     }
 
     hold() {
-    	if(!this.tileData){
-    		return;
-    	}
+        if (!this.tileData) {
+            return;
+        }
+        this.label.visible = false
         this.holding = true;
         this.onHold.dispatch(this);
         this.backSlot.tint = 0xFF0000

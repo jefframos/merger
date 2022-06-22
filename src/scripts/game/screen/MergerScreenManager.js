@@ -3,9 +3,6 @@ import ScreenManager from '../../screenManager/ScreenManager';
 import config from '../../config';
 import utils from '../../utils';
 import ParticleSystem from '../effects/ParticleSystem';
-import FbManager from '../../fb/FbManager'
-import GameScreen from './GameScreen';
-import MainScreen from './MainScreen';
 import MergeScreen from './MergeScreen';
 import StandardPopUp from './popup/StandardPop'
 
@@ -29,15 +26,7 @@ export default class MergerScreenManager extends ScreenManager {
         this.addChild(this.backgroundContainer);
         this.setChildIndex(this.backgroundContainer, 0);
 
-        let bgColor = new PIXI.Graphics().beginFill(0x12073f).drawRect(0, 0, config.width, config.height);
-        this.backgroundContainer.addChild(bgColor)
-
-        // goodboy.height = config.height;
-        let bigBlur = new PIXI.Sprite(PIXI.Texture.from('bigblur'));
-        this.backgroundContainer.addChild(bigBlur)
-        bigBlur.width = config.width;
-        bigBlur.height = config.height;
-        bigBlur.alpha = 0.2
+       
 
         let vignette = new PIXI.Sprite(PIXI.Texture.from('vignette'));
         this.backgroundContainer.addChild(vignette)

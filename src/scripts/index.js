@@ -2,13 +2,9 @@ import globals from './globals';
 import plugins from './plugins';
 
 import Game from './Game';
-import GameData from './game/data/GameData';
 import LocalStorage from './game/data/LocalStorage';
-import PartyData from './game/data/PartyData';
 import CookieManager from './game/CookieManager';
-import HellScreenManager from './game/screen/HellScreenManager';
 import MergerScreenManager from './game/screen/MergerScreenManager';
-import GameScreen from './game/screen/GameScreen';
 
 import SoundManager from './soundManager/SoundManager'
 import SoundManagerCordova from './soundManager/SoundManagerCordova'
@@ -16,12 +12,10 @@ import jsonManifest from './manifests/manifest-json'
 import imageManifest from './manifests/manifest-image'
 import audioManifest from './manifests/manifest-audio'
 import spritesheetManifest from './manifests/manifest'
-import FbManager from './fb/FbManager'
 
 
 
 window.STORAGE = new LocalStorage();
-window.PARTY_DATA = new PartyData();
 
 window.GAME_ID = 572860816402905
 
@@ -107,7 +101,6 @@ function configGame(evt) {
     SOUND_MANAGER.load(audioManifest);
     // FbManager.start()
     // console.log(CAT_LIST);
-    window.GAME_DATA = new GameData();
     let sotrageData = STORAGE.getObject('space-cats-game-data')
     // if (!sotrageData) {
     //     STORAGE.storeObject('space-cats-game-data', GAME_DATA.getObjectData());
@@ -141,9 +134,9 @@ function myFocusFunction() {
     // TweenLite.to(screenManager, 0.5, {
     //     timeScale: 1
     // })
-    if (GAME_DATA.mute) {
-        return
-    }
+    // if (GAME_DATA.mute) {
+    //     return
+    // }
     // SOUND_MANAGER.unmute();
 }
 

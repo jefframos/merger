@@ -10,7 +10,7 @@ export default class PointsContainer extends PIXI.Container
 
         this.pointsContainer = new PIXI.Container();
 
-        this.currentPointsSprite = new PIXI.Sprite.from('score_plinth');
+        this.currentPointsSprite = new PIXI.Sprite.from('l0_spader_1_1');
         this.currentPointsSprite.scale.set(config.height / this.currentPointsSprite.height * 0.08)
         this.pointsContainer.addChild(this.currentPointsSprite);
 
@@ -18,7 +18,7 @@ export default class PointsContainer extends PIXI.Container
         {
             fontFamily: 'blogger_sansregular',
             fontSize: '22px',
-            fill: 0xFFFFFF,
+            fill: 0xff0000,
             align: 'center',
             fontWeight: '800'
         });
@@ -32,7 +32,7 @@ export default class PointsContainer extends PIXI.Container
         {
             fontFamily: 'blogger_sansregular',
             fontSize: '60px',
-            fill: 0xFFFFFF,
+            fill: 0xff0000,
             align: 'center',
             fontWeight: '800'
         });
@@ -43,7 +43,7 @@ export default class PointsContainer extends PIXI.Container
         this.currentPointsSprite.addChild(this.currentPointsLabel);
 
 
-        this.currentHighscoreSprite = new PIXI.Sprite.from('score_plinth');
+        this.currentHighscoreSprite = new PIXI.Sprite.from('l0_spader_1_1');
         this.currentHighscoreSprite.scale.set(config.height / this.currentHighscoreSprite.height * 0.08)
         this.pointsContainer.addChild(this.currentHighscoreSprite);
 
@@ -51,7 +51,7 @@ export default class PointsContainer extends PIXI.Container
         {
             fontFamily: 'blogger_sansregular',
             fontSize: '22px',
-            fill: 0xFFFFFF,
+            fill: 0xff0000,
             align: 'center',
             fontWeight: '800'
         });
@@ -78,7 +78,7 @@ export default class PointsContainer extends PIXI.Container
 
 
         this.coinsContainer = new PIXI.Container();
-        this.coinSprite = new PIXI.Sprite.from(GAME_DATA.moneyData.softIcon);
+        this.coinSprite = new PIXI.Sprite.from('l0_spader_1_1');
         this.coinsContainer.addChild(this.coinSprite);
         this.coinSprite.anchor.set(0, 0.5);
 
@@ -130,10 +130,6 @@ export default class PointsContainer extends PIXI.Container
                 this.currentPointsLabel.text = utils.formatPointsLabel(moneyObj.current / MAX_NUMBER);
 
                 SOUND_MANAGER.play('pop')
-                    // let globalCoinPos = this.coinSprite.getGlobalPosition();
-                    // globalCoinPos.x += this.coinSprite.width / 2
-
-                // window.screenManager.addCoinsParticles(globalCoinPos, 3);
             },
             onComplete: () =>
             {

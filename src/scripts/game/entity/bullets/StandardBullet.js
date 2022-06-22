@@ -2,7 +2,6 @@ import * as PIXI from 'pixi.js';
 import Signals from 'signals';
 import config from '../../../config';
 import utils from '../../../utils';
-import StandardEntity from '../StandardEntity';
 export default class StandardBullet extends PIXI.Container {
     constructor() {
         super();
