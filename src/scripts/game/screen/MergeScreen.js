@@ -8,6 +8,7 @@ import ParticleSystem from '../effects/ParticleSystem';
 import MergeSystem from '../ui/merger/MergeSystem';
 import SpaceBackground from '../effects/SpaceBackground';
 import TweenMax from 'gsap';
+import EnemySystem from '../ui/merger/EnemySystem';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
@@ -44,6 +45,9 @@ export default class MergeScreen extends Screen {
         this.mergeSystemContainer = new PIXI.Container()
         this.container.addChild(this.mergeSystemContainer);
 
+        this.enemiesContainer = new PIXI.Container()
+        this.container.addChild(this.enemiesContainer);
+
         this.uiContainer = new PIXI.Container()
         this.container.addChild(this.uiContainer);
 
@@ -74,31 +78,8 @@ export default class MergeScreen extends Screen {
                 generateDamageTime: 5
             })
         }
-        let d = {
-            initialCost: 4,
-            coefficient: 1.1,
-            initialTime: 0.6,
-            initialRevenue: 1,
-            coefficientProductivity: 1.1,
-            initialProductivity: 2
-        }
-
-        let mult = 1
-
-        let acc1 = 0
-        let acc2 = 0
-        for (let index = 0; index < 100; index++) {
-            //console.log(d.initialCost * Math.pow(d.coefficient, index))// * Math.pow(i, d.coefficient))
-            //console.log(d.initialProductivity * Math.pow(d.coefficientProductivity, index))// * Math.pow(i, d.coefficient))
-            let sim = d.initialProductivity * Math.pow(d.coefficientProductivity, index)
-            acc1 += sim
-            let cost = d.initialCost * Math.pow(d.coefficient, index)
-            acc2 += cost
-
-            console.log(utils.formatPointsLabel(cost), utils.formatPointsLabel(sim))
-            //console.log(d.initialProductivity * index * mult)
-        }
-        console.log(utils.formatPointsLabel(acc2), utils.formatPointsLabel(acc1))
+       
+        //console.log(utils.formatPointsLabel(acc2), utils.formatPointsLabel(acc1))
 
         //if own 10 nextCost=initial * (Math.pow(coefficient, 10)
         console.log(this.dataTiles)
@@ -109,9 +90,16 @@ export default class MergeScreen extends Screen {
             topContainer: this.topContainer,
         }, window.baseConfigGame, this.dataTiles);
 
+        this.enemiesSystem = new EnemySystem({
+            mainContainer:this.enemiesContainer
+        });
+        this.mergeSystem1.enemySystem = this.enemiesSystem;
+
         this.mergeSystem1.onGetResources.add(this.addResourceParticles.bind(this));
         this.mergeSystem1.onDealDamage.add(this.addDamageParticles.bind(this));
         this.mergeSystem1.onPopLabel.add(this.popLabel.bind(this));
+
+        this.mergeSystem1.addSystem(this.enemiesSystem);
 
         this.entityDragSprite = new PIXI.Sprite.from('');
         this.addChild(this.entityDragSprite);
@@ -222,6 +210,9 @@ export default class MergeScreen extends Screen {
         this.rpsLabel.y = config.height - 50
         this.resourcesLabel.x = config.width - this.resourcesLabel.width;
         this.resourcesLabel.y = config.height - 50
+
+        this.enemiesContainer.x = config.width / 2;
+        this.enemiesContainer.y = config.height * this.areaConfig.topArea*0.5;
     }
     transitionOut(nextScreen) {
         this.removeEvents();

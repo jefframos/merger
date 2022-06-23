@@ -111,7 +111,14 @@ export default class MergeTile extends PIXI.Container {
             }
         }
     }
-    updateDir(mousePos) {
+    lookAt(target) {
+        if(!this.tileSprite || !this.tileSprite.visible || !this.tileData){
+            return;
+        }
+        let enemyGlobal = target.getGlobalPosition();
+        let thisGlobal = this.tileSprite.getGlobalPosition();
+        let angle = Math.atan2(thisGlobal.y - enemyGlobal.y, thisGlobal.x - enemyGlobal.x) - 3.14/2
+        this.tileSprite.rotation = angle
     }
     resourceReady() {
         this.onGenerateResource.dispatch(this, this.tileData);
@@ -148,7 +155,7 @@ export default class MergeTile extends PIXI.Container {
             return;
         }
         this.tileSprite.alpha = 0//.5
-
+        this.tileSprite.visible = false;
         return this.tileSprite.texture;
     }
     addEntity(tileData) {

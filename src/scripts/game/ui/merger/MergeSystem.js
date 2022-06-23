@@ -80,11 +80,6 @@ export default class MergeSystem {
         this.addPieceGenerator();
         this.adjustSlotsPosition();
 
-
-        this.enemy = new PIXI.Sprite.from('capital_ship_05');
-        this.topContainer.addChild(this.enemy);
-        this.enemy.anchor.set(0.5)
-
         this.entityDragSprite = new PIXI.Sprite.from('');
         this.uiContainer.addChild(this.entityDragSprite);
         this.entityDragSprite.visible = false;
@@ -93,11 +88,16 @@ export default class MergeSystem {
         setTimeout(() => {
             this.resize(config, true)
         }, 1);
+
+        this.enemySystem = null;
+        this.systems = [];
+    }
+    addSystem(system) {
+        this.systems.push(system);
     }
     addPieceGenerator() {
         let piece = new ChargerTile(0, 0, this.slotSize.width, 'spark2', this.gameplayData.entityGeneratorBaseTime);
         piece.isGenerator = true;
-        
 
         let targetScale = config.height * 0.2 / piece.height
         piece.scale.set(Math.min(targetScale, 1))
@@ -105,13 +105,13 @@ export default class MergeSystem {
         this.uiContainer.addChild(piece);
 
         piece.onHold.add((slot) => {
-            if(!slot.tileData){
+            if (!slot.tileData) {
                 return;
             }
             this.startDrag(slot)
         });
         piece.onEndHold.add((slot) => {
-            if(!slot.tileData){
+            if (!slot.tileData) {
                 return;
             }
             this.endDrag(slot)
@@ -161,14 +161,20 @@ export default class MergeSystem {
             piece.update(delta);
         });
 
+        this.systems.forEach(element => {
+            element.update(delta);
+        });
         this.timestamp = (Date.now() / 1000 | 0);
         for (var i = 0; i < this.slots.length; i++) {
             for (var j = 0; j < this.slots[i].length; j++) {
                 if (this.slots[i][j]) {
 
                     let slot = this.slots[i][j];
+
+                    if(this.enemySystem){
+                        slot.lookAt(this.enemySystem.getEnemy());
+                    }
                     slot.update(delta, this.timestamp);
-                    slot.updateDir(this.mousePosition);
                 }
             }
         }
@@ -216,7 +222,11 @@ export default class MergeSystem {
 
             customData.gravity = 0
             customData.alphaDecress = 0
-            customData.target = { x: this.enemy.x, y: this.enemy.y, timer: 0.2 }
+            if (this.enemySystem) {
+
+                let globalEnemy = this.enemySystem.getEnemy().getGlobalPosition()
+                customData.target = { x: globalEnemy.x, y: globalEnemy.y, timer: 0 }
+            }
             customData.forceX = 0
             customData.forceY = 200
             customData.tint = 0x5588FF
@@ -230,9 +240,12 @@ export default class MergeSystem {
 
         this.adjustSlotsPosition()
     }
-    dispatchDamageParticle(data){
-        this.onPopLabel.dispatch(this.enemy.getGlobalPosition(), data.damage)
+    dispatchDamageParticle(data) {
+        if (this.enemySystem) {
 
+
+            this.onPopLabel.dispatch(this.enemySystem.getEnemy().getGlobalPosition(), data.damage);
+        }
     }
     startDrag(slot) {
         this.draggingEntity = true;
@@ -362,11 +375,6 @@ export default class MergeSystem {
         }
         this.currentResolution.width = resolution.width;
         this.currentResolution.height = resolution.height;
-
-        this.enemy.x = config.width / 2;
-        this.enemy.y = config.height * this.area.topArea*0.5;
-
-        //console.log(resolution, this.area)
 
         this.updateGridPosition();
 

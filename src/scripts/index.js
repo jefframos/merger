@@ -23,7 +23,7 @@ let audioToLoad = [] //['assets/audio/dream1.mp3', 'assets/audio/dream2.mp3']
 window.SOUND_MANAGER = new SoundManager();
 
 
-window.getCoinSound = function() {
+window.getCoinSound = function () {
     return 'coins_0' + Math.ceil(Math.random() * 4)
 }
 
@@ -68,7 +68,7 @@ function startLoader() {
         let url = jsonManifest[i].url//.substr(0, jsonManifest[i].url.length - 4);
         PIXI.loader.add(jsonManifest[i].id, url)
     }
- 
+
     for (var i = 0; i < audioManifest.length; i++) {
         audioManifest[i].url = audioManifest[i].url.replace(/\\/, "/")
         let url = audioManifest[i].url.substr(0, audioManifest[i].url.length - 4);
@@ -126,7 +126,7 @@ function configGame(evt) {
 
 }
 
-window.onresize = function(event) {
+window.onresize = function (event) {
     window.game.resize();
 };
 function myFocusFunction() {
@@ -147,4 +147,42 @@ function myBlurFunction() {
     // })
 
     // SOUND_MANAGER.mute();
+}
+
+
+
+tryStuff()
+
+function tryStuff() {
+    let d = {
+        initialCost: 4,
+        coefficient: 1.1,
+        initialTime: 0.6,
+        initialRevenue: 1,
+        coefficientProductivity: 1.1,
+        initialProductivity: 2
+    }
+
+
+    let enemies = {
+        initialLife: 4,
+        lifeCoefficient: 1.1,
+        initialRevenue: 2,
+        coefficientRevenue: 1.1,
+    }
+    let mult = 1
+
+    let acc1 = 0
+    let acc2 = 0
+    for (let index = 0; index < 100; index++) {
+        //console.log(d.initialCost * Math.pow(d.coefficient, index))// * Math.pow(i, d.coefficient))
+        //console.log(d.initialProductivity * Math.pow(d.coefficientProductivity, index))// * Math.pow(i, d.coefficient))
+        let sim = d.initialProductivity * Math.pow(d.coefficientProductivity, index)
+        acc1 += sim
+        let cost = d.initialCost * Math.pow(d.coefficient, index)
+        acc2 += cost
+
+        //console.log(utils.formatPointsLabel(cost), utils.formatPointsLabel(sim))
+        //console.log(d.initialProductivity * index * mult)
+    }
 }

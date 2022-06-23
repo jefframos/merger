@@ -40,4 +40,7 @@ export default class ChargerTile extends MergeTile {
     completeCharge(){
         this.onCompleteCharge.dispatch();
     }
+    lookAt(target) {
+       
+    }
 }
