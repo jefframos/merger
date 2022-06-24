@@ -69,6 +69,23 @@ export default
                     }
                 }
             }
+            if (Number.isNaN(max)) {
+                return 0
+            }
+            return max
+        },
+        findRPS2(target) {
+            let max = 0;
+            for (let index = 0; index < target.length; index++) {
+                if (target[index] && target[index].tileData) {
+                    let data = target[index].tileData
+                    max += Math.round(data.resources / data.generateResourceTime);
+
+                }
+            }
+            if (Number.isNaN(max)) {
+                return 0
+            }
             return max
         },
         findRPS(target) {
@@ -80,6 +97,9 @@ export default
                         max += Math.round(data.resources / data.generateResourceTime);
                     }
                 }
+            }
+            if (Number.isNaN(max)) {
+                return 0
             }
             return max
         },
@@ -227,6 +247,7 @@ export default
         formatPointsLabel(tempPoints) {
             let temp = ''
             let temp2 = ''
+
             tempPoints = Math.round(tempPoints)// * MAX_NUMBER);
 
             //console.log(tempPoints)
@@ -240,7 +261,61 @@ export default
                 tempPoints = this.cleanString(tempPoints)
                 return tempPoints
             }
+            //             let abv = ['K', 'M', 'B', 'T', 'aa', 'bb', 'cc', 'dd', 'ee', 'ff', 'gg', 'hh', 'ii']
+            //             for (let index = 0; index < abv.length; index++) {
+            //                 let target = '1000'
+            //                 for (let j = 0; j < index; j++) {
+            //                     console.log(j, index)
+            //                     target += '0';
+            //                 }
+            //                 let parse = parseInt(target)
 
+            //                 if (tempPoints <= parse) {
+            //                     tempPoints /= parse;
+            //                     temp = abv[index]
+            //                     temp2 = Math.floor(tempPoints)
+            //                     //console.log(tempPoints, target)
+            // //console.log(tempPoints, index)
+            //                     break
+            //                     // return Math.floor(tempPoints)
+            //                 }
+            //             }
+            if (tempPoints >= 10000000000000000000000000000000) {
+                tempPoints /= 10000000000000000000000000000000;
+                temp = 'jj'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 1000000000000000000000000000000) {
+                tempPoints /= 1000000000000000000000000000000;
+                temp = 'ii'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 1000000000000000000000000000000) {
+                tempPoints /= 1000000000000000000000000000000;
+                temp = 'gg'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 100000000000000000000000000000) {
+                tempPoints /= 100000000000000000000000000000;
+                temp = 'hh'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 100000000000000000000000000000) {
+                tempPoints /= 100000000000000000000000000000;
+                temp = 'gg'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 10000000000000000000000000000) {
+                tempPoints /= 10000000000000000000000000000;
+                temp = 'ff'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
             if (tempPoints >= 1000000000000000000000000000) {
                 tempPoints /= 1000000000000000000000000000;
                 temp = 'ee'
@@ -299,11 +374,13 @@ export default
             // tempPoints = Math.floor(tempPoints)
             if (tempPoints.toString().length < 4) {
                 let fix = 2
+                //console.log(tempPoints)
                 tempPoints = tempPoints.toFixed(fix).toString()
                 // console.log(tempPoints + temp);
             }
             else if (tempPoints.toString().length > 4) {
                 let tempRound = Math.floor(tempPoints)
+                //console.log(tempPoints)
                 tempPoints = tempPoints.toFixed(4 - tempRound.toString().length - 1)
             }
 

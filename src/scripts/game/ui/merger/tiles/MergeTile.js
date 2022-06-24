@@ -34,6 +34,7 @@ export default class MergeTile extends PIXI.Container {
         this.onHold = new Signals();
         this.onUp = new Signals();
         this.onEndHold = new Signals();
+        this.onOver = new Signals();
         this.onGenerateResource = new Signals();
         this.onGenerateDamage = new Signals();
 
@@ -61,18 +62,23 @@ export default class MergeTile extends PIXI.Container {
         this.lockIcon.visible = false;
 
 
-
-        this.generateResource = 0;
-        this.generateResourceTime = -1;
         this.isGenerator = false;
 
-
-        this.generateDamage = 0;
-        this.generateDamageTime = -1;
+        this.reset();
 
         this.positionOffset = { x: 0, y: 0 }
         this.sin = Math.random();
 
+    }
+    reset() {
+        this.generateResource = 0;
+        this.generateResourceTime = -1;
+        this.generateResourceNormal = 0;
+
+
+        this.generateDamage = 0;
+        this.generateDamageTime = -1;
+        this.generateDamageNormal = 0;
     }
 
     updatePosition() {
@@ -86,12 +92,15 @@ export default class MergeTile extends PIXI.Container {
             this.sin += delta;
             this.sin %= Math.PI * 2;
             this.updatePosition();
-
-
         }
-//console.log(this.generateResourceTime)
+
+        this.updateResource(delta, dateTimeStamp)
+        this.updateDamage(delta, dateTimeStamp)
+    }
+    updateResource(delta, dateTimeStamp) {
         if (this.generateResourceTime > 0) {
 
+            this.generateResourceNormal = this.generateResource / (this.generateResourceTime / window.TIME_SCALE);
             if (this.updatedResourceTimestamp) {
                 this.generateResource = dateTimeStamp - this.updatedResourceTimestamp
                 if (this.generateResource >= this.generateResourceTime / window.TIME_SCALE) {
@@ -99,25 +108,34 @@ export default class MergeTile extends PIXI.Container {
                     this.resourceReady();
                 }
             }
+        } else {
+            this.generateResourceNormal = 0;
         }
+    }
+    updateDamage(delta, dateTimeStamp) {
         if (this.generateDamageTime > 0) {
 
             if (this.updatedDamageTimestamp) {
                 this.generateDamage = dateTimeStamp - this.updatedDamageTimestamp
+                this.generateDamageNormal = this.generateDamage / (this.generateDamageTime / window.TIME_SCALE);
                 if (this.generateDamage >= this.generateDamageTime / window.TIME_SCALE) {
                     this.updatedDamageTimestamp = (Date.now() / 1000 | 0);
                     this.damageReady();
                 }
             }
+        } else {
+            this.generateDamageNormal = 0;
+
         }
+
     }
     lookAt(target) {
-        if(!this.tileSprite || !this.tileSprite.visible || !this.tileData){
+        if (!this.tileSprite || !this.tileSprite.visible || !this.tileData) {
             return;
         }
         let enemyGlobal = target.getGlobalPosition();
         let thisGlobal = this.tileSprite.getGlobalPosition();
-        let angle = Math.atan2(thisGlobal.y - enemyGlobal.y, thisGlobal.x - enemyGlobal.x) - 3.14/2
+        let angle = Math.atan2(thisGlobal.y - enemyGlobal.y, thisGlobal.x - enemyGlobal.x) - 3.14 / 2
         this.tileSprite.rotation = angle
     }
     resourceReady() {
@@ -165,6 +183,7 @@ export default class MergeTile extends PIXI.Container {
         } else {
             this.tileData = tileData;
         }
+        this.reset();
         this.generateDamageTime = tileData.generateDamageTime | 0;
         this.generateResourceTime = tileData.generateResourceTime | 0;
         this.generateDamageTimeStamp = (Date.now() / 1000 | 0);
@@ -190,19 +209,24 @@ export default class MergeTile extends PIXI.Container {
 
     }
     onMouseMove(e) {
+
+        this.onOver.dispatch();
+
+        this.isOver = true;
         if (this.holding) {
             return;
         }
         if (!this.mouseDown) {
-            this.backSlot.tint = 0x00FFFF
+            this.overState()
         }
     }
 
     onMouseCancel(e) {
+        this.isOver = false;
         if (this.holding) {
             return;
         }
-        this.backSlot.tint = 0xFFFFFF
+        this.outState()
         if (!this.mouseDown) {
             return;
         }
@@ -211,6 +235,8 @@ export default class MergeTile extends PIXI.Container {
         this.endHold();
     }
     onMouseUp(e) {
+        this.isOver = false;
+
         if (!this.mouseDown) {
             this.onUp.dispatch(this);
             return;
@@ -248,7 +274,7 @@ export default class MergeTile extends PIXI.Container {
     endHold() {
         this.holding = false;
         this.onEndHold.dispatch(this);
-        this.backSlot.tint = 0xFFFFFF
+        this.outState()
         this.label.visible = true
     }
 
@@ -259,9 +285,22 @@ export default class MergeTile extends PIXI.Container {
         this.label.visible = false
         this.holding = true;
         this.onHold.dispatch(this);
-        this.backSlot.tint = 0xFF0000
-
-        // this.tileSprite.alpha = 0.5
+        this.blockState()
     }
 
+    getCenterPosition() {
+        return this.tileSprite.getGlobalPosition()
+    }
+    overState() {
+        this.backSlot.tint = 0x00FFFF
+
+    }
+    outState() {
+        this.backSlot.tint = 0xFFFFFF
+
+    }
+    blockState() {
+        this.backSlot.tint = 0xFF0000
+
+    }
 }

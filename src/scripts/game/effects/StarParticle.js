@@ -23,7 +23,7 @@ export default class StarParticle extends PIXI.Container {
         this.y += velY * this.alpha
 
         if (this.y > size.height) {
-            this.y = -Math.random() * 50//-= size.height * 1.1
+            this.y = -size.height / 2 //-= size.height * 1.1
             this.x = Math.random() * size.width - size.width / 2
 
         }

@@ -9,6 +9,7 @@ import MergeSystem from '../ui/merger/MergeSystem';
 import SpaceBackground from '../effects/SpaceBackground';
 import TweenMax from 'gsap';
 import EnemySystem from '../ui/merger/EnemySystem';
+import ResourceSystem from '../ui/merger/ResourceSystem';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
@@ -20,6 +21,12 @@ export default class MergeScreen extends Screen {
         }
         if (!this.areaConfig.topArea) {
             this.areaConfig.topArea = 0.2
+        }
+        if (!this.areaConfig.gameArea) {
+            this.areaConfig.gameArea = {w:0.5, h:0.5}
+        }
+        if (!this.areaConfig.resourcesArea) {
+            this.areaConfig.resourcesArea = {w:0.5, h:0.5}
         }
 
         this.spaceBackground = new SpaceBackground();
@@ -35,15 +42,18 @@ export default class MergeScreen extends Screen {
         this.backBlocker.buttonMode = true;
         this.backBlocker.visible = false;
 
-        this.frontLayer.addChild(this.backBlocker);
-
-        this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * 0.89, config.height * (1 - this.areaConfig.bottomArea - this.areaConfig.topArea));
+        this.frontLayer.addChild(this.backBlocker);        
+        this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.gameArea.w, config.height * this.areaConfig.gameArea.h);
         this.container.addChild(this.gridWrapper);
-        this.gridWrapper.visible = false;
-
+        //this.gridWrapper.visible = false;
+        this.resourcesWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0,config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
+        this.container.addChild(this.resourcesWrapper);
 
         this.mergeSystemContainer = new PIXI.Container()
         this.container.addChild(this.mergeSystemContainer);
+
+        this.resourcesContainer = new PIXI.Container()
+        this.container.addChild(this.resourcesContainer);
 
         this.enemiesContainer = new PIXI.Container()
         this.container.addChild(this.enemiesContainer);
@@ -58,6 +68,7 @@ export default class MergeScreen extends Screen {
         this.container.addChild(this.topContainer);
 
         this.dataTiles = []
+        this.dataResourcesTiles = []
 
         console.log(window.baseConfigGame)
 
@@ -72,34 +83,60 @@ export default class MergeScreen extends Screen {
                 id: index,
                 texture: tex,
                 value: pow,
-                resources: pow * 1.5,
-                generateResourceTime: 3,
+                resources: 0,//pow * 1.5,
+                generateResourceTime: 0,//3,
                 damage: pow * 1.5 * index,
                 generateDamageTime: 5
             })
         }
-       
+        for (let index = 1; index <= window.baseConfigGame.entities.list.length * 2; index++) {
+            let pow = Math.pow(2, index)
+            let text = new PIXI.Text(pow, LABELS.LABEL1);
+            text.style.fill = 0xFFFFFF
+            text.style.fontSize = 64
+            let tex = new PIXI.Texture.from('starship_35')//utils.generateTextureFromContainer('image-' + index, text, window.TILE_ASSSETS_POOL)
+            this.dataResourcesTiles.push({
+                id: index,
+                texture: tex,
+                value: pow,
+                resources: pow * 1.5 * pow,
+                generateResourceTime: 3,
+                damage: 0,
+                generateDamageTime: 0
+            })
+        }
+
+        console.log( parseInt('1000') + 30)
         //console.log(utils.formatPointsLabel(acc2), utils.formatPointsLabel(acc1))
 
         //if own 10 nextCost=initial * (Math.pow(coefficient, 10)
         console.log(this.dataTiles)
+        console.log(this.dataResourcesTiles)
         this.mergeSystem1 = new MergeSystem({
             mainContainer: this.mergeSystemContainer,
             uiContainer: this.uiContainer,
             wrapper: this.gridWrapper,
             topContainer: this.topContainer,
         }, window.baseConfigGame, this.dataTiles);
+        
+        this.resourceSystem = new ResourceSystem({
+            mainContainer:this.resourcesContainer,
+            wrapper: this.resourcesWrapper,
+        }, window.baseConfigGame, this.dataResourcesTiles)
 
         this.enemiesSystem = new EnemySystem({
             mainContainer:this.enemiesContainer
         });
         this.mergeSystem1.enemySystem = this.enemiesSystem;
 
-        this.mergeSystem1.onGetResources.add(this.addResourceParticles.bind(this));
+        this.resourceSystem.onGetResources.add(this.addResourceParticles.bind(this));
+        this.resourceSystem.onPopLabel.add(this.popLabel.bind(this));
+
         this.mergeSystem1.onDealDamage.add(this.addDamageParticles.bind(this));
         this.mergeSystem1.onPopLabel.add(this.popLabel.bind(this));
 
         this.mergeSystem1.addSystem(this.enemiesSystem);
+        this.mergeSystem1.addSystem(this.resourceSystem);
 
         this.entityDragSprite = new PIXI.Sprite.from('');
         this.addChild(this.entityDragSprite);
@@ -116,6 +153,11 @@ export default class MergeScreen extends Screen {
 
         this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
         this.container.addChild(this.resourcesLabel)
+
+        this.coinTexture = new PIXI.Sprite.from('coin')
+        this.resourcesLabel.addChild(this.coinTexture)
+        this.coinTexture.scale.set(1.8)
+        this.coinTexture.x = -25
 
         this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
         this.container.addChild(this.rpsLabel)
@@ -140,6 +182,7 @@ export default class MergeScreen extends Screen {
             TweenMax.globalTimeScale( window.TIME_SCALE ) 
         })
 
+        this.totalResources = 0;
         window.TIME_SCALE = 1
     }
     popLabel(targetPosition, label) {
@@ -153,17 +196,20 @@ export default class MergeScreen extends Screen {
         this.particleSystem.show(toLocal, quant, customData)
         //this.particleSystem.popLabel(targetPosition, "+" + label, 0, 1, 1, LABELS.LABEL1)
     }
-    addResourceParticles(targetPosition, customData, label, quant) {
+    addResourceParticles(targetPosition, customData, totalResources, quantParticles) {
+
+        this.totalResources += totalResources;
         let toLocal = this.particleSystem.toLocal(targetPosition)
-        for (let index = 0; index < quant; index++) {
+        for (let index = 0; index < quantParticles; index++) {
 
             customData.target = { x: this.resourcesLabel.x, y: this.resourcesLabel.y, timer: 0.2 + Math.random() * 0.75 }
             this.particleSystem.show(toLocal, 1, customData)
         }
-        this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL1)
+        this.particleSystem.popLabel(toLocal, "+" + utils.formatPointsLabel(totalResources), 0, 1, 1, LABELS.LABEL1)
     }
     onMouseMove(e) {
         this.mergeSystem1.updateMouse(e)
+        this.resourceSystem.updateMouse(e)
         this.mousePosition = e.data.global;
         if (!this.draggingEntity) {
             return;
@@ -189,9 +235,9 @@ export default class MergeScreen extends Screen {
         this.mergeSystem1.update(delta);
         this.particleSystem.update(delta)
 
-        this.resourcesLabel.text = utils.formatPointsLabel(this.mergeSystem1.resources);
+        this.resourcesLabel.text = utils.formatPointsLabel(this.totalResources);
 
-        this.rpsLabel.text = utils.formatPointsLabel(this.mergeSystem1.rps) + "/rps";
+        this.rpsLabel.text = utils.formatPointsLabel(this.resourceSystem.rps) + "/rps";
 
         this.dpsLabel.text = utils.formatPointsLabel(this.mergeSystem1.dps) + "/dps";
 
@@ -202,9 +248,11 @@ export default class MergeScreen extends Screen {
     }
     resize(resolution) {
         this.mergeSystem1.resize(resolution);
-        this.spaceBackground.resize(resolution, resolution);
+        this.spaceBackground.resize(resolution);
         this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2
         this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height
+
+        this.resourcesWrapper.y = this.gridWrapper.y;
 
         this.dpsLabel.y = config.height - 70
         this.rpsLabel.y = config.height - 50

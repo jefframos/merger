@@ -15,11 +15,6 @@ export default class SpaceBackground extends PIXI.Container {
 
 		this.backgroundShape = new PIXI.Graphics().beginFill(0).drawRect(0, 0, 10, 10);
 
-		this.bottomBackground = new PIXI.Sprite()
-		this.addChild(this.bottomBackground);
-
-		this.bottomBackground.anchor.set(0.5, 0);
-
 		this.starsContainer = new PIXI.Container();
 		this.addChild(this.starsContainer);
 
@@ -46,11 +41,12 @@ export default class SpaceBackground extends PIXI.Container {
 	resize(innerResolution) {
 
 		this.innerResolution = innerResolution;
-		this.background.width = innerResolution.width
-		this.background.height = innerResolution.height
+		//this.background.width = innerResolution.width
+		//this.background.height = innerResolution.height
 
-		this.background.x = -innerResolution.width / 2
-		this.background.y = -innerResolution.height / 2
+		this.starsContainer.x = innerResolution.width / 2
+		this.starsContainer.y = innerResolution.height / 2
+		
 	}
 
 	update(delta) {
@@ -62,7 +58,7 @@ export default class SpaceBackground extends PIXI.Container {
 				window.fxSpeed = 1;
 			}
 		}
-		this.currentSpeed.y = this.innerResolution.height * 0.02 * (window.fxSpeed * 2)
+		this.currentSpeed.y = this.innerResolution.height * 0.02 * (window.fxSpeed * 2) 
 
 		//console.log(this.currentSpeed.y, delta)
 		let spd = this.currentSpeed.y * delta;
@@ -91,8 +87,8 @@ export default class SpaceBackground extends PIXI.Container {
 				let angle = Math.random() * Math.PI * 2;
 				let max = Math.max(this.innerResolution.width, this.innerResolution.height)
 				let radius = Math.random() * max + 20;
-				tempStar.x =this.innerResolution.width/2 + Math.cos(angle) * radius// - this.innerResolution.width/2;
-				tempStar.y =this.innerResolution.height/2 + Math.sin(angle) * radius// - this.innerResolution.height/2;
+				tempStar.x = + Math.cos(angle) * radius// - this.innerResolution.width/2;
+				tempStar.y = + Math.sin(angle) * radius// - this.innerResolution.height/2;
 				toClose = false;
 				for (var j = 0; j < this.stars.length; j++) {
 					let distance = utils.distance(this.stars[j].x, this.stars[j].y, tempStar.x, tempStar.y)

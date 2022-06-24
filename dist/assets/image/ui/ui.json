@@ -40,6 +40,14 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":120,"h":130},
 	"sourceSize": {"w":120,"h":130}
 },
+"coin.png":
+{
+	"frame": {"x":1073,"y":1498,"w":12,"h":12},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
+	"sourceSize": {"w":12,"h":12}
+},
 "icon-close.png":
 {
 	"frame": {"x":1430,"y":1429,"w":18,"h":18},
@@ -146,6 +154,6 @@
 	"format": "RGBA8888",
 	"size": {"w":1794,"h":1781},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:d50d1fe08ba65dfc60c54dcc4667af80:3021b0f27dd9df507b83617a8c037148:5b04aa198265472a3c5f56958d78e97b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:989e4072ab1cc978b55aebf83623231e:cbf50d73f52b8d49f01daf259ed6e77d:5b04aa198265472a3c5f56958d78e97b$"
 }
 }

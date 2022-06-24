@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Signals from 'signals';
 import MergeTile from './MergeTile';
-import ProgressBar from './ProgressBar';
+import ProgressBar from '../ProgressBar';
 export default class ChargerTile extends MergeTile {
     constructor(i, j, size, lockIcon, standardChargeTime = 2) {
         super(i, j, size, lockIcon);

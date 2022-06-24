@@ -28,16 +28,16 @@ const assets = [
 	"url":"assets/audio\\fx\\getstar.mp3"
 	},
 	{
+	"id":"getThemAll",
+	"url":"assets/audio\\fx\\getThemAll.mp3"
+	},
+	{
 	"id":"Harp-Flutter-02",
 	"url":"assets/audio\\fx\\Harp-Flutter-02.mp3"
 	},
 	{
 	"id":"item",
 	"url":"assets/audio\\fx\\item.mp3"
-	},
-	{
-	"id":"getThemAll",
-	"url":"assets/audio\\fx\\getThemAll.mp3"
 	},
 	{
 	"id":"kill",
@@ -52,10 +52,6 @@ const assets = [
 	"url":"assets/audio\\fx\\Musical-Beep-Loop-02.mp3"
 	},
 	{
-	"id":"place",
-	"url":"assets/audio\\fx\\place.mp3"
-	},
-	{
 	"id":"Ping-Slide-Down",
 	"url":"assets/audio\\fx\\Ping-Slide-Down.mp3"
 	},
@@ -64,12 +60,12 @@ const assets = [
 	"url":"assets/audio\\fx\\place2.mp3"
 	},
 	{
-	"id":"place3",
-	"url":"assets/audio\\fx\\place3.mp3"
+	"id":"place",
+	"url":"assets/audio\\fx\\place.mp3"
 	},
 	{
-	"id":"Pop-Musical",
-	"url":"assets/audio\\fx\\Pop-Musical.mp3"
+	"id":"place3",
+	"url":"assets/audio\\fx\\place3.mp3"
 	},
 	{
 	"id":"Pop-Low-Pitch-Up-02",
@@ -88,12 +84,12 @@ const assets = [
 	"url":"assets/audio\\fx\\pop2.mp3"
 	},
 	{
-	"id":"shoosh",
-	"url":"assets/audio\\fx\\shoosh.mp3"
+	"id":"Pop-Musical",
+	"url":"assets/audio\\fx\\Pop-Musical.mp3"
 	},
 	{
-	"id":"Tap-01",
-	"url":"assets/audio\\fx\\Tap-01.mp3"
+	"id":"shoosh",
+	"url":"assets/audio\\fx\\shoosh.mp3"
 	},
 	{
 	"id":"teleport",
@@ -102,6 +98,10 @@ const assets = [
 	{
 	"id":"Whoosh",
 	"url":"assets/audio\\fx\\Whoosh.mp3"
+	},
+	{
+	"id":"Tap-01",
+	"url":"assets/audio\\fx\\Tap-01.mp3"
 	}
 ];
 

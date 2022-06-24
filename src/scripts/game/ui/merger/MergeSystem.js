@@ -2,8 +2,8 @@ import * as PIXI from 'pixi.js';
 import Signals from 'signals';
 import config from '../../../config';
 import utils from '../../../utils';
-import ChargerTile from './ChargerTile';
-import MergeTile from './MergeTile';
+import ChargerTile from './tiles/ChargerTile';
+import MergeTile from './tiles/MergeTile';
 
 export default class MergeSystem {
     constructor(containers, data, dataTiles) {
@@ -96,7 +96,7 @@ export default class MergeSystem {
         this.systems.push(system);
     }
     addPieceGenerator() {
-        let piece = new ChargerTile(0, 0, this.slotSize.width, 'spark2', this.gameplayData.entityGeneratorBaseTime);
+        let piece = new ChargerTile(0, 0, this.slotSize.width, 'coin', this.gameplayData.entityGeneratorBaseTime);
         piece.isGenerator = true;
 
         let targetScale = config.height * 0.2 / piece.height
@@ -182,7 +182,7 @@ export default class MergeSystem {
         this.updateBottomPosition();
     }
     addSlot(i, j, type) {
-        let slot = new MergeTile(i, j, this.slotSize.width, 'spark2');
+        let slot = new MergeTile(i, j, this.slotSize.width, 'coin');
         this.slots[i][j] = slot;
 
         slot.x = (this.slotSize.width + this.slotSize.distance) * j - this.slotSize.distance
@@ -203,21 +203,16 @@ export default class MergeSystem {
             this.resources += data.resources
 
             let customData = {}
-            customData.texture = 'spark2'
+            customData.texture = 'coin'
             customData.scale = 0.01
             customData.alphaDecress = 0.1
-            // customData.gravity = 0
-            // customData.alphaDecress = 0
-            // customData.forceX = 0
-            // customData.forceY = 200
-
             let targetPos = slot.tileSprite.getGlobalPosition()
             this.onGetResources.dispatch(targetPos, customData, data.resources, 5)
 
         });
         slot.onGenerateDamage.add((slot, data) => {
             let customData = {}
-            customData.texture = 'spark2'
+            customData.texture = 'coin'
             customData.scale = 0.01
 
             customData.gravity = 0
@@ -253,9 +248,9 @@ export default class MergeSystem {
         this.currentDragSlot = slot;
         this.entityDragSprite.texture = tex;
         this.entityDragSprite.visible = true;
-        this.entityDragSprite.scale.set(slot.tileSprite.scale.y);
+        this.entityDragSprite.scale.set(slot.tileSprite.scale.y * 2);
         if (window.isMobile) {
-            this.entityDragSprite.anchor.set(0.5, 2);
+            this.entityDragSprite.anchor.set(0.5, 1);
         } else {
             this.entityDragSprite.anchor.set(0.5, 0.5);
         }
@@ -358,7 +353,7 @@ export default class MergeSystem {
                     let scale = ((slot.y + this.slotSize.distance) / this.fixedSize.height) * this.area.perspective + (1 - this.area.perspective)
                     slot.scale.set(scale)
                     slot.x = ((this.slotSize.width + this.slotSize.distance) * scale) * j + (horizontal * this.slotSize.width * (1 - scale)) / 2 - this.slotSize.distance
-                    slot.y = ((this.slotSize.height + this.slotSize.distance) * scale) * i + (this.slotSize.distance * scale) * vertical + this.slotSize.distance
+                    slot.y = ((this.slotSize.height + this.slotSize.distance) * scale) * i + (this.slotSize.distance * scale) * vertical - this.slotSize.distance*2
                 }
             }
         }
