@@ -18,15 +18,15 @@ export default class ChargerTile extends MergeTile {
         this.progressBar.y = size
 
     }
-    update(delta){
-        super.update(delta);
+    update(delta, timeStamp){
+        super.update(delta, timeStamp);
         if(this.currentChargeTime > 0){
             this.currentChargeTime  -= delta;
             if(this.currentChargeTime <= 0){
                 this.completeCharge();
                 this.progressBar.visible = false;
             }
-            this.progressBar.setProgressBar(1-(this.currentChargeTime / this.defaultChargeTime), 0xFF00ff);
+            this.progressBar.setProgressBar(1-(this.currentChargeTime / this.defaultChargeTime), 0x04ff09);
             
             
         }

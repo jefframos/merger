@@ -7,7 +7,8 @@ import MergeTile from './tiles/MergeTile';
 
 export default class MergeSystem {
     constructor(containers, data, dataTiles) {
-
+        
+        console.log('DATA', dataTiles)
         this.gameplayData = data.general;
 
         this.container = containers.mainContainer;
@@ -127,6 +128,13 @@ export default class MergeSystem {
         });
         this.pieceGeneratorsList.push(piece);
     }
+    updateMouseSystems(e){
+        this.updateMouse(e);
+        
+        this.systems.forEach(element => {
+            element.updateMouse(e);            
+        });
+    }
     updateMouse(e) {
         if (e) {
             this.mousePosition = e.data.global;
@@ -155,6 +163,13 @@ export default class MergeSystem {
         }
 
 
+    }
+    updateSystems(delta){
+        this.update(delta);
+        
+        this.systems.forEach(element => {
+            element.update(delta);            
+        });
     }
     update(delta) {
         this.pieceGeneratorsList.forEach(piece => {
@@ -218,16 +233,15 @@ export default class MergeSystem {
             customData.gravity = 0
             customData.alphaDecress = 0
             if (this.enemySystem) {
-
                 let globalEnemy = this.enemySystem.getEnemy().getGlobalPosition()
                 customData.target = { x: globalEnemy.x, y: globalEnemy.y, timer: 0 }
             }
             customData.forceX = 0
             customData.forceY = 200
             customData.tint = 0x5588FF
-            customData.callback = this.dispatchDamageParticle.bind(this, data)
+            customData.callback = this.finishDamage.bind(this, data)
             let targetPos = slot.tileSprite.getGlobalPosition()
-            this.onDealDamage.dispatch(targetPos, customData, data.damage, 1)
+            this.onDealDamage.dispatch(targetPos, customData, data.getDamage(), 1)
 
         });
 
@@ -235,11 +249,10 @@ export default class MergeSystem {
 
         this.adjustSlotsPosition()
     }
-    dispatchDamageParticle(data) {
+    finishDamage(data) {
         if (this.enemySystem) {
 
-
-            this.onPopLabel.dispatch(this.enemySystem.getEnemy().getGlobalPosition(), data.damage);
+            this.enemySystem.damageEnemy(data.getDamage())
         }
     }
     startDrag(slot) {
@@ -287,11 +300,12 @@ export default class MergeSystem {
 
         if (copyDataTargetSlot) {
             let target = copyDataTargetSlot
-            if (copyDataTargetSlot.value == copyData.value) {
+            if (copyDataTargetSlot.getValue() == copyData.getValue()) {
                 //only remove if they will merge
                 this.currentDragSlot.removeEntity();
-                target = this.dataTiles[copyDataTargetSlot.id]
+                target = this.dataTiles[copyDataTargetSlot.getID()+1]
                 slot.removeEntity();
+                console.log(target)
                 slot.addEntity(target);
             } else {
 

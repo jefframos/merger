@@ -53,7 +53,7 @@ export default
                 for (let j = 0; j < target[index].length; j++) {
                     if (target[index][j].tileData) {
 
-                        matrix.push(target[index][j].tileData.id)
+                        matrix.push(target[index][j].tileData.getID())
                     }
                 }
             }
@@ -65,7 +65,7 @@ export default
                 for (let j = 0; j < target[index].length; j++) {
                     if (target[index][j] && target[index][j].tileData) {
                         let data = target[index][j].tileData
-                        max += data.damage / data.generateDamageTime;
+                        max += data.getDamage() / data.getGenerateDamageTime();
                     }
                 }
             }
@@ -79,7 +79,7 @@ export default
             for (let index = 0; index < target.length; index++) {
                 if (target[index] && target[index].tileData) {
                     let data = target[index].tileData
-                    max += Math.round(data.resources / data.generateResourceTime);
+                    max += Math.round(data.getResources() / data.getGenerateResourceTime());
 
                 }
             }
@@ -94,7 +94,7 @@ export default
                 for (let j = 0; j < target[index].length; j++) {
                     if (target[index][j] && target[index][j].tileData) {
                         let data = target[index][j].tileData
-                        max += Math.round(data.resources / data.generateResourceTime);
+                        max += Math.round(data.getResources() / data.getGenerateResourceTime());
                     }
                 }
             }

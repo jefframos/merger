@@ -7,11 +7,6 @@ export default class ResourceTile extends MergeTile {
     constructor(i, j, size, lockIcon) {
         super(i, j, size, lockIcon);
 
-
-
-        //this.backSlot.on('mousemove', this.onMouseMoveOver.bind(this)).on('pointermove', this.onMouseMoveOver.bind(this));
-
-        console.log(this.backSlot)
         this.onCompleteCharge = new Signals();
 
         this.progressBar = new ProgressBar({ width: size, height: 20 });
@@ -32,29 +27,29 @@ export default class ResourceTile extends MergeTile {
         this.priceLabel.visible = false;
 
         this.label.visible = false
-
-        this.autoCollect = true;
-
         this.currentCollect = 0;
+
+        this.progressBar = new ProgressBar({width: size, height:20});
+        this.addChild(this.progressBar)
+        this.progressBar.visible = false;
+
+        this.progressBar.y = size - this.progressBar.height
     }
     update(delta, timestamp) {
+        //console.log(timestamp)
         super.update(delta, timestamp);
 
+        //console.log(this.generateResource ,this.generateResourceTime)
         this.readyLabel.visible = this.readyToCollect
-        //        console.log(this.generateResourceNormal,  this.tileData.generateResourceTime)
-        //console.log( this.generateResourceNormal)
-
-        // if(this.currentChargeTime > 0){
-        //     this.currentChargeTime  -= delta;
-        //     if(this.currentChargeTime <= 0){
-        //         this.completeCharge();
-        //         this.progressBar.visible = false;
-        //     }
-        //     this.progressBar.setProgressBar(1-(this.currentChargeTime / this.defaultChargeTime), 0xFF00ff);
-        // }
+        if(this.tileData){
+            this.progressBar.visible = true;
+            this.progressBar.setProgressBar(this.generateResourceNormal, 0xFF00ff);
+        }else{
+            this.progressBar.visible = false;
+        }
     }
     updateResource(delta, dateTimeStamp) {
-        if (this.readyToCollect && !this.autoCollect) {
+        if (this.readyToCollect && !this.tileData.shouldAccumulateResources()) {
             return;
         }
         super.updateResource(delta, dateTimeStamp)
@@ -74,7 +69,7 @@ export default class ResourceTile extends MergeTile {
     resourceReady() {
         this.readyToCollect = true;
 
-        this.currentCollect += this.tileData.resources;
+        this.currentCollect += this.tileData.getResources();
 
         this.readyLabel.text = utils.formatPointsLabel(this.currentCollect)
         this.readyLabel.x = this.backSlot.width - this.readyLabel.width ;
@@ -82,7 +77,8 @@ export default class ResourceTile extends MergeTile {
     }
     collectResources() {
         this.readyToCollect = false;
-
+        this.generateResourceNormal = 0
+        this.progressBar.setProgressBar(this.generateResourceNormal, 0xFF00ff);
     }
     onMouseMoveOver(forced = false) {
         this.overState()

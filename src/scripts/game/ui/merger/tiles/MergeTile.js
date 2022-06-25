@@ -94,18 +94,22 @@ export default class MergeTile extends PIXI.Container {
             this.updatePosition();
         }
 
+        //console.log(this, dateTimeStamp)
         this.updateResource(delta, dateTimeStamp)
         this.updateDamage(delta, dateTimeStamp)
     }
     updateResource(delta, dateTimeStamp) {
         if (this.generateResourceTime > 0) {
-
-            this.generateResourceNormal = this.generateResource / (this.generateResourceTime / window.TIME_SCALE);
             if (this.updatedResourceTimestamp) {
                 this.generateResource = dateTimeStamp - this.updatedResourceTimestamp
                 if (this.generateResource >= this.generateResourceTime / window.TIME_SCALE) {
                     this.updatedResourceTimestamp = (Date.now() / 1000 | 0);
+                    this.generateResourceNormal = 1;
                     this.resourceReady();
+                } else {
+                    this.milisecTimeStamp = Date.now() / 1000
+                    this.generateResourceNormal = (this.milisecTimeStamp - this.updatedResourceTimestamp) / (this.generateResourceTime / window.TIME_SCALE);
+                    this.generateResourceNormal = Math.min(this.generateResourceNormal, 1)
                 }
             }
         } else {
@@ -114,20 +118,22 @@ export default class MergeTile extends PIXI.Container {
     }
     updateDamage(delta, dateTimeStamp) {
         if (this.generateDamageTime > 0) {
-
             if (this.updatedDamageTimestamp) {
                 this.generateDamage = dateTimeStamp - this.updatedDamageTimestamp
-                this.generateDamageNormal = this.generateDamage / (this.generateDamageTime / window.TIME_SCALE);
                 if (this.generateDamage >= this.generateDamageTime / window.TIME_SCALE) {
                     this.updatedDamageTimestamp = (Date.now() / 1000 | 0);
+                    this.generateDamageNormal = 1;
                     this.damageReady();
+                } else {
+                    this.milisecTimeStamp = Date.now() / 1000
+                    this.generateDamageNormal = (this.milisecTimeStamp - this.updatedDamageTimestamp) / (this.generateDamageTime / window.TIME_SCALE);
+                    this.generateDamageNormal = Math.min(this.generateDamageNormal, 1)
+                    
                 }
             }
         } else {
             this.generateDamageNormal = 0;
-
         }
-
     }
     lookAt(target) {
         if (!this.tileSprite || !this.tileSprite.visible || !this.tileData) {
@@ -184,19 +190,19 @@ export default class MergeTile extends PIXI.Container {
             this.tileData = tileData;
         }
         this.reset();
-        this.generateDamageTime = tileData.generateDamageTime | 0;
-        this.generateResourceTime = tileData.generateResourceTime | 0;
+        this.generateDamageTime = tileData.getGenerateDamageTime() || 0;
+        this.generateResourceTime = tileData.getGenerateResourceTime() || 0;
         this.generateDamageTimeStamp = (Date.now() / 1000 | 0);
         this.generateResourceTimeStamp = (Date.now() / 1000 | 0);
         this.updatedResourceTimestamp = (Date.now() / 1000 | 0);
         this.updatedDamageTimestamp = (Date.now() / 1000 | 0);
-        this.tileSprite.texture = PIXI.Texture.from(this.tileData.texture);
+        this.tileSprite.texture = PIXI.Texture.from(this.tileData.getTexture());
         this.updatePosition()
         this.entityScale = 1.5//Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
         this.tileSprite.scale.set(0, 2);
         this.tileSprite.anchor.set(0.5)
         this.sin = Math.random();
-        this.label.text = this.tileData.value
+        this.label.text = this.tileData.getValue()
         this.showSprite()
         TweenLite.to(this.tileSprite.scale, 0.5, {
             x: this.entityScale,

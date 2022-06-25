@@ -7,6 +7,7 @@ import ResourceTile from './tiles/ResourceTile';
 export default class ResourceSystem {
     constructor(containers, data, dataTiles) {
 
+        console.log("RESOURCES",dataTiles)
         this.dataTiles = dataTiles;
         this.gameplayData = data.general;
 
@@ -34,21 +35,11 @@ export default class ResourceSystem {
         }
         this.mousePosition = { x: 0, y: 0 }
         this.resourceSlots = []
-        this.addResourceSlot();
-        this.addResourceSlot();
-        this.addResourceSlot();
-        this.addResourceSlot();
-        this.addResourceSlot();
-        this.addResourceSlot();
+
+        this.dataTiles.forEach(element => {
+            this.addResourceSlot();            
+        });
         this.timestamp = (Date.now() / 1000 | 0);
-
-
-        this.resourceSlots[0].addEntity(this.dataTiles[0])
-        this.resourceSlots[1].addEntity(this.dataTiles[2])
-        this.resourceSlots[2].addEntity(this.dataTiles[4])
-        this.resourceSlots[3].addEntity(this.dataTiles[9])
-        this.resourceSlots[4].addEntity(this.dataTiles[11])
-        this.resourceSlots[5].addEntity(this.dataTiles[29])
 
         setTimeout(() => {
             this.resize(config, true)
@@ -85,9 +76,11 @@ export default class ResourceSystem {
         piece.onUp.add((slot) => {
             if (!slot.tileData) {
                 console.log("open shop menu")
+                slot.addEntity(this.dataTiles[slot.id])
                 return;
             }
             console.log("open upgrade menu")
+            slot.tileData.upgrade(1);
         });
         piece.onGenerateResource.add((slot, data, totalResources) => {
             let customData = {}
@@ -101,6 +94,7 @@ export default class ResourceSystem {
         });
         this.container.addChild(piece);
 
+        piece.id = this.resourceSlots.length;
         this.resourceSlots.push(piece)
 
 

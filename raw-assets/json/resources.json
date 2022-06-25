@@ -1,0 +1,59 @@
+{
+    "generators": [
+        [
+            {
+                "imageSrc": "starship_35",
+                "initialCost": 4,
+                "costCoefficient": 1.1,
+                "initialTime": 0.6,
+                "initialRevenue": 1,
+                "coefficientProductivity": 1.09,
+                "initialProductivity": 2
+            }
+        ],
+        [
+            {
+                "imageSrc": "starship_34",
+                "initialCost": 60,
+                "costCoefficient": 1.15,
+                "initialTime": 3,
+                "initialRevenue": 60,
+                "coefficientProductivity": 1.09,
+                "initialProductivity": 20
+            }
+        ],
+        [
+            {
+                "imageSrc": "starship_33",
+                "initialCost": 720,
+                "costCoefficient": 1.14,
+                "initialTime": 6,
+                "initialRevenue": 540,
+                "coefficientProductivity": 1.09,
+                "initialProductivity": 90
+            }
+        ],
+        [
+            {
+                "imageSrc": "starship_32",
+                "initialCost": 8600,
+                "costCoefficient": 1.13,
+                "initialTime": 12,
+                "initialRevenue": 4320,
+                "coefficientProductivity": 1.09,
+                "initialProductivity": 360
+            }
+        ],
+        [
+            {
+                "imageSrc": "starship_31",
+                "initialCost": 104000,
+                "costCoefficient": 1.12,
+                "initialTime": 24,
+                "initialRevenue": 51800,
+                "coefficientProductivity": 1.09,
+                "initialProductivity": 2160
+            }
+        ]
+    ]
+}

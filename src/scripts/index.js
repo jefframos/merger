@@ -159,7 +159,7 @@ function tryStuff() {
         coefficient: 1.1,
         initialTime: 0.6,
         initialRevenue: 1,
-        coefficientProductivity: 1.1,
+        coefficientProductivity: 1.09,
         initialProductivity: 2
     }
 
@@ -174,7 +174,7 @@ function tryStuff() {
 
     let acc1 = 0
     let acc2 = 0
-    for (let index = 0; index < 100; index++) {
+    for (let index = 0; index < 100; index+=10) {
         //console.log(d.initialCost * Math.pow(d.coefficient, index))// * Math.pow(i, d.coefficient))
         //console.log(d.initialProductivity * Math.pow(d.coefficientProductivity, index))// * Math.pow(i, d.coefficient))
         let sim = d.initialProductivity * Math.pow(d.coefficientProductivity, index)
@@ -182,7 +182,7 @@ function tryStuff() {
         let cost = d.initialCost * Math.pow(d.coefficient, index)
         acc2 += cost
 
-        //console.log(utils.formatPointsLabel(cost), utils.formatPointsLabel(sim))
+        console.log(utils.formatPointsLabel(cost), utils.formatPointsLabel(sim))
         //console.log(d.initialProductivity * index * mult)
     }
 }

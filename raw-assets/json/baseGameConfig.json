@@ -5,6 +5,7 @@
             "entityGeneratorBaseTime":10,
             "giftGenerateTime":60
         },
+        "entitiesData":"entities",
         "gameMap": [
             [0,0,0,13],
             [0,0,0,11],
@@ -12,10 +13,11 @@
             [5,4,6,12],
             [8,7,9,14]
         ],
+        "resourcesData":"resources",
         "resourcesMap": [
           [0,0,0,0,0],
           [0,0,0,0,0]
-      ],
+     ],
         "lockIcon":"starship_01",
         "slotSize":{
             "width": 150,
@@ -28,7 +30,7 @@
             "gameArea": {"w":0.7, "h":0.6},
             "resourcesArea": {"w":0.15, "h":0.6},
             "perspective": 0.3
-        },
+          },
         "entities":{
             "list":[
                 {

@@ -10,11 +10,15 @@ import SpaceBackground from '../effects/SpaceBackground';
 import TweenMax from 'gsap';
 import EnemySystem from '../ui/merger/EnemySystem';
 import ResourceSystem from '../ui/merger/ResourceSystem';
+import MergerData from '../ui/merger/data/MergerData';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
 
         window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
+        window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
+        window.baseResources = PIXI.loader.resources[window.baseConfigGame.resourcesData].data;
+        console.log(window.baseResources)
         this.areaConfig = window.baseConfigGame.area;
         if (!this.areaConfig.bottomArea) {
             this.areaConfig.bottomArea = 0.2
@@ -70,59 +74,30 @@ export default class MergeScreen extends Screen {
         this.dataTiles = []
         this.dataResourcesTiles = []
 
-        console.log(window.baseConfigGame)
-
         window.TILE_ASSSETS_POOL = []
-        for (let index = 1; index <= window.baseConfigGame.entities.list.length - 1; index++) {
-            let pow = Math.pow(2, index)
-            let text = new PIXI.Text(pow, LABELS.LABEL1);
-            text.style.fill = 0xFFFFFF
-            text.style.fontSize = 64
-            let tex = new PIXI.Texture.from(window.baseConfigGame.entities.list[index].imageSrc)//utils.generateTextureFromContainer('image-' + index, text, window.TILE_ASSSETS_POOL)
-            this.dataTiles.push({
-                id: index,
-                texture: tex,
-                value: pow,
-                resources: 0,//pow * 1.5,
-                generateResourceTime: 0,//3,
-                damage: pow * 1.5 * index,
-                generateDamageTime: 5
-            })
+        this.rawMergeDataList = []
+        for (let index = 0; index < window.baseEntities.mergeEntities.list.length; index++) {
+            let mergeData = new MergerData(window.baseEntities.mergeEntities.list[index], index)
+            this.rawMergeDataList.push(mergeData)
         }
-        for (let index = 1; index <= window.baseConfigGame.entities.list.length * 2; index++) {
-            let pow = Math.pow(2, index)
-            let text = new PIXI.Text(pow, LABELS.LABEL1);
-            text.style.fill = 0xFFFFFF
-            text.style.fontSize = 64
-            let tex = new PIXI.Texture.from('starship_35')//utils.generateTextureFromContainer('image-' + index, text, window.TILE_ASSSETS_POOL)
-            this.dataResourcesTiles.push({
-                id: index,
-                texture: tex,
-                value: pow,
-                resources: pow * 1.5 * pow,
-                generateResourceTime: 3,
-                damage: 0,
-                generateDamageTime: 0
-            })
+        
+        this.rawMergeResourceList = []
+        for (let index = 0; index < window.baseResources.generators.length; index++) {
+            let mergeData = new MergerData(window.baseResources.generators[index][0], index)
+            this.rawMergeResourceList.push(mergeData)
         }
-
-        console.log( parseInt('1000') + 30)
-        //console.log(utils.formatPointsLabel(acc2), utils.formatPointsLabel(acc1))
-
-        //if own 10 nextCost=initial * (Math.pow(coefficient, 10)
-        console.log(this.dataTiles)
-        console.log(this.dataResourcesTiles)
+        
         this.mergeSystem1 = new MergeSystem({
             mainContainer: this.mergeSystemContainer,
             uiContainer: this.uiContainer,
             wrapper: this.gridWrapper,
             topContainer: this.topContainer,
-        }, window.baseConfigGame, this.dataTiles);
+        }, window.baseConfigGame, this.rawMergeDataList);
         
         this.resourceSystem = new ResourceSystem({
             mainContainer:this.resourcesContainer,
             wrapper: this.resourcesWrapper,
-        }, window.baseConfigGame, this.dataResourcesTiles)
+        }, window.baseConfigGame, this.rawMergeResourceList)
 
         this.enemiesSystem = new EnemySystem({
             mainContainer:this.enemiesContainer
@@ -134,6 +109,8 @@ export default class MergeScreen extends Screen {
 
         this.mergeSystem1.onDealDamage.add(this.addDamageParticles.bind(this));
         this.mergeSystem1.onPopLabel.add(this.popLabel.bind(this));
+
+        this.enemiesSystem.onPopLabel.add(this.popLabel.bind(this));
 
         this.mergeSystem1.addSystem(this.enemiesSystem);
         this.mergeSystem1.addSystem(this.resourceSystem);
@@ -176,7 +153,7 @@ export default class MergeScreen extends Screen {
             if(window.TIME_SCALE > 1){
                 window.TIME_SCALE = 1
             }else{
-                window.TIME_SCALE = 10
+                window.TIME_SCALE = 30
             }
 
             TweenMax.globalTimeScale( window.TIME_SCALE ) 
@@ -208,8 +185,7 @@ export default class MergeScreen extends Screen {
         this.particleSystem.popLabel(toLocal, "+" + utils.formatPointsLabel(totalResources), 0, 1, 1, LABELS.LABEL1)
     }
     onMouseMove(e) {
-        this.mergeSystem1.updateMouse(e)
-        this.resourceSystem.updateMouse(e)
+        this.mergeSystem1.updateMouseSystems(e)
         this.mousePosition = e.data.global;
         if (!this.draggingEntity) {
             return;
@@ -232,7 +208,9 @@ export default class MergeScreen extends Screen {
     update(delta) {
 
         delta *= window.TIME_SCALE;
-        this.mergeSystem1.update(delta);
+
+        this.mergeSystem1.updateSystems(delta)
+        // this.mergeSystem1.update(delta);
         this.particleSystem.update(delta)
 
         this.resourcesLabel.text = utils.formatPointsLabel(this.totalResources);
