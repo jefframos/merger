@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Signals from 'signals';
-import config from '../../../config';
-import utils from '../../../utils';
+import config from '../../../../config';
+import utils from '../../../../utils';
 export default class ShopButton extends PIXI.Container
 {
     constructor(catData, price)
@@ -14,7 +14,12 @@ export default class ShopButton extends PIXI.Container
             this.container = new PIXI.Container();
             this.addChild(this.container);
             // this.background = new PIXI.Graphics().beginFill(0xFFFFFF).drawRect(0, 0, 120, 40);
-            this.backButton = new PIXI.Sprite.from('back_button');
+
+            this.backButton = new PIXI.mesh.NineSlicePlane(
+                PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10)
+            this.backButton.width = 90 
+            this.backButton.height = 40 
+
             this.container.addChild(this.backButton);
 
             this.w = this.backButton.width;
@@ -24,8 +29,8 @@ export default class ShopButton extends PIXI.Container
             this.catData = catData;
 
 
-
-            this.sprite = new PIXI.Sprite.from(GAME_DATA.moneyData.softIcon);
+            //GAME_DATA.moneyData.softIcon
+            this.sprite = new PIXI.Sprite.from('coin');
             this.container.addChild(this.sprite);
             this.sprite.anchor.set(0, 0.5)
             this.defaultSpriteScale = this.h / this.sprite.height * 0.5;
@@ -75,7 +80,7 @@ export default class ShopButton extends PIXI.Container
         }
         else
         {
-            SOUND_MANAGER.play(getCoinSound(), 0.2)
+            // SOUND_MANAGER.play(getCoinSound(), 0.2)
             this.onClickItem.dispatch(this);
             this.timeoutHold = setTimeout(() =>
             {
@@ -149,7 +154,7 @@ export default class ShopButton extends PIXI.Container
 
     shake(force = 0.25, steps = 5, time = 0.4)
     {
-        SOUND_MANAGER.play('boing');
+        // SOUND_MANAGER.play('boing');
         let timelinePosition = new TimelineLite();
         let positionForce = (force * -20);
         let spliterForce = (force * 20);

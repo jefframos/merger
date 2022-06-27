@@ -96,6 +96,7 @@ function startLoader() {
     //     })
 }
 
+window.COOKIE_MANAGER = new CookieManager();
 
 function configGame(evt) {
     SOUND_MANAGER.load(audioManifest);

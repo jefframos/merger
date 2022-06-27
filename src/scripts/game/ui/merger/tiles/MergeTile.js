@@ -182,6 +182,9 @@ export default class MergeTile extends PIXI.Container {
         this.tileSprite.visible = false;
         return this.tileSprite.texture;
     }
+    updateData(){
+        
+    }
     addEntity(tileData) {
         //console.log(tileData);
         if (this.tileData) {

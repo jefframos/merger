@@ -1,6 +1,6 @@
 export default class MergerData {
     constructor(rawData, index) {
-        
+
         let tex = new PIXI.Texture.from(rawData.imageSrc)
         let pow = Math.pow(2, index + 1)
         rawData.id = index;
@@ -11,38 +11,54 @@ export default class MergerData {
 
         this.currentLevel = 1;
         this.resourceAccum = true;
+      
     }
-    shouldAccumulateResources(){
+    shouldAccumulateResources() {
         return this.resourceAccum;
     }
-    getID(){
+    getID() {
         return this.rawData.id
     }
-    getValue(){
+    getValue() {
         return this.rawData.value;
     }
-    getDamage(){
+    getDamage() {
         return this.rawData.initialDamage
     }
-    getTexture(){
+    getTexture() {
         return this.rawData.texture
     }
-    getGenerateDamageTime(){
+    getGenerateDamageTime() {
         return this.rawData.initialTime
     }
-    getGenerateResourceTime(){
-        return this.rawData.initialTime
+    getGenerateResourceTime(simulate = 0) {
+        return this.rawData.initialTime //Math.max(0.01, this.rawData.initialTime / Math.pow(this.rawData.coefficientProductivity, this.currentLevel+ simulate))
     }
-    getResources(){
-        return this.rawData.initialRevenue * Math.pow(this.rawData.coefficientProductivity, this.currentLevel)
+    getResources(simulate = 0) {
+        return this.rawData.initialRevenue * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate)
     }
-    getCoast(){
+    getCoast() {
         return this.rawData.initialCost
     }
-    getUpgradeCost(totalUpgrades){
+    getUpgradeCost(totalUpgrades) {
         return this.rawData.initialCost * Math.pow(this.rawData.costCoefficient, this.currentLevel + totalUpgrades)
     }
-    upgrade(quant){
+    upgrade(quant) {
         this.currentLevel += quant;
+    }
+    setLevel(next) {
+        this.currentLevel = next;
+    }
+    getRPS(simulate = 0) {
+        let res = this.getResources(simulate);
+        let time = this.getGenerateResourceTime(simulate);
+
+        return res / time;
+    }
+    getDPS(simulate = 0) {
+        // let res = this.getResources(simulate);
+        // let time = this.getGenerateResourceTime(simulate);
+
+        // return res / time;
     }
 }

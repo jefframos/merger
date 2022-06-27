@@ -1,17 +1,14 @@
 import * as PIXI from 'pixi.js';
 import Signals from 'signals';
-import config from '../../../config';
-import utils from '../../../utils';
-import CatItem from '../CatItem';
-import ListScroller from '../uiElements/ListScroller';
+import ListScroller from '../../uiElements/ListScroller';
 export default class ShopList extends ListScroller
 {
     constructor(rect = {
         w: 500,
         h: 500
-    }, itensPerPage = 4)
+    }, itensPerPage = 5)
     {
-        super(rect, itensPerPage, false);
+        super(rect, itensPerPage, true);
         this.onItemShop = new Signals();
         this.onShowInfo = new Signals();
         this.onVideoItemShop = new Signals();
@@ -47,13 +44,15 @@ export default class ShopList extends ListScroller
     }
     onShopItemCallback(itemData, realCost, button)
     {
-        let staticData = GAME_DATA[itemData.staticData][itemData.id];
-        if (staticData.shopType == 'video')
-        {
-            this.onVideoItemShop.dispatch(itemData);
-            return
-        }
-        GAME_DATA.buyUpgrade(itemData, realCost);
+        // let staticData = GAME_DATA[itemData.staticData][itemData.id];
+        // if (staticData.shopType == 'video')
+        // {
+        //     this.onVideoItemShop.dispatch(itemData);
+        //     return
+        // }
+        // GAME_DATA.buyUpgrade(itemData, realCost);
+
+        itemData.upgrade(1)
         this.onItemShop.dispatch(itemData, button);
         this.updateItems();
     }

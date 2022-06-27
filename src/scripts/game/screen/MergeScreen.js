@@ -11,6 +11,8 @@ import TweenMax from 'gsap';
 import EnemySystem from '../ui/merger/EnemySystem';
 import ResourceSystem from '../ui/merger/ResourceSystem';
 import MergerData from '../ui/merger/data/MergerData';
+import EntityShop from '../ui/merger/shop/EntityShop';
+import GameEconomy from '../ui/merger/GameEconomy';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
@@ -27,10 +29,10 @@ export default class MergeScreen extends Screen {
             this.areaConfig.topArea = 0.2
         }
         if (!this.areaConfig.gameArea) {
-            this.areaConfig.gameArea = {w:0.5, h:0.5}
+            this.areaConfig.gameArea = { w: 0.5, h: 0.5 }
         }
         if (!this.areaConfig.resourcesArea) {
-            this.areaConfig.resourcesArea = {w:0.5, h:0.5}
+            this.areaConfig.resourcesArea = { w: 0.5, h: 0.5 }
         }
 
         this.spaceBackground = new SpaceBackground();
@@ -46,11 +48,11 @@ export default class MergeScreen extends Screen {
         this.backBlocker.buttonMode = true;
         this.backBlocker.visible = false;
 
-        this.frontLayer.addChild(this.backBlocker);        
+        this.frontLayer.addChild(this.backBlocker);
         this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.gameArea.w, config.height * this.areaConfig.gameArea.h);
         this.container.addChild(this.gridWrapper);
         //this.gridWrapper.visible = false;
-        this.resourcesWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0,config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
+        this.resourcesWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
         this.container.addChild(this.resourcesWrapper);
 
         this.mergeSystemContainer = new PIXI.Container()
@@ -80,27 +82,27 @@ export default class MergeScreen extends Screen {
             let mergeData = new MergerData(window.baseEntities.mergeEntities.list[index], index)
             this.rawMergeDataList.push(mergeData)
         }
-        
+
         this.rawMergeResourceList = []
         for (let index = 0; index < window.baseResources.generators.length; index++) {
             let mergeData = new MergerData(window.baseResources.generators[index][0], index)
             this.rawMergeResourceList.push(mergeData)
         }
-        
+
         this.mergeSystem1 = new MergeSystem({
             mainContainer: this.mergeSystemContainer,
             uiContainer: this.uiContainer,
             wrapper: this.gridWrapper,
             topContainer: this.topContainer,
         }, window.baseConfigGame, this.rawMergeDataList);
-        
+
         this.resourceSystem = new ResourceSystem({
-            mainContainer:this.resourcesContainer,
+            mainContainer: this.resourcesContainer,
             wrapper: this.resourcesWrapper,
         }, window.baseConfigGame, this.rawMergeResourceList)
 
         this.enemiesSystem = new EnemySystem({
-            mainContainer:this.enemiesContainer
+            mainContainer: this.enemiesContainer
         });
         this.mergeSystem1.enemySystem = this.enemiesSystem;
 
@@ -141,26 +143,49 @@ export default class MergeScreen extends Screen {
 
         this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
         this.container.addChild(this.dpsLabel)
-        
+
         this.particleSystem = new ParticleSystem();
         this.addChild(this.particleSystem)
-        
-        
-        this.speedUpToggle = new UIButton1(0xFFFFFF,'smallButton')
+
+
+        this.speedUpToggle = new UIButton1(0xFFFFFF, 'smallButton')
         this.container.addChild(this.speedUpToggle)
         this.speedUpToggle.y = 30
-        this.speedUpToggle.onClick.add(()=>{
-            if(window.TIME_SCALE > 1){
+        this.speedUpToggle.onClick.add(() => {
+            if (window.TIME_SCALE > 1) {
                 window.TIME_SCALE = 1
-            }else{
+            } else {
                 window.TIME_SCALE = 30
             }
 
-            TweenMax.globalTimeScale( window.TIME_SCALE ) 
+            TweenMax.globalTimeScale(window.TIME_SCALE)
         })
 
-        this.totalResources = 0;
+        this.clearData = new UIButton1(0xFFFFFF, 'icon-trash',0)
+        this.container.addChild(this.clearData)
+        this.clearData.x = 80
+        this.clearData.y = 30
+        this.clearData.onClick.add(() => {
+            COOKIE_MANAGER.resetCookie()
+        })
+
+        this.openShop = new UIButton1(0xFFFFFF, 'smallButton')
+        this.container.addChild(this.openShop)
+        this.openShop.y = config.height - 120
+        this.openShop.onClick.add(() => {
+            this.entityShop.show()
+        })
+
         window.TIME_SCALE = 1
+
+        this.entityShop = new EntityShop(this.resourceSystem);
+        this.addChild(this.entityShop);
+        this.entityShop.hide();
+
+        this.entityShop.addItems(this.rawMergeResourceList)
+
+        window.gameEconomy = new GameEconomy()
+
     }
     popLabel(targetPosition, label) {
         let toLocal = this.particleSystem.toLocal(targetPosition)
@@ -175,7 +200,7 @@ export default class MergeScreen extends Screen {
     }
     addResourceParticles(targetPosition, customData, totalResources, quantParticles) {
 
-        this.totalResources += totalResources;
+        window.gameEconomy.addResources(totalResources)
         let toLocal = this.particleSystem.toLocal(targetPosition)
         for (let index = 0; index < quantParticles; index++) {
 
@@ -213,7 +238,9 @@ export default class MergeScreen extends Screen {
         // this.mergeSystem1.update(delta);
         this.particleSystem.update(delta)
 
-        this.resourcesLabel.text = utils.formatPointsLabel(this.totalResources);
+
+
+        this.resourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources);
 
         this.rpsLabel.text = utils.formatPointsLabel(this.resourceSystem.rps) + "/rps";
 
@@ -238,7 +265,10 @@ export default class MergeScreen extends Screen {
         this.resourcesLabel.y = config.height - 50
 
         this.enemiesContainer.x = config.width / 2;
-        this.enemiesContainer.y = config.height * this.areaConfig.topArea*0.5;
+        this.enemiesContainer.y = config.height * this.areaConfig.topArea * 0.5;
+
+        this.entityShop.x = config.width / 2 - this.entityShop.width / 2
+        this.entityShop.y = config.height / 2 - this.entityShop.height / 2
     }
     transitionOut(nextScreen) {
         this.removeEvents();

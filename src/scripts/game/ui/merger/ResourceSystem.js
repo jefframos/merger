@@ -36,8 +36,15 @@ export default class ResourceSystem {
         this.mousePosition = { x: 0, y: 0 }
         this.resourceSlots = []
 
+        this.savedResources = COOKIE_MANAGER.getResources();
+
         this.dataTiles.forEach(element => {
-            this.addResourceSlot();            
+            if(this.savedResources[element.rawData.nameID]){
+                
+                this.addResourceSlot(element, this.savedResources[element.rawData.nameID]);            
+            }else{
+                this.addResourceSlot();            
+            }
         });
         this.timestamp = (Date.now() / 1000 | 0);
 
@@ -58,7 +65,7 @@ export default class ResourceSystem {
         this.rps = utils.findRPS2(this.resourceSlots)
     }
 
-    addResourceSlot() {
+    addResourceSlot(dataToAdd, savedStats) {
         let piece = new ResourceTile(0, 0, this.slotSize.width, 'coin', this.gameplayData.entityGeneratorBaseTime);
         let targetScale = config.height * 0.2 / piece.height
         piece.scale.set(Math.min(targetScale, 1))
@@ -75,18 +82,22 @@ export default class ResourceSystem {
         });
         piece.onUp.add((slot) => {
             if (!slot.tileData) {
-                console.log("open shop menu")
-                slot.addEntity(this.dataTiles[slot.id])
+                if(window.gameEconomy.hasEnoughtResources(slot.initialCost)){
+                    window.gameEconomy.useResources(slot.initialCost)
+                    slot.addEntity(this.dataTiles[slot.id])
+                    COOKIE_MANAGER.buyResource(this.dataTiles[slot.id])
+                    
+                }
                 return;
             }
-            console.log("open upgrade menu")
-            slot.tileData.upgrade(1);
         });
         piece.onGenerateResource.add((slot, data, totalResources) => {
             let customData = {}
             customData.texture = 'coin'
             customData.scale = 0.01
             customData.alphaDecress = 0.1
+
+            COOKIE_MANAGER.pickResource(data)
 
             let targetPos = slot.tileSprite.getGlobalPosition()
             this.onGetResources.dispatch(targetPos, customData, totalResources, 5)
@@ -95,7 +106,18 @@ export default class ResourceSystem {
         this.container.addChild(piece);
 
         piece.id = this.resourceSlots.length;
+
+        piece.setTargetData(this.dataTiles[piece.id])
+        if(piece.id == 0){
+            piece.forcePriceToZero();
+        }
         this.resourceSlots.push(piece)
+
+
+        if(dataToAdd){
+            piece.addEntity(dataToAdd);
+            piece.updateSavedStats(savedStats);
+        }
 
 
         let vertical = this.resourceSlots.length
@@ -114,6 +136,13 @@ export default class ResourceSystem {
 
         this.updateGridPosition();
 
+    }
+    findUpgrade(item){
+        this.resourceSlots.forEach(element => {
+            if(element.tileData && element.tileData.id == element.id){
+                element.tileData.setLevel(item.currentLevel)
+            }
+        });
     }
     updateGridPosition() {
 
