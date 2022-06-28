@@ -15,8 +15,11 @@
         ],
         "resourcesData":"resources",
         "resourcesMap": [
-          [0,0,0,0,0],
-          [0,0,0,0,0]
+          [0,0],
+          [0,0],
+          [0,0],
+          [0,0],
+          [0,0]
      ],
         "lockIcon":"starship_01",
         "slotSize":{

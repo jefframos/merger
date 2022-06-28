@@ -6,9 +6,9 @@ import ShopItem from './ShopItem';
 import ShopList from './ShopList';
 
 export default class EntityShop extends PIXI.Container {
-    constructor(resourceSystem, size, border = 0) {
+    constructor(resourceSystems, size, border = 0) {
         super()
-        this.resourceSystem = resourceSystem;
+        this.resourceSystems = resourceSystems;
         this.size = {
             w: config.width * 0.8,
             h: config.height * 0.8
@@ -55,7 +55,13 @@ export default class EntityShop extends PIXI.Container {
         this.visible = true;
     }
     confirmItemShop(item) {
-        this.resourceSystem.findUpgrade(item)
+
+        this.resourceSystems.forEach(resourceSystem => {
+            resourceSystem.findUpgrade(item)
+        });
+
+        COOKIE_MANAGER.addResourceUpgrade(item);
+
     }
     addItems(items) {
 

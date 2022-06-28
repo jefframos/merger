@@ -2,10 +2,11 @@
     "generators": [
         [
             {
+                "isFirst":true,
                 "nameID": "resource_starship_35",
                 "imageSrc": "starship_35",
                 "initialCost": 4,
-                "costCoefficient": 1.1,
+                "costCoefficient": 1.14,
                 "initialTime": 0.6,
                 "initialRevenue": 1,
                 "coefficientProductivity": 1.09,
@@ -18,64 +19,118 @@
                 "nameID": "resource_starship_34",
                 "imageSrc": "starship_34",
                 "initialCost": 60,
-                "costCoefficient": 1.15,
+                "costCoefficient": 1.153,
                 "initialTime": 3,
-                "initialRevenue": 60,
-                "coefficientProductivity": 1.09,
+                "initialRevenue": 20,
+                "coefficientProductivity": 1.152,
                 "initialProductivity": 20,
-                "levelMax": 2500
+                "levelMax": 500
             }
         ],
         [
             {
                 "nameID": "resource_starship_33",
                 "imageSrc": "starship_33",
-                "initialCost": 720,
-                "costCoefficient": 1.14,
+                "initialCost": 800,
+                "costCoefficient": 1.155,
                 "initialTime": 20,
-                "initialRevenue": 540,
-                "coefficientProductivity": 1.09,
+                "initialRevenue": 140,
+                "coefficientProductivity": 1.18,
                 "initialProductivity": 90,
-                "levelMax": 9500
+                "levelMax": 500
             }
         ],
         [
             {
                 "nameID": "resource_starship_32",
                 "imageSrc": "starship_32",
-                "initialCost": 8600,
-                "costCoefficient": 1.11,
-                "initialTime": 40,
-                "initialRevenue": 4320,
-                "coefficientProductivity": 1.09,
+                "initialCost": 80600,
+                "costCoefficient": 1.162,
+                "initialTime": 60,
+                "initialRevenue": 3000,
+                "coefficientProductivity": 1.191,
                 "initialProductivity": 360,
-                "levelMax": 36500
+                "levelMax": 500
             }
         ],
         [
             {
                 "nameID": "resource_starship_31",
                 "imageSrc": "starship_31",
-                "initialCost": 104000,
-                "costCoefficient": 1.12,
+                "initialCost": 1000000,
+                "costCoefficient": 1.168,
                 "initialTime": 150,
-                "initialRevenue": 351800,
-                "coefficientProductivity": 1.09,
+                "initialRevenue": 350000,
+                "coefficientProductivity": 1.192,
                 "initialProductivity": 2160,
-                "levelMax": 216500
+                "levelMax": 500
             }
         ],
         [
             {
+                "nameID": "1starship_30",
                 "imageSrc": "starship_30",
-                "initialCost": 5104000,
-                "costCoefficient": 1.13,
+                "initialCost": 5000000000,
+                "costCoefficient": 1.15,
                 "initialTime": 250,
-                "initialRevenue": 8350000,
-                "coefficientProductivity": 1.09,
+                "initialRevenue": 42000000,
+                "coefficientProductivity": 1.175,
                 "initialProductivity": 2160,
-                "levelMax": 216500
+                "levelMax": 500
+            }
+        ],
+        [
+            {
+                "nameID": "2starship_30",
+                "imageSrc": "starship_30",
+                "initialCost": 700000000000,
+                "costCoefficient": 1.15,
+                "initialTime": 500,
+                "initialRevenue": 5500000000,
+                "coefficientProductivity": 1.181,
+                "initialProductivity": 2160,
+                "levelMax": 500
+            }
+        ],
+        [
+            {
+                "nameID": "3starship_30",
+                "imageSrc": "starship_30",
+                "initialCost": 90000000000000,
+                "costCoefficient": 1.149,
+                "initialTime": 650,
+                "initialRevenue": 85500000000,
+                "coefficientProductivity": 1.186,
+                "initialProductivity": 2160,
+                "levelMax": 500
+            }
+        ],
+        [
+            {
+                "nameID": "4starship_30",
+                "imageSrc": "starship_30",
+                "initialCost": 1020000000000000,
+                "costCoefficient": 1.156,
+                "initialTime": 825,
+                "initialRevenue": 1205506500000,
+                "coefficientProductivity": 1.194,
+                "initialProductivity": 2160,
+                "levelMax": 500
+            }
+        ],
+        [
+            {
+                "nameID": "5starship_30",
+                "imageSrc": "starship_30",
+                "initialCost": 5000000000000000000,
+                "costCoefficient": 1.164,
+                "initialTime": 1000,
+                "initialRevenue": 80312055065000000,
+                "coefficientProductivity": 1.197,
+                "initialProductivity": 2160,
+                "levelMax": 500
             }
         ]
     ]
 }
+

@@ -35,7 +35,7 @@ export default class MergerData {
         return this.rawData.initialTime //Math.max(0.01, this.rawData.initialTime / Math.pow(this.rawData.coefficientProductivity, this.currentLevel+ simulate))
     }
     getResources(simulate = 0) {
-        return this.rawData.initialRevenue * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate)
+        return (this.rawData.initialRevenue * this.rawData.initialTime) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate)
     }
     getCoast() {
         return this.rawData.initialCost

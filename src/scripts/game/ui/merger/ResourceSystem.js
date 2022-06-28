@@ -38,9 +38,10 @@ export default class ResourceSystem {
 
         this.savedResources = COOKIE_MANAGER.getResources();
 
+
+
         this.dataTiles.forEach(element => {
-            if(this.savedResources[element.rawData.nameID]){
-                
+            if(this.savedResources[element.rawData.nameID]){                
                 this.addResourceSlot(element, this.savedResources[element.rawData.nameID]);            
             }else{
                 this.addResourceSlot();            
@@ -108,7 +109,7 @@ export default class ResourceSystem {
         piece.id = this.resourceSlots.length;
 
         piece.setTargetData(this.dataTiles[piece.id])
-        if(piece.id == 0){
+        if(this.dataTiles[piece.id].rawData.isFirst){
             piece.forcePriceToZero();
         }
         this.resourceSlots.push(piece)
@@ -149,7 +150,7 @@ export default class ResourceSystem {
 
         utils.resizeToFitARCap(this.wrapper, this.container, this.fixedSize)
 
-        this.container.x = 0//this.wrapper.x + this.wrapper.width / 2 - (this.fixedSize.width * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.x;;
+        this.container.x = this.wrapper.x//this.wrapper.x + this.wrapper.width / 2 - (this.fixedSize.width * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.x;;
         this.container.y = this.wrapper.y + this.wrapper.height / 2 - (this.fixedSize.height * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.y;
 
         for (let index = this.resourceSlots.length - 1; index >= 0; index--) {

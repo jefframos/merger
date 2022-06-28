@@ -7,16 +7,28 @@ export default class CookieManager {
 			resources: 0
 		}
 		let defaultResources = {
-			version:'0.0.1'
+			version: '0.0.1'
+		}
+		let defaultProgression = {
+			version: '0.0.1',
+			currentEnemyLevel: 1,
+		}
+		let defaultBoard = {
+			version: '0.0.1',
+			currentBoardLevel: 0,
+			entities:{}
 		}
 		this.economy = {}
 		this.stats = {}
 		this.resources = {}
+		this.progression = {}
+		this.board = {}
 		this.economy = this.sortCookieData('economy', defaultEconomy);
-		this.stats = this.sortCookieData( 'stats', defaultStats);
-		this.resources = this.sortCookieData( 'resources', defaultResources);
+		this.stats = this.sortCookieData('stats', defaultStats);
+		this.resources = this.sortCookieData('resources', defaultResources);
+		this.progression = this.sortCookieData('progression', defaultProgression);
+		this.board = this.sortCookieData('board', defaultBoard);
 
-		console.log('resourcesresources',this.resources)
 	}
 
 	sortCookieData(nameID, defaultData) {
@@ -24,7 +36,7 @@ export default class CookieManager {
 		let target
 		if (cookie) {
 			target = cookie;
-			
+
 			for (const key in defaultData) {
 				const element = defaultData[key];
 				if (target[key] === undefined) {
@@ -54,7 +66,6 @@ export default class CookieManager {
 	}
 	addResourceUpgrade(mergeData) {
 		this.resources[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
-
 		this.storeObject('resources', this.resources)
 	}
 	addPendingResource(mergeData, current) {
@@ -70,7 +81,30 @@ export default class CookieManager {
 			pendingResource: 0,
 			latestResourceAdd: 0
 		}
+		this.storeObject('resources', this.resources)
 	}
+
+	addMergePiece(mergeData, i, j) {
+		if (mergeData == null) {
+			this.board.entities[i + ";" + j] = null
+		} else {
+			this.board.entities[i + ";" + j] = {
+				nameID: mergeData.rawData.nameID
+			}
+		}
+		this.storeObject('board', this.board)
+	}
+
+	saveBoardLevel(level) {
+		this.board.currentBoardLevel = level;
+		this.storeObject('board', this.board)
+
+	}
+	saveEnemyLevel(level) {
+		this.progression.currentEnemyLevel = level;
+		this.storeObject('progression', this.progression)
+	}
+
 	createCookie(name, value, days) {
 		let sValue = JSON.stringify(value);
 		try {
@@ -86,6 +120,12 @@ export default class CookieManager {
 	getResources() {
 		return this.getCookie('resources')
 	}
+	getProgression() {
+		return this.getCookie('progression')
+	}
+	getBoard() {
+		return this.getCookie('board')
+	}
 	getCookie(name) {
 		return JSON.parse(window.localStorage.getItem(name))//(result === null) ? null : result[1];
 	}
@@ -96,5 +136,10 @@ export default class CookieManager {
 		for (var i in window.localStorage) {
 			window.localStorage.removeItem(i);
 		}
+	}
+	wipeData() {
+		this.resetCookie();
+		window.localStorage.clear();
+		window.location.reload();
 	}
 }

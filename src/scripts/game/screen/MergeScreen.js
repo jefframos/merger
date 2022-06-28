@@ -55,11 +55,18 @@ export default class MergeScreen extends Screen {
         this.resourcesWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
         this.container.addChild(this.resourcesWrapper);
 
+        this.resourcesWrapperRight = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
+        this.container.addChild(this.resourcesWrapperRight);
+
         this.mergeSystemContainer = new PIXI.Container()
         this.container.addChild(this.mergeSystemContainer);
 
         this.resourcesContainer = new PIXI.Container()
         this.container.addChild(this.resourcesContainer);
+
+        this.resourcesContainerRight = new PIXI.Container()
+        this.container.addChild(this.resourcesContainerRight);
+
 
         this.enemiesContainer = new PIXI.Container()
         this.container.addChild(this.enemiesContainer);
@@ -84,9 +91,16 @@ export default class MergeScreen extends Screen {
         }
 
         this.rawMergeResourceList = []
+        this.allRawResources = []
+        this.rawMergeResourceListRight = []
         for (let index = 0; index < window.baseResources.generators.length; index++) {
             let mergeData = new MergerData(window.baseResources.generators[index][0], index)
-            this.rawMergeResourceList.push(mergeData)
+            if(index % 2 == 0){
+                this.rawMergeResourceListRight.push(mergeData)
+            }else{
+                this.rawMergeResourceList.push(mergeData)
+            }
+            this.allRawResources.push(mergeData)
         }
 
         this.mergeSystem1 = new MergeSystem({
@@ -101,6 +115,11 @@ export default class MergeScreen extends Screen {
             wrapper: this.resourcesWrapper,
         }, window.baseConfigGame, this.rawMergeResourceList)
 
+        this.resourceSystemRight = new ResourceSystem({
+            mainContainer: this.resourcesContainerRight,
+            wrapper: this.resourcesWrapperRight,
+        }, window.baseConfigGame, this.rawMergeResourceListRight)
+
         this.enemiesSystem = new EnemySystem({
             mainContainer: this.enemiesContainer
         });
@@ -109,6 +128,9 @@ export default class MergeScreen extends Screen {
         this.resourceSystem.onGetResources.add(this.addResourceParticles.bind(this));
         this.resourceSystem.onPopLabel.add(this.popLabel.bind(this));
 
+        this.resourceSystemRight.onGetResources.add(this.addResourceParticles.bind(this));
+        this.resourceSystemRight.onPopLabel.add(this.popLabel.bind(this));
+
         this.mergeSystem1.onDealDamage.add(this.addDamageParticles.bind(this));
         this.mergeSystem1.onPopLabel.add(this.popLabel.bind(this));
 
@@ -116,6 +138,7 @@ export default class MergeScreen extends Screen {
 
         this.mergeSystem1.addSystem(this.enemiesSystem);
         this.mergeSystem1.addSystem(this.resourceSystem);
+        this.mergeSystem1.addSystem(this.resourceSystemRight);
 
         this.entityDragSprite = new PIXI.Sprite.from('');
         this.addChild(this.entityDragSprite);
@@ -166,7 +189,7 @@ export default class MergeScreen extends Screen {
         this.clearData.x = 80
         this.clearData.y = 30
         this.clearData.onClick.add(() => {
-            COOKIE_MANAGER.resetCookie()
+            COOKIE_MANAGER.wipeData()
         })
 
         this.openShop = new UIButton1(0xFFFFFF, 'smallButton')
@@ -178,11 +201,11 @@ export default class MergeScreen extends Screen {
 
         window.TIME_SCALE = 1
 
-        this.entityShop = new EntityShop(this.resourceSystem);
+        this.entityShop = new EntityShop([this.resourceSystem, this.resourceSystemRight]);
         this.addChild(this.entityShop);
         this.entityShop.hide();
 
-        this.entityShop.addItems(this.rawMergeResourceList)
+        this.entityShop.addItems(this.allRawResources)
 
         window.gameEconomy = new GameEconomy()
 
@@ -242,7 +265,7 @@ export default class MergeScreen extends Screen {
 
         this.resourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources);
 
-        this.rpsLabel.text = utils.formatPointsLabel(this.resourceSystem.rps) + "/rps";
+        this.rpsLabel.text = utils.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps) + "/rps";
 
         this.dpsLabel.text = utils.formatPointsLabel(this.mergeSystem1.dps) + "/dps";
 
@@ -258,6 +281,8 @@ export default class MergeScreen extends Screen {
         this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height
 
         this.resourcesWrapper.y = this.gridWrapper.y;
+        this.resourcesWrapperRight.x = this.gridWrapper.x + this.gridWrapper.width;
+        this.resourcesWrapperRight.y = this.gridWrapper.y;
 
         this.dpsLabel.y = config.height - 70
         this.rpsLabel.y = config.height - 50

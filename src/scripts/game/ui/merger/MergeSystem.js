@@ -7,7 +7,7 @@ import MergeTile from './tiles/MergeTile';
 
 export default class MergeSystem {
     constructor(containers, data, dataTiles) {
-        
+
         console.log('DATA', dataTiles)
         this.gameplayData = data.general;
 
@@ -58,14 +58,18 @@ export default class MergeSystem {
         this.resources = 0;
         this.dps = 0;
         this.rps = 0;
+        this.virtualSlots = [];
         this.slots = [];
 
         for (var i = 0; i < matrix.length; i++) {
             let temp = []
+            let temp2 = []
             for (var j = 0; j < matrix[i].length; j++) {
                 temp.push(0)
+                temp2.push(0)
             }
             this.slots.push(temp);
+            this.virtualSlots.push(temp2);
         }
 
         for (var i = 0; i < matrix.length; i++) {
@@ -92,6 +96,40 @@ export default class MergeSystem {
 
         this.enemySystem = null;
         this.systems = [];
+
+        this.loadData();
+    }
+    
+    loadData() {
+        this.savedProgression = COOKIE_MANAGER.getBoard();
+        this.boardLevel = -1
+        this.levelUp(this.savedProgression.currentBoardLevel, true)
+
+        for (const key in this.savedProgression.entities) {
+            if (Object.hasOwnProperty.call(this.savedProgression.entities, key)) {
+                const element = this.savedProgression.entities[key];
+                if (element) {
+                    let split = key.split(";")
+                    console.log(element, split[0], split[1])
+
+                    let found = this.findEntityByID(element.nameID)
+                    if (found) {
+
+                        this.virtualSlots[split[0]][split[1]].addEntity(found)
+                    }
+                }
+            }
+        }
+        this.updateAllData();
+    }
+
+    findEntityByID(id) {
+        for (let index = 0; index < this.dataTiles.length; index++) {
+            const element = this.dataTiles[index];
+            if (element.rawData.nameID == id) {
+                return element
+            }
+        }
     }
     addSystem(system) {
         this.systems.push(system);
@@ -124,15 +162,15 @@ export default class MergeSystem {
 
         });
         piece.onCompleteCharge.add((slot) => {
-            piece.addEntity(this.dataTiles[0])
+            piece.addEntity(this.dataTiles[0]);
         });
         this.pieceGeneratorsList.push(piece);
     }
-    updateMouseSystems(e){
+    updateMouseSystems(e) {
         this.updateMouse(e);
-        
+
         this.systems.forEach(element => {
-            element.updateMouse(e);            
+            element.updateMouse(e);
         });
     }
     updateMouse(e) {
@@ -151,24 +189,37 @@ export default class MergeSystem {
     adjustSlotsPosition() {
         this.updateAllData()
     }
-    levelUp() {
+    levelUp(nextLevel, ignoreSave = false) {
+
+
+        if (this.boardLevel != nextLevel) {
+            this.boardLevel = nextLevel;
+            if (!ignoreSave) {
+                COOKIE_MANAGER.saveBoardLevel(this.boardLevel);
+            }
+        } else {
+            return;
+        }
+
         for (let index = 0; index < window.baseConfigGame.gameMap.length; index++) {
             for (let j = 0; j < window.baseConfigGame.gameMap[index].length; j++) {
-                if (window.baseConfigGame.gameMap[index][j] == (this.latest + 1)) {
-                    this.addSlot(index, j);
-                    this.latest++;
-                    return
+                console.log(window.baseConfigGame.gameMap[index][j], this.boardLevel)
+                if (window.baseConfigGame.gameMap[index][j] <= this.boardLevel) {
+                    if (this.virtualSlots[index][j] == 0) {
+                        this.addSlot(index, j);
+                        this.latest++;
+                    }
                 }
             }
         }
 
 
     }
-    updateSystems(delta){
+    updateSystems(delta) {
         this.update(delta);
-        
+
         this.systems.forEach(element => {
-            element.update(delta);            
+            element.update(delta);
         });
     }
     update(delta) {
@@ -186,7 +237,7 @@ export default class MergeSystem {
 
                     let slot = this.slots[i][j];
 
-                    if(this.enemySystem){
+                    if (this.enemySystem) {
                         slot.lookAt(this.enemySystem.getEnemy());
                     }
                     slot.update(delta, this.timestamp);
@@ -247,6 +298,8 @@ export default class MergeSystem {
 
         this.slotsContainer.addChild(slot);
 
+        this.virtualSlots[i][j] = slot;
+
         this.adjustSlotsPosition()
     }
     finishDamage(data) {
@@ -303,10 +356,12 @@ export default class MergeSystem {
             if (copyDataTargetSlot.getValue() == copyData.getValue()) {
                 //only remove if they will merge
                 this.currentDragSlot.removeEntity();
-                target = this.dataTiles[copyDataTargetSlot.getID()+1]
+                COOKIE_MANAGER.addMergePiece(null, this.currentDragSlot.id.i, this.currentDragSlot.id.j)
+                target = this.dataTiles[copyDataTargetSlot.getID() + 1]
                 slot.removeEntity();
-                console.log(target)
+                //console.log(target)
                 slot.addEntity(target);
+                COOKIE_MANAGER.addMergePiece(target, slot.id.i, slot.id.j)
             } else {
 
                 if (!this.currentDragSlot.isGenerator) {
@@ -315,6 +370,7 @@ export default class MergeSystem {
                     this.currentDragSlot.addEntity(copyDataTargetSlot);
                     slot.removeEntity();
                     slot.addEntity(copyData);
+                    COOKIE_MANAGER.addMergePiece(copyData, slot.id.i, slot.id.j)
                 } else {
                     //doesnt do anything coz is coming from the generator
                     //this.currentDragSlot.addEntity(copyDataTargetSlot);                    
@@ -322,7 +378,9 @@ export default class MergeSystem {
             }
         } else {
             this.currentDragSlot.removeEntity();
+            COOKIE_MANAGER.addMergePiece(null, this.currentDragSlot.id.i, this.currentDragSlot.id.j)
             slot.addEntity(copyData);
+            COOKIE_MANAGER.addMergePiece(copyData, slot.id.i, slot.id.j)
         }
 
 
@@ -330,9 +388,8 @@ export default class MergeSystem {
         let tempMaxTiledPlaced = utils.findMax(this.slots);
         if (tempMaxTiledPlaced > this.maxTilePlaced) {
             this.maxTilePlaced = tempMaxTiledPlaced;
-            if (this.maxTilePlaced > 4) {
-                this.levelUp()
-            }
+            let nextLevel = Math.max(0, this.maxTilePlaced - 3);
+            this.levelUp(nextLevel)
         }
         //this.levelUp()
 
@@ -367,7 +424,7 @@ export default class MergeSystem {
                     let scale = ((slot.y + this.slotSize.distance) / this.fixedSize.height) * this.area.perspective + (1 - this.area.perspective)
                     slot.scale.set(scale)
                     slot.x = ((this.slotSize.width + this.slotSize.distance) * scale) * j + (horizontal * this.slotSize.width * (1 - scale)) / 2 - this.slotSize.distance
-                    slot.y = ((this.slotSize.height + this.slotSize.distance) * scale) * i + (this.slotSize.distance * scale) * vertical - this.slotSize.distance*2
+                    slot.y = ((this.slotSize.height + this.slotSize.distance) * scale) * i + (this.slotSize.distance * scale) * vertical - this.slotSize.distance * 2
                 }
             }
         }
