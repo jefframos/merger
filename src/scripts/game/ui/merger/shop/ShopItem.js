@@ -222,9 +222,10 @@ export default class ShopItem extends UIList {
         this.levelLabel.text = 'Level\n' + this.itemData.currentLevel
         // this.itemData = GAME_DATA.getUpdatedItem(this.itemData.dataType, this.itemData.id)
         if (this.itemData.currentLevel >= this.itemData.rawData.levelMax) {
-            this.levelLabel.text = 'Level ' + this.itemData.rawData.levelMax;
+            this.levelLabel.text = 'Level\n' + this.itemData.rawData.levelMax;
             this.levelBar.updatePowerBar(1)
             this.shopButton.deactiveMax()
+            this.attributesList['value'].visible = false
         }
         else {
             //this.updateValues();

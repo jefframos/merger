@@ -10,7 +10,13 @@ export default class UIButton1 extends PIXI.Container {
 
 		this.mainContainer = new PIXI.Container();
 		//this.backShape = PIXI.Sprite.fromImage('./assets/images/rect.png');
-		this.icon = PIXI.Sprite.fromFrame(icon);
+		if(!icon){
+			this.icon = new PIXI.Sprite();
+
+		}else{
+
+			this.icon = PIXI.Sprite.fromFrame(icon);
+		}
 		this.icon.tint = iconColor;
 
 		// this.backShape = new PIXI.Graphics();

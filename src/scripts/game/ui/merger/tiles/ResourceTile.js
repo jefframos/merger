@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 import Signals from 'signals';
 import MergeTile from './MergeTile';
-import ProgressBar from '../ProgressBar';
 import utils from '../../../../utils';
 import UIBar from '../../uiElements/UIBar';
 export default class ResourceTile extends MergeTile {
@@ -55,11 +54,11 @@ export default class ResourceTile extends MergeTile {
     update(delta, timestamp) {
         //console.log(timestamp)
         super.update(delta, timestamp);
-        this.sin += delta * 20
-
+        
         //console.log(this.generateResource ,this.generateResourceTime)
         this.readyLabel.visible = this.readyToCollect
         if (this.tileData) {
+            this.sin += delta * 20
             this.levelBar.visible = true;
             this.levelBar.updatePowerBar(this.generateResourceNormal, 0, true);
             this.initialCostLabel.visible = false;
@@ -72,6 +71,8 @@ export default class ResourceTile extends MergeTile {
         } else {
             this.levelBar.visible = false;
             this.initialCostLabel.visible = true;
+            this.sin += delta
+            this.updateResourcePosition();
         }
 
     }
@@ -96,19 +97,34 @@ export default class ResourceTile extends MergeTile {
         this.initialCostLabel.y = this.backSlot.height - this.initialCostLabel.height * 2;
     }
     addEntity(tile) {
-        this.positionOffset.x = 60
         super.addEntity(tile);
     }
     updatePosition() {
-        this.positionOffset.x = 60 + this.entityScale + Math.cos(this.sin) * 4
+
+        if(this.tileData){
+            if(this.tileData.isRight){
+
+                this.positionOffset.x = 60 + this.entityScale + Math.cos(this.sin) * 4
+            }else{
+                
+                this.positionOffset.x = -60 - this.entityScale + Math.cos(this.sin) * 4
+
+                this.tileSprite.scale.x = Math.abs(this.tileSprite.scale.x) * -1
+            }
+        }
+
+        this.resourceSource.x = this.backSlot.height / 2 + Math.sin(this.sin) 
 
         this.tileSprite.x = this.backSlot.width / 2 + this.positionOffset.x;
         this.tileSprite.y = this.backSlot.height / 2 + this.positionOffset.y;
     }
+    updateResourcePosition(){
+        this.resourceSource.y = this.backSlot.height / 2 + Math.sin(this.sin) *5
+    }
     enterAnimation() {
         this.entityScale = this.size / this.tileSprite.width * 0.4
         TweenLite.to(this.tileSprite.scale, 0.5, {
-            x: this.entityScale,
+            x: this.tileData.isRight ? this.entityScale: -this.entityScale,
             y: this.entityScale,
             ease: Elastic.easeOut,
             onComplete: () => {
@@ -137,22 +153,21 @@ export default class ResourceTile extends MergeTile {
     updateSavedStats(stats) {
         this.tileData.setLevel(stats.currentLevel)
 
-        console.log(stats)
 
-        let timePassed = (Date.now() / 1000 | 0) - stats.latestResourceCollect
+        // let timePassed = (Date.now() / 1000 | 0) - stats.latestResourceCollect
 
 
-        let rps = this.tileData.getRPS();
-        this.updatedDamageTimestamp = stats.latestResourceCollect
+        // let rps = this.tileData.getRPS();
+        // this.updatedDamageTimestamp = stats.latestResourceCollect
 
-        //console.log(timePassed,  rps)
-        let timeToCollect = this.tileData.getGenerateResourceTime()
+        // //console.log(timePassed,  rps)
+        // let timeToCollect = this.tileData.getGenerateResourceTime()
 
-        //console.log(Math.floor(timePassed / timeToCollect) - timePassed % timeToCollect)
-        if (timePassed > timeToCollect) {
-            this.currentCollect = Math.floor(rps) * timePassed
-            this.resourceReady();
-        }
+        // //console.log(Math.floor(timePassed / timeToCollect) - timePassed % timeToCollect)
+        // if (timePassed > timeToCollect) {
+        //     this.currentCollect = Math.floor(rps) * timePassed
+        //     this.resourceReady();
+        // }
     }
     resourceReady() {
         this.readyToCollect = true;

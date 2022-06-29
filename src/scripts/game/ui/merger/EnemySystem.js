@@ -88,9 +88,6 @@ export default class EnemySystem {
     updateEnemyLife() {
         this.enemyLife = this.enemyStartLife * Math.pow(this.lifeCoefficient * this.lifeCoefficient, this.enemyLevel)
         this.enemyCurrentLife = this.enemyLife;
-
-        console.log(this.enemyLife, this.enemyLevel)
-
     }
     damageEnemy(damage) {
 

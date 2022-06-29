@@ -20,6 +20,7 @@ export default class ResourceSystem {
         this.onGetResources = new Signals();
         this.onParticles = new Signals();
         this.onPopLabel = new Signals();
+        this.onStandardPopUp = new Signals();
 
         this.slotsContainer = new PIXI.Container();
         this.container.addChild(this.slotsContainer)
@@ -41,9 +42,14 @@ export default class ResourceSystem {
 
 
 
+        this.sumStart = 0;
         this.dataTiles.forEach(element => {
-            if(this.savedResources[element.rawData.nameID]){                
-                this.addResourceSlot(element, this.savedResources[element.rawData.nameID]);            
+            if(this.savedResources[element.rawData.nameID]){            
+                let saved = this.savedResources[element.rawData.nameID];
+                let time = saved.latestResourceAdd - saved.latestResourceCollect                
+                this.addResourceSlot(element, this.savedResources[element.rawData.nameID]); 
+                this.sumStart += time * element.getRPS();
+                
             }else{
                 this.addResourceSlot();            
             }
@@ -51,12 +57,17 @@ export default class ResourceSystem {
         this.timestamp = (Date.now() / 1000 | 0);
 
         setTimeout(() => {
-            this.resize(config, true)
+            this.resize(config, true)           
         }, 1);
 
         this.rps = 0;
     }
 
+    collectStartAmount(mult = 1) {
+        gameEconomy.addResources(this.sumStart * mult)
+        COOKIE_MANAGER.resetAllCollects();
+        this.sumStart = 0;
+    }
     update(delta) {
         this.timestamp = (Date.now() / 1000 | 0);
 

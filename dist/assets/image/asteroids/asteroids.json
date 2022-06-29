@@ -82,11 +82,11 @@
 },
 "drill.png":
 {
-	"frame": {"x":1662,"y":253,"w":140,"h":92},
+	"frame": {"x":1662,"y":253,"w":136,"h":84},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":140,"h":92},
-	"sourceSize": {"w":140,"h":92}
+	"spriteSourceSize": {"x":0,"y":0,"w":136,"h":84},
+	"sourceSize": {"w":136,"h":84}
 }},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
@@ -95,6 +95,6 @@
 	"format": "RGBA8888",
 	"size": {"w":1899,"h":920},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:7a9378df3cb7d2f5705fa3e99f121389:5144d655488811aaaf9dcd0fd26e3ddc:3cb2167982f406a3d6627570b02f9be7$"
+	"smartupdate": "$TexturePacker:SmartUpdate:7a9378df3cb7d2f5705fa3e99f121389:767e58c1c093d83728aa9f46126c9023:3cb2167982f406a3d6627570b02f9be7$"
 }
 }

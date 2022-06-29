@@ -17,28 +17,28 @@ export default class SpaceBackground extends PIXI.Container {
 		this.addChild(this.backgroundShape);
 
 
-		this.baseGradient = new PIXI.Sprite.fromFrame('base-gradient')
-		this.addChild(this.baseGradient);
-		this.baseGradient.anchor.x = 0.5
-		this.baseGradient.anchor.y = 1
-
-		this.baseGradient.tint = 0
-
-
+		
 		this.baseTopGradient = new PIXI.Sprite.fromFrame('base-gradient')
 		this.addChild(this.baseTopGradient);
 		this.baseTopGradient.anchor.x = 0.5
 		this.baseTopGradient.anchor.y = 1
 		this.baseTopGradient.rotation = Math.PI
 		this.baseTopGradient.tint = 0x371f52
-
+		
+		
 		this.middleGradient = new PIXI.Sprite.fromFrame('bigblur')
 		this.addChild(this.middleGradient);
 		this.middleGradient.anchor.x = 0.5
 		this.middleGradient.anchor.y = 0.5
 		this.middleGradient.rotation = Math.PI
 		this.middleGradient.tint = 0x0d5956
+		
+		this.baseGradient = new PIXI.Sprite.fromFrame('base-gradient')
+		this.addChild(this.baseGradient);
+		this.baseGradient.anchor.x = 0.5
+		this.baseGradient.anchor.y = 1
 
+		this.baseGradient.tint = 0
 		// this.backShape = new PIXI.Sprite.fromFrame('background_space')
 		// this.addChild(this.backShape);
 		// this.backShape.anchor.x = 0.5
@@ -69,8 +69,8 @@ export default class SpaceBackground extends PIXI.Container {
 	resize(innerResolution, scale) {
 
 		this.innerResolution = innerResolution;
-		this.backgroundShape.width = innerResolution.width / scale.x
-		this.backgroundShape.height = window.innerHeight / scale.x
+		this.backgroundShape.width = innerResolution.width * 4 // scale.x
+		this.backgroundShape.height = window.innerHeight * 4// scale.x
 
 		//console.log(innerResolution.height / config.height)
 		let globalScale = innerResolution.height / config.height

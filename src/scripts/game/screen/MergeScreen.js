@@ -14,6 +14,8 @@ import MergerData from '../ui/merger/data/MergerData';
 import EntityShop from '../ui/merger/shop/EntityShop';
 import GameEconomy from '../ui/merger/GameEconomy';
 import MergeItemsShop from '../ui/merger/shop/MergeItemsShop';
+import StartPopUp from './popup/StartPopUp';
+import StandardPop from './popup/StandardPop';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
@@ -42,6 +44,8 @@ export default class MergeScreen extends Screen {
         this.addChild(this.container);
         this.frontLayer = new PIXI.Container()
         this.addChild(this.frontLayer);
+        this.uiLayer = new PIXI.Container()
+        this.addChild(this.uiLayer);
 
         this.backBlocker = new PIXI.Graphics().beginFill(0).drawRect(0, 0, config.width, config.height);
         this.backBlocker.alpha = 0.5;
@@ -53,11 +57,11 @@ export default class MergeScreen extends Screen {
         this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.gameArea.w, config.height * this.areaConfig.gameArea.h);
         this.container.addChild(this.gridWrapper);
         this.gridWrapper.visible = false;
-        
+
         this.resourcesWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
         this.container.addChild(this.resourcesWrapper);
         this.resourcesWrapper.visible = false;
-        
+
         this.resourcesWrapperRight = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
         this.container.addChild(this.resourcesWrapperRight);
         this.resourcesWrapperRight.visible = false;
@@ -84,6 +88,8 @@ export default class MergeScreen extends Screen {
         this.topContainer = new PIXI.Container()
         this.container.addChild(this.topContainer);
 
+
+
         this.dataTiles = []
         this.dataResourcesTiles = []
 
@@ -100,9 +106,10 @@ export default class MergeScreen extends Screen {
         this.rawMergeResourceListRight = []
         for (let index = 0; index < window.baseResources.generators.length; index++) {
             let mergeData = new MergerData(window.baseResources.generators[index][0], index)
-            if(index % 2 == 0){
+            if (index % 2 == 0) {
+                mergeData.isRight = true;
                 this.rawMergeResourceListRight.push(mergeData)
-            }else{
+            } else {
                 this.rawMergeResourceList.push(mergeData)
             }
             this.allRawResources.push(mergeData)
@@ -133,15 +140,17 @@ export default class MergeScreen extends Screen {
         this.resourceSystem.onParticles.add(this.addParticles.bind(this));
         this.resourceSystem.onGetResources.add(this.addResourceParticles.bind(this));
         this.resourceSystem.onPopLabel.add(this.popLabel.bind(this));
-        
+        this.resourceSystem.onStandardPopUp.add(this.standardPopUpShow.bind(this));
+
         this.resourceSystemRight.onParticles.add(this.addParticles.bind(this));
         this.resourceSystemRight.onGetResources.add(this.addResourceParticles.bind(this));
         this.resourceSystemRight.onPopLabel.add(this.popLabel.bind(this));
-        
+        this.resourceSystemRight.onStandardPopUp.add(this.standardPopUpShow.bind(this));
+
         this.mergeSystem1.onParticles.add(this.addParticles.bind(this));
         this.mergeSystem1.onDealDamage.add(this.addDamageParticles.bind(this));
         this.mergeSystem1.onPopLabel.add(this.popLabel.bind(this));
-        
+
         this.enemiesSystem.onParticles.add(this.addParticles.bind(this));
         this.enemiesSystem.onPopLabel.add(this.popLabel.bind(this));
 
@@ -177,7 +186,7 @@ export default class MergeScreen extends Screen {
         this.container.addChild(this.dpsLabel)
 
         this.particleSystem = new ParticleSystem();
-        this.addChild(this.particleSystem)
+        this.frontLayer.addChild(this.particleSystem)
 
 
         this.speedUpToggle = new UIButton1(0xFFFFFF, 'fast_forward_icon')
@@ -221,19 +230,50 @@ export default class MergeScreen extends Screen {
         window.TIME_SCALE = 1
 
         this.entityShop = new EntityShop([this.resourceSystem, this.resourceSystemRight]);
-        this.addChild(this.entityShop);
+        this.uiLayer.addChild(this.entityShop);
         this.entityShop.hide();
-        
+
         this.entityShop.addItems(this.allRawResources)
-        
+
         this.mergeItemsShop = new MergeItemsShop([this.mergeSystem1])
-        this.addChild(this.mergeItemsShop);
+        this.uiLayer.addChild(this.mergeItemsShop);
         this.mergeItemsShop.addItems(this.rawMergeDataList)
         this.mergeItemsShop.hide();
 
 
+        this.testPopUp = new StandardPop('any', this.screenManager)
+        this.uiLayer.addChild(this.testPopUp)
+
         window.gameEconomy = new GameEconomy()
 
+        this.sumStart = 0;
+        this.savedResources = COOKIE_MANAGER.getResources();
+        this.allRawResources.forEach(element => {
+            if (this.savedResources[element.rawData.nameID]) {
+                let saved = this.savedResources[element.rawData.nameID];
+                let time = saved.latestResourceAdd - saved.latestResourceCollect
+                this.sumStart += time * element.getRPS();
+            }
+        });
+        if (this.sumStart > 10) {
+            let params = {
+                label: 'your ships\ncollected\n' + utils.formatPointsLabel(this.sumStart)+'\n\nWould you like to watch\na video and double?',
+                onConfirm: this.collectStartAmountDouble.bind(this),
+                onCancel: this.collectStartAmount.bind(this)
+            }
+            this.standardPopUpShow(params)
+        }
+    }
+    collectStartAmountDouble() {
+        this.resourceSystem.collectStartAmount(2)
+        this.resourceSystemRight.collectStartAmount(2)
+    }
+    collectStartAmount() {
+        this.resourceSystem.collectStartAmount()
+        this.resourceSystemRight.collectStartAmount()
+    }
+    standardPopUpShow(params) {
+        this.testPopUp.show(params)
     }
     popLabel(targetPosition, label) {
         let toLocal = this.particleSystem.toLocal(targetPosition)
@@ -328,7 +368,7 @@ export default class MergeScreen extends Screen {
         this.entityShop.y = config.height / 2 - this.entityShop.height / 2
 
         this.mergeItemsShop.x = config.width / 2 - this.mergeItemsShop.width / 2
-        this.mergeItemsShop.y = config.height / 2 - this.mergeItemsShop.height / 2        
+        this.mergeItemsShop.y = config.height / 2 - this.mergeItemsShop.height / 2
     }
 
     transitionOut(nextScreen) {

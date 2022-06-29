@@ -22,7 +22,7 @@ export default class BossCounter extends PIXI.Container {
     }
 
     updateLevel(level){
-        this.levelLabel.text = level
+        this.levelLabel.text = 'boss at\n'+level
         this.levelLabel.pivot.x = this.levelLabel.width / 2
     }
     setFontSize(size){

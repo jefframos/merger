@@ -58,6 +58,18 @@ export default class CookieManager {
 		this.economy.resources = total;
 		this.storeObject('economy', this.economy)
 	}
+	resetAllCollects(){
+		for (const key in this.resources) {
+			if (Object.hasOwnProperty.call(this.resources, key)) {
+				const element = this.resources[key];
+				if(element.latestResourceCollect)	{
+					element.latestResourceCollect= Date.now() / 1000 | 0
+					element.pendingResource = 0
+				}
+			}
+		}
+		this.storeObject('resources', this.resources)
+	}
 	pickResource(mergeData) {
 		this.resources[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
 		this.resources[mergeData.rawData.nameID].latestResourceCollect = Date.now() / 1000 | 0
