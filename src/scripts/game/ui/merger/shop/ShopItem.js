@@ -11,7 +11,6 @@ export default class ShopItem extends UIList {
         h: 80
     }) {
         super();
-console.log(rect)
         this.w = rect.w;
         this.h = rect.h;
         // this.container = new PIXI.Container();
@@ -33,16 +32,9 @@ console.log(rect)
         this.levelContainer = new PIXI.Container();
 
 
-        this.levelLabel = new PIXI.Text('LV1\n9999',
-            {
-                fontFamily: 'blogger_sansregular',
-                fontSize: '18px',
-                fill: 0xFFFFFF,
-                align: 'center',
-                fontWeight: '800'
-            });
+        this.levelLabel = new PIXI.Text('LV1\n9999',        LABELS.LABEL1);
         this.levelContainer.addChild(this.levelLabel);
-
+        this.levelLabel.style.fontSize = 12
 
         this.levelBar = new UIBar();
         this.levelContainer.addChild(this.levelBar);
@@ -58,19 +50,12 @@ console.log(rect)
 
         this.descriptionContainer = new PIXI.Container();
 
-        this.descriptionLabel = new PIXI.Text('this is a description of the item',
-            {
-                fontFamily: 'blogger_sansregular',
-                fontSize: '18px',
-                fill: 0xFFFFFF,
-                align: 'right',
-                fontWeight: '800'
-            });
+        this.descriptionLabel = new PIXI.Text('this is a description',LABELS.LABEL1);
 
-        this.descriptionContainer.scaleContentMax = true;
-        this.descriptionContainer.listScl = 0.45;
-        // this.descriptionContainer.align = 0.5;
-        this.descriptionContainer.addChild(this.descriptionLabel)
+        //this.descriptionContainer.scaleContentMax = true;
+        this.descriptionContainer.listScl = 0.4;
+        this.descriptionContainer.align = 0.5;
+        //this.descriptionContainer.addChild(this.descriptionLabel)
 
         this.elementsList.push(this.descriptionContainer);
         this.container.addChild(this.descriptionContainer);
@@ -245,11 +230,11 @@ this.realCost = this.itemData.getUpgradeCost(next);
         console.log(this.itemData)
         this.itemIcon.texture = new PIXI.Texture.from(this.itemData.rawData.imageSrc);
 
-        let types = ['cost', 'value']
+        let types = [{name:'cost', icon:'icon_increase'}, {name:'value', icon:'icon_increase'}]
         if (!this.attributesList) {
             this.attributesList = new UIList();
-            this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.85;
-            this.attributesList.h = this.h
+            this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.9;
+            this.attributesList.h = this.h * 0.75
 
             this.descriptionContainer.addChild(this.attributesList);
 
@@ -257,17 +242,10 @@ this.realCost = this.itemData.getUpgradeCost(next);
             types.forEach(element => {
                 let attContainer = new PIXI.Container();
 
-                let attIcon = new PIXI.Sprite.from('icon-close');
+                let attIcon = new PIXI.Sprite.from(element.icon);
                 attIcon.scale.set(this.attributesList.w / attIcon.width * 0.1)
-                let attValue = new PIXI.Text(element,
-                    {
-                        fontFamily: 'blogger_sansregular',
-                        fontSize: '18px',
-                        fill: 0xFF0055,
-                        align: 'right',
-                        fontWeight: '800'
-                    });
-
+                let attValue = new PIXI.Text(element.name,LABELS.LABEL1);
+                attValue.style.fontSize = 12
                 attContainer.addChild(attIcon);
                 attContainer.addChild(attValue);
 
@@ -275,23 +253,23 @@ this.realCost = this.itemData.getUpgradeCost(next);
                 attValue.x = attIcon.x + attIcon.width + 5;
                 attValue.y = attIcon.y + attIcon.height / 2 - attValue.height / 2;
 
-                attContainer.align = 0
+                attContainer.align = 0.5
 
                 this.attributesList.elementsList.push(attContainer);
                 this.attributesList.container.addChild(attContainer);
 
-                this.attributesList[element] = attValue;
+                this.attributesList[element.name] = attValue;
 
 
             });
 
-
+            
             this.attributesList.updateHorizontalList();
             this.descriptionContainer.y = 0;
         }
         this.updateHorizontalList();
-
+        
         this.updateData();
-
+        
     }
 }

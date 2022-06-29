@@ -51,12 +51,15 @@ export default class MergeScreen extends Screen {
         this.frontLayer.addChild(this.backBlocker);
         this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.gameArea.w, config.height * this.areaConfig.gameArea.h);
         this.container.addChild(this.gridWrapper);
-        //this.gridWrapper.visible = false;
+        this.gridWrapper.visible = false;
+        
         this.resourcesWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
         this.container.addChild(this.resourcesWrapper);
-
+        this.resourcesWrapper.visible = false;
+        
         this.resourcesWrapperRight = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
         this.container.addChild(this.resourcesWrapperRight);
+        this.resourcesWrapperRight.visible = false;
 
         this.mergeSystemContainer = new PIXI.Container()
         this.container.addChild(this.mergeSystemContainer);
@@ -171,8 +174,9 @@ export default class MergeScreen extends Screen {
         this.addChild(this.particleSystem)
 
 
-        this.speedUpToggle = new UIButton1(0xFFFFFF, 'smallButton')
+        this.speedUpToggle = new UIButton1(0xFFFFFF, 'fast_forward_icon')
         this.container.addChild(this.speedUpToggle)
+        this.speedUpToggle.x = 50
         this.speedUpToggle.y = 30
         this.speedUpToggle.onClick.add(() => {
             if (window.TIME_SCALE > 1) {
@@ -184,16 +188,17 @@ export default class MergeScreen extends Screen {
             TweenMax.globalTimeScale(window.TIME_SCALE)
         })
 
-        this.clearData = new UIButton1(0xFFFFFF, 'icon-trash',0)
+        this.clearData = new UIButton1(0xFFFFFF, 'icon_reset')
         this.container.addChild(this.clearData)
-        this.clearData.x = 80
+        this.clearData.x = 110
         this.clearData.y = 30
         this.clearData.onClick.add(() => {
             COOKIE_MANAGER.wipeData()
         })
 
-        this.openShop = new UIButton1(0xFFFFFF, 'smallButton')
+        this.openShop = new UIButton1(0xFFFFFF, 'icon_shop')
         this.container.addChild(this.openShop)
+        this.openShop.x = 50
         this.openShop.y = config.height - 120
         this.openShop.onClick.add(() => {
             this.entityShop.show()
@@ -276,7 +281,11 @@ export default class MergeScreen extends Screen {
     }
     resize(resolution) {
         this.mergeSystem1.resize(resolution);
-        this.spaceBackground.resize(resolution);
+        this.spaceBackground.resize(resolution, this.screenManager.scale);
+
+        this.spaceBackground.x = config.width / 2
+        this.spaceBackground.y = config.height / 2
+
         this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2
         this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height
 

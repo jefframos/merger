@@ -14,15 +14,16 @@ export default class EnemySystem {
 
         this.mainEnemy = new StandardEnemy();
         this.container.addChild(this.mainEnemy);
-        
+
         this.enemyProgressionView = new EnemyProgressionView(this);
         this.container.addChild(this.enemyProgressionView);
 
         this.enemyProgressionView.y = - 70
 
+        this.enemyStartLife = 10;
         this.enemyLife = 10;
         this.enemyCurrentLife = 10;
-        this.lifeCoefficient = 1.03
+        this.lifeCoefficient = 1.13
         this.enemyLevel = 1;
         this.nextBoss = 10;
 
@@ -31,60 +32,64 @@ export default class EnemySystem {
         this.label.style.fontSize = 14
         this.container.addChild(this.progressBar)
         this.container.addChild(this.label)
-        this.progressBar.pivot.x = this.progressBar.width/2
+        this.progressBar.pivot.x = this.progressBar.width / 2
         this.progressBar.y = -35
         this.mainEnemy.y = 50
         this.loadData();
         this.updateEnemyLife();
         this.updateLevelView();
+        this.enemyCurrentLife = this.savedProgression.currentEnemyLife
     }
-    
+
     loadData() {
         this.savedProgression = COOKIE_MANAGER.getProgression();
         this.enemyLevel = this.savedProgression.currentEnemyLevel;
         this.calcNextBoss();
     }
-calcNextBoss(){
+    calcNextBoss() {
 
-    this.nextBoss = this.enemyLevel + 10 - this.enemyLevel % 10;
-}
-    getEnemy(){
+        this.nextBoss = this.enemyLevel + 10 - this.enemyLevel % 10;
+    }
+    getEnemy() {
         return this.mainEnemy;
     }
     update(delta) {
         this.mainEnemy.update(delta)
         this.progressBar.setProgressBar(this.enemyCurrentLife / this.enemyLife, 0xFF0000)
-        
-        this.label.text = utils.formatPointsLabel(this.enemyCurrentLife)+"/"+utils.formatPointsLabel(this.enemyLife)
+
+        this.label.text = utils.formatPointsLabel(this.enemyCurrentLife) + "/" + utils.formatPointsLabel(this.enemyLife)
         this.label.x = -this.label.width / 2
-        this.label.y = this.progressBar.y +1
+        this.label.y = this.progressBar.y + 1
 
     }
-    updateMouse(e){
+    updateMouse(e) {
 
     }
-    updateLevelView(){
+    updateLevelView() {
         this.enemyProgressionView.updateLevel();
     }
-    nextEnemy(){
+    nextEnemy() {
         this.enemyLevel++;
         COOKIE_MANAGER.saveEnemyLevel(this.enemyLevel);
         this.updateEnemyLife();
         this.updateLevelView();
-        if(this.enemyLevel == this.nextBoss){
+        if (this.enemyLevel == this.nextBoss) {
             //console.log("THIS SHOULD BE A BOSS")
             this.inABossBattle = true;
         }
         this.calcNextBoss();
 
-
+        COOKIE_MANAGER.saveEnemyLife(this.enemyCurrentLife)
         this.onNextEnemy.dispatch();
     }
-    updateEnemyLife(){
-        this.enemyLife = this.enemyLife * Math.pow(this.lifeCoefficient * this.lifeCoefficient, this.enemyLevel)
+    updateEnemyLife() {
+        this.enemyLife = this.enemyStartLife * Math.pow(this.lifeCoefficient * this.lifeCoefficient, this.enemyLevel)
         this.enemyCurrentLife = this.enemyLife;
+
+        console.log(this.enemyLife, this.enemyLevel)
+
     }
-    damageEnemy(damage){
+    damageEnemy(damage) {
 
         let ang = Math.random() * Math.PI * 2;
         let targetPosition = this.mainEnemy.getGlobalPosition()
@@ -94,8 +99,12 @@ calcNextBoss(){
 
         this.enemyCurrentLife -= damage;
 
-        if(this.enemyCurrentLife < 0){
+        
+        if (this.enemyCurrentLife < 0) {
+            this.enemyCurrentLife = 0;
             this.nextEnemy();
+        }else{
+            COOKIE_MANAGER.saveEnemyLife(this.enemyCurrentLife)
         }
 
     }

@@ -22,7 +22,7 @@ export default class UIButton1 extends PIXI.Container {
 
 		this.padding = 8;
 		this.backShapeBorder = new PIXI.mesh.NineSlicePlane(
-			PIXI.Texture.fromFrame('smallButton'), 10, 10, 10, 10)
+			PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15)
 		this.backShapeBorder.width = width + this.padding
 		this.backShapeBorder.height = width + this.padding
 		this.backShapeBorder.pivot.set((width + this.padding) / 2)
@@ -30,7 +30,7 @@ export default class UIButton1 extends PIXI.Container {
 
 		//this.backShape = PIXI.Sprite.fromFrame('largeCard.png')
 		this.backShape = new PIXI.mesh.NineSlicePlane(
-			PIXI.Texture.fromFrame('smallButton'), 10, 10, 10, 10)
+			PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15)
 		this.backShape.width = width
 		this.backShape.height = width
 		this.backShape.pivot.set(width / 2)

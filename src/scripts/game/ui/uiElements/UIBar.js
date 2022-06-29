@@ -28,7 +28,6 @@ export default class UIBar extends PIXI.Container
         this.powerBarMask.x = this.powerBarBar.x
         this.powerBarMask.y = this.powerBarBar.y
         this.powerBarBar.mask = this.powerBarMask;
-        this.addChild(this.powerBarContainer);
         this.powerBarMask.scale.x = 0;
         this.updatePowerBar(0);
 

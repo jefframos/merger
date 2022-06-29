@@ -13,7 +13,35 @@ export default class SpaceBackground extends PIXI.Container {
 		this.background = new PIXI.Container();
 		this.addChild(this.background);
 
-		this.backgroundShape = new PIXI.Graphics().beginFill(0).drawRect(0, 0, 10, 10);
+		this.backgroundShape = new PIXI.Graphics().beginFill(0x111a20).drawRect(-50, -50, 100, 100);
+		this.addChild(this.backgroundShape);
+
+
+		this.baseGradient = new PIXI.Sprite.fromFrame('base-gradient')
+		this.addChild(this.baseGradient);
+		this.baseGradient.anchor.x = 0.5
+		this.baseGradient.anchor.y = 1
+
+		this.baseGradient.tint = 0
+
+
+		this.baseTopGradient = new PIXI.Sprite.fromFrame('base-gradient')
+		this.addChild(this.baseTopGradient);
+		this.baseTopGradient.anchor.x = 0.5
+		this.baseTopGradient.anchor.y = 1
+		this.baseTopGradient.rotation = Math.PI
+		this.baseTopGradient.tint = 0x371f52
+
+		this.middleGradient = new PIXI.Sprite.fromFrame('bigblur')
+		this.addChild(this.middleGradient);
+		this.middleGradient.anchor.x = 0.5
+		this.middleGradient.anchor.y = 0.5
+		this.middleGradient.rotation = Math.PI
+		this.middleGradient.tint = 0x0d5956
+
+		// this.backShape = new PIXI.Sprite.fromFrame('background_space')
+		// this.addChild(this.backShape);
+		// this.backShape.anchor.x = 0.5
 
 		this.starsContainer = new PIXI.Container();
 		this.addChild(this.starsContainer);
@@ -37,16 +65,25 @@ export default class SpaceBackground extends PIXI.Container {
 
 		window.fxSpeed = 1;
 	}
-	
-	resize(innerResolution) {
+
+	resize(innerResolution, scale) {
 
 		this.innerResolution = innerResolution;
-		//this.background.width = innerResolution.width
-		//this.background.height = innerResolution.height
+		this.backgroundShape.width = innerResolution.width / scale.x
+		this.backgroundShape.height = window.innerHeight / scale.x
 
-		this.starsContainer.x = innerResolution.width / 2
-		this.starsContainer.y = innerResolution.height / 2
+		//console.log(innerResolution.height / config.height)
+		let globalScale = innerResolution.height / config.height
+		this.baseGradient.y = innerResolution.height / 2 / globalScale
+		this.baseTopGradient.y = -innerResolution.height / 2 / globalScale
+
+		this.baseGradient.width = innerResolution.width * 4
+		this.baseTopGradient.width = innerResolution.width * 4
+
 		
+		// this.starsContainer.x = innerResolution.width / 2
+		// this.starsContainer.y = innerResolution.height / 2
+
 	}
 
 	update(delta) {
@@ -58,11 +95,11 @@ export default class SpaceBackground extends PIXI.Container {
 				window.fxSpeed = 1;
 			}
 		}
-		this.currentSpeed.y = this.innerResolution.height * 0.02 * (window.fxSpeed * 2) 
+		this.currentSpeed.y = this.innerResolution.height * 0.02 * (window.fxSpeed * 2)
 
 		//console.log(this.currentSpeed.y, delta)
 		let spd = this.currentSpeed.y * delta;
-        
+
 		if (spd) {
 			for (var i = 0; i < this.stars.length; i++) {
 				this.stars[i].update(this.currentSpeed.y * delta, this.innerResolution);
@@ -80,6 +117,7 @@ export default class SpaceBackground extends PIXI.Container {
 			let dist = Math.random() * (l * 2) + l;
 			let tempStar = new StarParticle(dist);
 			tempStar.alpha = (Math.min(dist, 3) / 3 * 0.5) + 0.2
+			tempStar.tint = 0x7C8284
 			let toClose = true;
 			let acc = 5;
 			while (toClose && acc > 0) {

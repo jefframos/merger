@@ -12,6 +12,7 @@ export default class CookieManager {
 		let defaultProgression = {
 			version: '0.0.1',
 			currentEnemyLevel: 1,
+			currentEnemyLife:0
 		}
 		let defaultBoard = {
 			version: '0.0.1',
@@ -99,6 +100,10 @@ export default class CookieManager {
 		this.board.currentBoardLevel = level;
 		this.storeObject('board', this.board)
 
+	}
+	saveEnemyLife(value){
+		this.progression.currentEnemyLife = value;
+		this.storeObject('progression', this.progression)
 	}
 	saveEnemyLevel(level) {
 		this.progression.currentEnemyLevel = level;

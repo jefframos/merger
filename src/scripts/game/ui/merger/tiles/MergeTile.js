@@ -20,6 +20,15 @@ export default class MergeTile extends PIXI.Container {
         this.backSlot.height = size
 
         this.container.addChild(this.backSlot)
+        this.backSlot.alpha = 0
+        
+
+        
+        this.backShape = new PIXI.Sprite.fromFrame('backTiles')
+        this.backShape.width = size
+        this.backShape.height = size
+        this.backShape.alpha = 0.1
+        this.container.addChild(this.backShape)
 
         this.label = new PIXI.Text('', LABELS.LABEL1);
         this.container.addChild(this.label)
@@ -206,6 +215,7 @@ export default class MergeTile extends PIXI.Container {
         this.tileSprite.anchor.set(0.5)
         this.sin = Math.random();
         this.label.text = this.tileData.getValue()
+        this.label.x = this.backSlot.width / 2 - this.label.width / 2;
         this.showSprite()
         TweenLite.to(this.tileSprite.scale, 0.5, {
             x: this.entityScale,
@@ -302,14 +312,17 @@ export default class MergeTile extends PIXI.Container {
     }
     overState() {
         this.backSlot.tint = 0x00FFFF
-
+        this.backShape.tint = 0x00FFFF
+        
     }
     outState() {
         this.backSlot.tint = 0xFFFFFF
-
+        this.backShape.tint = 0xFFFFFF
+        
     }
     blockState() {
         this.backSlot.tint = 0xFF0000
+        this.backShape.tint = 0xFF0000
 
     }
 }

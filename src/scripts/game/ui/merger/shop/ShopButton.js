@@ -47,14 +47,9 @@ export default class ShopButton extends PIXI.Container
                 .on('pointerupoutside', this.mouseUp.bind(this))
                 .on('mouseupoutside', this.mouseUp.bind(this));
 
-            this.priceLabel = new PIXI.Text('100k',
-            {
-                fontFamily: 'blogger_sansregular',
-                fontSize: '18px',
-                fill: 0xe5519b,
-                align: 'center',
-                fontWeight: '800'
-            });
+            this.priceLabel = new PIXI.Text('100k',LABELS.LABEL1);
+            this.priceLabel.style.fill = 0xff5566
+            this.priceLabel.style.fontSize = 12
             this.container.addChild(this.priceLabel);
             this.container.pivot.x = this.container.width / 2
             this.container.pivot.y = this.container.height / 2

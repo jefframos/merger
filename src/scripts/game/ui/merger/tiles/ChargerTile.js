@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import Signals from 'signals';
 import MergeTile from './MergeTile';
 import ProgressBar from '../ProgressBar';
+import UIBar from '../../uiElements/UIBar';
 export default class ChargerTile extends MergeTile {
     constructor(i, j, size, lockIcon, standardChargeTime = 2) {
         super(i, j, size, lockIcon);
@@ -11,11 +12,13 @@ export default class ChargerTile extends MergeTile {
 
         this.onCompleteCharge = new Signals();
 
-        this.progressBar = new ProgressBar({width: size, height:20});
-        this.addChild(this.progressBar)
-        this.progressBar.visible = false;
 
-        this.progressBar.y = size
+        this.levelBar = new UIBar();
+        this.addChild(this.levelBar)
+        this.levelBar.scale.set(0.3)
+       
+        this.levelBar.y = size - 20
+        this.levelBar.x = size/2 - this.levelBar.width / 2 + 12
 
     }
     update(delta, timeStamp){
@@ -24,18 +27,17 @@ export default class ChargerTile extends MergeTile {
             this.currentChargeTime  -= delta;
             if(this.currentChargeTime <= 0){
                 this.completeCharge();
-                this.progressBar.visible = false;
+                this.levelBar.visible = false;
             }
-            this.progressBar.setProgressBar(1-(this.currentChargeTime / this.defaultChargeTime), 0x04ff09);
-            
+            this.levelBar.updatePowerBar(1-(this.currentChargeTime / this.defaultChargeTime))
             
         }
     }
     startCharging(){
         this.tileData = null;
         this.currentChargeTime = this.defaultChargeTime;
-        this.progressBar.visible = true;
-        this.progressBar.setProgressBar(0, 0xFF00ff);
+        this.levelBar.visible = true;
+        this.levelBar.updatePowerBar(0, 0,true);
     }
     completeCharge(){
         this.onCompleteCharge.dispatch();

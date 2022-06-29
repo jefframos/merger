@@ -3,6 +3,7 @@ import Signals from 'signals';
 import MergeTile from './MergeTile';
 import ProgressBar from '../ProgressBar';
 import utils from '../../../../utils';
+import UIBar from '../../uiElements/UIBar';
 export default class ResourceTile extends MergeTile {
     constructor(i, j, size, lockIcon) {
         super(i, j, size, lockIcon);
@@ -39,6 +40,13 @@ export default class ResourceTile extends MergeTile {
         this.progressBar = new ProgressBar({ width: size, height: 20 });
         this.addChild(this.progressBar)
         this.progressBar.visible = false;
+        
+        this.levelBar = new UIBar();
+        this.addChild(this.levelBar)
+        this.levelBar.scale.set(0.3)
+
+        this.levelBar.y = size - 20
+        this.levelBar.x = size/2 - this.levelBar.width / 2 + 12
 
         this.progressBar.y = size - this.progressBar.height
     }
@@ -50,11 +58,11 @@ export default class ResourceTile extends MergeTile {
         //console.log(this.generateResource ,this.generateResourceTime)
         this.readyLabel.visible = this.readyToCollect
         if (this.tileData) {
-            this.progressBar.visible = true;
-            this.progressBar.setProgressBar(this.generateResourceNormal, 0xFF00ff);
+            this.levelBar.visible = true;
+            this.levelBar.updatePowerBar(this.generateResourceNormal, 0, true);
             this.initialCostLabel.visible = false;
         } else {
-            this.progressBar.visible = false;
+            this.levelBar.visible = false;
             this.initialCostLabel.visible = true;
         }
     }
@@ -81,8 +89,8 @@ export default class ResourceTile extends MergeTile {
     startCharging() {
         this.tileData = null;
         this.currentChargeTime = this.defaultChargeTime;
-        this.progressBar.visible = true;
-        this.progressBar.setProgressBar(0, 0xFF00ff);
+        this.levelBar.visible = true;
+        this.levelBar.updatePowerBar(0, 0, true);
     }
     completeCharge() {
         this.onCompleteCharge.dispatch();
@@ -126,7 +134,7 @@ export default class ResourceTile extends MergeTile {
     collectResources() {
         this.readyToCollect = false;
         this.generateResourceNormal = 0
-        this.progressBar.setProgressBar(this.generateResourceNormal, 0xFF00ff);
+        this.levelBar.updatePowerBar(this.generateResourceNormal, 0);
     }
     onMouseMoveOver(forced = false) {
         this.overState()
