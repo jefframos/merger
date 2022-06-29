@@ -21,6 +21,7 @@ export default class MergeSystem {
         this.onGetResources = new Signals();
         this.onDealDamage = new Signals();
         this.onPopLabel = new Signals();
+        this.onParticles = new Signals();
 
         this.slotsContainer = new PIXI.Container();
         this.container.addChild(this.slotsContainer)
@@ -89,6 +90,7 @@ export default class MergeSystem {
         this.uiContainer.addChild(this.entityDragSprite);
         this.entityDragSprite.visible = false;
 
+        this.shootColor = 0x00FFFF
         //force to resize
         setTimeout(() => {
             this.resize(config, true)
@@ -99,7 +101,7 @@ export default class MergeSystem {
 
         this.loadData();
     }
-    
+
     loadData() {
         this.savedProgression = COOKIE_MANAGER.getBoard();
         this.boardLevel = -1
@@ -120,9 +122,26 @@ export default class MergeSystem {
                 }
             }
         }
+
+        for (const key in this.savedProgression.dataProgression) {
+            if (Object.hasOwnProperty.call(this.savedProgression.dataProgression, key)) {
+                const element = this.savedProgression.dataProgression[key];
+                if (element) {
+                    
+                    let found = this.findEntityByID(key)
+                    if (found) {                        
+                        found.setLevel(element.currentLevel)
+                    }
+                }
+            }
+        }
+
         this.updateAllData();
     }
+    findUpgrade(item){
 
+        this.dps = utils.findDPS(this.slots);
+    }    
     findEntityByID(id) {
         for (let index = 0; index < this.dataTiles.length; index++) {
             const element = this.dataTiles[index];
@@ -203,7 +222,6 @@ export default class MergeSystem {
 
         for (let index = 0; index < window.baseConfigGame.gameMap.length; index++) {
             for (let j = 0; j < window.baseConfigGame.gameMap[index].length; j++) {
-                console.log(window.baseConfigGame.gameMap[index][j], this.boardLevel)
                 if (window.baseConfigGame.gameMap[index][j] <= this.boardLevel) {
                     if (this.virtualSlots[index][j] == 0) {
                         this.addSlot(index, j);
@@ -278,21 +296,22 @@ export default class MergeSystem {
         });
         slot.onGenerateDamage.add((slot, data) => {
             let customData = {}
-            customData.texture = 'coin'
-            customData.scale = 0.01
+            customData.texture = 'shoot'
+            customData.scale = 0.002
 
             customData.gravity = 0
             customData.alphaDecress = 0
             if (this.enemySystem) {
                 let globalEnemy = this.enemySystem.getEnemy().getGlobalPosition()
-                customData.target = { x: globalEnemy.x, y: globalEnemy.y, timer: 0 }
+                customData.target = { x: globalEnemy.x, y: globalEnemy.y, timer: 0, speed: 700 }
             }
             customData.forceX = 0
-            customData.forceY = 200
-            customData.tint = 0x5588FF
+            customData.forceY = 300
+            customData.tint = this.shootColor
             customData.callback = this.finishDamage.bind(this, data)
             let targetPos = slot.tileSprite.getGlobalPosition()
             this.onDealDamage.dispatch(targetPos, customData, data.getDamage(), 1)
+            this.posShootingParticles(targetPos)
 
         });
 
@@ -301,6 +320,21 @@ export default class MergeSystem {
         this.virtualSlots[i][j] = slot;
 
         this.adjustSlotsPosition()
+    }
+    posShootingParticles(targetPos) {
+        let customData = {}
+        customData.texture = 'spark2'
+        customData.scale = 0.002
+        customData.alphaDecress = 0.5
+        customData.gravity = 0
+        customData.tint = this.shootColor
+
+        for (let index = 0; index < 5; index++) {
+            let particleAng = Math.random() * 3.14;
+            customData.forceX = Math.cos(particleAng) * 50
+            customData.forceY = Math.sin(particleAng) * 50
+            this.onParticles.dispatch(targetPos, customData, 1)
+        }
     }
     finishDamage(data) {
         if (this.enemySystem) {

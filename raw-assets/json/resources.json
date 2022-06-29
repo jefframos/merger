@@ -4,7 +4,9 @@
             {
                 "isFirst":true,
                 "nameID": "resource_starship_35",
-                "imageSrc": "starship_35",
+                "displayName": "Asteroid1",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (1)",
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "initialTime": 0.6,
@@ -17,7 +19,9 @@
         [
             {
                 "nameID": "resource_starship_34",
-                "imageSrc": "starship_34",
+                "displayName": "Asteroid2",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (2)",
                 "initialCost": 60,
                 "costCoefficient": 1.153,
                 "initialTime": 3,
@@ -30,7 +34,9 @@
         [
             {
                 "nameID": "resource_starship_33",
-                "imageSrc": "starship_33",
+                "displayName": "Asteroid3",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (3)",
                 "initialCost": 800,
                 "costCoefficient": 1.155,
                 "initialTime": 20,
@@ -43,7 +49,9 @@
         [
             {
                 "nameID": "resource_starship_32",
-                "imageSrc": "starship_32",
+                "displayName": "Asteroid4",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (4)",
                 "initialCost": 80600,
                 "costCoefficient": 1.162,
                 "initialTime": 60,
@@ -56,7 +64,9 @@
         [
             {
                 "nameID": "resource_starship_31",
-                "imageSrc": "starship_31",
+                "displayName": "Asteroid5",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (5)",
                 "initialCost": 1000000,
                 "costCoefficient": 1.168,
                 "initialTime": 150,
@@ -69,7 +79,9 @@
         [
             {
                 "nameID": "1starship_30",
-                "imageSrc": "starship_30",
+                "displayName": "Asteroid6",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (6)",
                 "initialCost": 5000000000,
                 "costCoefficient": 1.15,
                 "initialTime": 250,
@@ -82,7 +94,9 @@
         [
             {
                 "nameID": "2starship_30",
-                "imageSrc": "starship_30",
+                "displayName": "Asteroid7",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (7)",
                 "initialCost": 700000000000,
                 "costCoefficient": 1.15,
                 "initialTime": 500,
@@ -95,7 +109,9 @@
         [
             {
                 "nameID": "3starship_30",
-                "imageSrc": "starship_30",
+                "displayName": "Asteroid8",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (8)",
                 "initialCost": 90000000000000,
                 "costCoefficient": 1.149,
                 "initialTime": 650,
@@ -108,7 +124,9 @@
         [
             {
                 "nameID": "4starship_30",
-                "imageSrc": "starship_30",
+                "displayName": "Asteroid9",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (9)",
                 "initialCost": 1020000000000000,
                 "costCoefficient": 1.156,
                 "initialTime": 825,
@@ -121,7 +139,9 @@
         [
             {
                 "nameID": "5starship_30",
-                "imageSrc": "starship_30",
+                "displayName": "Asteroid10",
+                "imageSrc": "drill",
+                "tileImageSrc": "asteroid (10)",
                 "initialCost": 5000000000000000000,
                 "costCoefficient": 1.164,
                 "initialTime": 1000,

@@ -109,7 +109,7 @@ export default class SpaceBackground extends PIXI.Container {
 	addStars() {
 		let totalStars = this.innerResolution.width * 0.1;
 
-		totalStars = Math.min(40, totalStars);
+		totalStars = Math.min(60, totalStars);
 		let l = this.innerResolution.width * 0.001
 		l = Math.max(l, 1.5)
 		this.stars = [];

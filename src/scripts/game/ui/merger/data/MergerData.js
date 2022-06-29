@@ -22,13 +22,13 @@ export default class MergerData {
     getValue() {
         return this.rawData.value;
     }
-    getDamage() {
-        return this.rawData.initialDamage
+    getDamage(simulate = 0) {
+        return (this.rawData.initialDamage * this.rawData.initialTime) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)
     }
     getTexture() {
         return this.rawData.texture
     }
-    getGenerateDamageTime() {
+    getGenerateDamageTime(simulate = 0) {
         return this.rawData.initialTime
     }
     getGenerateResourceTime(simulate = 0) {
@@ -56,9 +56,9 @@ export default class MergerData {
         return res / time;
     }
     getDPS(simulate = 0) {
-        // let res = this.getResources(simulate);
-        // let time = this.getGenerateResourceTime(simulate);
+        let res = this.getDamage(simulate);
+        let time = this.getGenerateDamageTime(simulate);
 
-        // return res / time;
+        return res / time;
     }
 }

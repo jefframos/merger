@@ -17,7 +17,7 @@ export default class ShopButton extends PIXI.Container
 
             this.backButton = new PIXI.mesh.NineSlicePlane(
                 PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10)
-            this.backButton.width = 90 
+            this.backButton.width = 100
             this.backButton.height = 40 
 
             this.container.addChild(this.backButton);
@@ -113,7 +113,7 @@ export default class ShopButton extends PIXI.Container
     updateCoast(value)
     {
         this.priceLabel.text = value
-        this.priceLabel.x = this.backButton.width / 2 - this.sprite.width * 0.25
+        this.priceLabel.x = this.backButton.width / 2 - this.sprite.width * 0.4
         this.priceLabel.y = this.h / 2 - this.priceLabel.height / 2
     }
     deactiveMax()

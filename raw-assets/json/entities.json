@@ -4,8 +4,11 @@
             {
                 "nameID": "entity_starship_01",
                 "imageSrc": "starship_01",
+                "displayName": "starship_01",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -13,8 +16,11 @@
             {
                 "nameID": "entity_starship_02",
                 "imageSrc": "starship_02",
+                "displayName": "starship_02",
                 "damageCoeficient": 1.1,
                 "initialDamage": 10,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 3.09,
                 "levelMax": 500
@@ -22,8 +28,11 @@
             {
                 "nameID": "entity_starship_03",
                 "imageSrc": "starship_03",
+                "displayName": "starship_03",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -31,8 +40,11 @@
             {
                 "nameID": "entity_starship_04",
                 "imageSrc": "starship_04",
+                "displayName": "starship_04",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -40,8 +52,11 @@
             {
                 "nameID": "entity_starship_05",
                 "imageSrc": "starship_05",
+                "displayName": "starship_05",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -49,8 +64,11 @@
             {
                 "nameID": "entity_starship_06",
                 "imageSrc": "starship_06",
+                "displayName": "starship_06",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -58,8 +76,11 @@
             {
                 "nameID": "entity_starship_07",
                 "imageSrc": "starship_07",
+                "displayName": "starship_07",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -67,8 +88,11 @@
             {
                 "nameID": "entity_starship_08",
                 "imageSrc": "starship_08",
+                "displayName": "starship_08",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -76,8 +100,11 @@
             {
                 "nameID": "entity_starship_09",
                 "imageSrc": "starship_09",
+                "displayName": "starship_09",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -85,8 +112,11 @@
             {
                 "nameID": "entity_starship_10",
                 "imageSrc": "starship_10",
+                "displayName": "starship_10",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -94,8 +124,11 @@
             {
                 "nameID": "entity_starship_11",
                 "imageSrc": "starship_11",
+                "displayName": "starship_11",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -103,8 +136,11 @@
             {
                 "nameID": "entity_starship_12",
                 "imageSrc": "starship_12",
+                "displayName": "starship_12",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -112,8 +148,11 @@
             {
                 "nameID": "entity_starship_13",
                 "imageSrc": "starship_13",
+                "displayName": "starship_13",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -121,8 +160,11 @@
             {
                 "nameID": "entity_starship_14",
                 "imageSrc": "starship_14",
+                "displayName": "starship_14",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500
@@ -130,8 +172,11 @@
             {
                 "nameID": "entity_starship_15",
                 "imageSrc": "starship_15",
+                "displayName": "starship_15",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
                 "timeCoeficient": 1,
                 "initialTime": 1.09,
                 "levelMax": 500

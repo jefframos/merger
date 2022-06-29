@@ -11,6 +11,7 @@ export default class EnemySystem {
         this.container = containers.mainContainer;
         this.onPopLabel = new Signals();
         this.onNextEnemy = new Signals();
+        this.onParticles = new Signals();
 
         this.mainEnemy = new StandardEnemy();
         this.container.addChild(this.mainEnemy);
@@ -39,6 +40,8 @@ export default class EnemySystem {
         this.updateEnemyLife();
         this.updateLevelView();
         this.enemyCurrentLife = this.savedProgression.currentEnemyLife
+
+        this.damageColors = [0xec3e3e, 0xff9000, 0xffd200]
     }
 
     loadData() {
@@ -99,13 +102,29 @@ export default class EnemySystem {
 
         this.enemyCurrentLife -= damage;
 
-        
+
+        let customData = {}
+        customData.texture = 'spark2'
+        customData.scale = 0.005
+        customData.alphaDecress = 0.5
+        customData.gravity = 0
+        customData.tint = this.getDamageColor()
+
+        for (let index = 0; index < 5; index++) {
+            let particleAng = Math.random() * 3.14 * 2;
+            customData.forceX = Math.cos(particleAng) * 20
+            customData.forceY = Math.sin(particleAng) * 20
+            this.onParticles.dispatch(targetPosition, customData, 1)
+        }
+
         if (this.enemyCurrentLife < 0) {
             this.enemyCurrentLife = 0;
             this.nextEnemy();
-        }else{
+        } else {
             COOKIE_MANAGER.saveEnemyLife(this.enemyCurrentLife)
         }
-
+    }
+    getDamageColor() {
+        return this.damageColors[Math.floor(Math.random() * this.damageColors.length)]
     }
 }

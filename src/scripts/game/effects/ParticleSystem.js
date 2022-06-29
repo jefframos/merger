@@ -53,12 +53,15 @@ export default class ParticleSystem extends PIXI.Container
                         if (coin.timer <= 0)
                         {
                             let angle = Math.atan2(coin.target.y - coin.y, coin.target.x - coin.x);
-                            let targetX = Math.cos(angle) * 500
-                            let targetY = Math.sin(angle) * 500
+                            let targetX = Math.cos(angle) * coin.speed
+                            let targetY = Math.sin(angle) * coin.speed
 
+                            if(coin.matchRotation){
+                                coin.rotation = angle
+                            }
                             coin.velocity.x = this.lerp(coin.velocity.x, targetX, 0.05)
                             coin.velocity.y = this.lerp(coin.velocity.y, targetY, 0.05)
-                            if (utils.distance(coin.x, coin.y, coin.target.x, coin.target.y) < coin.height)
+                            if (utils.distance(coin.x, coin.y, coin.target.x, coin.target.y) < Math.max(coin.height, coin.width))
                             {
                                 coin.alpha = 0;
                             }
@@ -166,9 +169,12 @@ export default class ParticleSystem extends PIXI.Container
             let scl = customData.scale || 0.03
             coin.timer =  (customData.timer != undefined ? customData.timer : 0)
             coin.target = customData.target
+            coin.matchRotation = false;
             if (coin.target)
             {
                 coin.timer = coin.target.timer;
+                coin.speed = coin.target.speed | 500;
+                coin.matchRotation = (coin.target.matchRotation != undefined ? coin.target.matchRotation : true);
             }
             coin.scale.set(config.height / (coin.height * coin.scale.y) * (scl))
             let force = {

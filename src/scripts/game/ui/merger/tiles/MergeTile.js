@@ -39,6 +39,7 @@ export default class MergeTile extends PIXI.Container {
         this.tileSprite.anchor.set(0.5, 1)
         this.tileSprite.visible = false;
 
+        this.onShowParticles = new Signals();
         this.onClick = new Signals();
         this.onHold = new Signals();
         this.onUp = new Signals();
@@ -93,7 +94,7 @@ export default class MergeTile extends PIXI.Container {
     updatePosition() {
         this.positionOffset.y = this.entityScale + Math.cos(this.sin) * 4
 
-        this.tileSprite.x = this.backSlot.width / 2;
+        this.tileSprite.x = this.backSlot.width / 2+ this.positionOffset.x;
         this.tileSprite.y = this.backSlot.height / 2 + this.positionOffset.y;
     }
     update(delta, dateTimeStamp) {
@@ -211,12 +212,17 @@ export default class MergeTile extends PIXI.Container {
         this.tileSprite.texture = PIXI.Texture.from(this.tileData.getTexture());
         this.updatePosition()
         this.entityScale = 1.5//Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
-        this.tileSprite.scale.set(0, 2);
         this.tileSprite.anchor.set(0.5)
         this.sin = Math.random();
         this.label.text = this.tileData.getValue()
         this.label.x = this.backSlot.width / 2 - this.label.width / 2;
         this.showSprite()
+        this.enterAnimation()
+
+    }
+    enterAnimation(){
+        this.tileSprite.scale.set(0, 2);
+
         TweenLite.to(this.tileSprite.scale, 0.5, {
             x: this.entityScale,
             y: this.entityScale,
@@ -225,7 +231,6 @@ export default class MergeTile extends PIXI.Container {
                 this.animSprite = true;
             }
         })
-
     }
     onMouseMove(e) {
 

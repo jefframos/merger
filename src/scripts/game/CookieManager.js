@@ -17,7 +17,8 @@ export default class CookieManager {
 		let defaultBoard = {
 			version: '0.0.1',
 			currentBoardLevel: 0,
-			entities:{}
+			entities:{},
+			dataProgression:{}
 		}
 		this.economy = {}
 		this.stats = {}
@@ -95,7 +96,18 @@ export default class CookieManager {
 		}
 		this.storeObject('board', this.board)
 	}
+	addMergePieceUpgrade(mergeData) {
 
+		if (this.board.dataProgression[mergeData.rawData.nameID] == null) {
+			this.board.dataProgression[mergeData.rawData.nameID] = {
+				currentLevel:mergeData.currentLevel
+			}
+		}else{
+			this.board.dataProgression[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
+		}
+
+		this.storeObject('board', this.board)
+	}
 	saveBoardLevel(level) {
 		this.board.currentBoardLevel = level;
 		this.storeObject('board', this.board)

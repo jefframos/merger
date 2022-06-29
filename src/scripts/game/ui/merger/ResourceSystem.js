@@ -18,6 +18,7 @@ export default class ResourceSystem {
         this.wrapper = containers.wrapper;
 
         this.onGetResources = new Signals();
+        this.onParticles = new Signals();
         this.onPopLabel = new Signals();
 
         this.slotsContainer = new PIXI.Container();
@@ -92,6 +93,18 @@ export default class ResourceSystem {
                 return;
             }
         });
+        piece.onShowParticles.add((slot) => {
+            let customData = {}
+            customData.texture = 'coin'
+            customData.scale = 0.01
+            customData.alphaDecress = 0.5
+            customData.gravity = 0
+            let ang = Math.random() * 3.14 * 2;
+            customData.forceX = Math.cos(ang) * 25
+            customData.forceY = Math.sin(ang) * 25
+
+            this.onParticles.dispatch(slot.resourceSource.getGlobalPosition(), customData, 1)
+        })
         piece.onGenerateResource.add((slot, data, totalResources) => {
             let customData = {}
             customData.texture = 'coin'

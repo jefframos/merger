@@ -6,19 +6,13 @@ import ShopItem from './ShopItem';
 import ShopList from './ShopList';
 
 export default class EntityShop extends PIXI.Container {
-    constructor(resourceSystems, size, border = 0) {
+    constructor(mainSystem, size, border = 0) {
         super()
-        this.resourceSystems = resourceSystems;
+        this.mainSystem = mainSystem;
         this.size = {
             w: config.width * 0.8,
             h: config.height * 0.8
         }
-        // this.prizeDark = new PIXI.Graphics().beginFill(0).drawRect(0, 0, this.size.w, config.height) //new PIXI.Sprite(PIXI.Texture.from('UIpiece.png'));
-        // this.prizeDark.alpha = 0.5;
-        // this.prizeDark.interactive = true;
-        // this.prizeDark.buttonMode = true;
-        // this.prizeDark.on('mousedown', this.hideCallback.bind(this)).on('touchstart', this.hideCallback.bind(this));
-        // this.addChild(this.prizeDark);
 
         this.backContainer = new PIXI.mesh.NineSlicePlane(
             PIXI.Texture.fromFrame('button-2'), 10, 10, 10, 10)
@@ -30,11 +24,7 @@ export default class EntityShop extends PIXI.Container {
         this.shopList.y = 100
         this.addChild(this.shopList);
 
-
         this.shopList.onItemShop.add(this.confirmItemShop.bind(this))
-        //this.shopList.onShowInfo = new Signals();
-        //this.shopList.onVideoItemShop = new Signals();
-
 
         this.openShop = new UIButton1(0xFFFFFF, 'icon-close', 0)
         this.addChild(this.openShop)
@@ -56,7 +46,8 @@ export default class EntityShop extends PIXI.Container {
     }
     confirmItemShop(item) {
 
-        this.resourceSystems.forEach(resourceSystem => {
+        
+        this.mainSystem.forEach(resourceSystem => {
             resourceSystem.findUpgrade(item)
         });
 
@@ -71,7 +62,7 @@ export default class EntityShop extends PIXI.Container {
             shopItem.setData(items[index])
             this.currentItens.push(shopItem)
         }
-
+        
         this.shopList.addItens(this.currentItens)
     }
 }

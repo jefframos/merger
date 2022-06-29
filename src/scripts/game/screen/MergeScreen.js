@@ -13,6 +13,7 @@ import ResourceSystem from '../ui/merger/ResourceSystem';
 import MergerData from '../ui/merger/data/MergerData';
 import EntityShop from '../ui/merger/shop/EntityShop';
 import GameEconomy from '../ui/merger/GameEconomy';
+import MergeItemsShop from '../ui/merger/shop/MergeItemsShop';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
@@ -90,6 +91,7 @@ export default class MergeScreen extends Screen {
         this.rawMergeDataList = []
         for (let index = 0; index < window.baseEntities.mergeEntities.list.length; index++) {
             let mergeData = new MergerData(window.baseEntities.mergeEntities.list[index], index)
+            mergeData.type = 'damage'
             this.rawMergeDataList.push(mergeData)
         }
 
@@ -128,15 +130,19 @@ export default class MergeScreen extends Screen {
         });
         this.mergeSystem1.enemySystem = this.enemiesSystem;
 
+        this.resourceSystem.onParticles.add(this.addParticles.bind(this));
         this.resourceSystem.onGetResources.add(this.addResourceParticles.bind(this));
         this.resourceSystem.onPopLabel.add(this.popLabel.bind(this));
-
+        
+        this.resourceSystemRight.onParticles.add(this.addParticles.bind(this));
         this.resourceSystemRight.onGetResources.add(this.addResourceParticles.bind(this));
         this.resourceSystemRight.onPopLabel.add(this.popLabel.bind(this));
-
+        
+        this.mergeSystem1.onParticles.add(this.addParticles.bind(this));
         this.mergeSystem1.onDealDamage.add(this.addDamageParticles.bind(this));
         this.mergeSystem1.onPopLabel.add(this.popLabel.bind(this));
-
+        
+        this.enemiesSystem.onParticles.add(this.addParticles.bind(this));
         this.enemiesSystem.onPopLabel.add(this.popLabel.bind(this));
 
         this.mergeSystem1.addSystem(this.enemiesSystem);
@@ -198,10 +204,18 @@ export default class MergeScreen extends Screen {
 
         this.openShop = new UIButton1(0xFFFFFF, 'icon_shop')
         this.container.addChild(this.openShop)
-        this.openShop.x = 50
+        this.openShop.x = config.width - 45
         this.openShop.y = config.height - 120
         this.openShop.onClick.add(() => {
             this.entityShop.show()
+        })
+
+        this.openMergeShop = new UIButton1(0xFFFFFF, 'results_arrow')
+        this.container.addChild(this.openMergeShop)
+        this.openMergeShop.x = config.width - 45
+        this.openMergeShop.y = config.height - 190
+        this.openMergeShop.onClick.add(() => {
+            this.mergeItemsShop.show()
         })
 
         window.TIME_SCALE = 1
@@ -209,8 +223,14 @@ export default class MergeScreen extends Screen {
         this.entityShop = new EntityShop([this.resourceSystem, this.resourceSystemRight]);
         this.addChild(this.entityShop);
         this.entityShop.hide();
-
+        
         this.entityShop.addItems(this.allRawResources)
+        
+        this.mergeItemsShop = new MergeItemsShop([this.mergeSystem1])
+        this.addChild(this.mergeItemsShop);
+        this.mergeItemsShop.addItems(this.rawMergeDataList)
+        this.mergeItemsShop.hide();
+
 
         window.gameEconomy = new GameEconomy()
 
@@ -220,18 +240,21 @@ export default class MergeScreen extends Screen {
 
         this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL1)
     }
+
+    addParticles(targetPosition, customData, quant) {
+        let toLocal = this.particleSystem.toLocal(targetPosition)
+        this.particleSystem.show(toLocal, quant, customData)
+    }
+
     addDamageParticles(targetPosition, customData, label, quant) {
         let toLocal = this.particleSystem.toLocal(targetPosition)
-
         this.particleSystem.show(toLocal, quant, customData)
         //this.particleSystem.popLabel(targetPosition, "+" + label, 0, 1, 1, LABELS.LABEL1)
     }
     addResourceParticles(targetPosition, customData, totalResources, quantParticles) {
-
         window.gameEconomy.addResources(totalResources)
         let toLocal = this.particleSystem.toLocal(targetPosition)
         for (let index = 0; index < quantParticles; index++) {
-
             customData.target = { x: this.resourcesLabel.x, y: this.resourcesLabel.y, timer: 0.2 + Math.random() * 0.75 }
             this.particleSystem.show(toLocal, 1, customData)
         }
@@ -303,7 +326,11 @@ export default class MergeScreen extends Screen {
 
         this.entityShop.x = config.width / 2 - this.entityShop.width / 2
         this.entityShop.y = config.height / 2 - this.entityShop.height / 2
+
+        this.mergeItemsShop.x = config.width / 2 - this.mergeItemsShop.width / 2
+        this.mergeItemsShop.y = config.height / 2 - this.mergeItemsShop.height / 2        
     }
+
     transitionOut(nextScreen) {
         this.removeEvents();
         this.nextScreen = nextScreen;

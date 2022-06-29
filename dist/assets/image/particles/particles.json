@@ -16,6 +16,14 @@
 	"spriteSourceSize": {"x":0,"y":1,"w":64,"h":61},
 	"sourceSize": {"w":64,"h":64}
 },
+"shoot.png":
+{
+	"frame": {"x":133,"y":12,"w":7,"h":1},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":7,"h":1},
+	"sourceSize": {"w":7,"h":1}
+},
 "spark2.png":
 {
 	"frame": {"x":133,"y":1,"w":9,"h":9},
@@ -31,6 +39,6 @@
 	"format": "RGBA8888",
 	"size": {"w":143,"h":63},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:523fb1f73cb73b33a02e8182e21b9cb8:9b0c50c12f6ce233f81403495e86eec3:767f0aa26e08023d62afa20c0c952bea$"
+	"smartupdate": "$TexturePacker:SmartUpdate:9ceae5a48b11004f5b8ca536bda3fed0:4b388b06bddddbbda0559fb770f5c8b7:767f0aa26e08023d62afa20c0c952bea$"
 }
 }

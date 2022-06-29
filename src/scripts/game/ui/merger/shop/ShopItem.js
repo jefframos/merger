@@ -32,7 +32,7 @@ export default class ShopItem extends UIList {
         this.levelContainer = new PIXI.Container();
 
 
-        this.levelLabel = new PIXI.Text('LV1\n9999',        LABELS.LABEL1);
+        this.levelLabel = new PIXI.Text('LV1\n9999', LABELS.LABEL1);
         this.levelContainer.addChild(this.levelLabel);
         this.levelLabel.style.fontSize = 12
 
@@ -45,17 +45,17 @@ export default class ShopItem extends UIList {
         this.elementsList.push(this.levelContainer);
         this.container.addChild(this.levelContainer);
 
-        this.levelBar.y = this.levelLabel.y + this.levelLabel.height;
+        this.levelBar.y = this.levelLabel.y + this.levelLabel.height + 3;
         this.levelBar.scale.set(0.2)
 
         this.descriptionContainer = new PIXI.Container();
 
-        this.descriptionLabel = new PIXI.Text('this is a description',LABELS.LABEL1);
-
-        //this.descriptionContainer.scaleContentMax = true;
+        this.descriptionLabel = new PIXI.Text('this is a description', LABELS.LABEL1);
+        this.descriptionLabel.style.fontSize = 14
+        this.descriptionContainer.scaleContentMax = true;
         this.descriptionContainer.listScl = 0.4;
         this.descriptionContainer.align = 0.5;
-        //this.descriptionContainer.addChild(this.descriptionLabel)
+        this.descriptionContainer.addChild(this.descriptionLabel)
 
         this.elementsList.push(this.descriptionContainer);
         this.container.addChild(this.descriptionContainer);
@@ -72,23 +72,23 @@ export default class ShopItem extends UIList {
 
         this.onConfirmShop = new Signals();
         this.onShowInfo = new Signals();
-        this.icons = {
-            value: 'icon_increase',
-            cooldown: 'icon_duration_orange',
-            activeTime: 'icon_duration_blue',
-        }
+        // this.icons = {
+        //     value: 'icon_increase',
+        //     cooldown: 'icon_duration_orange',
+        //     activeTime: 'icon_duration_blue',
+        // }
 
-        this.infoButton = new PIXI.Sprite.from('info');
-        // this.itemIcon.scaleContent = true;
-        this.infoButton.listScl = 0.1;
-        this.infoButton.align = 0.5;
-        this.infoButton.fitWidth = 0.75;
-        // this.infoButton.scaleContentMax = true;
-        this.elementsList.push(this.infoButton);
-        this.container.addChild(this.infoButton);
-        this.infoButton.interactive = true;
-        this.infoButton.buttonMode = true;
-        this.infoButton.on('mousedown', this.onInfoCallback.bind(this)).on('touchstart', this.onInfoCallback.bind(this));
+        // this.infoButton = new PIXI.Sprite.from('info');
+        // // this.itemIcon.scaleContent = true;
+        // this.infoButton.listScl = 0.1;
+        // this.infoButton.align = 0.5;
+        // this.infoButton.fitWidth = 0.75;
+        // // this.infoButton.scaleContentMax = true;
+        // // this.elementsList.push(this.infoButton);
+        // // this.container.addChild(this.infoButton);
+        // this.infoButton.interactive = true;
+        // this.infoButton.buttonMode = true;
+        // this.infoButton.on('mousedown', this.onInfoCallback.bind(this)).on('touchstart', this.onInfoCallback.bind(this));
 
         // this.itemIcon.scaleContent = false;
         this.currentColor = 0;
@@ -111,7 +111,7 @@ export default class ShopItem extends UIList {
     }
     onShopItem(itemData) {
 
-        if(window.gameEconomy.hasEnoughtResources(this.realCost)){
+        if (window.gameEconomy.hasEnoughtResources(this.realCost)) {
 
             window.gameEconomy.useResources(this.realCost)
             this.onConfirmShop.dispatch(this.itemData, this.realCost, this.shopButton);
@@ -206,9 +206,16 @@ export default class ShopItem extends UIList {
     updateData() {
         let next = 1
         //this.attributesList['cost'].text = utils.formatPointsLabel(this.itemData.getRPS())+'/s'
-this.realCost = this.itemData.getUpgradeCost(next);
-        this.attributesList['cost'].text = utils.formatPointsLabel(this.itemData.getRPS()) + '/s'
-        this.attributesList['value'].text = utils.formatPointsLabel(this.itemData.getRPS(next)) + '/s'
+        this.realCost = this.itemData.getUpgradeCost(next);
+
+        let currentRPS = this.itemData.getRPS()
+        let nextRPS = this.itemData.getRPS(next)
+        if(this.itemData.type == 'damage'){
+            currentRPS = this.itemData.getDPS()
+            nextRPS = this.itemData.getDPS(next)
+        }
+        this.attributesList['cost'].text = utils.formatPointsLabel(currentRPS) + '/s'
+        this.attributesList['value'].text = utils.formatPointsLabel(Math.ceil(nextRPS - currentRPS)) + '/s'
 
         this.shopButton.updateCoast(utils.formatPointsLabel(this.itemData.getUpgradeCost(next)))
 
@@ -227,10 +234,10 @@ this.realCost = this.itemData.getUpgradeCost(next);
     }
     setData(itemData) {
         this.itemData = itemData;
-        console.log(this.itemData)
-        this.itemIcon.texture = new PIXI.Texture.from(this.itemData.rawData.imageSrc);
-
-        let types = [{name:'cost', icon:'icon_increase'}, {name:'value', icon:'icon_increase'}]
+        let image = this.itemData.rawData.tileImageSrc ? this.itemData.rawData.tileImageSrc : this.itemData.rawData.imageSrc
+        this.itemIcon.texture = new PIXI.Texture.from(image);
+        this.descriptionLabel.text = this.itemData.rawData.displayName
+        let types = [{ name: 'cost', icon: 'coin' }, { name: 'value', icon: 'icon_increase' }]
         if (!this.attributesList) {
             this.attributesList = new UIList();
             this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.9;
@@ -244,7 +251,7 @@ this.realCost = this.itemData.getUpgradeCost(next);
 
                 let attIcon = new PIXI.Sprite.from(element.icon);
                 attIcon.scale.set(this.attributesList.w / attIcon.width * 0.1)
-                let attValue = new PIXI.Text(element.name,LABELS.LABEL1);
+                let attValue = new PIXI.Text(element.name, LABELS.LABEL1);
                 attValue.style.fontSize = 12
                 attContainer.addChild(attIcon);
                 attContainer.addChild(attValue);
@@ -253,7 +260,7 @@ this.realCost = this.itemData.getUpgradeCost(next);
                 attValue.x = attIcon.x + attIcon.width + 5;
                 attValue.y = attIcon.y + attIcon.height / 2 - attValue.height / 2;
 
-                attContainer.align = 0.5
+                attContainer.align = 0
 
                 this.attributesList.elementsList.push(attContainer);
                 this.attributesList.container.addChild(attContainer);
@@ -263,13 +270,13 @@ this.realCost = this.itemData.getUpgradeCost(next);
 
             });
 
-            
+
             this.attributesList.updateHorizontalList();
             this.descriptionContainer.y = 0;
         }
         this.updateHorizontalList();
-        
+
         this.updateData();
-        
+
     }
 }
