@@ -5,6 +5,7 @@ import UIList from '../../uiElements/UIList';
 import UIBar from '../../uiElements/UIBar';
 import ShopButton from './ShopButton';
 import config from '../../../../config';
+import ShopLockState from './ShopLockState';
 export default class ShopItem extends UIList {
     constructor(rect = {
         w: 500,
@@ -91,20 +92,23 @@ export default class ShopItem extends UIList {
         // this.infoButton.on('mousedown', this.onInfoCallback.bind(this)).on('touchstart', this.onInfoCallback.bind(this));
 
         // this.itemIcon.scaleContent = false;
+
+        this.lockStateContainer = new PIXI.Container();
+        this.addChild(this.lockStateContainer);
+        this.lockState = new ShopLockState(this.w, this.h);
+        this.lockStateContainer.addChild(this.lockState);
+        this.lockStateContainer.interactive = true;
         this.currentColor = 0;
         this.realCost = 0
-        window.GAME_DATA = {
-            getShopValues() {
-                return 200
-            },
-            getActionStats() {
-                return 200
-            },
-            canBuyIt() {
-                return true
-            }
-        }
-
+        this.unlockItem();
+    }
+    lockItem() {
+        this.lockStateContainer.visible = true;
+        this.container.visible = false;
+    }
+    unlockItem() {
+        this.lockStateContainer.visible = false;
+        this.container.visible = true;
     }
     onInfoCallback() {
         this.onShowInfo.dispatch(this.itemData, this.infoButton);
@@ -210,7 +214,7 @@ export default class ShopItem extends UIList {
 
         let currentRPS = this.itemData.getRPS()
         let nextRPS = this.itemData.getRPS(next)
-        if(this.itemData.type == 'damage'){
+        if (this.itemData.type == 'damage') {
             currentRPS = this.itemData.getDPS()
             nextRPS = this.itemData.getDPS(next)
         }

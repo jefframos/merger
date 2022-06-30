@@ -20,4 +20,29 @@ export default class MergeItemsShop extends EntityShop {
         COOKIE_MANAGER.addMergePieceUpgrade(item);
 
     }
+    show() {
+        this.visible = true;
+        let currentResources = COOKIE_MANAGER.getBoard();
+        let currentEntities = []
+        for (const key in currentResources.entities) {
+            const element = currentResources.entities[key];
+            if (element && element.nameID) {
+                currentEntities.push(element.nameID);
+            }
+        }
+
+        let found = false;
+        for (let index = this.currentItens.length-1; index >=0 ; index--) {
+            const element = this.currentItens[index];
+
+            if (found || currentEntities.indexOf(element.nameID) > -1) {
+                element.unlockItem();
+                found = true;
+            }else {
+                element.lockItem();
+            }
+            
+        }
+        
+    }
 }

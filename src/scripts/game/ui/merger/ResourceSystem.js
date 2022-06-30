@@ -43,17 +43,8 @@ export default class ResourceSystem {
 
 
         this.sumStart = 0;
-        this.dataTiles.forEach(element => {
-            if(this.savedResources[element.rawData.nameID]){            
-                let saved = this.savedResources[element.rawData.nameID];
-                let time = saved.latestResourceAdd - saved.latestResourceCollect                
-                this.addResourceSlot(element, this.savedResources[element.rawData.nameID]); 
-                this.sumStart += time * element.getRPS();
-                
-            }else{
-                this.addResourceSlot();            
-            }
-        });
+        this.loadData();
+        
         this.timestamp = (Date.now() / 1000 | 0);
 
         setTimeout(() => {
@@ -62,7 +53,19 @@ export default class ResourceSystem {
 
         this.rps = 0;
     }
-
+    loadData(){
+        this.dataTiles.forEach(element => {
+            if(this.savedResources.entities[element.rawData.nameID]){            
+                let saved = this.savedResources.entities[element.rawData.nameID];
+                let time = saved.latestResourceAdd - saved.latestResourceCollect                
+                this.addResourceSlot(element, this.savedResources.entities[element.rawData.nameID]); 
+                this.sumStart += time * element.getRPS();
+                
+            }else{
+                this.addResourceSlot();            
+            }
+        });
+    }
     collectStartAmount(mult = 1) {
         gameEconomy.addResources(this.sumStart * mult)
         COOKIE_MANAGER.resetAllCollects();

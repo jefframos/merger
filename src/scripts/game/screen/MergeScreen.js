@@ -189,7 +189,7 @@ export default class MergeScreen extends Screen {
         this.frontLayer.addChild(this.particleSystem)
 
 
-        this.speedUpToggle = new UIButton1(0xFFFFFF, 'fast_forward_icon')
+        this.speedUpToggle = new UIButton1(0x002299, 'fast_forward_icon')
         this.container.addChild(this.speedUpToggle)
         this.speedUpToggle.x = 50
         this.speedUpToggle.y = 30
@@ -203,7 +203,7 @@ export default class MergeScreen extends Screen {
             TweenMax.globalTimeScale(window.TIME_SCALE)
         })
 
-        this.clearData = new UIButton1(0xFFFFFF, 'icon_reset')
+        this.clearData = new UIButton1(0x002299, 'icon_reset')
         this.container.addChild(this.clearData)
         this.clearData.x = 110
         this.clearData.y = 30
@@ -211,7 +211,7 @@ export default class MergeScreen extends Screen {
             COOKIE_MANAGER.wipeData()
         })
 
-        this.openShop = new UIButton1(0xFFFFFF, 'icon_shop')
+        this.openShop = new UIButton1(0x002299, 'drill')
         this.container.addChild(this.openShop)
         this.openShop.x = config.width - 45
         this.openShop.y = config.height - 120
@@ -219,7 +219,7 @@ export default class MergeScreen extends Screen {
             this.entityShop.show()
         })
 
-        this.openMergeShop = new UIButton1(0xFFFFFF, 'results_arrow')
+        this.openMergeShop = new UIButton1(0x002299, 'starship_01')
         this.container.addChild(this.openMergeShop)
         this.openMergeShop.x = config.width - 45
         this.openMergeShop.y = config.height - 190
@@ -249,13 +249,20 @@ export default class MergeScreen extends Screen {
         this.sumStart = 0;
         this.savedResources = COOKIE_MANAGER.getResources();
         this.allRawResources.forEach(element => {
-            if (this.savedResources[element.rawData.nameID]) {
-                let saved = this.savedResources[element.rawData.nameID];
+            if (this.savedResources.entities[element.rawData.nameID]) {
+                let saved = this.savedResources.entities[element.rawData.nameID];
                 let time = saved.latestResourceAdd - saved.latestResourceCollect
                 this.sumStart += time * element.getRPS();
             }
         });
-        if (this.sumStart > 10) {
+
+
+        this.savedEconomy = COOKIE_MANAGER.getEconomy();
+
+        let now = Date.now() / 1000 | 0
+        let diff = now - this.savedEconomy.lastChanged
+        console.log(diff, this.sumStart)
+        if (diff > 10 && this.sumStart > 10) {
             let params = {
                 label: 'your ships\ncollected\n' + utils.formatPointsLabel(this.sumStart)+'\n\nWould you like to watch\na video and double?',
                 onConfirm: this.collectStartAmountDouble.bind(this),
@@ -263,6 +270,8 @@ export default class MergeScreen extends Screen {
             }
             this.standardPopUpShow(params)
         }
+
+        //this.mergeItemsShop.show()
     }
     collectStartAmountDouble() {
         this.resourceSystem.collectStartAmount(2)

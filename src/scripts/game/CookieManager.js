@@ -4,10 +4,13 @@ export default class CookieManager {
 			test: 0
 		}
 		let defaultEconomy = {
-			resources: 0
+			resources: 0,
+			lastChanged:0
 		}
 		let defaultResources = {
-			version: '0.0.1'
+			version: '0.0.1',
+			entities:{},
+			dataProgression:{}
 		}
 		let defaultProgression = {
 			version: '0.0.1',
@@ -56,6 +59,7 @@ export default class CookieManager {
 	}
 	updateResources(total) {
 		this.economy.resources = total;
+		this.economy.lastChanged = Date.now() / 1000 | 0
 		this.storeObject('economy', this.economy)
 	}
 	resetAllCollects(){
@@ -71,25 +75,25 @@ export default class CookieManager {
 		this.storeObject('resources', this.resources)
 	}
 	pickResource(mergeData) {
-		this.resources[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
-		this.resources[mergeData.rawData.nameID].latestResourceCollect = Date.now() / 1000 | 0
-		this.resources[mergeData.rawData.nameID].pendingResource = 0
+		this.resources.entities[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
+		this.resources.entities[mergeData.rawData.nameID].latestResourceCollect = Date.now() / 1000 | 0
+		this.resources.entities[mergeData.rawData.nameID].pendingResource = 0
 
 		this.storeObject('resources', this.resources)
 
 	}
 	addResourceUpgrade(mergeData) {
-		this.resources[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
+		this.resources.entities[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
 		this.storeObject('resources', this.resources)
 	}
 	addPendingResource(mergeData, current) {
-		this.resources[mergeData.rawData.nameID].pendingResource = current
-		this.resources[mergeData.rawData.nameID].latestResourceAdd = Date.now() / 1000 | 0
+		this.resources.entities[mergeData.rawData.nameID].pendingResource = current
+		this.resources.entities[mergeData.rawData.nameID].latestResourceAdd = Date.now() / 1000 | 0
 
 		this.storeObject('resources', this.resources)
 	}
 	buyResource(mergeData) {
-		this.resources[mergeData.rawData.nameID] = {
+		this.resources.entities[mergeData.rawData.nameID] = {
 			currentLevel: mergeData.currentLevel,
 			latestResourceCollect: Date.now() / 1000 | 0,
 			pendingResource: 0,

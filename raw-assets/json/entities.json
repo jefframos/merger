@@ -75,7 +75,7 @@
             },
             {
                 "nameID": "entity_starship_07",
-                "imageSrc": "starship_07",
+                "imageSrc": "starship_16",
                 "displayName": "starship_07",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
@@ -159,7 +159,7 @@
             },
             {
                 "nameID": "entity_starship_14",
-                "imageSrc": "starship_14",
+                "imageSrc": "starship_18",
                 "displayName": "starship_14",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,
@@ -171,7 +171,7 @@
             },
             {
                 "nameID": "entity_starship_15",
-                "imageSrc": "starship_15",
+                "imageSrc": "starship_17",
                 "displayName": "starship_15",
                 "damageCoeficient": 1.1,
                 "initialDamage": 0.6,

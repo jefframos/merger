@@ -48,7 +48,7 @@ export default class UIButton1 extends PIXI.Container {
 
 		this.icon.anchor.set(0.5);
 
-		this.icon.scale.set(this.backShape.height / this.icon.height * 0.7)
+		this.icon.scale.set(this.backShape.height / Math.max(this.icon.height,this.icon.width) * 0.7)
 		this.mainContainer.addChild(this.backShapeBorder);
 		this.mainContainer.addChild(this.backShape);
 		this.mainContainer.addChild(this.icon);
@@ -76,7 +76,7 @@ export default class UIButton1 extends PIXI.Container {
 		this.backShape.height = height
 		this.backShape.pivot.set(width / 2)
 
-		this.icon.scale.set(this.backShape.height / this.icon.height * 0.7 * this.icon.scale.x)
+		this.icon.scale.set(this.backShape.height / Math.max(this.icon.height,this.icon.width) * 0.7 * this.icon.scale.x)
 
 	}
 	updateRotation(rot, invertIcon = false) {
@@ -161,6 +161,6 @@ export default class UIButton1 extends PIXI.Container {
 	}
 	updateTexture(texture) {
 		this.icon.texture = PIXI.Texture.fromFrame(texture);
-		this.icon.scale.set(this.backShape.height / this.icon.height * 0.7 * this.icon.scale.x);
+		this.icon.scale.set(this.backShape.height / Math.max(this.icon.height,this.icon.width) * 0.7 * this.icon.scale.x);
 	}
 }

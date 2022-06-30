@@ -43,10 +43,29 @@ export default class EntityShop extends PIXI.Container {
     }
     show() {
         this.visible = true;
+
+        let currentResources = COOKIE_MANAGER.getResources();
+
+        let currentEntities = []
+        for (const key in currentResources.entities) {
+            const element = currentResources.entities[key];
+            if (element.currentLevel) {
+                currentEntities.push(key);
+            }
+        }
+        this.currentItens.forEach(element => {
+            console.log(element.nameID)
+            if (currentEntities.indexOf(element.nameID) > -1) {
+                element.unlockItem();
+            } else {
+                element.lockItem();
+            }
+        });
+
     }
     confirmItemShop(item) {
 
-        
+
         this.mainSystem.forEach(resourceSystem => {
             resourceSystem.findUpgrade(item)
         });
@@ -58,11 +77,13 @@ export default class EntityShop extends PIXI.Container {
 
         this.currentItens = []
         for (let index = 0; index < items.length; index++) {
-            let shopItem = new ShopItem({ w: this.size.w, h: 80 })
+            let shopItem = new ShopItem({ w: this.size.w * 0.9, h: 80 })
             shopItem.setData(items[index])
+            shopItem.nameID = items[index].rawData.nameID;
             this.currentItens.push(shopItem)
         }
-        
+
         this.shopList.addItens(this.currentItens)
+        this.shopList.x = this.size.w * 0.05
     }
 }
