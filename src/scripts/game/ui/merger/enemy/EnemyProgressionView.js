@@ -29,17 +29,23 @@ export default class EnemyProgressionView extends PIXI.Container {
 
     }
     updateLevel() {
-        //console.log(this.enemySystem.enemyLevel)
+        let nextLevel = this.enemySystem.enemyLevel - 1
+        let isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;
 
-        if(this.enemySystem.enemyLevel > 1){
-            this.prevLevelContainer.updateLevel(this.enemySystem.enemyLevel-1)
+        if (this.enemySystem.enemyLevel > 1) {
+            this.prevLevelContainer.updateLevel(nextLevel, isBoss)
             this.prevLevelContainer.visible = true;
-        }else{
+        } else {
             this.prevLevelContainer.visible = false;
         }
+        nextLevel = this.enemySystem.enemyLevel
+        isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;        
 
-        this.currentLevelContainer.updateLevel(this.enemySystem.enemyLevel)
-        this.nextLevelContainer.updateLevel(this.enemySystem.enemyLevel + 1)
+        this.currentLevelContainer.updateLevel(nextLevel, isBoss)
+
+        nextLevel = this.enemySystem.enemyLevel + 1
+        isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;
+        this.nextLevelContainer.updateLevel(nextLevel, isBoss)
         this.bossCounter.updateLevel(this.enemySystem.nextBoss)
     }
 }

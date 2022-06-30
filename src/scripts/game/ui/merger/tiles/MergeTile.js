@@ -97,7 +97,7 @@ export default class MergeTile extends PIXI.Container {
         this.tileSprite.x = this.backSlot.width / 2+ this.positionOffset.x;
         this.tileSprite.y = this.backSlot.height / 2 + this.positionOffset.y;
     }
-    update(delta, dateTimeStamp) {
+    update(delta, dateTimeStamp, autoUpdateResources = true) {
         if (this.animSprite) {
             this.sin += delta;
             this.sin %= Math.PI * 2;
@@ -105,8 +105,10 @@ export default class MergeTile extends PIXI.Container {
         }
 
         //console.log(this, dateTimeStamp)
-        this.updateResource(delta, dateTimeStamp)
-        this.updateDamage(delta, dateTimeStamp)
+        if(autoUpdateResources){
+            this.updateResource(delta, dateTimeStamp)
+            this.updateDamage(delta, dateTimeStamp)
+        }
     }
     updateResource(delta, dateTimeStamp) {
         if (this.generateResourceTime > 0) {

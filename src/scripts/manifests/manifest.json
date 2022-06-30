@@ -1,8 +1,8 @@
 {
     "default": [
         "image/particles/particles.json",
-        "image/entities/entities.json",
         "image/background/background.json",
+        "image/entities/entities.json",
         "image/asteroids/asteroids.json",
         "image/environment/environment.json",
         "image/ui/ui.json"

@@ -2,15 +2,23 @@
 
 "arrow.png":
 {
-	"frame": {"x":83,"y":344,"w":42,"h":171},
+	"frame": {"x":1,"y":486,"w":42,"h":171},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":67,"y":0,"w":42,"h":171},
 	"sourceSize": {"w":175,"h":175}
 },
+"capital_ship_01.png":
+{
+	"frame": {"x":1,"y":1,"w":483,"h":127},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":1,"w":483,"h":127},
+	"sourceSize": {"w":500,"h":135}
+},
 "capital_ship_05.png":
 {
-	"frame": {"x":1,"y":1,"w":236,"h":91},
+	"frame": {"x":130,"y":1,"w":236,"h":91},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":10,"y":4,"w":236,"h":91},
@@ -18,7 +26,7 @@
 },
 "cure.png":
 {
-	"frame": {"x":50,"y":640,"w":15,"h":37},
+	"frame": {"x":239,"y":525,"w":15,"h":37},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":13,"y":15,"w":15,"h":37},
@@ -26,23 +34,23 @@
 },
 "fire.png":
 {
-	"frame": {"x":49,"y":679,"w":15,"h":37},
-	"rotated": false,
+	"frame": {"x":165,"y":648,"w":15,"h":37},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":13,"y":15,"w":15,"h":37},
 	"sourceSize": {"w":40,"h":68}
 },
 "shipsWhite/starship_01.png":
 {
-	"frame": {"x":1,"y":623,"w":42,"h":47},
-	"rotated": true,
+	"frame": {"x":176,"y":428,"w":42,"h":47},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":1,"w":42,"h":47},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_02.png":
 {
-	"frame": {"x":82,"y":517,"w":46,"h":43},
+	"frame": {"x":212,"y":321,"w":46,"h":43},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":0,"w":46,"h":43},
@@ -50,7 +58,7 @@
 },
 "shipsWhite/starship_03.png":
 {
-	"frame": {"x":93,"y":247,"w":32,"h":48},
+	"frame": {"x":223,"y":1,"w":32,"h":48},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":8,"y":0,"w":32,"h":48},
@@ -58,31 +66,31 @@
 },
 "shipsWhite/starship_04.png":
 {
-	"frame": {"x":1,"y":803,"w":34,"h":41},
-	"rotated": true,
+	"frame": {"x":220,"y":369,"w":34,"h":41},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":7,"y":4,"w":34,"h":41},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_05.png":
 {
-	"frame": {"x":80,"y":565,"w":36,"h":45},
-	"rotated": true,
+	"frame": {"x":155,"y":526,"w":36,"h":45},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":5,"y":1,"w":36,"h":45},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_06.png":
 {
-	"frame": {"x":1,"y":761,"w":40,"h":42},
-	"rotated": true,
+	"frame": {"x":92,"y":581,"w":40,"h":42},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":4,"y":4,"w":40,"h":42},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_07.png":
 {
-	"frame": {"x":65,"y":484,"w":16,"h":25},
+	"frame": {"x":239,"y":498,"w":16,"h":25},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":5,"w":16,"h":25},
@@ -90,31 +98,31 @@
 },
 "shipsWhite/starship_08.png":
 {
-	"frame": {"x":73,"y":603,"w":36,"h":47},
-	"rotated": true,
+	"frame": {"x":107,"y":486,"w":36,"h":47},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":6,"y":1,"w":36,"h":47},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_09.png":
 {
-	"frame": {"x":1,"y":581,"w":48,"h":40},
-	"rotated": false,
+	"frame": {"x":178,"y":378,"w":48,"h":40},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":5,"w":48,"h":40},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_10.png":
 {
-	"frame": {"x":67,"y":641,"w":46,"h":44},
-	"rotated": false,
+	"frame": {"x":193,"y":477,"w":46,"h":44},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":2,"w":46,"h":44},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_11.png":
 {
-	"frame": {"x":93,"y":727,"w":32,"h":41},
+	"frame": {"x":223,"y":98,"w":32,"h":41},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":8,"y":7,"w":32,"h":41},
@@ -122,7 +130,7 @@
 },
 "shipsWhite/starship_12.png":
 {
-	"frame": {"x":94,"y":155,"w":48,"h":30},
+	"frame": {"x":223,"y":191,"w":48,"h":30},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":1,"w":48,"h":30},
@@ -130,7 +138,7 @@
 },
 "shipsWhite/starship_13.png":
 {
-	"frame": {"x":94,"y":125,"w":28,"h":31},
+	"frame": {"x":222,"y":291,"w":28,"h":31},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":0,"w":28,"h":31},
@@ -138,7 +146,7 @@
 },
 "shipsWhite/starship_14.png":
 {
-	"frame": {"x":93,"y":297,"w":32,"h":45},
+	"frame": {"x":223,"y":51,"w":32,"h":45},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":45},
@@ -146,7 +154,7 @@
 },
 "shipsWhite/starship_15.png":
 {
-	"frame": {"x":65,"y":440,"w":16,"h":42},
+	"frame": {"x":239,"y":454,"w":16,"h":42},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":6,"w":16,"h":42},
@@ -154,7 +162,7 @@
 },
 "shipsWhite/starship_16.png":
 {
-	"frame": {"x":94,"y":1,"w":48,"h":31},
+	"frame": {"x":223,"y":141,"w":48,"h":31},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":1,"w":48,"h":31},
@@ -162,7 +170,7 @@
 },
 "shipsWhite/starship_17.png":
 {
-	"frame": {"x":89,"y":770,"w":36,"h":40},
+	"frame": {"x":214,"y":565,"w":36,"h":40},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":6,"y":3,"w":36,"h":40},
@@ -170,31 +178,31 @@
 },
 "shipsWhite/starship_18.png":
 {
-	"frame": {"x":51,"y":511,"w":36,"h":29},
-	"rotated": true,
+	"frame": {"x":176,"y":617,"w":36,"h":29},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":6,"y":1,"w":36,"h":29},
 	"sourceSize": {"w":48,"h":32}
 },
 "shipsWhite/starship_19.png":
 {
-	"frame": {"x":1,"y":487,"w":46,"h":48},
-	"rotated": true,
+	"frame": {"x":130,"y":378,"w":46,"h":48},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":0,"w":46,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_20.png":
 {
-	"frame": {"x":45,"y":769,"w":42,"h":36},
-	"rotated": false,
+	"frame": {"x":176,"y":573,"w":42,"h":36},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":6,"w":42,"h":36},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_21.png":
 {
-	"frame": {"x":1,"y":715,"w":46,"h":44},
+	"frame": {"x":107,"y":535,"w":46,"h":44},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":0,"w":46,"h":44},
@@ -202,7 +210,7 @@
 },
 "shipsWhite/starship_22.png":
 {
-	"frame": {"x":44,"y":807,"w":38,"h":35},
+	"frame": {"x":45,"y":628,"w":38,"h":35},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":5,"y":4,"w":38,"h":35},
@@ -210,15 +218,15 @@
 },
 "shipsWhite/starship_23.png":
 {
-	"frame": {"x":51,"y":599,"w":20,"h":39},
-	"rotated": false,
+	"frame": {"x":214,"y":607,"w":20,"h":39},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":6,"y":4,"w":20,"h":39},
 	"sourceSize": {"w":32,"h":48}
 },
 "shipsWhite/starship_24.png":
 {
-	"frame": {"x":84,"y":812,"w":36,"h":34},
+	"frame": {"x":85,"y":629,"w":36,"h":34},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":7,"y":5,"w":36,"h":34},
@@ -226,7 +234,7 @@
 },
 "shipsWhite/starship_25.png":
 {
-	"frame": {"x":1,"y":667,"w":46,"h":46},
+	"frame": {"x":145,"y":478,"w":46,"h":46},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":0,"w":46,"h":46},
@@ -234,7 +242,7 @@
 },
 "shipsWhite/starship_26.png":
 {
-	"frame": {"x":94,"y":93,"w":30,"h":31},
+	"frame": {"x":214,"y":629,"w":30,"h":31},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":9,"y":1,"w":30,"h":31},
@@ -242,15 +250,15 @@
 },
 "shipsWhite/starship_27.png":
 {
-	"frame": {"x":94,"y":205,"w":40,"h":29},
-	"rotated": true,
+	"frame": {"x":123,"y":625,"w":40,"h":29},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":4,"y":3,"w":40,"h":29},
 	"sourceSize": {"w":48,"h":32}
 },
 "shipsWhite/starship_28.png":
 {
-	"frame": {"x":94,"y":51,"w":40,"h":31},
+	"frame": {"x":220,"y":412,"w":40,"h":31},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":4,"y":0,"w":40,"h":31},
@@ -258,15 +266,15 @@
 },
 "shipsWhite/starship_29.png":
 {
-	"frame": {"x":1,"y":535,"w":44,"h":48},
-	"rotated": true,
+	"frame": {"x":130,"y":428,"w":44,"h":48},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":0,"w":44,"h":48},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_30.png":
 {
-	"frame": {"x":66,"y":687,"w":44,"h":38},
+	"frame": {"x":193,"y":525,"w":44,"h":38},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":6,"w":44,"h":38},
@@ -274,7 +282,7 @@
 },
 "shipsWhite/starship_31.png":
 {
-	"frame": {"x":51,"y":549,"w":48,"h":27},
+	"frame": {"x":222,"y":241,"w":48,"h":27},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":2,"w":48,"h":27},
@@ -282,23 +290,23 @@
 },
 "shipsWhite/starship_32.png":
 {
-	"frame": {"x":49,"y":727,"w":42,"h":40},
-	"rotated": false,
+	"frame": {"x":134,"y":581,"w":42,"h":40},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":3,"w":42,"h":40},
 	"sourceSize": {"w":48,"h":48}
 },
 "shipsWhite/starship_33.png":
 {
-	"frame": {"x":1,"y":440,"w":62,"h":45},
-	"rotated": false,
+	"frame": {"x":45,"y":564,"w":62,"h":45},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":2,"w":62,"h":45},
 	"sourceSize": {"w":64,"h":48}
 },
 "shipsWhite/starship_34.png":
 {
-	"frame": {"x":1,"y":321,"w":80,"h":55},
+	"frame": {"x":130,"y":321,"w":80,"h":55},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":5,"w":80,"h":55},
@@ -306,21 +314,22 @@
 },
 "shipsWhite/starship_35.png":
 {
-	"frame": {"x":1,"y":378,"w":60,"h":76},
-	"rotated": true,
+	"frame": {"x":45,"y":486,"w":60,"h":76},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":3,"w":60,"h":76},
 	"sourceSize": {"w":64,"h":80}
 },
 "shipsWhite/starship_36.png":
 {
-	"frame": {"x":1,"y":239,"w":90,"h":80},
+	"frame": {"x":130,"y":239,"w":90,"h":80},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":0,"w":90,"h":80},
 	"sourceSize": {"w":96,"h":80}
 }},
 "animations": {
+	"capital_ship": ["capital_ship_01.png","capital_ship_05.png"],
 	"shipsWhite/starship": ["shipsWhite/starship_01.png","shipsWhite/starship_02.png","shipsWhite/starship_03.png","shipsWhite/starship_04.png","shipsWhite/starship_05.png","shipsWhite/starship_06.png","shipsWhite/starship_07.png","shipsWhite/starship_08.png","shipsWhite/starship_09.png","shipsWhite/starship_10.png","shipsWhite/starship_11.png","shipsWhite/starship_12.png","shipsWhite/starship_13.png","shipsWhite/starship_14.png","shipsWhite/starship_15.png","shipsWhite/starship_16.png","shipsWhite/starship_17.png","shipsWhite/starship_18.png","shipsWhite/starship_19.png","shipsWhite/starship_20.png","shipsWhite/starship_21.png","shipsWhite/starship_22.png","shipsWhite/starship_23.png","shipsWhite/starship_24.png","shipsWhite/starship_25.png","shipsWhite/starship_26.png","shipsWhite/starship_27.png","shipsWhite/starship_28.png","shipsWhite/starship_29.png","shipsWhite/starship_30.png","shipsWhite/starship_31.png","shipsWhite/starship_32.png","shipsWhite/starship_33.png","shipsWhite/starship_34.png","shipsWhite/starship_35.png","shipsWhite/starship_36.png"]
 },
 "meta": {
@@ -328,8 +337,8 @@
 	"version": "1.0",
 	"image": "entities.png",
 	"format": "RGBA8888",
-	"size": {"w":126,"h":847},
+	"size": {"w":256,"h":664},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:8bbab875246fd491d86f3958302e238a:4c27ea813960dca24270dc0e45c90dcc:d80676a5e85c5032e708efda4f84d8e3$"
+	"smartupdate": "$TexturePacker:SmartUpdate:55a4bdd8b68669d33357e14476afb73b:9baeaf2bc094cb57d6645dcaed3c492b:d80676a5e85c5032e708efda4f84d8e3$"
 }
 }

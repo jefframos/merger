@@ -108,40 +108,36 @@ export default class MergeSystem {
         this.levelUp(this.savedProgression.currentBoardLevel, true)
 
         for (const key in this.savedProgression.entities) {
-            if (Object.hasOwnProperty.call(this.savedProgression.entities, key)) {
-                const element = this.savedProgression.entities[key];
-                if (element) {
-                    let split = key.split(";")
-                    console.log(element, split[0], split[1])
+            const element = this.savedProgression.entities[key];
+            if (element) {
+                let split = key.split(";")
+                console.log(element, split[0], split[1])
 
-                    let found = this.findEntityByID(element.nameID)
-                    if (found) {
+                let found = this.findEntityByID(element.nameID)
+                if (found) {
 
-                        this.virtualSlots[split[0]][split[1]].addEntity(found)
-                    }
+                    this.virtualSlots[split[0]][split[1]].addEntity(found)
                 }
             }
         }
 
         for (const key in this.savedProgression.dataProgression) {
-            if (Object.hasOwnProperty.call(this.savedProgression.dataProgression, key)) {
-                const element = this.savedProgression.dataProgression[key];
-                if (element) {
-                    
-                    let found = this.findEntityByID(key)
-                    if (found) {                        
-                        found.setLevel(element.currentLevel)
-                    }
+            const element = this.savedProgression.dataProgression[key];
+            if (element) {
+
+                let found = this.findEntityByID(key)
+                if (found) {
+                    found.setLevel(element.currentLevel)
                 }
             }
         }
 
         this.updateAllData();
     }
-    findUpgrade(item){
+    findUpgrade(item) {
 
         this.dps = utils.findDPS(this.slots);
-    }    
+    }
     findEntityByID(id) {
         for (let index = 0; index < this.dataTiles.length; index++) {
             const element = this.dataTiles[index];
@@ -258,14 +254,14 @@ export default class MergeSystem {
                     if (this.enemySystem) {
                         slot.lookAt(this.enemySystem.getEnemy());
                     }
-                    slot.update(delta, this.timestamp);
+                    slot.update(delta, this.timestamp, this.enemySystem.isAlive());
                 }
             }
         }
 
         this.updateBottomPosition();
     }
-    addSlot(i, j, type) {
+    addSlot(i, j) {
         let slot = new MergeTile(i, j, this.slotSize.width, 'coin');
         this.slots[i][j] = slot;
 

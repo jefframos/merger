@@ -5,15 +5,15 @@ import config from '../../config';
 import utils from '../../utils';
 
 export default class UIButton1 extends PIXI.Container {
-	constructor(color, icon, iconColor =0xFFFFFF, width = 40) {
+	constructor(color, icon, iconColor = 0xFFFFFF, width = 40, height = 40) {
 		super();
 
 		this.mainContainer = new PIXI.Container();
 		//this.backShape = PIXI.Sprite.fromImage('./assets/images/rect.png');
-		if(!icon){
+		if (!icon) {
 			this.icon = new PIXI.Sprite();
 
-		}else{
+		} else {
 
 			this.icon = PIXI.Sprite.fromFrame(icon);
 		}
@@ -30,16 +30,16 @@ export default class UIButton1 extends PIXI.Container {
 		this.backShapeBorder = new PIXI.mesh.NineSlicePlane(
 			PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15)
 		this.backShapeBorder.width = width + this.padding
-		this.backShapeBorder.height = width + this.padding
-		this.backShapeBorder.pivot.set((width + this.padding) / 2)
+		this.backShapeBorder.height = height + this.padding
+		this.backShapeBorder.pivot.set((width + this.padding) / 2, (height + this.padding) / 2)
 		this.backShapeBorder.tint = iconColor;
 
 		//this.backShape = PIXI.Sprite.fromFrame('largeCard.png')
 		this.backShape = new PIXI.mesh.NineSlicePlane(
 			PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15)
 		this.backShape.width = width
-		this.backShape.height = width
-		this.backShape.pivot.set(width / 2)
+		this.backShape.height = height
+		this.backShape.pivot.set(width / 2, height / 2)
 		//this.backShape.scale.set(width / this.backShape.width);
 		//this.backShape.anchor.set(0.5)
 		this.backShape.tint = color;
@@ -48,7 +48,7 @@ export default class UIButton1 extends PIXI.Container {
 
 		this.icon.anchor.set(0.5);
 
-		this.icon.scale.set(this.backShape.height / Math.max(this.icon.height,this.icon.width) * 0.7)
+		this.updateIconScale();
 		this.mainContainer.addChild(this.backShapeBorder);
 		this.mainContainer.addChild(this.backShape);
 		this.mainContainer.addChild(this.icon);
@@ -60,12 +60,12 @@ export default class UIButton1 extends PIXI.Container {
 		this.interactive = true;
 		this.buttonMode = true;
 	}
-	addFrontShape(){
+	addFrontShape() {
 		this.backShape.y = -10
 		this.backShapeBorder.y = 5
 	}
-	resize(width, height){
-		if(!width || !height){
+	resize(width, height) {
+		if (!width || !height) {
 			return
 		}
 		this.backShapeBorder.width = width + this.padding
@@ -76,7 +76,15 @@ export default class UIButton1 extends PIXI.Container {
 		this.backShape.height = height
 		this.backShape.pivot.set(width / 2)
 
-		this.icon.scale.set(this.backShape.height / Math.max(this.icon.height,this.icon.width) * 0.7 * this.icon.scale.x)
+
+		this.updateIconScale();
+	}
+	updateIconScale(scale = 0.7) {
+
+		utils.resizeToFitAR({
+			width: this.backShape.width * scale,
+			height: this.backShape.height * scale
+		}, this.icon)
 
 	}
 	updateRotation(rot, invertIcon = false) {
@@ -102,19 +110,19 @@ export default class UIButton1 extends PIXI.Container {
 			this.buttonLabel.style.fill = color;
 		}
 	}
-	replaceIcon(icon){
-		if(this.icon && this.icon.parent){
+	replaceIcon(icon) {
+		if (this.icon && this.icon.parent) {
 			this.icon.parent.removeChild(this.icon);
 		}
-		this.icon = icon;		
+		this.icon = icon;
 		this.mainContainer.addChild(this.icon);
 
 	}
-	updateMenuColors(textColor, backgroundColor){
+	updateMenuColors(textColor, backgroundColor) {
 		this.backShapeBorder.tint = backgroundColor;
 		this.icon.tint = backgroundColor;
 
-		if(this.backLabelLeft){
+		if (this.backLabelLeft) {
 			this.backLabelLeft.tint = backgroundColor;
 		}
 
@@ -156,11 +164,11 @@ export default class UIButton1 extends PIXI.Container {
 		this.backLabelLeft.height = this.backShape.height;
 		this.backLabelLeft.x = - this.backLabelLeft.width - this.backShape.width / 2
 		this.backLabelLeft.y = -this.backLabelLeft.height / 2// - this.backShape.height / 2
-		this.addChildAt(this.backLabelLeft,0);
+		this.addChildAt(this.backLabelLeft, 0);
 		this.addChild(this.buttonLabel);
 	}
 	updateTexture(texture) {
 		this.icon.texture = PIXI.Texture.fromFrame(texture);
-		this.icon.scale.set(this.backShape.height / Math.max(this.icon.height,this.icon.width) * 0.7 * this.icon.scale.x);
+		this.updateIconScale();
 	}
 }

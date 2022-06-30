@@ -43,6 +43,6 @@ export default class MergeItemsShop extends EntityShop {
             }
             
         }
-        
+        this.currentItens[0].unlockItem();        
     }
 }

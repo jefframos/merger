@@ -4,7 +4,9 @@ export default class StandardEnemy extends PIXI.Container {
     constructor() {
         super();
 
-        this.enemySprite = new PIXI.Sprite.from('capital_ship_05');
+        this.bossSpriteSrc = 'capital_ship_01'
+        this.enemySpriteSrc = 'capital_ship_05'
+        this.enemySprite = new PIXI.Sprite.from(this.enemySpriteSrc);
         this.addChild(this.enemySprite);
         this.enemySprite.anchor.set(0.5)
 
@@ -22,5 +24,11 @@ export default class StandardEnemy extends PIXI.Container {
         this.sin += delta;
         this.sin %= Math.PI * 2;
         this.updatePosition();
+    }
+    setAsBoss(){
+        this.enemySprite.texture = PIXI.Texture.fromFrame(this.bossSpriteSrc);
+    }
+    setAsEnemy(){
+        this.enemySprite.texture = PIXI.Texture.fromFrame(this.enemySpriteSrc);
     }
 }

@@ -153,6 +153,7 @@ export default class MergeScreen extends Screen {
 
         this.enemiesSystem.onParticles.add(this.addParticles.bind(this));
         this.enemiesSystem.onPopLabel.add(this.popLabel.bind(this));
+        this.enemiesSystem.onGetResources.add(this.addResourceParticles.bind(this));
 
         this.mergeSystem1.addSystem(this.enemiesSystem);
         this.mergeSystem1.addSystem(this.resourceSystem);
