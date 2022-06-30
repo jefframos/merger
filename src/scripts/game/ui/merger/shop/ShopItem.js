@@ -100,6 +100,7 @@ export default class ShopItem extends UIList {
         this.lockStateContainer.interactive = true;
         this.currentColor = 0;
         this.realCost = 0
+        this.previewValue = 1;
         this.unlockItem();
     }
     lockItem() {
@@ -118,7 +119,7 @@ export default class ShopItem extends UIList {
         if (window.gameEconomy.hasEnoughtResources(this.realCost)) {
 
             window.gameEconomy.useResources(this.realCost)
-            this.onConfirmShop.dispatch(this.itemData, this.realCost, this.shopButton);
+            this.onConfirmShop.dispatch(this.itemData, this.realCost, this.shopButton, this.previewValue);
 
             this.updateData();
         }
@@ -206,9 +207,14 @@ export default class ShopItem extends UIList {
             this.changeBgColor()
         }
     }
-
+    updatePreviewValue(value) {
+        this.previewValue = value;
+        let max = this.itemData.rawData.levelMax - this.itemData.currentLevel;
+        this.previewValue = Math.min(this.previewValue, max)
+        this.updateData()
+    }
     updateData() {
-        let next = 1
+        let next = this.previewValue
         //this.attributesList['cost'].text = utils.formatPointsLabel(this.itemData.getRPS())+'/s'
         this.realCost = this.itemData.getUpgradeCost(next);
 
@@ -222,7 +228,7 @@ export default class ShopItem extends UIList {
         this.attributesList['cost'].text = utils.formatPointsLabel(currentRPS) + '/s'
         //this.attributesList['value'].text = utils.formatPointsLabel(Math.ceil(nextRPS - currentRPS)) + '/s'
         this.attributesList['value'].text = utils.formatPointsLabel(nextRPS - currentRPS) + '/s'
-//console.log(nextRPS - currentRPS)
+        //console.log(nextRPS - currentRPS)
         this.shopButton.updateCoast(utils.formatPointsLabel(this.itemData.getUpgradeCost(next)))
 
         this.levelLabel.text = 'Level\n' + this.itemData.currentLevel

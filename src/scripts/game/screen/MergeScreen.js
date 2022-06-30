@@ -16,6 +16,7 @@ import GameEconomy from '../ui/merger/GameEconomy';
 import MergeItemsShop from '../ui/merger/shop/MergeItemsShop';
 import StartPopUp from './popup/StartPopUp';
 import StandardPop from './popup/StandardPop';
+import GeneralShop from '../ui/merger/shop/GeneralShop';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
@@ -212,27 +213,41 @@ export default class MergeScreen extends Screen {
             COOKIE_MANAGER.wipeData()
         })
 
+
+        this.openSettingsShop = new UIButton1(0x002299, 'icon_shop')
+        this.container.addChild(this.openSettingsShop)
+        this.openSettingsShop.x = config.width - 45
+        this.openSettingsShop.y = config.height - 80
+        this.openSettingsShop.onClick.add(() => {
+            this.openPopUp(this.generalShop)
+        })
+
         this.openShop = new UIButton1(0x002299, 'drill')
         this.container.addChild(this.openShop)
         this.openShop.x = config.width - 45
-        this.openShop.y = config.height - 120
+        this.openShop.y = config.height - 150
         this.openShop.onClick.add(() => {
-            this.entityShop.show()
+            this.openPopUp(this.entityShop)
         })
 
         this.openMergeShop = new UIButton1(0x002299, 'starship_01')
         this.container.addChild(this.openMergeShop)
         this.openMergeShop.x = config.width - 45
-        this.openMergeShop.y = config.height - 190
+        this.openMergeShop.y = config.height - 220
         this.openMergeShop.onClick.add(() => {
-            this.mergeItemsShop.show()
+            this.openPopUp(this.mergeItemsShop)
         })
 
+
+
         window.TIME_SCALE = 1
+
+        this.uiPanels = []
 
         this.entityShop = new EntityShop([this.resourceSystem, this.resourceSystemRight]);
         this.uiLayer.addChild(this.entityShop);
         this.entityShop.hide();
+
 
         this.entityShop.addItems(this.allRawResources)
 
@@ -241,9 +256,17 @@ export default class MergeScreen extends Screen {
         this.mergeItemsShop.addItems(this.rawMergeDataList)
         this.mergeItemsShop.hide();
 
+        this.generalShop = new GeneralShop()
+        this.uiLayer.addChild(this.generalShop);
+        this.generalShop.hide();
 
-        this.testPopUp = new StandardPop('any', this.screenManager)
-        this.uiLayer.addChild(this.testPopUp)
+        this.standardPopUp = new StandardPop('any', this.screenManager)
+        this.uiLayer.addChild(this.standardPopUp)
+
+        this.uiPanels.push(this.entityShop)
+        this.uiPanels.push(this.mergeItemsShop)
+        this.uiPanels.push(this.generalShop)
+        this.uiPanels.push(this.standardPopUp)
 
         window.gameEconomy = new GameEconomy()
 
@@ -262,10 +285,9 @@ export default class MergeScreen extends Screen {
 
         let now = Date.now() / 1000 | 0
         let diff = now - this.savedEconomy.lastChanged
-        console.log(diff, this.sumStart)
         if (diff > 10 && this.sumStart > 10) {
             let params = {
-                label: 'your ships\ncollected\n' + utils.formatPointsLabel(this.sumStart)+'\n\nWould you like to watch\na video and double?',
+                label: 'your ships\ncollected\n' + utils.formatPointsLabel(this.sumStart) + '\n\nWould you like to watch\na video and double?',
                 onConfirm: this.collectStartAmountDouble.bind(this),
                 onCancel: this.collectStartAmount.bind(this)
             }
@@ -283,7 +305,18 @@ export default class MergeScreen extends Screen {
         this.resourceSystemRight.collectStartAmount()
     }
     standardPopUpShow(params) {
-        this.testPopUp.show(params)
+        //this.standardPopUp.show(params)
+        this.openPopUp(this.standardPopUp, params)
+    }
+    openPopUp(target, params) {
+        this.uiPanels.forEach(element => {
+            if (element.visible) {
+                element.hide();
+            }
+        });
+
+        console.log('show', params)
+        target.show(params)
     }
     popLabel(targetPosition, label) {
         let toLocal = this.particleSystem.toLocal(targetPosition)
@@ -366,19 +399,23 @@ export default class MergeScreen extends Screen {
         this.resourcesWrapperRight.x = this.gridWrapper.x + this.gridWrapper.width;
         this.resourcesWrapperRight.y = this.gridWrapper.y;
 
-        this.dpsLabel.y = config.height - 70
+        this.dpsLabel.y = config.height - 80
         this.rpsLabel.y = config.height - 50
-        this.resourcesLabel.x = config.width - this.resourcesLabel.width;
-        this.resourcesLabel.y = config.height - 50
+        this.resourcesLabel.x = 25;
+        this.resourcesLabel.y = config.height - 110
 
         this.enemiesContainer.x = config.width / 2;
         this.enemiesContainer.y = config.height * this.areaConfig.topArea * 0.5;
 
-        this.entityShop.x = config.width / 2 - this.entityShop.width / 2
-        this.entityShop.y = config.height / 2 - this.entityShop.height / 2
+        this.uiPanels.forEach(element => {
+            element.x = config.width / 2 - element.width / 2
+            element.y = config.height / 2 - element.height / 2
+        });
+        // this.entityShop.x = config.width / 2 - this.entityShop.width / 2
+        // this.entityShop.y = config.height / 2 - this.entityShop.height / 2
 
-        this.mergeItemsShop.x = config.width / 2 - this.mergeItemsShop.width / 2
-        this.mergeItemsShop.y = config.height / 2 - this.mergeItemsShop.height / 2
+        // this.mergeItemsShop.x = config.width / 2 - this.mergeItemsShop.width / 2
+        // this.mergeItemsShop.y = config.height / 2 - this.mergeItemsShop.height / 2
     }
 
     transitionOut(nextScreen) {

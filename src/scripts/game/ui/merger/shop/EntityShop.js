@@ -4,6 +4,7 @@ import config from '../../../../config';
 import UIButton1 from '../../UIButton1';
 import ShopItem from './ShopItem';
 import ShopList from './ShopList';
+import UpgradesToggles from './UpgradesToggles';
 
 export default class EntityShop extends PIXI.Container {
     constructor(mainSystem, size, border = 0) {
@@ -15,18 +16,24 @@ export default class EntityShop extends PIXI.Container {
         }
 
         this.backContainer = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('button-2'), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame('button-1'), 10, 10, 10, 10)
         this.backContainer.width = this.size.w
         this.backContainer.height = this.size.h
+        this.backContainer.tint = 0x529898
         this.addChild(this.backContainer);
 
+
+        this.toggles = new UpgradesToggles({ w: this.size.w * 0.8, h: this.size.h * 0.1 })
+        this.addChild(this.toggles);
         this.shopList = new ShopList({ w: this.size.w, h: this.size.h * 0.8 })
         this.shopList.y = 100
         this.addChild(this.shopList);
 
+        this.toggles.onUpdateValue.add(this.updateToggleValue.bind(this))
+
         this.shopList.onItemShop.add(this.confirmItemShop.bind(this))
 
-        this.openShop = new UIButton1(0xFFFFFF, 'icon-close', 0)
+        this.openShop = new UIButton1(0, 'icon-close', 0xFFffff)
         this.addChild(this.openShop)
         this.openShop.x = this.size.w - this.openShop.width
         this.openShop.y = this.openShop.height
@@ -40,6 +47,11 @@ export default class EntityShop extends PIXI.Container {
     }
     hide() {
         this.visible = false;
+    }
+    updateToggleValue() {
+        this.currentItens.forEach(element => {
+            element.updatePreviewValue(this.toggles.currentActiveValue)
+        });
     }
     show() {
         this.visible = true;
@@ -63,9 +75,9 @@ export default class EntityShop extends PIXI.Container {
         });
 
     }
-    confirmItemShop(item) {
+    confirmItemShop(item,button,totalUpgrades) {
 
-
+        console.log(totalUpgrades)
         this.mainSystem.forEach(resourceSystem => {
             resourceSystem.findUpgrade(item)
         });

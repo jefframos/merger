@@ -22,12 +22,12 @@ export default class ProgressBar extends PIXI.Container {
 
         
         this.loadingBar = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame('progressbar_frame'), 6, 6, 6, 6)
         this.loadingBar.width = this.sizeWidth
         this.loadingBar.height = this.sizeHeight
         
         this.loadingBarFillBack = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame('progressbar_bar'), 2.5, 2.5, 2.5, 2.5)
         this.loadingBarFillBack.width = this.sizeWidth- this.round / 2
         this.loadingBarFillBack.height = this.sizeHeight- this.round / 2
         this.loadingBarFillBack.tint = 0;
@@ -37,7 +37,7 @@ export default class ProgressBar extends PIXI.Container {
         this.loadingBarFillBack.cacheAsBitmap = true;
 
         this.loadingBarFill = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame('progressbar_bar'), 2.5, 2.5, 2.5, 2.5)
         this.loadingBarFill.width = 0
         this.loadingBarFill.height = this.sizeHeight- this.round / 2
         this.loadingBarFill.tint = 0xFF0011;
@@ -99,7 +99,7 @@ export default class ProgressBar extends PIXI.Container {
        
         this.loadingBarFill.visible = true;
         value = Math.max(value, 0);
-        this.loadingBarFill.visible = value > 0.075
+        //this.loadingBarFill.visible = value > 0.075
         this.currentValue = value;
         this.loadingBarFill.tint = color;
         this.loadingBarFill.width =  (this.sizeWidth - this.round / 2) * value;

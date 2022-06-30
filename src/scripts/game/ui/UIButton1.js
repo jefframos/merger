@@ -8,6 +8,9 @@ export default class UIButton1 extends PIXI.Container {
 	constructor(color, icon, iconColor = 0xFFFFFF, width = 50, height = 50) {
 		super();
 
+		this.w = width;
+		this.h = height;
+
 		this.mainContainer = new PIXI.Container();
 		//this.backShape = PIXI.Sprite.fromImage('./assets/images/rect.png');
 		if (!icon) {
@@ -59,6 +62,21 @@ export default class UIButton1 extends PIXI.Container {
 		this.on('touchstart', this.click.bind(this));
 		this.interactive = true;
 		this.buttonMode = true;
+	}
+	changePivot(x, y) {
+		this.backShapeBorder.pivot.set((this.w * x + this.padding) / 2, (this.h * y + this.padding) / 2)
+		this.backShape.pivot.set(this.w * x / 2, this.h * y / 2)
+
+		this.icon.x = this.w * x + this.w / 2
+		this.icon.y = this.h * y + this.h / 2
+	}
+	disableState(color) {
+		this.icon.alpha = 0.5
+		this.backShape.tint = color;
+	}
+	enableState(color) {
+		this.icon.alpha = 1
+		this.backShape.tint = color;
 	}
 	addFrontShape() {
 		this.backShape.y = -10

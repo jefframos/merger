@@ -21,12 +21,11 @@ export default class EnemySystem {
         this.enemyProgressionView = new EnemyProgressionView(this);
         this.container.addChild(this.enemyProgressionView);
 
-
         //color, icon, iconColor =0xFFFFFF, width = 40, height = 40
 
         this.invokeBossBattle = new UIButton1(0xff2299, 'capital_ship_01', 0xFFFFFF, 80, 50)
         this.container.addChild(this.invokeBossBattle)
-        this.invokeBossBattle.x = config.width / 2 - 45
+        this.invokeBossBattle.x = config.width / 2 - 70
         this.invokeBossBattle.y = 50
         this.invokeBossBattle.onClick.add(() => {
             this.invokeBoss()

@@ -75,6 +75,7 @@ export default class StandardPop extends PIXI.Container
     }
     show(param)
     {
+        this.isShowing = true;
         this.container.visible = true;
 
         this.toRemove = false;
@@ -97,6 +98,11 @@ export default class StandardPop extends PIXI.Container
     }
     hide(dispatch = true, callback = null)
     {
+        if(!this.isShowing){
+            return;
+        }
+        this.isShowing = false;
+
         TweenLite.to(this.container, 0.25, {alpha:0});
         TweenLite.to(this.popUp.scale, 0.25,
         {
