@@ -5,7 +5,7 @@ import config from '../../config';
 import utils from '../../utils';
 
 export default class UIButton1 extends PIXI.Container {
-	constructor(color, icon, iconColor = 0xFFFFFF, width = 40, height = 40) {
+	constructor(color, icon, iconColor = 0xFFFFFF, width = 50, height = 50) {
 		super();
 
 		this.mainContainer = new PIXI.Container();

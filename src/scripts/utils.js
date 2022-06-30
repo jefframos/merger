@@ -248,15 +248,27 @@ export default
             let temp = ''
             let temp2 = ''
 
-            tempPoints = Math.round(tempPoints)// * MAX_NUMBER);
-
+            
             //console.log(tempPoints)
-
-            if (tempPoints < 1) {
-                if (tempPoints.toString().length < 3) {
+            
+            if (tempPoints < 1000) {
+                if (tempPoints.toString().length < 2) {
+                    //console.log("TO FIX", tempPoints)
                     tempPoints = tempPoints.toFixed(2)
+                }else{
+                    tempPoints = tempPoints.toFixed(1)
+
                 }
+                return tempPoints
             }
+            if (tempPoints < 100) {
+                // if (tempPoints.toString().length < 3) {
+                //     console.log("TO FIX", tempPoints)
+                // }
+                tempPoints = tempPoints.toFixed(2)
+                return tempPoints
+            }
+            tempPoints = Math.round(tempPoints)// * MAX_NUMBER);
             if (tempPoints < 1000) {
                 tempPoints = this.cleanString(tempPoints)
                 return tempPoints

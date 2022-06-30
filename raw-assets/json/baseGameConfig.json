@@ -25,11 +25,12 @@
         "slotSize":{
             "width": 150,
             "height": 150,
-            "distance":10
+            "distance":10,
+            "distanceResources":20
         },
         "area":{
-            "bottomArea": 0.2,
-            "topArea": 0.2,
+            "bottomArea": 0.25,
+            "topArea": 0.15,
             "gameArea": {"w":0.7, "h":0.6},
             "resourcesArea": {"w":0.15, "h":0.6},
             "perspective": 0.3

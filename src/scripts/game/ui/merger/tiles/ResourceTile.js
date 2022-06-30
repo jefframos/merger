@@ -16,10 +16,31 @@ export default class ResourceTile extends MergeTile {
         this.resourceSource.y = size / 2
         this.resourceSource.visible = false;
 
+
+
+        this.resourceReadyToCollectSprite = new PIXI.Sprite.fromFrame('shine')
+        this.container.addChildAt(this.resourceReadyToCollectSprite, 0)
+        this.resourceReadyToCollectSprite.anchor.set(0.5)
+        this.resourceReadyToCollectSprite.x = size / 2
+        this.resourceReadyToCollectSprite.y = size / 2
+        this.resourceReadyToCollectSprite.visible = false;
+        this.resourceReadyToCollectSprite.scale.set(size / this.resourceReadyToCollectSprite.width)
+        this.resourceReadyToCollectSprite.tint = 0x0055ff
+
+
+
+        this.collectLabelContainer = new PIXI.Container()
+        this.container.addChild(this.collectLabelContainer)
+        
         this.readyLabel = new PIXI.Text('Ready', LABELS.LABEL1);
-        this.container.addChild(this.readyLabel)
-        this.readyLabel.x = this.backSlot.width / 2 - this.label.width / 2;
-        this.readyLabel.visible = false;
+        this.collectCoinIcon = new PIXI.Sprite.fromFrame('coin')
+        this.collectLabelContainer.addChild(this.collectCoinIcon)
+        
+        this.collectCoinIcon.scale.set(this.readyLabel.height /this.collectCoinIcon.height)
+        this.collectLabelContainer.addChild( this.readyLabel)
+        this.readyLabel.x = this.collectCoinIcon.width + 2
+        this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
+        this.collectLabelContainer.visible = false;
 
 
         this.priceLabel = new PIXI.Text('Ready', LABELS.LABEL1);
@@ -28,12 +49,26 @@ export default class ResourceTile extends MergeTile {
         this.priceLabel.visible = false;
 
 
+
+        this.costLabelContainer = new PIXI.mesh.NineSlicePlane(
+            PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10)
+        this.costLabelContainer.width = 100
+        this.costLabelContainer.height = 30 
+        this.container.addChild(this.costLabelContainer)
+
         this.initialCostLabel = new PIXI.Text('Ready', LABELS.LABEL1);
-        this.container.addChild(this.initialCostLabel)
+        this.costLabelContainer.addChild(this.initialCostLabel)
         this.initialCostLabel.style.stroke = 0
         this.initialCostLabel.style.strokeThickness = 6
-        this.initialCostLabel.x = this.backSlot.width / 2 - this.initialCostLabel.width / 2;
-        this.initialCostLabel.y = this.backSlot.height / 2 - this.initialCostLabel.height / 2;
+
+
+        this.costLabelContainer.x = this.backSlot.width / 2 - this.costLabelContainer.width / 2;
+        this.costLabelContainer.y = this.backSlot.height - this.costLabelContainer.height;
+
+        this.exclamationMark = new PIXI.Sprite.fromFrame('new_item')
+        this.costLabelContainer.addChild(this.exclamationMark)
+        this.exclamationMark.anchor.set(0.5)
+
         //this.initialCostLabel.visible = false;
 
         this.label.visible = false
@@ -56,12 +91,14 @@ export default class ResourceTile extends MergeTile {
         super.update(delta, timestamp);
         
         //console.log(this.generateResource ,this.generateResourceTime)
-        this.readyLabel.visible = this.readyToCollect
+        this.collectLabelContainer.visible = this.readyToCollect
+        this.resourceReadyToCollectSprite.visible = this.readyToCollect
+        this.resourceReadyToCollectSprite.rotation += delta;
         if (this.tileData) {
             this.sin += delta * 20
             this.levelBar.visible = true;
             this.levelBar.updatePowerBar(this.generateResourceNormal, 0, true);
-            this.initialCostLabel.visible = false;
+            this.costLabelContainer.visible = false;
             if (this.particleCounter <= 0) {
                 this.onShowParticles.dispatch(this)
                 this.particleCounter = 1
@@ -70,7 +107,10 @@ export default class ResourceTile extends MergeTile {
             }
         } else {
             this.levelBar.visible = false;
-            this.initialCostLabel.visible = true;
+            this.costLabelContainer.visible = true;
+
+            this.exclamationMark.visible = window.gameEconomy.currentResources >= this.targetData.rawData.initialCost
+
             this.sin += delta
             this.updateResourcePosition();
         }
@@ -93,8 +133,8 @@ export default class ResourceTile extends MergeTile {
     }
     updatePriceLabel(value) {
         this.initialCostLabel.text = value
-        this.initialCostLabel.x = this.backSlot.width / 2 - this.initialCostLabel.width / 2;
-        this.initialCostLabel.y = this.backSlot.height - this.initialCostLabel.height * 2;
+        this.initialCostLabel.x =  this.costLabelContainer.width / 2 - this.initialCostLabel.width / 2;
+        this.initialCostLabel.y = this.costLabelContainer.height / 2 - this.initialCostLabel.height / 2 - 1;
     }
     addEntity(tile) {
         super.addEntity(tile);
@@ -179,7 +219,7 @@ export default class ResourceTile extends MergeTile {
         }
 
         this.readyLabel.text = utils.formatPointsLabel(this.currentCollect)
-        this.readyLabel.x = this.backSlot.width - this.readyLabel.width;
+        this.collectLabelContainer.x = this.backSlot.width/2 - this.collectLabelContainer.width / 2;
         //this.onGenerateResource.dispatch(this, this.tileData);
     }
     collectResources() {

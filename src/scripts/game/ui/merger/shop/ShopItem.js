@@ -218,9 +218,11 @@ export default class ShopItem extends UIList {
             currentRPS = this.itemData.getDPS()
             nextRPS = this.itemData.getDPS(next)
         }
-        this.attributesList['cost'].text = utils.formatPointsLabel(currentRPS) + '/s'
-        this.attributesList['value'].text = utils.formatPointsLabel(Math.ceil(nextRPS - currentRPS)) + '/s'
 
+        this.attributesList['cost'].text = utils.formatPointsLabel(currentRPS) + '/s'
+        //this.attributesList['value'].text = utils.formatPointsLabel(Math.ceil(nextRPS - currentRPS)) + '/s'
+        this.attributesList['value'].text = utils.formatPointsLabel(nextRPS - currentRPS) + '/s'
+//console.log(nextRPS - currentRPS)
         this.shopButton.updateCoast(utils.formatPointsLabel(this.itemData.getUpgradeCost(next)))
 
         this.levelLabel.text = 'Level\n' + this.itemData.currentLevel

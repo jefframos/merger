@@ -178,11 +178,11 @@ export default class ResourceSystem {
         utils.resizeToFitARCap(this.wrapper, this.container, this.fixedSize)
 
         this.container.x = this.wrapper.x//this.wrapper.x + this.wrapper.width / 2 - (this.fixedSize.width * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.x;;
-        this.container.y = this.wrapper.y + this.wrapper.height / 2 - (this.fixedSize.height * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.y;
+        this.container.y = this.wrapper.y + this.wrapper.height / 2 - (this.fixedSize.height * this.container.scale.x) / 2 + this.slotSize.distanceResources * this.container.scale.y;
 
         for (let index = this.resourceSlots.length - 1; index >= 0; index--) {
             const element = this.resourceSlots[this.resourceSlots.length - 1 - index];
-            element.y = (this.slotSize.height + this.slotSize.distance) * index
+            element.y = (this.slotSize.height + this.slotSize.distanceResources) * index
         }
 
     }

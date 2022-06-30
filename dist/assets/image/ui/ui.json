@@ -162,7 +162,7 @@
 },
 "icon_increase.png":
 {
-	"frame": {"x":2009,"y":1,"w":29,"h":29},
+	"frame": {"x":2009,"y":33,"w":29,"h":29},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":29,"h":29},
@@ -199,6 +199,14 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":97,"h":101},
 	"sourceSize": {"w":97,"h":101}
+},
+"new_item.png":
+{
+	"frame": {"x":2009,"y":1,"w":29,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":29,"h":30},
+	"sourceSize": {"w":29,"h":30}
 },
 "panel-1.png":
 {
@@ -258,7 +266,7 @@
 },
 "progressBarSmallOld.png":
 {
-	"frame": {"x":2009,"y":32,"w":20,"h":20},
+	"frame": {"x":2009,"y":64,"w":20,"h":20},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":20},
@@ -280,14 +288,6 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":17,"h":24},
 	"sourceSize": {"w":17,"h":24}
 },
-"results_newcat_rays_01.png":
-{
-	"frame": {"x":1608,"y":1724,"w":87,"h":82},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":87,"h":82},
-	"sourceSize": {"w":87,"h":82}
-},
 "results_newcat_rays_02.png":
 {
 	"frame": {"x":1341,"y":1743,"w":69,"h":73},
@@ -295,6 +295,14 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":73},
 	"sourceSize": {"w":69,"h":73}
+},
+"shine.png":
+{
+	"frame": {"x":1608,"y":1724,"w":87,"h":82},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":87,"h":82},
+	"sourceSize": {"w":87,"h":82}
 },
 "smallButton.png":
 {
@@ -346,7 +354,6 @@
 }},
 "animations": {
 	"button": ["button-1.png","button-2.png","button-3.png"],
-	"results_newcat_rays": ["results_newcat_rays_01.png","results_newcat_rays_02.png"],
 	"treasure_chest": ["treasure_chest_01.png","treasure_chest_02.png","treasure_chest_03.png"]
 },
 "meta": {
@@ -356,6 +363,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2039,"h":1822},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:3b1c851301a46033d1ff99aac27521c3:4a0ea74485fb2ef7d13ad1fadb3a3027:5b04aa198265472a3c5f56958d78e97b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:0eb3a16af40e20d20f14f8830d171d0c:1b70f774c5d2dd452cc94070da03e147:5b04aa198265472a3c5f56958d78e97b$"
 }
 }

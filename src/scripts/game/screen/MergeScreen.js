@@ -193,7 +193,7 @@ export default class MergeScreen extends Screen {
         this.speedUpToggle = new UIButton1(0x002299, 'fast_forward_icon')
         this.container.addChild(this.speedUpToggle)
         this.speedUpToggle.x = 50
-        this.speedUpToggle.y = 30
+        this.speedUpToggle.y = 50
         this.speedUpToggle.onClick.add(() => {
             if (window.TIME_SCALE > 1) {
                 window.TIME_SCALE = 1
@@ -206,8 +206,8 @@ export default class MergeScreen extends Screen {
 
         this.clearData = new UIButton1(0x002299, 'icon_reset')
         this.container.addChild(this.clearData)
-        this.clearData.x = 110
-        this.clearData.y = 30
+        this.clearData.x = 130
+        this.clearData.y = 50
         this.clearData.onClick.add(() => {
             COOKIE_MANAGER.wipeData()
         })

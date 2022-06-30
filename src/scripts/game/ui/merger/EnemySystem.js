@@ -24,15 +24,15 @@ export default class EnemySystem {
 
         //color, icon, iconColor =0xFFFFFF, width = 40, height = 40
 
-        this.invokeBossBattle = new UIButton1(0xff2299, 'capital_ship_01', 0xFFFFFF, 80, 40)
+        this.invokeBossBattle = new UIButton1(0xff2299, 'capital_ship_01', 0xFFFFFF, 80, 50)
         this.container.addChild(this.invokeBossBattle)
         this.invokeBossBattle.x = config.width / 2 - 45
-        this.invokeBossBattle.y = 0
+        this.invokeBossBattle.y = 50
         this.invokeBossBattle.onClick.add(() => {
             this.invokeBoss()
         })
 
-        this.enemyProgressionView.y = - 70
+        this.enemyProgressionView.y = - 35
 
         this.enemyStartLife = 10;
         this.enemyLife = 10;
@@ -40,18 +40,18 @@ export default class EnemySystem {
         this.lifeCoefficient = 1.13
         this.enemyLevel = 1;
         this.nextBoss = 10;
-        this.bossGap = 3;
+        this.bossGap = 10;
 
         this.enemyLifeBar = new ProgressBar({ width: 200, height: 18 });
         this.container.addChild(this.enemyLifeBar)
         this.enemyLifeBar.pivot.x = this.enemyLifeBar.width / 2
-        this.enemyLifeBar.y = -35
+        this.enemyLifeBar.y = -5
 
 
         this.bossBattleTimer = new ProgressBar({ width: 200, height: 10 });
         this.container.addChild(this.bossBattleTimer)
         this.bossBattleTimer.pivot.x = this.bossBattleTimer.width / 2
-        this.bossBattleTimer.y = -15
+        this.bossBattleTimer.y = 15
 
         this.bossTimerLabel = new PIXI.Text('', LABELS.LABEL1);
         this.bossTimerLabel.style.fontSize = 12
