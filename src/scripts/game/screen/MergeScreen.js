@@ -21,10 +21,13 @@ export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
 
+        
+        
         window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
         window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
         window.baseResources = PIXI.loader.resources[window.baseConfigGame.resourcesData].data;
-        console.log(window.baseResources)
+        window.gameEconomy = new GameEconomy()
+        
         this.areaConfig = window.baseConfigGame.area;
         if (!this.areaConfig.bottomArea) {
             this.areaConfig.bottomArea = 0.2
@@ -268,7 +271,6 @@ export default class MergeScreen extends Screen {
         this.uiPanels.push(this.generalShop)
         this.uiPanels.push(this.standardPopUp)
 
-        window.gameEconomy = new GameEconomy()
 
         this.sumStart = 0;
         this.savedResources = COOKIE_MANAGER.getResources();

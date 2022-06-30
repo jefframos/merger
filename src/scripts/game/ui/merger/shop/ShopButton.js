@@ -134,7 +134,7 @@ export default class ShopButton extends PIXI.Container
         this.deactived = true;
         this.sprite.visible = true;
         this.backButton.tint = 0xFFFFFF;
-        this.priceLabel.style.fill = 0xe5519b;
+        this.priceLabel.style.fill = 0x666666;
         this.backButton.alpha = 1;
     }
     enable()

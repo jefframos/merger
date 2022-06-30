@@ -28,13 +28,14 @@ export default class UpgradesToggles extends PIXI.Container {
 
         this.addChild(this.lockList);
 
-        this.values = [1, 10, 100]
+        this.values = [1, 10, 100, 500]
         this.toggles = []
         for (let index = 0; index < this.values.length; index++) {
             let toggle = new UIButton1(0, this.values[index]+'toggle', 0xFFffff)
             toggle.changePivot(0, 0)
             toggle.disableState(0x555555)
             toggle.value = this.values[index]
+            toggle.fitHeight = 0.8
             this.lockList.addElement(toggle)
             toggle.onClick.add(() => {
 

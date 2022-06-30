@@ -215,9 +215,10 @@ export default class ShopItem extends UIList {
     }
     updateData() {
         let next = this.previewValue
+
         //this.attributesList['cost'].text = utils.formatPointsLabel(this.itemData.getRPS())+'/s'
         this.realCost = this.itemData.getUpgradeCost(next);
-
+        
         let currentRPS = this.itemData.getRPS()
         let nextRPS = this.itemData.getRPS(next)
         if (this.itemData.type == 'damage') {
@@ -229,7 +230,13 @@ export default class ShopItem extends UIList {
         //this.attributesList['value'].text = utils.formatPointsLabel(Math.ceil(nextRPS - currentRPS)) + '/s'
         this.attributesList['value'].text = utils.formatPointsLabel(nextRPS - currentRPS) + '/s'
         //console.log(nextRPS - currentRPS)
-        this.shopButton.updateCoast(utils.formatPointsLabel(this.itemData.getUpgradeCost(next)))
+        this.shopButton.updateCoast(utils.formatPointsLabel(this.realCost))
+        
+        if(this.realCost <= window.gameEconomy.currentResources){            
+            this.shopButton.enable()
+        }else{            
+            this.shopButton.deactive()
+        }
 
         this.levelLabel.text = 'Level\n' + this.itemData.currentLevel
         // this.itemData = GAME_DATA.getUpdatedItem(this.itemData.dataType, this.itemData.id)

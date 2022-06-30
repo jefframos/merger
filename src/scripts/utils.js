@@ -291,7 +291,97 @@ export default
             //                     break
             //                     // return Math.floor(tempPoints)
             //                 }
-            //             }
+            // 
+            if (tempPoints >= 10000000000000000000000000000000000000000000000) {
+                tempPoints /= 10000000000000000000000000000000000000000000000;
+                temp = 'zz'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 1000000000000000000000000000000000000000000000) {
+                tempPoints /= 1000000000000000000000000000000000000000000000;
+                temp = 'yy'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 100000000000000000000000000000000000000000000) {
+                tempPoints /= 100000000000000000000000000000000000000000000;
+                temp = 'xx'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 10000000000000000000000000000000000000000000) {
+                tempPoints /= 10000000000000000000000000000000000000000000;
+                temp = 'vv'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 1000000000000000000000000000000000000000000) {
+                tempPoints /= 1000000000000000000000000000000000000000000;
+                temp = 'uu'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 100000000000000000000000000000000000000000) {
+                tempPoints /= 100000000000000000000000000000000000000000;
+                temp = 'tt'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 10000000000000000000000000000000000000000) {
+                tempPoints /= 10000000000000000000000000000000000000000;
+                temp = 'ss'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 1000000000000000000000000000000000000000) {
+                tempPoints /= 1000000000000000000000000000000000000000;
+                temp = 'rr'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 100000000000000000000000000000000000000) {
+                tempPoints /= 100000000000000000000000000000000000000;
+                temp = 'qq'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 10000000000000000000000000000000000000) {
+                tempPoints /= 10000000000000000000000000000000000000;
+                temp = 'pp'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 1000000000000000000000000000000000000) {
+                tempPoints /= 1000000000000000000000000000000000000;
+                temp = 'oo'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 100000000000000000000000000000000000) {
+                tempPoints /= 100000000000000000000000000000000000;
+                temp = 'nn'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 10000000000000000000000000000000000) {
+                tempPoints /= 10000000000000000000000000000000000;
+                temp = 'mm'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 1000000000000000000000000000000000) {
+                tempPoints /= 1000000000000000000000000000000000;
+                temp = 'll'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }
+            if (tempPoints >= 100000000000000000000000000000000) {
+                tempPoints /= 100000000000000000000000000000000;
+                temp = 'kk'
+                temp2 = Math.floor(tempPoints)
+                // return Math.floor(tempPoints)
+            }           
             if (tempPoints >= 10000000000000000000000000000000) {
                 tempPoints /= 10000000000000000000000000000000;
                 temp = 'jj'

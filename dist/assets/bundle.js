@@ -2666,7 +2666,97 @@ exports.default = (_resizeToFitMaxAR$res = {
         //                     break
         //                     // return Math.floor(tempPoints)
         //                 }
-        //             }
+        // 
+        if (tempPoints >= 10000000000000000000000000000000000000000000000) {
+            tempPoints /= 10000000000000000000000000000000000000000000000;
+            temp = 'zz';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 1000000000000000000000000000000000000000000000) {
+            tempPoints /= 1000000000000000000000000000000000000000000000;
+            temp = 'yy';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 100000000000000000000000000000000000000000000) {
+            tempPoints /= 100000000000000000000000000000000000000000000;
+            temp = 'xx';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 10000000000000000000000000000000000000000000) {
+            tempPoints /= 10000000000000000000000000000000000000000000;
+            temp = 'vv';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 1000000000000000000000000000000000000000000) {
+            tempPoints /= 1000000000000000000000000000000000000000000;
+            temp = 'uu';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 100000000000000000000000000000000000000000) {
+            tempPoints /= 100000000000000000000000000000000000000000;
+            temp = 'tt';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 10000000000000000000000000000000000000000) {
+            tempPoints /= 10000000000000000000000000000000000000000;
+            temp = 'ss';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 1000000000000000000000000000000000000000) {
+            tempPoints /= 1000000000000000000000000000000000000000;
+            temp = 'rr';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 100000000000000000000000000000000000000) {
+            tempPoints /= 100000000000000000000000000000000000000;
+            temp = 'qq';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 10000000000000000000000000000000000000) {
+            tempPoints /= 10000000000000000000000000000000000000;
+            temp = 'pp';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 1000000000000000000000000000000000000) {
+            tempPoints /= 1000000000000000000000000000000000000;
+            temp = 'oo';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 100000000000000000000000000000000000) {
+            tempPoints /= 100000000000000000000000000000000000;
+            temp = 'nn';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 10000000000000000000000000000000000) {
+            tempPoints /= 10000000000000000000000000000000000;
+            temp = 'mm';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 1000000000000000000000000000000000) {
+            tempPoints /= 1000000000000000000000000000000000;
+            temp = 'll';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
+        if (tempPoints >= 100000000000000000000000000000000) {
+            tempPoints /= 100000000000000000000000000000000;
+            temp = 'kk';
+            temp2 = Math.floor(tempPoints);
+            // return Math.floor(tempPoints)
+        }
         if (tempPoints >= 10000000000000000000000000000000) {
             tempPoints /= 10000000000000000000000000000000;
             temp = 'jj';
@@ -16956,13 +17046,9 @@ var EntityShop = function (_PIXI$Container) {
         _this.backContainer.tint = 0x529898;
         _this.addChild(_this.backContainer);
 
-        _this.toggles = new _UpgradesToggles2.default({ w: _this.size.w * 0.8, h: _this.size.h * 0.1 });
-        _this.addChild(_this.toggles);
         _this.shopList = new _ShopList2.default({ w: _this.size.w, h: _this.size.h * 0.8 });
         _this.shopList.y = 100;
         _this.addChild(_this.shopList);
-
-        _this.toggles.onUpdateValue.add(_this.updateToggleValue.bind(_this));
 
         _this.shopList.onItemShop.add(_this.confirmItemShop.bind(_this));
 
@@ -16973,6 +17059,12 @@ var EntityShop = function (_PIXI$Container) {
         _this.openShop.onClick.add(function () {
             _this.hide();
         });
+
+        _this.toggles = new _UpgradesToggles2.default({ w: _this.size.w * 0.3, h: _this.size.h * 0.05 });
+        _this.addChild(_this.toggles);
+        _this.toggles.x = _this.size.w / 2 - _this.size.w * 0.15;
+        _this.toggles.y = _this.openShop.y - _this.size.h * 0.025;
+        _this.toggles.onUpdateValue.add(_this.updateToggleValue.bind(_this));
 
         return _this;
     }
@@ -17036,7 +17128,7 @@ var EntityShop = function (_PIXI$Container) {
 
             this.currentItens = [];
             for (var index = 0; index < items.length; index++) {
-                var shopItem = new _ShopItem2.default({ w: this.size.w * 0.9, h: 80 });
+                var shopItem = new _ShopItem2.default({ w: this.size.w * 0.9, h: 70 });
                 shopItem.setData(items[index]);
                 shopItem.nameID = items[index].rawData.nameID;
                 this.currentItens.push(shopItem);
@@ -17349,6 +17441,7 @@ var ShopItem = function (_UIList) {
         key: 'updateData',
         value: function updateData() {
             var next = this.previewValue;
+
             //this.attributesList['cost'].text = utils.formatPointsLabel(this.itemData.getRPS())+'/s'
             this.realCost = this.itemData.getUpgradeCost(next);
 
@@ -17363,7 +17456,13 @@ var ShopItem = function (_UIList) {
             //this.attributesList['value'].text = utils.formatPointsLabel(Math.ceil(nextRPS - currentRPS)) + '/s'
             this.attributesList['value'].text = _utils2.default.formatPointsLabel(nextRPS - currentRPS) + '/s';
             //console.log(nextRPS - currentRPS)
-            this.shopButton.updateCoast(_utils2.default.formatPointsLabel(this.itemData.getUpgradeCost(next)));
+            this.shopButton.updateCoast(_utils2.default.formatPointsLabel(this.realCost));
+
+            if (this.realCost <= window.gameEconomy.currentResources) {
+                this.shopButton.enable();
+            } else {
+                this.shopButton.deactive();
+            }
 
             this.levelLabel.text = 'Level\n' + this.itemData.currentLevel;
             // this.itemData = GAME_DATA.getUpdatedItem(this.itemData.dataType, this.itemData.id)
@@ -33568,7 +33667,7 @@ function myBlurFunction() {
     // SOUND_MANAGER.mute();
 }
 
-tryStuff();
+//tryStuff()
 
 function tryStuff() {
     var d = {
@@ -57118,7 +57217,8 @@ var MergeScreen = function (_Screen) {
                 window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
                 window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
                 window.baseResources = PIXI.loader.resources[window.baseConfigGame.resourcesData].data;
-                console.log(window.baseResources);
+                window.gameEconomy = new _GameEconomy2.default();
+
                 _this.areaConfig = window.baseConfigGame.area;
                 if (!_this.areaConfig.bottomArea) {
                         _this.areaConfig.bottomArea = 0.2;
@@ -57352,8 +57452,6 @@ var MergeScreen = function (_Screen) {
                 _this.uiPanels.push(_this.mergeItemsShop);
                 _this.uiPanels.push(_this.generalShop);
                 _this.uiPanels.push(_this.standardPopUp);
-
-                window.gameEconomy = new _GameEconomy2.default();
 
                 _this.sumStart = 0;
                 _this.savedResources = COOKIE_MANAGER.getResources();
@@ -58953,7 +59051,7 @@ var EnemySystem = function () {
             customData.scale = 0.02;
             customData.alphaDecress = 0.1;
             var targetPos = this.mainEnemy.getGlobalPosition();
-            var reward = window.gameEconomy.currentResources * (0.05 + Math.random() * 0.01);
+            var reward = window.gameEconomy.currentResources * (0.005 + Math.random() * 0.001);
             reward = Math.max(10, reward);
             this.onGetResources.dispatch(targetPos, customData, reward, 5);
         }
@@ -60358,7 +60456,7 @@ var ShopButton = function (_PIXI$Container) {
             this.deactived = true;
             this.sprite.visible = true;
             this.backButton.tint = 0xFFFFFF;
-            this.priceLabel.style.fill = 0xe5519b;
+            this.priceLabel.style.fill = 0x666666;
             this.backButton.alpha = 1;
         }
     }, {
@@ -60796,7 +60894,7 @@ var UpgradesToggles = function (_PIXI$Container) {
 
                 _this.addChild(_this.lockList);
 
-                _this.values = [1, 10, 100];
+                _this.values = [1, 10, 100, 500];
                 _this.toggles = [];
 
                 var _loop = function _loop(index) {
@@ -60804,6 +60902,7 @@ var UpgradesToggles = function (_PIXI$Container) {
                         toggle.changePivot(0, 0);
                         toggle.disableState(0x555555);
                         toggle.value = _this.values[index];
+                        toggle.fitHeight = 0.8;
                         _this.lockList.addElement(toggle);
                         toggle.onClick.add(function () {
 
@@ -65063,7 +65162,7 @@ module.exports = exports["default"];
 /* 367 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
+module.exports = {"default":["image/particles/particles.json","image/entities/entities.json","image/background/background.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
 
 /***/ })
 /******/ ]);

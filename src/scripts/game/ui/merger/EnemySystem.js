@@ -196,7 +196,7 @@ export default class EnemySystem {
         customData.scale = 0.02
         customData.alphaDecress = 0.1
         let targetPos = this.mainEnemy.getGlobalPosition()
-        let reward = (window.gameEconomy.currentResources * (0.05 + Math.random() * 0.01));
+        let reward = (window.gameEconomy.currentResources * (0.005 + Math.random() * 0.001));
         reward = Math.max(10, reward);
         this.onGetResources.dispatch(targetPos, customData, reward, 5)
     }

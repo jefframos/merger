@@ -23,13 +23,11 @@ export default class EntityShop extends PIXI.Container {
         this.addChild(this.backContainer);
 
 
-        this.toggles = new UpgradesToggles({ w: this.size.w * 0.8, h: this.size.h * 0.1 })
-        this.addChild(this.toggles);
+      
         this.shopList = new ShopList({ w: this.size.w, h: this.size.h * 0.8 })
         this.shopList.y = 100
         this.addChild(this.shopList);
 
-        this.toggles.onUpdateValue.add(this.updateToggleValue.bind(this))
 
         this.shopList.onItemShop.add(this.confirmItemShop.bind(this))
 
@@ -40,6 +38,12 @@ export default class EntityShop extends PIXI.Container {
         this.openShop.onClick.add(() => {
             this.hide()
         })
+
+        this.toggles = new UpgradesToggles({ w: this.size.w * 0.3, h: this.size.h * 0.05 })
+        this.addChild(this.toggles);
+        this.toggles.x = this.size.w / 2 - this.size.w * 0.15
+        this.toggles.y = this.openShop.y - this.size.h * 0.025
+        this.toggles.onUpdateValue.add(this.updateToggleValue.bind(this))
 
     }
     hideCallback() {
@@ -89,7 +93,7 @@ export default class EntityShop extends PIXI.Container {
 
         this.currentItens = []
         for (let index = 0; index < items.length; index++) {
-            let shopItem = new ShopItem({ w: this.size.w * 0.9, h: 80 })
+            let shopItem = new ShopItem({ w: this.size.w * 0.9, h: 70 })
             shopItem.setData(items[index])
             shopItem.nameID = items[index].rawData.nameID;
             this.currentItens.push(shopItem)
