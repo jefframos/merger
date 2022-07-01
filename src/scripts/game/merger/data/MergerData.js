@@ -22,8 +22,11 @@ export default class MergerData {
     getValue() {
         return this.rawData.value;
     }
-    getDamage(simulate = 0) {
+    getRawDamage(simulate = 0) {
         return (this.rawData.initialDamage * this.rawData.initialTime) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)
+    }
+    getDamage(simulate = 0) {
+        return (this.rawData.initialDamage * this.rawData.initialTime) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)  * window.gameModifyers.modifyersData.damageMultiplier
     }
     getTexture() {
         return this.rawData.texture
@@ -33,6 +36,9 @@ export default class MergerData {
     }
     getGenerateResourceTime(simulate = 0) {
         return this.rawData.initialTime / gameModifyers.modifyersData.drillSpeedValue || 1;
+    }
+    getRawResources(simulate = 0) {
+        return (this.rawData.initialRevenue / this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) 
     }
     getResources(simulate = 0) {
         return (this.rawData.initialRevenue / this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) * window.gameModifyers.modifyersData.resourcesMultiplier

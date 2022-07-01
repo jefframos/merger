@@ -2487,27 +2487,28 @@ exports.default = (_resizeToFitMaxAR$res = {
             for (var j = 0; j < target[index].length; j++) {
                 if (target[index][j] && target[index][j].tileData) {
                     var data = target[index][j].tileData;
-                    max += data.getDamage() / data.getGenerateDamageTime();
+                    max += data.getRawDamage() / data.getGenerateDamageTime();
                 }
             }
         }
         if ((0, _isNan2.default)(max)) {
             return 0;
         }
-        return max;
+        console.log(window.gameModifyers.modifyersData.damageMultiplier);
+        return max * window.gameModifyers.modifyersData.damageMultiplier;
     },
     findRPS2: function findRPS2(target) {
         var max = 0;
         for (var index = 0; index < target.length; index++) {
             if (target[index] && target[index].tileData) {
                 var data = target[index].tileData;
-                max += Math.round(data.getResources() / data.getGenerateResourceTime());
+                max += Math.round(data.getRawResources() / data.getGenerateResourceTime());
             }
         }
         if ((0, _isNan2.default)(max)) {
             return 0;
         }
-        return max;
+        return max * window.gameModifyers.modifyersData.resourcesMultiplier;
     },
     findRPS: function findRPS(target) {
         var max = 0;
@@ -2515,14 +2516,14 @@ exports.default = (_resizeToFitMaxAR$res = {
             for (var j = 0; j < target[index].length; j++) {
                 if (target[index][j] && target[index][j].tileData) {
                     var data = target[index][j].tileData;
-                    max += Math.round(data.getResources() / data.getGenerateResourceTime());
+                    max += Math.round(data.getRawResources() / data.getGenerateResourceTime());
                 }
             }
         }
         if ((0, _isNan2.default)(max)) {
             return 0;
         }
-        return max;
+        return max * window.gameModifyers.modifyersData.resourcesMultiplier;
     },
     generateTextureFromContainer: function generateTextureFromContainer(id, content, list) {
         if (list[id]) {
@@ -21751,6 +21752,7 @@ var MergeTile = function (_PIXI$Container) {
     }, {
         key: 'damageReady',
         value: function damageReady() {
+            console.log("sort out damage multiplier");
             this.onGenerateDamage.dispatch(this, this.tileData);
         }
     }, {
@@ -59758,7 +59760,7 @@ module.exports = exports["default"];
 /* 339 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/particles/particles.json","image/background/background.json","image/asteroids/asteroids.json","image/entities/entities.json","image/environment/environment.json","image/ui/ui.json"]}
+module.exports = {"default":["image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 340 */
@@ -60425,7 +60427,7 @@ var MergeScreen = function (_Screen) {
                 _this.uiPanels.push(_this.generalShop);
                 _this.uiPanels.push(_this.standardPopUp);
 
-                _this.openPopUp(_this.generalShop);
+                //this.openPopUp(this.generalShop)
 
                 _this.sumStart = 0;
                 _this.savedResources = COOKIE_MANAGER.getResources();
@@ -63318,11 +63320,18 @@ var MergerData = function () {
             return this.rawData.value;
         }
     }, {
+        key: "getRawDamage",
+        value: function getRawDamage() {
+            var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+            return this.rawData.initialDamage * this.rawData.initialTime * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate);
+        }
+    }, {
         key: "getDamage",
         value: function getDamage() {
             var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-            return this.rawData.initialDamage * this.rawData.initialTime * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate);
+            return this.rawData.initialDamage * this.rawData.initialTime * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate) * window.gameModifyers.modifyersData.damageMultiplier;
         }
     }, {
         key: "getTexture",
@@ -63342,6 +63351,13 @@ var MergerData = function () {
             var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
             return this.rawData.initialTime / gameModifyers.modifyersData.drillSpeedValue || 1;
+        }
+    }, {
+        key: "getRawResources",
+        value: function getRawResources() {
+            var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+            return this.rawData.initialRevenue / this.getGenerateResourceTime() * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate);
         }
     }, {
         key: "getResources",

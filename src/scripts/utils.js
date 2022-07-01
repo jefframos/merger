@@ -66,28 +66,29 @@ export default
                 for (let j = 0; j < target[index].length; j++) {
                     if (target[index][j] && target[index][j].tileData) {
                         let data = target[index][j].tileData
-                        max += data.getDamage() / data.getGenerateDamageTime();
+                        max += data.getRawDamage() / data.getGenerateDamageTime();
                     }
                 }
             }
             if (Number.isNaN(max)) {
                 return 0
             }
-            return max
+            console.log(window.gameModifyers.modifyersData.damageMultiplier)
+            return max * window.gameModifyers.modifyersData.damageMultiplier
         },
         findRPS2(target) {
             let max = 0;
             for (let index = 0; index < target.length; index++) {
                 if (target[index] && target[index].tileData) {
                     let data = target[index].tileData
-                    max += Math.round(data.getResources() / data.getGenerateResourceTime());
+                    max += Math.round(data.getRawResources() / data.getGenerateResourceTime());
 
                 }
             }
             if (Number.isNaN(max)) {
                 return 0
             }
-            return max
+            return max * window.gameModifyers.modifyersData.resourcesMultiplier
         },
         findRPS(target) {
             let max = 0;
@@ -95,14 +96,14 @@ export default
                 for (let j = 0; j < target[index].length; j++) {
                     if (target[index][j] && target[index][j].tileData) {
                         let data = target[index][j].tileData
-                        max += Math.round(data.getResources() / data.getGenerateResourceTime());
+                        max += Math.round(data.getRawResources() / data.getGenerateResourceTime());
                     }
                 }
             }
             if (Number.isNaN(max)) {
                 return 0
             }
-            return max
+            return max* window.gameModifyers.modifyersData.resourcesMultiplier
         },
         generateTextureFromContainer(id, content, list) {
             if (list[id]) {

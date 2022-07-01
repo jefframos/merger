@@ -289,7 +289,7 @@ export default class MergeScreen extends Screen {
         this.uiPanels.push(this.generalShop)
         this.uiPanels.push(this.standardPopUp)
 
-        this.openPopUp(this.generalShop)
+        //this.openPopUp(this.generalShop)
 
         this.sumStart = 0;
         this.savedResources = COOKIE_MANAGER.getResources();

@@ -16,7 +16,7 @@
         },
         {
             "nameID": "drill_speed",
-            "displayName": "Drill Speed",
+            "displayName": "DresourcesMultiplierd",
             "imageSrc": "drill",
             "tileImageSrc": "asteroid (2)",
             "initialCost": 60,
@@ -30,7 +30,7 @@
         },
         {
             "nameID": "drill_speed",
-            "displayName": "Drill Speed",
+            "displayName": "damageMultiplier",
             "imageSrc": "drill",
             "tileImageSrc": "asteroid (2)",
             "initialCost": 60,
