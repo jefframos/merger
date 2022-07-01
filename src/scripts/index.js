@@ -4,7 +4,6 @@ import plugins from './plugins';
 import Game from './Game';
 import LocalStorage from './game/data/LocalStorage';
 import CookieManager from './game/CookieManager';
-import MergerScreenManager from './game/screen/MergerScreenManager';
 
 import SoundManager from './soundManager/SoundManager'
 import SoundManagerCordova from './soundManager/SoundManagerCordova'
@@ -12,6 +11,7 @@ import jsonManifest from './manifests/manifest-json'
 import imageManifest from './manifests/manifest-image'
 import audioManifest from './manifests/manifest-audio'
 import spritesheetManifest from './manifests/manifest'
+import MergerScreenManager from './game/merger/screen/MergerScreenManager';
 
 
 

@@ -1,6 +1,31 @@
 import config from './config';
 import utils from './utils';
 
+const alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+window.numberList = []
+window.numberList.push({value:1000, abv:'k'})
+window.numberList.push({value:1000000, abv:'Mi'})
+window.numberList.push({value:1000000000, abv:'B'})
+window.numberList.push({value:1000000000000, abv:'T'})
+let accum = 0
+for (let index = 15; index < 309; index+=3) {
+
+    let abv = ''
+    if(accum < alphabet.length){
+        abv = alphabet[accum]+alphabet[accum]
+    }else{
+        let first = Math.floor(accum / alphabet.length) - 1     
+        if(first == accum % alphabet.length)   {
+            abv = alphabet[first]+alphabet[first]+alphabet[first]
+        }else{
+            abv = alphabet[first]+alphabet[accum % alphabet.length]
+        }
+    }
+    accum ++
+    window.numberList.push({value:Math.floor(Math.pow(10, index)), abv:abv})    
+}
+
+console.log(window.numberList)
 
 window.config = config;
 window.utils = utils;

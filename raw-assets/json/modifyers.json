@@ -1,0 +1,46 @@
+{
+    "modifyers": [
+        {
+            "nameID": "drill_speed",
+            "displayName": "Drill Speed",
+            "imageSrc": "drill",
+            "tileImageSrc": "asteroid (2)",
+            "initialCost": 60,
+            "costCoefficient": 1.153,
+            "initialTime": 1,
+            "initialRevenue": 1,
+            "coefficientProductivity": 1.06,
+            "initialProductivity": 1.1,
+            "modifyer":"drillSpeed",
+            "levelMax": 100
+        },
+        {
+            "nameID": "drill_speed",
+            "displayName": "Drill Speed",
+            "imageSrc": "drill",
+            "tileImageSrc": "asteroid (2)",
+            "initialCost": 60,
+            "costCoefficient": 1.153,
+            "initialTime": 1,
+            "initialRevenue": 1,
+            "coefficientProductivity": 1.12,
+            "initialProductivity": 1.1,
+            "modifyer":"resourcesMultiplier",
+            "levelMax": 100
+        },
+        {
+            "nameID": "drill_speed",
+            "displayName": "Drill Speed",
+            "imageSrc": "drill",
+            "tileImageSrc": "asteroid (2)",
+            "initialCost": 60,
+            "costCoefficient": 1.153,
+            "initialTime": 1,
+            "initialRevenue": 1,
+            "coefficientProductivity": 1.15,
+            "initialProductivity": 1.1,
+            "modifyer":"damageMultiplier",
+            "levelMax": 100
+        }
+    ]
+}

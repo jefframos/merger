@@ -5,34 +5,43 @@ export default class CookieManager {
 		}
 		let defaultEconomy = {
 			resources: 0,
-			lastChanged:0
+			lastChanged: 0
 		}
 		let defaultResources = {
 			version: '0.0.1',
-			entities:{},
-			dataProgression:{}
+			entities: {},
+			dataProgression: {}
 		}
 		let defaultProgression = {
 			version: '0.0.1',
 			currentEnemyLevel: 1,
-			currentEnemyLife:0
+			currentEnemyLife: 0
 		}
 		let defaultBoard = {
 			version: '0.0.1',
 			currentBoardLevel: 0,
-			entities:{},
-			dataProgression:{}
+			entities: {},
+			dataProgression: {}
+		}
+		let defaultModifyers = {
+			version: '0.0.1',
+			entities: {},
+			drillSpeed: 1,
+			resourcesMultiplier: 1,
+			damageMultiplier: 1,
 		}
 		this.economy = {}
 		this.stats = {}
 		this.resources = {}
 		this.progression = {}
 		this.board = {}
+		this.modifyers = {}
 		this.economy = this.sortCookieData('economy', defaultEconomy);
 		this.stats = this.sortCookieData('stats', defaultStats);
 		this.resources = this.sortCookieData('resources', defaultResources);
 		this.progression = this.sortCookieData('progression', defaultProgression);
 		this.board = this.sortCookieData('board', defaultBoard);
+		this.modifyers = this.sortCookieData('modifyers', defaultModifyers);
 
 	}
 
@@ -62,12 +71,12 @@ export default class CookieManager {
 		this.economy.lastChanged = Date.now() / 1000 | 0
 		this.storeObject('economy', this.economy)
 	}
-	resetAllCollects(){
+	resetAllCollects() {
 		for (const key in this.resources) {
 			if (Object.hasOwnProperty.call(this.resources, key)) {
 				const element = this.resources[key];
-				if(element.latestResourceCollect)	{
-					element.latestResourceCollect= Date.now() / 1000 | 0
+				if (element.latestResourceCollect) {
+					element.latestResourceCollect = Date.now() / 1000 | 0
 					element.pendingResource = 0
 				}
 			}
@@ -116,9 +125,9 @@ export default class CookieManager {
 
 		if (this.board.dataProgression[mergeData.rawData.nameID] == null) {
 			this.board.dataProgression[mergeData.rawData.nameID] = {
-				currentLevel:mergeData.currentLevel
+				currentLevel: mergeData.currentLevel
 			}
-		}else{
+		} else {
 			this.board.dataProgression[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
 		}
 
@@ -129,7 +138,7 @@ export default class CookieManager {
 		this.storeObject('board', this.board)
 
 	}
-	saveEnemyLife(value){
+	saveEnemyLife(value) {
 		this.progression.currentEnemyLife = value;
 		this.storeObject('progression', this.progression)
 	}
@@ -146,6 +155,13 @@ export default class CookieManager {
 			// alert(sValue)
 			//  	alert(e)
 		}
+	}
+	updateModifyers(data) {
+		this.modifyers = data;
+		this.storeObject('modifyers', this.modifyers)
+	}
+	getModifyers() {
+		return this.getCookie('modifyers')
 	}
 	getEconomy() {
 		return this.getCookie('economy')

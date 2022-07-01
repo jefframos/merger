@@ -5,6 +5,7 @@
             "entityGeneratorBaseTime":10,
             "giftGenerateTime":60
         },
+        "modifyersData":"modifyers",
         "entitiesData":"entities",
         "gameMap": [
             [0,0,0,13],

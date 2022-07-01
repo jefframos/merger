@@ -8,6 +8,10 @@ const assets = [
 	"url":"assets/json\\entities.json"
 	},
 	{
+	"id":"modifyers",
+	"url":"assets/json\\modifyers.json"
+	},
+	{
 	"id":"resources",
 	"url":"assets/json\\resources.json"
 	}
