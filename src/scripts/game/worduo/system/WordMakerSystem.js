@@ -33,11 +33,12 @@ export default class WordMakerSystem {
         this.actionButtons.h = 50
         this.bottomContainer.addChild(this.actionButtons);
 
-        this.registerButton(this.actionButtons, 'icon-close', 'arrowUp')
+
+        this.registerButton(this.actionButtons, 'icon-close', 'erase')
+        this.registerButton(this.actionButtons, 'results_arrow_left', 'arrowLeft')
+        this.registerButton(this.actionButtons, 'results_arrow_right', 'arrowRight')
         this.registerButton(this.actionButtons, 'results_arrow', 'arrowUp')
-        this.registerButton(this.actionButtons, 'results_arrow_left', 'arrowUp')
-        this.registerButton(this.actionButtons, 'results_arrow_right', 'arrowUp')
-        this.registerButton(this.actionButtons, 'results_arrow_down', 'arrowUp')
+        this.registerButton(this.actionButtons, 'results_arrow_down', 'arrowDown')
 
         this.actionButtons.updateHorizontalList()
 
@@ -71,7 +72,7 @@ export default class WordMakerSystem {
         this.bottomContainer.addChild(this.topLetterList);
         this.topLetterList.updateHorizontalList()
 
-        this.slotSize = {width:60, height:60, distance:10}
+        this.slotSize = { width: 60, height: 60, distance: 10 }
 
         this.wordFormations = {
             three: this.buildFormation(3),
@@ -80,6 +81,8 @@ export default class WordMakerSystem {
             six: this.buildFormation(6)
         }
 
+
+
         this.wordFormationsList = new UIList();
         this.wordFormationsList.w = 6 * (this.slotSize.width) + 5 * this.slotSize.distance
         this.wordFormationsList.h = 5 * (this.slotSize.height + this.slotSize.distance)
@@ -87,21 +90,89 @@ export default class WordMakerSystem {
         this.markerList = new UIList();
         this.markerList.w = this.wordFormationsList.w
         this.markerList.h = this.wordFormationsList.h
-        
+
+        this.gameplayData = {
+            currentVerticalPosition: 0,
+            lists: [],
+            positionMarkers: []
+        }
         for (const key in this.wordFormations) {
             const element = this.wordFormations[key];
             element.list.updateHorizontalList()
             this.markerList.addElement(element.marker)
             this.wordFormationsList.addElement(element.list)
+
+            this.gameplayData.positionMarkers.push(element.marker);
+
+            this.gameplayData.lists.push({
+                currentIDLetter: 0,
+                slots: element.slots
+            })
+
         }
         this.markerList.updateVerticalList();
         this.wordFormationsList.updateVerticalList();
         this.container.addChild(this.markerList)
         this.container.addChild(this.wordFormationsList)
-        this.startNewRound();
-    }
-    arrowUp(){
 
+        this.currentSelectedRow = {}
+        this.updateCurrentGameState();
+        this.startNewRound();
+
+
+
+    }
+    arrowUp() {
+        this.gameplayData.currentVerticalPosition--;
+        if (this.gameplayData.currentVerticalPosition < 0) {
+            this.gameplayData.currentVerticalPosition = this.gameplayData.lists.length - 1
+        }
+        this.currentSelectedRow = this.gameplayData.lists[this.gameplayData.currentVerticalPosition]
+
+        this.updateCurrentGameState();
+    }
+    arrowDown() {
+        this.gameplayData.currentVerticalPosition++;
+        this.gameplayData.currentVerticalPosition %= this.gameplayData.lists.length
+        this.currentSelectedRow = this.gameplayData.lists[this.gameplayData.currentVerticalPosition]
+
+
+        this.updateCurrentGameState();
+    }
+    arrowLeft() {
+        this.currentSelectedRow.currentIDLetter--
+        if (this.currentSelectedRow.currentIDLetter < 0) {
+            this.currentSelectedRow.currentIDLetter = this.currentSelectedRow.slots.length - 1
+        }
+        this.updateCurrentGameState();
+
+    }
+    arrowRight() {
+        this.currentSelectedRow.currentIDLetter++
+        this.currentSelectedRow.currentIDLetter %= this.currentSelectedRow.slots.length
+        this.updateCurrentGameState();
+
+    }
+    erase() {
+
+    }
+    getCurrentSelectedSlot() {
+        return this.currentSelectedRow.slots[this.currentSelectedRow.currentIDLetter]
+    }
+    updateCurrentGameState() {
+        this.gameplayData.positionMarkers.forEach(element => {
+            element.visible = false;
+        });
+
+        this.gameplayData.lists.forEach(dataList => {
+            dataList.slots.forEach(slot => {
+                slot.normalState();
+            });
+        });
+
+        this.currentSelectedRow = this.gameplayData.lists[this.gameplayData.currentVerticalPosition]
+        this.currentSelectedRow.slots[this.currentSelectedRow.currentIDLetter].highlight()
+        this.gameplayData.positionMarkers[this.gameplayData.currentVerticalPosition].visible = true;
     }
     registerButton(list, texture, callback) {
         let button = new UIButton1(0xFFFFFF, texture, 0)
@@ -114,7 +185,7 @@ export default class WordMakerSystem {
         let letterSlots = [];
         let slotList = new UIList();
 
-        let marker = new LetterSlot(this.wrapper.height, this.slotSize.height +  this.slotSize.distance * 2, 0xefefef)
+        let marker = new LetterSlot(this.wrapper.height, this.slotSize.height + this.slotSize.distance * 2, 0xefefef)
         slotList.w = total * (this.slotSize.width) + (total - 1) * this.slotSize.distance
         slotList.h = (this.slotSize.height);
         for (let index = 0; index < total; index++) {
@@ -124,7 +195,7 @@ export default class WordMakerSystem {
             letterSlots.push(slot)
         }
 
-        return {list:slotList, slots:letterSlots, marker:marker}
+        return { list: slotList, slots: letterSlots, marker: marker }
     }
     startNewRound() {
         let letters = this.scrabbleSystem.getConsoantSets(4, 3)
@@ -137,15 +208,39 @@ export default class WordMakerSystem {
             const element = letters[index];
             this.letterButtons[index].updateIconTexture(this.letters[element.key.toUpperCase()])
             this.letterButtons[index].letter = element;
-            console.log(element)
         }
-        // letters.forEach(element => {
-        //     let 
-        // });
-
     }
     onLetterClick(data) {
-        console.log(data.letter)
+        let slot = this.getCurrentSelectedSlot()
+        slot.addLetter(data.letter.key, this.letters[data.letter.key.toUpperCase()])
+
+        
+        if(this.testWord()){
+            console.log("")
+        }else{
+            this.arrowRight()
+        }
+    }
+    testWord() {
+        let found = true;
+        let testWord = ''
+        this.currentSelectedRow.slots.forEach(element => {
+            if (element.letter == '') {
+                found = false
+            }else{
+                testWord += element.letter
+            }
+        });
+
+        if(found){
+            if(this.scrabbleSystem.isThisAWord(testWord)){
+                return testWord
+            }else{
+                return false
+            }
+        }else{
+            return false
+        }
     }
     update(delta) {
 
@@ -165,14 +260,14 @@ export default class WordMakerSystem {
 
         this.markerList.x = this.wrapper.x + this.wrapper.width / 2 - this.markerList.width / 2
         this.markerList.y = this.wordFormationsList.y
-        
-        this.bottomLetterList.x = this.bottomWrapper.width / 2 - this.bottomLetterList.width / 2 
+
+        this.bottomLetterList.x = this.bottomWrapper.width / 2 - this.bottomLetterList.width / 2
         this.bottomLetterList.y = this.bottomWrapper.height / 2 - this.bottomLetterList.height / 2
 
         this.topLetterList.x = this.bottomLetterList.x
         this.topLetterList.y = this.bottomLetterList.y - this.topLetterList.height - 20
-        
-        this.actionButtons.x = this.bottomWrapper.width / 2 - this.actionButtons.w / 2 
-        this.actionButtons.y = this.bottomLetterList.y + this.bottomLetterList.height+20
+
+        this.actionButtons.x = this.bottomWrapper.width / 2 - this.actionButtons.w / 2
+        this.actionButtons.y = this.bottomLetterList.y + this.bottomLetterList.height + 20
     }
 }
