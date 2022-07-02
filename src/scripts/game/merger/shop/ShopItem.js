@@ -1,10 +1,12 @@
 import * as PIXI from 'pixi.js';
-import Signals from 'signals';
-import utils from '../../../utils';
-import UIList from '../ui/uiElements/UIList';
-import UIBar from '../ui/uiElements/UIBar';
+
 import ShopButton from './ShopButton';
 import ShopLockState from './ShopLockState';
+import Signals from 'signals';
+import UIBar from '../../ui/uiElements/UIBar';
+import UIList from '../../ui/uiElements/UIList';
+import utils from '../../../utils';
+
 export default class ShopItem extends UIList {
     constructor(rect = {
         w: 500,

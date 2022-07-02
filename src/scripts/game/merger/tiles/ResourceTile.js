@@ -1,9 +1,11 @@
 import * as PIXI from 'pixi.js';
-import Signals from 'signals';
+
+import CircleCounter from '../../ui/hudElements/CircleCounter';
 import MergeTile from './MergeTile';
-import UIBar from '../ui/uiElements/UIBar';
+import Signals from 'signals';
+import UIBar from '../../ui/uiElements/UIBar';
 import utils from '../../../utils';
-import CircleCounter from '../ui/hudElements/CircleCounter';
+
 export default class ResourceTile extends MergeTile {
     constructor(i, j, size, lockIcon) {
         super(i, j, size, lockIcon);

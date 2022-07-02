@@ -1,25 +1,22 @@
 import * as PIXI from 'pixi.js';
-import * as Filters from 'pixi-filters';
-import Signals from 'signals';
-import UIButton1 from '../ui/UIButton1';
-import utils from '../../../utils';
 
-import ParticleSystem from '../effects/ParticleSystem';
-import MergeSystem from '../systems/MergeSystem';
 import EnemySystem from '../systems/EnemySystem';
-import ResourceSystem from '../systems/ResourceSystem';
-
-import SpaceBackground from '../effects/SpaceBackground';
-import Screen from '../../../screenManager/Screen';
-import TweenMax from 'gsap';
-import MergerData from '../data/MergerData';
 import EntityShop from '../shop/EntityShop';
 import GameEconomy from '../GameEconomy';
-import MergeItemsShop from '../shop/MergeItemsShop';
-import StartPopUp from '../popup/StartPopUp';
-import StandardPop from '../popup/StandardPop';
-import GeneralShop from '../shop/GeneralShop';
 import GameModifyers from '../GameModifyers';
+import GeneralShop from '../shop/GeneralShop';
+import MergeItemsShop from '../shop/MergeItemsShop';
+import MergeSystem from '../systems/MergeSystem';
+import MergerData from '../data/MergerData';
+import ParticleSystem from '../../effects/ParticleSystem';
+import ResourceSystem from '../systems/ResourceSystem';
+import Screen from '../../../screenManager/Screen';
+import SpaceBackground from '../effects/SpaceBackground';
+import StandardPop from '../../popup/StandardPop';
+import TweenMax from 'gsap';
+import UIButton1 from '../../ui/UIButton1';
+import utils from '../../../utils';
+
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);

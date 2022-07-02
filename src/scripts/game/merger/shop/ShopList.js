@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js';
+
+import ListScroller from '../../ui/uiElements/ListScroller';
 import Signals from 'signals';
-import ListScroller from '../ui/uiElements/ListScroller';
+
 export default class ShopList extends ListScroller
 {
     constructor(rect = {

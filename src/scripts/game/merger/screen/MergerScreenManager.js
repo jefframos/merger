@@ -1,8 +1,8 @@
 import * as PIXI from 'pixi.js';
-import config from '../../../config';
-import ParticleSystem from '../effects/ParticleSystem';
+
 import MergeScreen from './MergeScreen';
 import ScreenManager from '../../../screenManager/ScreenManager';
+import config from '../../../config';
 
 export default class MergerScreenManager extends ScreenManager {
     constructor() {
@@ -67,11 +67,6 @@ export default class MergerScreenManager extends ScreenManager {
         // this.showPopUp('init')
 
 
-        this.particleSystem = new ParticleSystem();
-        this.addChild(this.particleSystem);
-
-
-
 
         // const urlParams = new URLSearchParams(window.location.search);
         // let levelRedirectParameters = urlParams.get('quickstart')
@@ -131,7 +126,6 @@ export default class MergerScreenManager extends ScreenManager {
     update(delta) {
         super.update(delta * this.timeScale);
 
-        this.particleSystem.update(delta);
         if (this.currentPopUp) {
             this.currentPopUp.update(delta * this.timeScale)
         }

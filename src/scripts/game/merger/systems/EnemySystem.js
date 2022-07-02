@@ -1,11 +1,12 @@
 import * as PIXI from 'pixi.js';
+
+import EnemyProgressionView from '../enemy/EnemyProgressionView';
+import ProgressBar from '../ProgressBar';
 import Signals from 'signals';
+import StandardEnemy from '../enemy/StandardEnemy';
+import UIButton1 from '../../ui/UIButton1';
 import config from '../../../config';
 import utils from '../../../utils';
-import StandardEnemy from '../enemy/StandardEnemy';
-import ProgressBar from '../ProgressBar';
-import UIButton1 from '../ui/UIButton1';
-import EnemyProgressionView from '../enemy/EnemyProgressionView';
 
 export default class EnemySystem {
     constructor(containers) {

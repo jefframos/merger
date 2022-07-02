@@ -26,7 +26,8 @@ function processJson() {
 		});
 		for (var i = 0; i < files.length; i++) {
 			const file = files[i];
-			minifyJson(file);
+			minifyJson(file, file[file.length - 6] == '_');
+
 		}
 		createManifest(files, sourceDir, 'json', 'manifest-json.js', null);
 	});

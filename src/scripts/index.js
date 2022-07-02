@@ -12,6 +12,7 @@ import imageManifest from './manifests/manifest-image'
 import audioManifest from './manifests/manifest-audio'
 import spritesheetManifest from './manifests/manifest'
 import MergerScreenManager from './game/merger/screen/MergerScreenManager';
+import WorduoScreenManager from './game/worduo/screen/WorduoScreenManager';
 
 
 
@@ -110,7 +111,17 @@ function configGame(evt) {
     // }
     window.RESOURCES = evt.resources;
     window.game = new Game(config);
-    window.screenManager = new MergerScreenManager();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams){
+        if (urlParams.get('worduo')){
+
+            window.screenManager = new WorduoScreenManager();
+        }
+    }
+    if(!window.screenManager){
+        window.screenManager = new MergerScreenManager();
+    }
     //window.screenManager = new HellScreenManager();
     game.screenManager = screenManager;
     // // screenManager.timeScale = 0;

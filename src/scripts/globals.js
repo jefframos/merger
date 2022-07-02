@@ -1,7 +1,7 @@
 import config from './config';
 import utils from './utils';
 
-const alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+window.alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 window.numberList = []
 window.numberList.push({value:1000, abv:'k'})
 window.numberList.push({value:1000000, abv:'Mi'})
@@ -25,7 +25,7 @@ for (let index = 15; index < 309; index+=3) {
     window.numberList.push({value:Math.floor(Math.pow(10, index)), abv:abv})    
 }
 
-console.log(window.numberList)
+//console.log(window.numberList)
 
 window.config = config;
 window.utils = utils;

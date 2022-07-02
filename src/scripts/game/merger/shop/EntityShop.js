@@ -1,10 +1,11 @@
-import TweenMax from 'gsap';
 import * as PIXI from 'pixi.js';
-import config from '../../../config';
-import UIButton1 from '../ui/UIButton1';
+
 import ShopItem from './ShopItem';
 import ShopList from './ShopList';
+import TweenMax from 'gsap';
+import UIButton1 from '../../ui/UIButton1';
 import UpgradesToggles from './UpgradesToggles';
+import config from '../../../config';
 
 export default class EntityShop extends PIXI.Container {
     constructor(mainSystem, size, border = 0) {

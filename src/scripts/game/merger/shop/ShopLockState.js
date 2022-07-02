@@ -1,8 +1,8 @@
-
-
 import * as PIXI from 'pixi.js';
+
 import Signals from 'signals';
-import UIList from '../ui/uiElements/UIList';
+import UIList from '../../ui/uiElements/UIList';
+
 export default class ShopLockState extends PIXI.Container {
     constructor(width, height) {
         super()

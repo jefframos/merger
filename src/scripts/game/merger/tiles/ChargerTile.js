@@ -1,9 +1,11 @@
 import * as PIXI from 'pixi.js';
-import Signals from 'signals';
+
+import CircleCounter from '../../ui/hudElements/CircleCounter';
 import MergeTile from './MergeTile';
 import ProgressBar from '../ProgressBar';
-import UIBar from '../ui/uiElements/UIBar';
-import CircleCounter from '../ui/hudElements/CircleCounter';
+import Signals from 'signals';
+import UIBar from '../../ui/uiElements/UIBar';
+
 export default class ChargerTile extends MergeTile {
     constructor(i, j, size, lockIcon, standardChargeTime = 2) {
         super(i, j, size, lockIcon);

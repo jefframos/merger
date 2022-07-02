@@ -58,7 +58,6 @@ export default class CookieManager {
 					this.storeObject(nameID, target)
 				}
 			}
-			console.log(target)
 		} else {
 			target = defaultData
 			this.storeObject(nameID, target)

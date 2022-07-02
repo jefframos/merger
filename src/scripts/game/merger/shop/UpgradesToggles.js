@@ -1,8 +1,9 @@
-import TweenMax from 'gsap';
 import * as PIXI from 'pixi.js';
+
 import Signals from 'signals';
-import UIButton1 from '../ui/UIButton1';
-import UIList from '../ui/uiElements/UIList';
+import TweenMax from 'gsap';
+import UIButton1 from '../../ui/UIButton1';
+import UIList from '../../ui/uiElements/UIList';
 
 export default class UpgradesToggles extends PIXI.Container {
     constructor(rect) {
