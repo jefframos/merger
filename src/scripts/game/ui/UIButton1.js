@@ -18,7 +18,14 @@ export default class UIButton1 extends PIXI.Container {
 
 		} else {
 
-			this.icon = PIXI.Sprite.fromFrame(icon);
+			if (typeof (icon) == PIXI.RenderTexture ||
+				typeof (icon) == PIXI.Texture) {
+				this.icon = new PIXI.Sprite();
+				this.icon.texture = icon;
+			} else {
+
+				this.icon = PIXI.Sprite.fromFrame(icon);
+			}
 		}
 		this.icon.tint = iconColor;
 
@@ -118,6 +125,9 @@ export default class UIButton1 extends PIXI.Container {
 	}
 	setColor(color) {
 		this.backShape.tint = color;
+	}
+	updateIconTexture(texture) {
+		this.icon.texture = texture;
 	}
 	click() {
 		this.onClick.dispatch();

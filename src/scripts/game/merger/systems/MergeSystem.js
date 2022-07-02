@@ -1,9 +1,10 @@
 import * as PIXI from 'pixi.js';
+
+import ChargerTile from '../tiles/ChargerTile';
+import MergeTile from '../tiles/MergeTile';
 import Signals from 'signals';
 import config from '../../../config';
 import utils from '../../../utils';
-import ChargerTile from '../tiles/ChargerTile';
-import MergeTile from '../tiles/MergeTile';
 
 export default class MergeSystem {
     constructor(containers, data, dataTiles) {

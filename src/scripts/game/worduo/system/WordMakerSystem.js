@@ -1,0 +1,178 @@
+import * as PIXI from 'pixi.js';
+
+import LetterSlot from '../ui/LetterSlot';
+import Signals from 'signals';
+import UIButton1 from '../../ui/UIButton1';
+import UIList from '../../ui/uiElements/UIList';
+import config from '../../../config';
+import utils from '../../../utils';
+
+export default class WordMakerSystem {
+    constructor(containers, scrabbleSystem, letters) {
+
+        this.container = containers.mainContainer;
+        this.bottomContainer = containers.bottomContainer;
+        this.topContainer = containers.topContainer;
+        this.wrapper = containers.wrapper;
+        this.bottomWrapper = containers.bottomWrapper;
+        this.topWrapper = containers.topWrapper;
+
+        this.scrabbleSystem = scrabbleSystem;
+
+        this.letters = letters;
+
+        this.onGetResources = new Signals();
+        this.onDealDamage = new Signals();
+        this.onPopLabel = new Signals();
+        this.onParticles = new Signals();
+
+        this.currentLetterButtons = [];
+
+        this.actionButtons = new UIList()
+        this.actionButtons.w = this.bottomWrapper.width * 0.6
+        this.actionButtons.h = 50
+        this.bottomContainer.addChild(this.actionButtons);
+
+        this.registerButton(this.actionButtons, 'icon-close', 'arrowUp')
+        this.registerButton(this.actionButtons, 'results_arrow', 'arrowUp')
+        this.registerButton(this.actionButtons, 'results_arrow_left', 'arrowUp')
+        this.registerButton(this.actionButtons, 'results_arrow_right', 'arrowUp')
+        this.registerButton(this.actionButtons, 'results_arrow_down', 'arrowUp')
+
+        this.actionButtons.updateHorizontalList()
+
+        this.bottomLetterList = new UIList()
+        this.bottomLetterList.w = this.bottomWrapper.width * 0.6
+        this.bottomLetterList.h = 50
+
+        this.topLetterList = new UIList()
+        this.topLetterList.w = this.bottomWrapper.width * 0.6
+        this.topLetterList.h = 50
+        this.totalLetters = 10
+        this.letterButtons = []
+        for (let index = 0; index < this.totalLetters; index++) {
+            let button = new UIButton1(0xFFFFFF, null, 0)
+            button.changePivot(0, 0)
+            button.updateIconTexture(this.letters['A'])
+            button.updateIconScale(0.7)
+            button.onClick.add(this.onLetterClick.bind(this, button))
+            button.align = 0
+            if (index < this.totalLetters / 2) {
+                this.topLetterList.addElement(button);
+            } else {
+                this.bottomLetterList.addElement(button);
+            }
+            this.letterButtons.push(button)
+        }
+
+        this.bottomContainer.addChild(this.bottomLetterList);
+        this.bottomLetterList.updateHorizontalList()
+
+        this.bottomContainer.addChild(this.topLetterList);
+        this.topLetterList.updateHorizontalList()
+
+        this.slotSize = {width:60, height:60, distance:10}
+
+        this.wordFormations = {
+            three: this.buildFormation(3),
+            four: this.buildFormation(4),
+            five: this.buildFormation(5),
+            six: this.buildFormation(6)
+        }
+
+        this.wordFormationsList = new UIList();
+        this.wordFormationsList.w = 6 * (this.slotSize.width) + 5 * this.slotSize.distance
+        this.wordFormationsList.h = 5 * (this.slotSize.height + this.slotSize.distance)
+
+        this.markerList = new UIList();
+        this.markerList.w = this.wordFormationsList.w
+        this.markerList.h = this.wordFormationsList.h
+        
+        for (const key in this.wordFormations) {
+            const element = this.wordFormations[key];
+            element.list.updateHorizontalList()
+            this.markerList.addElement(element.marker)
+            this.wordFormationsList.addElement(element.list)
+        }
+        this.markerList.updateVerticalList();
+        this.wordFormationsList.updateVerticalList();
+        this.container.addChild(this.markerList)
+        this.container.addChild(this.wordFormationsList)
+        this.startNewRound();
+    }
+    arrowUp(){
+
+    }
+    registerButton(list, texture, callback) {
+        let button = new UIButton1(0xFFFFFF, texture, 0)
+        button.changePivot(0, 0)
+        button.updateIconScale(0.5)
+        button.onClick.add(this[callback].bind(this, button))
+        list.addElement(button)
+    }
+    buildFormation(total) {
+        let letterSlots = [];
+        let slotList = new UIList();
+
+        let marker = new LetterSlot(this.wrapper.height, this.slotSize.height +  this.slotSize.distance * 2, 0xefefef)
+        slotList.w = total * (this.slotSize.width) + (total - 1) * this.slotSize.distance
+        slotList.h = (this.slotSize.height);
+        for (let index = 0; index < total; index++) {
+            let slot = new LetterSlot(this.slotSize.width, this.slotSize.height)
+            slot.align = 1
+            slotList.addElement(slot);
+            letterSlots.push(slot)
+        }
+
+        return {list:slotList, slots:letterSlots, marker:marker}
+    }
+    startNewRound() {
+        let letters = this.scrabbleSystem.getConsoantSets(4, 3)
+
+        let vowels = this.scrabbleSystem.getVowelSets(2, 1)
+        letters = vowels.concat(letters)
+
+
+        for (let index = 0; index < letters.length; index++) {
+            const element = letters[index];
+            this.letterButtons[index].updateIconTexture(this.letters[element.key.toUpperCase()])
+            this.letterButtons[index].letter = element;
+            console.log(element)
+        }
+        // letters.forEach(element => {
+        //     let 
+        // });
+
+    }
+    onLetterClick(data) {
+        console.log(data.letter)
+    }
+    update(delta) {
+
+    }
+    resize(resolution) {
+        this.bottomContainer.x = this.bottomWrapper.x
+        this.bottomContainer.y = this.bottomWrapper.y
+
+        this.topContainer.x = this.topWrapper.x
+        this.topContainer.y = this.topWrapper.y
+
+        this.container.x = this.wrapper.x
+        this.container.y = this.wrapper.y
+
+        this.wordFormationsList.x = this.wrapper.width / 2 - this.wordFormationsList.width / 2 - this.slotSize.distance
+        this.wordFormationsList.y = this.wrapper.height / 2 - this.wordFormationsList.height / 2
+
+        this.markerList.x = this.wrapper.x + this.wrapper.width / 2 - this.markerList.width / 2
+        this.markerList.y = this.wordFormationsList.y
+        
+        this.bottomLetterList.x = this.bottomWrapper.width / 2 - this.bottomLetterList.width / 2 
+        this.bottomLetterList.y = this.bottomWrapper.height / 2 - this.bottomLetterList.height / 2
+
+        this.topLetterList.x = this.bottomLetterList.x
+        this.topLetterList.y = this.bottomLetterList.y - this.topLetterList.height - 20
+        
+        this.actionButtons.x = this.bottomWrapper.width / 2 - this.actionButtons.w / 2 
+        this.actionButtons.y = this.bottomLetterList.y + this.bottomLetterList.height+20
+    }
+}

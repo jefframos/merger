@@ -6,6 +6,7 @@ import Screen from '../../../screenManager/Screen';
 import StandardPop from '../../popup/StandardPop';
 import TweenMax from 'gsap';
 import UIButton1 from '../../ui/UIButton1';
+import WordMakerSystem from '../system/WordMakerSystem';
 import utils from '../../../utils';
 
 export default class WorduoScreen extends Screen {
@@ -33,7 +34,7 @@ export default class WorduoScreen extends Screen {
             let text = new PIXI.Text(letter, LABELS.LABEL1);
             text.style.fill = 0
             text.style.fontSize = 64
-            let tex = utils.generateTextureFromContainer('image-' + index, text, window.TILE_ASSSETS_POOL)
+            let tex = utils.generateTextureFromContainer('image-' + letter, text, window.TILE_ASSSETS_POOL)
             this.letters[letter] = tex
         }
 console.log(this.letters)
@@ -63,8 +64,8 @@ console.log(this.letters)
         this.backBlocker.visible = false;
 
         this.frontLayer.addChild(this.backBlocker);
-        this.gridWrapper = new PIXI.Graphics().beginFill(0xFFFFFF).drawRect(0, 0, config.width * this.areaConfig.gameArea.w, config.height * this.areaConfig.gameArea.h);
-        this.container.addChild(this.gridWrapper);
+        this.wrapper = new PIXI.Graphics().beginFill(0xFFFFFF).drawRect(0, 0, config.width * this.areaConfig.gameArea.w, config.height * this.areaConfig.gameArea.h);
+        this.container.addChild(this.wrapper);
 
         this.topWrapper = new PIXI.Graphics().beginFill(0xaaaaaa).drawRect(0, 0, config.width, config.height * this.areaConfig.topArea);
         this.container.addChild(this.topWrapper);
@@ -72,10 +73,11 @@ console.log(this.letters)
         this.bottomWrapper = new PIXI.Graphics().beginFill(0xaaaaaa).drawRect(0, 0, config.width, config.height * this.areaConfig.bottomArea);
         this.container.addChild(this.bottomWrapper);
 
-        //this.gridWrapper.visible = false;
+        //this.wrapper.visible = false;
+       
 
-        this.mergeSystemContainer = new PIXI.Container()
-        this.container.addChild(this.mergeSystemContainer);
+        this.mainContainer = new PIXI.Container()
+        this.container.addChild(this.mainContainer);
 
         this.uiContainer = new PIXI.Container()
         this.container.addChild(this.uiContainer);
@@ -86,7 +88,16 @@ console.log(this.letters)
         this.topContainer = new PIXI.Container()
         this.container.addChild(this.topContainer);
 
-
+        this.wordMakerSystem = new WordMakerSystem({
+            mainContainer:this.mainContainer,
+            topContainer:this.topContainer,
+            bottomContainer:this.bottomContainer,
+            wrapper:this.wrapper,
+            bottomWrapper:this.bottomWrapper,
+            topWrapper:this.topWrapper
+        },
+        this.scrabbleSystem,
+        this.letters)
 
         this.mousePosition = {
             x: 0,
@@ -117,20 +128,8 @@ console.log(this.letters)
         this.uiLayer.addChild(this.standardPopUp)
         this.uiPanels.push(this.standardPopUp)
 
-        this.startNewRound()
-
     }
-    startNewRound(){
-        let letters = this.scrabbleSystem.getConsoantSets(3, 3)
 
-        let vowels = this.scrabbleSystem.getVowelSets(1,1)
-        letters = letters.concat(vowels)
-
-        // letters.forEach(element => {
-        //     let 
-        // });
-
-    }
     standardPopUpShow(params) {
         //this.standardPopUp.show(params)
         this.openPopUp(this.standardPopUp, params)
@@ -190,17 +189,20 @@ console.log(this.letters)
         this.addEvents();
     }
     update(delta) {
-
+        this.wordMakerSystem.update(delta)
     }
     resize(resolution) {
-        this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2
-        this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height
+        this.wrapper.x = config.width / 2 - this.wrapper.width / 2
+        this.wrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.wrapper.height
 
         this.topWrapper.x = config.width / 2 - this.topWrapper.width / 2
 
 
         this.bottomWrapper.x = config.width / 2 - this.bottomWrapper.width / 2
         this.bottomWrapper.y = config.height * (1 - this.areaConfig.bottomArea)
+
+
+        this.wordMakerSystem.resize(resolution)
 
         // this.entityShop.x = config.width / 2 - this.entityShop.width / 2
         // this.entityShop.y = config.height / 2 - this.entityShop.height / 2
