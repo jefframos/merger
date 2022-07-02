@@ -28,11 +28,22 @@ export default class WordMakerSystem {
 
         this.currentLetterButtons = [];
 
+
+        this.topHUDButtons = new UIList()
+        this.topHUDButtons.w = this.bottomWrapper.width * 0.6
+        this.topHUDButtons.h = 50
+        this.topContainer.addChild(this.topHUDButtons);
+        this.registerButton(this.topHUDButtons, 'icon_reset', 'resetAll', 'Restart')
+        //this.topHUDButtons.updateHorizontalList()
+        
+		this.pointsLabel = new PIXI.Text('Points: ', { font: '24px', fill: 0, align: 'right', fontWeight: '300', fontFamily: MAIN_FONT });
+        this.container.addChild(this.pointsLabel);
+
+
         this.actionButtons = new UIList()
         this.actionButtons.w = this.bottomWrapper.width * 0.6
         this.actionButtons.h = 50
         this.bottomContainer.addChild(this.actionButtons);
-
 
         this.registerButton(this.actionButtons, 'icon-close', 'erase')
         this.registerButton(this.actionButtons, 'results_arrow_left', 'arrowLeft')
@@ -52,7 +63,7 @@ export default class WordMakerSystem {
         this.totalLetters = 10
         this.letterButtons = []
         for (let index = 0; index < this.totalLetters; index++) {
-            let button = new UIButton1(0xFFFFFF, null, 0)
+            let button = new UIButton1(0xFFFFFF, null, 0xFFFFFF)
             button.changePivot(0, 0)
             button.updateIconTexture(this.letters['A'])
             button.updateIconScale(0.7)
@@ -72,20 +83,23 @@ export default class WordMakerSystem {
         this.bottomContainer.addChild(this.topLetterList);
         this.topLetterList.updateHorizontalList()
 
-        this.slotSize = { width: 60, height: 60, distance: 10 }
+        this.slotSize = { width: 60, height: 60, distance: 10, vertical:10 }
 
+        this.maxSlotsPerRow = 5
         this.wordFormations = {
             three: this.buildFormation(3),
             four: this.buildFormation(4),
+            four2: this.buildFormation(4),
             five: this.buildFormation(5),
-            six: this.buildFormation(6)
+            five2: this.buildFormation(5),
+            // six: this.buildFormation(6)
         }
 
 
 
         this.wordFormationsList = new UIList();
-        this.wordFormationsList.w = 6 * (this.slotSize.width) + 5 * this.slotSize.distance
-        this.wordFormationsList.h = 5 * (this.slotSize.height + this.slotSize.distance)
+        this.wordFormationsList.w = this.maxSlotsPerRow * (this.slotSize.width) + (this.maxSlotsPerRow-1) * this.slotSize.distance
+        this.wordFormationsList.h = 6 * (this.slotSize.height + this.slotSize.vertical)
 
         this.markerList = new UIList();
         this.markerList.w = this.wordFormationsList.w
@@ -106,7 +120,8 @@ export default class WordMakerSystem {
 
             this.gameplayData.lists.push({
                 currentIDLetter: 0,
-                slots: element.slots
+                slots: element.slots,
+                checker:element.checker
             })
 
         }
@@ -120,7 +135,7 @@ export default class WordMakerSystem {
         this.startNewRound();
 
 
-
+        this.currentPoints = 0;
     }
     arrowUp() {
         this.gameplayData.currentVerticalPosition--;
@@ -151,10 +166,37 @@ export default class WordMakerSystem {
         this.currentSelectedRow.currentIDLetter++
         this.currentSelectedRow.currentIDLetter %= this.currentSelectedRow.slots.length
         this.updateCurrentGameState();
+        
+    }
+    resetAll(){
+        this.gameplayData.currentVerticalPosition = 0;
+        this.gameplayData.lists.forEach(element => {
+            this.resetRow(element)
+        });
+        this.startNewRound()
+        this.updateCurrentGameState();
 
     }
-    erase() {
-
+    erase() {        
+        this.resetRow(this.currentSelectedRow)
+        this.updateCurrentGameState();
+    }
+    resetRow(row){
+        row.wordFound = '';
+        row.currentIDLetter = 0;
+        row.checker.addX()
+        row.slots.forEach(element => {
+            element.removeLetter();
+        });
+    }
+    isAlreadyUsed(word){
+        for (let index = 0; index < this.gameplayData.lists.length; index++) {
+            const element = this.gameplayData.lists[index];
+            if(element.wordFound == word){
+                return true;
+            }
+        }
+        return false;
     }
     getCurrentSelectedSlot() {
         return this.currentSelectedRow.slots[this.currentSelectedRow.currentIDLetter]
@@ -169,24 +211,37 @@ export default class WordMakerSystem {
                 slot.normalState();
             });
         });
+        this.currentPoints = 0
 
+        this.gameplayData.lists.forEach(element => {
+            if(element.wordFound && element.wordFound != ''){
+
+                this.currentPoints +=  this.scrabbleSystem.countWord(element.wordFound)
+            }
+        });
+        this.pointsLabel.text = 'POINTS: '+this.currentPoints
+        // console.log(this.scrabbleSystem.letters)
         this.currentSelectedRow = this.gameplayData.lists[this.gameplayData.currentVerticalPosition]
         this.currentSelectedRow.slots[this.currentSelectedRow.currentIDLetter].highlight()
         this.gameplayData.positionMarkers[this.gameplayData.currentVerticalPosition].visible = true;
     }
-    registerButton(list, texture, callback) {
+    registerButton(list, texture, callback, label) {
         let button = new UIButton1(0xFFFFFF, texture, 0)
         button.changePivot(0, 0)
+        if(label){
+            button.addLabelLeft(label, 0)
+        }
         button.updateIconScale(0.5)
         button.onClick.add(this[callback].bind(this, button))
         list.addElement(button)
     }
     buildFormation(total) {
+        
         let letterSlots = [];
         let slotList = new UIList();
 
         let marker = new LetterSlot(this.wrapper.height, this.slotSize.height + this.slotSize.distance * 2, 0xefefef)
-        slotList.w = total * (this.slotSize.width) + (total - 1) * this.slotSize.distance
+        slotList.w = (total+1) * (this.slotSize.width) + (total ) * this.slotSize.distance
         slotList.h = (this.slotSize.height);
         for (let index = 0; index < total; index++) {
             let slot = new LetterSlot(this.slotSize.width, this.slotSize.height)
@@ -194,10 +249,14 @@ export default class WordMakerSystem {
             slotList.addElement(slot);
             letterSlots.push(slot)
         }
-
-        return { list: slotList, slots: letterSlots, marker: marker }
+        let slot = new LetterSlot(this.slotSize.width, this.slotSize.height)
+        slot.align = 1
+        slotList.addElement(slot);
+        slot.addX()
+        return { list: slotList, slots: letterSlots, marker: marker , checker:slot}
     }
     startNewRound() {
+        this.currentPoints = 0;
         let letters = this.scrabbleSystem.getConsoantSets(4, 3)
 
         let vowels = this.scrabbleSystem.getVowelSets(2, 1)
@@ -214,10 +273,18 @@ export default class WordMakerSystem {
         let slot = this.getCurrentSelectedSlot()
         slot.addLetter(data.letter.key, this.letters[data.letter.key.toUpperCase()])
 
+        //console.log(this.currentSelectedRow)
         
-        if(this.testWord()){
-            console.log("")
+        let word = this.testWord()
+
+        
+        if(word && !this.isAlreadyUsed(word)){
+            this.currentSelectedRow.wordFound = word;
+            this.currentSelectedRow.checker.addCheck()
+            this.arrowDown();
         }else{
+            this.currentSelectedRow.wordFound = '';
+            this.currentSelectedRow.checker.addX()
             this.arrowRight()
         }
     }
@@ -225,13 +292,12 @@ export default class WordMakerSystem {
         let found = true;
         let testWord = ''
         this.currentSelectedRow.slots.forEach(element => {
-            if (element.letter == '') {
+            if (element.currentLetter == '') {
                 found = false
             }else{
-                testWord += element.letter
+                testWord += element.currentLetter
             }
         });
-
         if(found){
             if(this.scrabbleSystem.isThisAWord(testWord)){
                 return testWord
@@ -255,10 +321,14 @@ export default class WordMakerSystem {
         this.container.x = this.wrapper.x
         this.container.y = this.wrapper.y
 
-        this.wordFormationsList.x = this.wrapper.width / 2 - this.wordFormationsList.width / 2 - this.slotSize.distance
+        this.wordFormationsList.x = this.wrapper.width / 2 - this.wordFormationsList.width / 2 - this.slotSize.distance + this.slotSize.width/2
         this.wordFormationsList.y = this.wrapper.height / 2 - this.wordFormationsList.height / 2
 
-        this.markerList.x = this.wrapper.x + this.wrapper.width / 2 - this.markerList.width / 2
+
+        this.pointsLabel.x = this.wrapper.width / 2 - this.pointsLabel.width / 2 
+        this.pointsLabel.y = this.wordFormationsList.y - this.pointsLabel.height - 30
+
+        this.markerList.x = this.wrapper.width / 2 - this.markerList.w / 2
         this.markerList.y = this.wordFormationsList.y
 
         this.bottomLetterList.x = this.bottomWrapper.width / 2 - this.bottomLetterList.width / 2
@@ -269,5 +339,9 @@ export default class WordMakerSystem {
 
         this.actionButtons.x = this.bottomWrapper.width / 2 - this.actionButtons.w / 2
         this.actionButtons.y = this.bottomLetterList.y + this.bottomLetterList.height + 20
+
+
+        this.topHUDButtons.x = this.topWrapper.width - 80 //- this.topHUDButtons.width / 2
+        this.topHUDButtons.y = this.topWrapper.height / 2 - this.topHUDButtons.height / 2
     }
 }

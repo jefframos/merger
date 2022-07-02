@@ -105,7 +105,7 @@ export default class ScrabbleSystem {
             }, 0);
         }
     }
-    getConsoantSets(normal = 5, forceEasy=3){
+    getConsoantSets(normal = 5, forceEasy = 3) {
         let lettersToReturn = []
 
         while (lettersToReturn.length < normal) {
@@ -132,7 +132,7 @@ export default class ScrabbleSystem {
         return this.consonant[Math.floor(id)];
     }
 
-    getVowelSets(normal = 2, forceEasy=1){
+    getVowelSets(normal = 2, forceEasy = 1) {
         let lettersToReturn = []
 
         while (lettersToReturn.length < normal) {
@@ -643,9 +643,20 @@ export default class ScrabbleSystem {
         });
         return lettersData
     }
+    countWord(word) {
+        let count = 0;
+        for (let index = 0; index < word.length; index++) {
+            const letter = word[index];
+            this.letters.forEach(element => {
+                if(element.key == letter){
+                    count += element.points
+                }
+            });
+        }
+        return count;
+    }
     isThisAWord(word) {
         let lettersData = this.getDataByLetters(word.length)
-        console.log(lettersData)
         return lettersData.words ? lettersData.words[word] == 1 : false
     }
     fetchWords(letters, quant = 30) {

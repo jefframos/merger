@@ -25,19 +25,35 @@ export default class WorduoScreen extends Screen {
         }
 
         this.scrabbleSystem = new ScrabbleSystem(window.baseConfigGame.lettersData, window.baseConfigGame.wordsData)
-
+        console.log(this.scrabbleSystem.letters)
 
         window.TILE_ASSSETS_POOL = []
         this.letters = {}
-        for (let index = 0; index <= window.alphabet.length; index++) {
-            let letter = window.alphabet[index]
-            let text = new PIXI.Text(letter, LABELS.LABEL1);
-            text.style.fill = 0
-            text.style.fontSize = 64
-            let tex = utils.generateTextureFromContainer('image-' + letter, text, window.TILE_ASSSETS_POOL)
-            this.letters[letter] = tex
+        for (let index = 0; index <= this.scrabbleSystem.letters.length; index++) {
+            let letter = this.scrabbleSystem.letters[index]
+            if (letter) {
+
+            //    console.log(letter)
+                let container = new PIXI.Container()
+                let text = new PIXI.Text(letter.key, LABELS.LABEL1);
+                text.style.fill = 0
+                text.style.fontSize = 64
+
+                let textPoints = new PIXI.Text(letter.points, LABELS.LABEL1);
+                textPoints.style.fill = 0xFFFFFF
+                textPoints.style.stroke = 0
+                textPoints.style.strokeThickness = 10
+                textPoints.style.fontSize = 32
+                textPoints.x = 52
+                textPoints.y = 48
+
+                container.addChild(text)
+                container.addChild(textPoints)
+                let tex = utils.generateTextureFromContainer('image-' + letter.key.toUpperCase(), container, window.TILE_ASSSETS_POOL)
+                this.letters[letter.key.toUpperCase()] = tex
+            }
         }
-console.log(this.letters)
+        console.log(this.letters)
         // console.log(this.scrabbleSystem.isThisAWord('test'))
         // console.log(this.scrabbleSystem.isThisAWord('tee'))
         // console.log(this.scrabbleSystem.isThisAWord('rain'))
@@ -74,7 +90,7 @@ console.log(this.letters)
         this.container.addChild(this.bottomWrapper);
 
         //this.wrapper.visible = false;
-       
+
 
         this.mainContainer = new PIXI.Container()
         this.container.addChild(this.mainContainer);
@@ -89,15 +105,15 @@ console.log(this.letters)
         this.container.addChild(this.topContainer);
 
         this.wordMakerSystem = new WordMakerSystem({
-            mainContainer:this.mainContainer,
-            topContainer:this.topContainer,
-            bottomContainer:this.bottomContainer,
-            wrapper:this.wrapper,
-            bottomWrapper:this.bottomWrapper,
-            topWrapper:this.topWrapper
+            mainContainer: this.mainContainer,
+            topContainer: this.topContainer,
+            bottomContainer: this.bottomContainer,
+            wrapper: this.wrapper,
+            bottomWrapper: this.bottomWrapper,
+            topWrapper: this.topWrapper
         },
-        this.scrabbleSystem,
-        this.letters)
+            this.scrabbleSystem,
+            this.letters)
 
         this.mousePosition = {
             x: 0,

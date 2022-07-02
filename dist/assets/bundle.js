@@ -12686,6 +12686,7 @@ var UIButton1 = function (_PIXI$Container) {
 			this.buttonLabel.pivot.x = 0; //this.buttonLabel.width;
 			this.buttonLabel.pivot.y = this.buttonLabel.height / 2;
 			this.buttonLabel.x = this.mainContainer.width * 0.5 + 5;
+			this.buttonLabel.y = this.backShape.width * 0.5;
 			this.addChild(this.buttonLabel);
 		}
 	}, {
@@ -12697,6 +12698,7 @@ var UIButton1 = function (_PIXI$Container) {
 			this.buttonLabel.pivot.x = this.buttonLabel.width;
 			this.buttonLabel.pivot.y = this.buttonLabel.height / 2;
 			this.buttonLabel.x = -this.mainContainer.width * 0.5 - 5;
+			this.buttonLabel.y = this.backShape.width * 0.5;
 			this.addChild(this.buttonLabel);
 		}
 	}, {
@@ -59784,11 +59786,11 @@ var assets = [{
 	"id": "fiveLetters_",
 	"url": "assets/json\\fiveLetters_.json"
 }, {
-	"id": "fourLetters_",
-	"url": "assets/json\\fourLetters_.json"
-}, {
 	"id": "modifyers",
 	"url": "assets/json\\modifyers.json"
+}, {
+	"id": "fourLetters_",
+	"url": "assets/json\\fourLetters_.json"
 }, {
 	"id": "resources",
 	"url": "assets/json\\resources.json"
@@ -65345,16 +65347,33 @@ var WorduoScreen = function (_Screen) {
         }
 
         _this.scrabbleSystem = new _ScrabbleSystem2.default(window.baseConfigGame.lettersData, window.baseConfigGame.wordsData);
+        console.log(_this.scrabbleSystem.letters);
 
         window.TILE_ASSSETS_POOL = [];
         _this.letters = {};
-        for (var index = 0; index <= window.alphabet.length; index++) {
-            var letter = window.alphabet[index];
-            var text = new PIXI.Text(letter, LABELS.LABEL1);
-            text.style.fill = 0;
-            text.style.fontSize = 64;
-            var tex = _utils2.default.generateTextureFromContainer('image-' + letter, text, window.TILE_ASSSETS_POOL);
-            _this.letters[letter] = tex;
+        for (var index = 0; index <= _this.scrabbleSystem.letters.length; index++) {
+            var letter = _this.scrabbleSystem.letters[index];
+            if (letter) {
+
+                //    console.log(letter)
+                var container = new PIXI.Container();
+                var text = new PIXI.Text(letter.key, LABELS.LABEL1);
+                text.style.fill = 0;
+                text.style.fontSize = 64;
+
+                var textPoints = new PIXI.Text(letter.points, LABELS.LABEL1);
+                textPoints.style.fill = 0xFFFFFF;
+                textPoints.style.stroke = 0;
+                textPoints.style.strokeThickness = 10;
+                textPoints.style.fontSize = 32;
+                textPoints.x = 52;
+                textPoints.y = 48;
+
+                container.addChild(text);
+                container.addChild(textPoints);
+                var tex = _utils2.default.generateTextureFromContainer('image-' + letter.key.toUpperCase(), container, window.TILE_ASSSETS_POOL);
+                _this.letters[letter.key.toUpperCase()] = tex;
+            }
         }
         console.log(_this.letters);
         // console.log(this.scrabbleSystem.isThisAWord('test'))
@@ -66296,10 +66315,30 @@ var ScrabbleSystem = function () {
             return lettersData;
         }
     }, {
+        key: "countWord",
+        value: function countWord(word) {
+            var _this4 = this;
+
+            var count = 0;
+
+            var _loop2 = function _loop2(index) {
+                var letter = word[index];
+                _this4.letters.forEach(function (element) {
+                    if (element.key == letter) {
+                        count += element.points;
+                    }
+                });
+            };
+
+            for (var index = 0; index < word.length; index++) {
+                _loop2(index);
+            }
+            return count;
+        }
+    }, {
         key: "isThisAWord",
         value: function isThisAWord(word) {
             var lettersData = this.getDataByLetters(word.length);
-            console.log(lettersData);
             return lettersData.words ? lettersData.words[word] == 1 : false;
         }
     }, {
@@ -66436,6 +66475,16 @@ var WordMakerSystem = function () {
 
         this.currentLetterButtons = [];
 
+        this.topHUDButtons = new _UIList2.default();
+        this.topHUDButtons.w = this.bottomWrapper.width * 0.6;
+        this.topHUDButtons.h = 50;
+        this.topContainer.addChild(this.topHUDButtons);
+        this.registerButton(this.topHUDButtons, 'icon_reset', 'resetAll', 'Restart');
+        //this.topHUDButtons.updateHorizontalList()
+
+        this.pointsLabel = new PIXI.Text('Points: ', { font: '24px', fill: 0, align: 'right', fontWeight: '300', fontFamily: MAIN_FONT });
+        this.container.addChild(this.pointsLabel);
+
         this.actionButtons = new _UIList2.default();
         this.actionButtons.w = this.bottomWrapper.width * 0.6;
         this.actionButtons.h = 50;
@@ -66459,7 +66508,7 @@ var WordMakerSystem = function () {
         this.totalLetters = 10;
         this.letterButtons = [];
         for (var index = 0; index < this.totalLetters; index++) {
-            var button = new _UIButton2.default(0xFFFFFF, null, 0);
+            var button = new _UIButton2.default(0xFFFFFF, null, 0xFFFFFF);
             button.changePivot(0, 0);
             button.updateIconTexture(this.letters['A']);
             button.updateIconScale(0.7);
@@ -66479,18 +66528,21 @@ var WordMakerSystem = function () {
         this.bottomContainer.addChild(this.topLetterList);
         this.topLetterList.updateHorizontalList();
 
-        this.slotSize = { width: 60, height: 60, distance: 10 };
+        this.slotSize = { width: 60, height: 60, distance: 10, vertical: 10 };
 
+        this.maxSlotsPerRow = 5;
         this.wordFormations = {
             three: this.buildFormation(3),
             four: this.buildFormation(4),
+            four2: this.buildFormation(4),
             five: this.buildFormation(5),
-            six: this.buildFormation(6)
+            five2: this.buildFormation(5)
+            // six: this.buildFormation(6)
         };
 
         this.wordFormationsList = new _UIList2.default();
-        this.wordFormationsList.w = 6 * this.slotSize.width + 5 * this.slotSize.distance;
-        this.wordFormationsList.h = 5 * (this.slotSize.height + this.slotSize.distance);
+        this.wordFormationsList.w = this.maxSlotsPerRow * this.slotSize.width + (this.maxSlotsPerRow - 1) * this.slotSize.distance;
+        this.wordFormationsList.h = 6 * (this.slotSize.height + this.slotSize.vertical);
 
         this.markerList = new _UIList2.default();
         this.markerList.w = this.wordFormationsList.w;
@@ -66511,7 +66563,8 @@ var WordMakerSystem = function () {
 
             this.gameplayData.lists.push({
                 currentIDLetter: 0,
-                slots: element.slots
+                slots: element.slots,
+                checker: element.checker
             });
         }
         this.markerList.updateVerticalList();
@@ -66522,6 +66575,8 @@ var WordMakerSystem = function () {
         this.currentSelectedRow = {};
         this.updateCurrentGameState();
         this.startNewRound();
+
+        this.currentPoints = 0;
     }
 
     (0, _createClass3.default)(WordMakerSystem, [{
@@ -66561,8 +66616,44 @@ var WordMakerSystem = function () {
             this.updateCurrentGameState();
         }
     }, {
+        key: 'resetAll',
+        value: function resetAll() {
+            var _this = this;
+
+            this.gameplayData.currentVerticalPosition = 0;
+            this.gameplayData.lists.forEach(function (element) {
+                _this.resetRow(element);
+            });
+            this.startNewRound();
+            this.updateCurrentGameState();
+        }
+    }, {
         key: 'erase',
-        value: function erase() {}
+        value: function erase() {
+            this.resetRow(this.currentSelectedRow);
+            this.updateCurrentGameState();
+        }
+    }, {
+        key: 'resetRow',
+        value: function resetRow(row) {
+            row.wordFound = '';
+            row.currentIDLetter = 0;
+            row.checker.addX();
+            row.slots.forEach(function (element) {
+                element.removeLetter();
+            });
+        }
+    }, {
+        key: 'isAlreadyUsed',
+        value: function isAlreadyUsed(word) {
+            for (var index = 0; index < this.gameplayData.lists.length; index++) {
+                var element = this.gameplayData.lists[index];
+                if (element.wordFound == word) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }, {
         key: 'getCurrentSelectedSlot',
         value: function getCurrentSelectedSlot() {
@@ -66571,6 +66662,8 @@ var WordMakerSystem = function () {
     }, {
         key: 'updateCurrentGameState',
         value: function updateCurrentGameState() {
+            var _this2 = this;
+
             this.gameplayData.positionMarkers.forEach(function (element) {
                 element.visible = false;
             });
@@ -66580,16 +66673,28 @@ var WordMakerSystem = function () {
                     slot.normalState();
                 });
             });
+            this.currentPoints = 0;
 
+            this.gameplayData.lists.forEach(function (element) {
+                if (element.wordFound && element.wordFound != '') {
+
+                    _this2.currentPoints += _this2.scrabbleSystem.countWord(element.wordFound);
+                }
+            });
+            this.pointsLabel.text = 'POINTS: ' + this.currentPoints;
+            // console.log(this.scrabbleSystem.letters)
             this.currentSelectedRow = this.gameplayData.lists[this.gameplayData.currentVerticalPosition];
             this.currentSelectedRow.slots[this.currentSelectedRow.currentIDLetter].highlight();
             this.gameplayData.positionMarkers[this.gameplayData.currentVerticalPosition].visible = true;
         }
     }, {
         key: 'registerButton',
-        value: function registerButton(list, texture, callback) {
+        value: function registerButton(list, texture, callback, label) {
             var button = new _UIButton2.default(0xFFFFFF, texture, 0);
             button.changePivot(0, 0);
+            if (label) {
+                button.addLabelLeft(label, 0);
+            }
             button.updateIconScale(0.5);
             button.onClick.add(this[callback].bind(this, button));
             list.addElement(button);
@@ -66597,24 +66702,29 @@ var WordMakerSystem = function () {
     }, {
         key: 'buildFormation',
         value: function buildFormation(total) {
+
             var letterSlots = [];
             var slotList = new _UIList2.default();
 
             var marker = new _LetterSlot2.default(this.wrapper.height, this.slotSize.height + this.slotSize.distance * 2, 0xefefef);
-            slotList.w = total * this.slotSize.width + (total - 1) * this.slotSize.distance;
+            slotList.w = (total + 1) * this.slotSize.width + total * this.slotSize.distance;
             slotList.h = this.slotSize.height;
             for (var index = 0; index < total; index++) {
-                var slot = new _LetterSlot2.default(this.slotSize.width, this.slotSize.height);
-                slot.align = 1;
-                slotList.addElement(slot);
-                letterSlots.push(slot);
+                var _slot = new _LetterSlot2.default(this.slotSize.width, this.slotSize.height);
+                _slot.align = 1;
+                slotList.addElement(_slot);
+                letterSlots.push(_slot);
             }
-
-            return { list: slotList, slots: letterSlots, marker: marker };
+            var slot = new _LetterSlot2.default(this.slotSize.width, this.slotSize.height);
+            slot.align = 1;
+            slotList.addElement(slot);
+            slot.addX();
+            return { list: slotList, slots: letterSlots, marker: marker, checker: slot };
         }
     }, {
         key: 'startNewRound',
         value: function startNewRound() {
+            this.currentPoints = 0;
             var letters = this.scrabbleSystem.getConsoantSets(4, 3);
 
             var vowels = this.scrabbleSystem.getVowelSets(2, 1);
@@ -66632,9 +66742,17 @@ var WordMakerSystem = function () {
             var slot = this.getCurrentSelectedSlot();
             slot.addLetter(data.letter.key, this.letters[data.letter.key.toUpperCase()]);
 
-            if (this.testWord()) {
-                console.log("");
+            //console.log(this.currentSelectedRow)
+
+            var word = this.testWord();
+
+            if (word && !this.isAlreadyUsed(word)) {
+                this.currentSelectedRow.wordFound = word;
+                this.currentSelectedRow.checker.addCheck();
+                this.arrowDown();
             } else {
+                this.currentSelectedRow.wordFound = '';
+                this.currentSelectedRow.checker.addX();
                 this.arrowRight();
             }
         }
@@ -66644,13 +66762,12 @@ var WordMakerSystem = function () {
             var found = true;
             var testWord = '';
             this.currentSelectedRow.slots.forEach(function (element) {
-                if (element.letter == '') {
+                if (element.currentLetter == '') {
                     found = false;
                 } else {
-                    testWord += element.letter;
+                    testWord += element.currentLetter;
                 }
             });
-
             if (found) {
                 if (this.scrabbleSystem.isThisAWord(testWord)) {
                     return testWord;
@@ -66676,10 +66793,13 @@ var WordMakerSystem = function () {
             this.container.x = this.wrapper.x;
             this.container.y = this.wrapper.y;
 
-            this.wordFormationsList.x = this.wrapper.width / 2 - this.wordFormationsList.width / 2 - this.slotSize.distance;
+            this.wordFormationsList.x = this.wrapper.width / 2 - this.wordFormationsList.width / 2 - this.slotSize.distance + this.slotSize.width / 2;
             this.wordFormationsList.y = this.wrapper.height / 2 - this.wordFormationsList.height / 2;
 
-            this.markerList.x = this.wrapper.x + this.wrapper.width / 2 - this.markerList.width / 2;
+            this.pointsLabel.x = this.wrapper.width / 2 - this.pointsLabel.width / 2;
+            this.pointsLabel.y = this.wordFormationsList.y - this.pointsLabel.height - 30;
+
+            this.markerList.x = this.wrapper.width / 2 - this.markerList.w / 2;
             this.markerList.y = this.wordFormationsList.y;
 
             this.bottomLetterList.x = this.bottomWrapper.width / 2 - this.bottomLetterList.width / 2;
@@ -66690,6 +66810,9 @@ var WordMakerSystem = function () {
 
             this.actionButtons.x = this.bottomWrapper.width / 2 - this.actionButtons.w / 2;
             this.actionButtons.y = this.bottomLetterList.y + this.bottomLetterList.height + 20;
+
+            this.topHUDButtons.x = this.topWrapper.width - 80; //- this.topHUDButtons.width / 2
+            this.topHUDButtons.y = this.topWrapper.height / 2 - this.topHUDButtons.height / 2;
         }
     }]);
     return WordMakerSystem;
@@ -66765,7 +66888,7 @@ var LetterSlot = function (_PIXI$Container) {
 		_this.addChild(_this.letter);
 
 		_this.letter.x = width / 2;
-		_this.letter.y = height / 2;
+		_this.letter.y = height / 2 - 2;
 		return _this;
 	}
 
@@ -66778,6 +66901,18 @@ var LetterSlot = function (_PIXI$Container) {
 		key: 'normalState',
 		value: function normalState() {
 			this.backShape.tint = this.color;
+		}
+	}, {
+		key: 'addCheck',
+		value: function addCheck() {
+			this.letter.texture = PIXI.Texture.fromFrame('icon_confirm');
+			this.updateletterScale();
+		}
+	}, {
+		key: 'addX',
+		value: function addX() {
+			this.letter.texture = PIXI.Texture.fromFrame('icon_close');
+			this.updateletterScale();
 		}
 	}, {
 		key: 'addLetter',

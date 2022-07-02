@@ -19,13 +19,21 @@ export default class LetterSlot extends PIXI.Container {
 		this.addChild(this.letter)
 
 		this.letter.x = width / 2
-		this.letter.y = height / 2
+		this.letter.y = height / 2 - 2
 	}
 	highlight(){
 		this.backShape.tint = 0x22aa99;
 	}
 	normalState(){
 		this.backShape.tint = this.color;
+	}
+	addCheck(){
+		this.letter.texture = PIXI.Texture.fromFrame('icon_confirm');
+		this.updateletterScale();
+	}
+	addX(){
+		this.letter.texture = PIXI.Texture.fromFrame('icon_close');
+		this.updateletterScale();
 	}
 	addLetter(letter, texture) {
 		this.currentLetter = letter

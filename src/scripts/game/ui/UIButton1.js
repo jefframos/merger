@@ -165,6 +165,7 @@ export default class UIButton1 extends PIXI.Container {
 		this.buttonLabel.pivot.x = 0//this.buttonLabel.width;
 		this.buttonLabel.pivot.y = this.buttonLabel.height / 2;
 		this.buttonLabel.x = this.mainContainer.width * 0.5 + 5;
+		this.buttonLabel.y = this.backShape.width * 0.5;
 		this.addChild(this.buttonLabel);
 	}
 	addLabelLeft(label, color = 0xFFFFFF) {
@@ -172,6 +173,7 @@ export default class UIButton1 extends PIXI.Container {
 		this.buttonLabel.pivot.x = this.buttonLabel.width;
 		this.buttonLabel.pivot.y = this.buttonLabel.height / 2;
 		this.buttonLabel.x = -this.mainContainer.width * 0.5 - 5;
+		this.buttonLabel.y = this.backShape.width * 0.5;
 		this.addChild(this.buttonLabel);
 	}
 	addLabelLeftMenu(label) {
