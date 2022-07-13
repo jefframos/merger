@@ -2321,34 +2321,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.default = {
-	width: 720 * 0.9,
-	height: 1280 * 0.8,
-	webgl: true,
-	effectsLayer: null,
-	colors: {
-		background: 0x000000
-	},
-	rendererOptions: {
-		//pixi rendererOptions
-		resolution: 2, //window.devicePixelRatio,
-		antialias: true,
-		backgroundColor: 0x000000
-	},
-	levels: []
-};
-module.exports = exports["default"];
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
@@ -2366,7 +2338,7 @@ var _isNan2 = _interopRequireDefault(_isNan);
 
 var _resizeToFitMaxAR$res;
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -2985,6 +2957,34 @@ exports.default = (_resizeToFitMaxAR$res = {
     return -c * (Math.sqrt(1 - t * t) - 1) + b;
 }), _resizeToFitMaxAR$res);
 module.exports = exports['default'];
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = {
+	width: 750 * 0.8,
+	height: 1334 * 0.8,
+	webgl: true,
+	effectsLayer: null,
+	colors: {
+		background: 0x000000
+	},
+	rendererOptions: {
+		//pixi rendererOptions
+		resolution: 2, //window.devicePixelRatio,
+		antialias: true,
+		backgroundColor: 0x000000
+	},
+	levels: []
+};
+module.exports = exports["default"];
 
 /***/ }),
 /* 14 */
@@ -12479,7 +12479,7 @@ var _gsap = __webpack_require__(17);
 
 var _gsap2 = _interopRequireDefault(_gsap);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -12492,8 +12492,8 @@ var UIButton1 = function (_PIXI$Container) {
 
 	function UIButton1(color, icon) {
 		var iconColor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0xFFFFFF;
-		var width = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 50;
-		var height = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 50;
+		var width = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 65;
+		var height = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 65;
 		(0, _classCallCheck3.default)(this, UIButton1);
 
 		var _this = (0, _possibleConstructorReturn3.default)(this, (UIButton1.__proto__ || (0, _getPrototypeOf2.default)(UIButton1)).call(this));
@@ -12525,27 +12525,27 @@ var UIButton1 = function (_PIXI$Container) {
 		// this.backShape.alpha = 1
 
 		_this.padding = 8;
-		_this.backShapeBorder = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15);
+		_this.backShapeBorder = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('small-no-pattern'), 15, 15, 15, 15);
 		_this.backShapeBorder.width = width + _this.padding;
 		_this.backShapeBorder.height = height + _this.padding;
 		_this.backShapeBorder.pivot.set((width + _this.padding) / 2, (height + _this.padding) / 2);
 		_this.backShapeBorder.tint = iconColor;
 
 		//this.backShape = PIXI.Sprite.fromFrame('largeCard.png')
-		_this.backShape = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15);
+		_this.backShape = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('small-no-pattern'), 15, 15, 15, 15);
 		_this.backShape.width = width;
 		_this.backShape.height = height;
 		_this.backShape.pivot.set(width / 2, height / 2);
 		//this.backShape.scale.set(width / this.backShape.width);
 		//this.backShape.anchor.set(0.5)
-		_this.backShape.tint = color;
+		// //this.backShape.tint = color;
 
 		//this.updateRotation(Math.PI * 0.25)
 
 		_this.icon.anchor.set(0.5);
 
 		_this.updateIconScale();
-		_this.mainContainer.addChild(_this.backShapeBorder);
+		//this.mainContainer.addChild(this.backShapeBorder);
 		_this.mainContainer.addChild(_this.backShape);
 		_this.mainContainer.addChild(_this.icon);
 		_this.addChild(_this.mainContainer);
@@ -12571,13 +12571,13 @@ var UIButton1 = function (_PIXI$Container) {
 		key: 'disableState',
 		value: function disableState(color) {
 			this.icon.alpha = 0.5;
-			this.backShape.tint = color;
+			// this.backShape.tint = color;
 		}
 	}, {
 		key: 'enableState',
 		value: function enableState(color) {
 			this.icon.alpha = 1;
-			this.backShape.tint = color;
+			// this.backShape.tint = color;
 		}
 	}, {
 		key: 'addFrontShape',
@@ -21819,7 +21819,7 @@ var _UpgradesToggles = __webpack_require__(357);
 
 var _UpgradesToggles2 = _interopRequireDefault(_UpgradesToggles);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -21987,7 +21987,7 @@ var _signals = __webpack_require__(9);
 
 var _signals2 = _interopRequireDefault(_signals);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -32366,11 +32366,11 @@ var _signals = __webpack_require__(9);
 
 var _signals2 = _interopRequireDefault(_signals);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -32766,7 +32766,7 @@ var _UIButton = __webpack_require__(27);
 
 var _UIButton2 = _interopRequireDefault(_UIButton);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -33295,11 +33295,11 @@ function tryStuff() {
 "use strict";
 
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -55855,6 +55855,10 @@ var _pixi = __webpack_require__(0);
 
 var PIXI = _interopRequireWildcard(_pixi);
 
+var _utils = __webpack_require__(12);
+
+var _utils2 = _interopRequireDefault(_utils);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -55904,58 +55908,165 @@ var Game = function () {
             this.dt = deltaTime / 60;
             this.update();
         }
+        // resize2() {
+        //     if (window.innerWidth / window.innerHeight >= this.ratio) {
+        //         var w = window.innerHeight * this.ratio;
+        //     } else {
+        //         var h = window.innerWidth / this.ratio;
+        //     }
+        //     var w = window.innerWidth;
+        //     var h = window.innerHeight;
+        //     window.renderer.view.style.position = 'absolute';
+        //     this.innerResolution = { width: window.innerWidth, height: window.innerHeight };
+
+        //     const sclX = window.innerWidth < this.desktopResolution.width ? window.innerWidth / this.desktopResolution.width : 10;
+        //     const sclY = window.innerHeight / this.desktopResolution.height// window.innerHeight < this.desktopResolution.height ? window.innerHeight / this.desktopResolution.height : 1;
+
+        //     const scl = Math.min(sclX, sclY);
+
+        //     window.renderer.view.style.position = 'absolute';
+
+        //     const newSize = {
+        //         width: window.innerWidth,//* scl,
+        //         height: window.innerHeight//this.desktopResolution.height * scl,
+        //     };
+
+
+        //     window.renderer.view.style.width = `${newSize.width}px`;
+        //     window.renderer.view.style.height = `${newSize.height}px`;
+
+        //     if (newSize.height < window.innerHeight) {
+        //         window.renderer.view.style.top = `${window.innerHeight / 2 - (newSize.height) / 2}px`;
+        //     }
+        //     if (newSize.width < window.innerWidth) {
+        //     }
+        //     window.renderer.view.style.left = `${window.innerWidth / 2 - (newSize.width) / 2}px`;
+
+        //     if (this.screenManager) {
+        //         this.screenManager.resize(newSize);
+
+        //         this.screenManager.scale.x = (config.width / newSize.width) / (config.height / window.innerHeight)
+        //         this.screenManager.pivot.x = config.width / 2
+        //         let s = (newSize.width / config.width)
+        //         //this.screenManager.x = window.innerWidth / 2 / s
+        //     }
+        //     // if (window.innerWidth / window.innerHeight >= this.ratio) {
+        //     //     var w = window.innerHeight * this.ratio;
+        //     //     var h = window.innerHeight;
+        //     // } else {
+        //     //     var w = window.innerWidth;
+        //     //     var h = window.innerWidth / this.ratio;
+        //     // }
+        //     // window.renderer.view.style.width = w + 'px';
+        //     // window.renderer.view.style.height = h + 'px';
+        // }
+
+
     }, {
         key: 'resize',
         value: function resize() {
+            var w = window.innerHeight;
+            var h = window.innerWidth;
             if (window.innerWidth / window.innerHeight >= this.ratio) {
                 var w = window.innerHeight * this.ratio;
             } else {
                 var h = window.innerWidth / this.ratio;
             }
-            var w = window.innerWidth;
-            var h = window.innerHeight;
-            window.renderer.view.style.position = 'absolute';
-            this.innerResolution = { width: window.innerWidth, height: window.innerHeight };
 
-            var sclX = window.innerWidth < this.desktopResolution.width ? window.innerWidth / this.desktopResolution.width : 10;
-            var sclY = window.innerHeight / this.desktopResolution.height; // window.innerHeight < this.desktopResolution.height ? window.innerHeight / this.desktopResolution.height : 1;
+            var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+            var w = width;
+            var h = height;
+            //this.resolution = { width: window.outerWidth, height: window.outerHeight };
+            this.resolution = { width: window.outerWidth, height: window.outerHeight };
+            this.innerResolution = { width: w, height: h };
+
+            window.renderer.view.style.position = 'absolute';
+
+            window.renderer.view.style.width = this.innerResolution.width + 'px';
+            window.renderer.view.style.height = this.innerResolution.height + 'px';
+
+            var sclX = this.innerResolution.width / config.width;
+            var sclY = this.innerResolution.height / config.height;
 
             var scl = Math.min(sclX, sclY);
-
-            window.renderer.view.style.position = 'absolute';
-
             var newSize = {
-                width: window.innerWidth, //* scl,
+                width: this.desktopResolution.width * scl,
                 height: this.desktopResolution.height * scl
             };
 
-            window.renderer.view.style.width = newSize.width + 'px';
-            window.renderer.view.style.height = newSize.height + 'px';
+            window.renderer.view.style.width = this.innerResolution.width + 'px';
+            window.renderer.view.style.height = this.innerResolution.height + 'px';
 
-            if (newSize.height < window.innerHeight) {
-                window.renderer.view.style.top = window.innerHeight / 2 - newSize.height / 2 + 'px';
-            }
-            if (newSize.width < window.innerWidth) {}
-            window.renderer.view.style.left = window.innerWidth / 2 - newSize.width / 2 + 'px';
+            window.renderer.view.style.left = '0px'; //`${this.innerResolution.width / 2 - (newSize.width) / 2}px`;
+            window.renderer.view.style.top = '0px'; //`${this.innerResolution.height / 2 - (newSize.height) / 2}px`;
+            // window.renderer.view.style.width = `${this.innerResolution.width}px`;
+            // window.renderer.view.style.height = `${this.innerResolution.height}px`;
+            //window.renderer.view.style.left = `${window.innerWidth / 2 - (this.innerResolution.width) / 2}px`;
+
+
+            // let sclX = this.innerResolution.width /this.desktopResolution.width //* this.ratio
+            // let sclY =  this.innerResolution.height /this.desktopResolution.height //* this.ratio
+
+
+            // console.log(sclX, sclY)
+
+            // utils.resizeToFitAR
+            // let scaleMin = 1//Math.min(sclX, sclY) * this.ratio;
+            // if(sclX < sclY){
+            //     scaleMin = sclX* this.ratio
+            // }else{
+
+            //     scaleMin = sclY* this.ratio
+            // }
+
+
+            //element.scale.set(min)
 
             if (this.screenManager) {
-                this.screenManager.resize(newSize);
+                //  let sclX = (this.innerResolution.width)/(this.desktopResolution.width) ;
+                //  let sclY = (this.innerResolution.height)/(this.desktopResolution.height) ;
+                //  let min = Math.min(sclX, sclY);
+                // this.screenManager.scale.set(min)
+                var newScaleX = newSize.width / this.innerResolution.width;
+                this.screenManager.scale.x = newScaleX; //this.ratio
+                var newScaleY = newSize.height / this.innerResolution.height;
+                this.screenManager.scale.y = newScaleY; //this.ratio
 
-                this.screenManager.scale.x = config.width / newSize.width / (config.height / window.innerHeight);
-                this.screenManager.pivot.x = config.width / 2;
-                var s = newSize.width / config.width;
-                this.screenManager.x = window.innerWidth / 2 / s;
+                //console.log(newScaleX)
+                // 	// this.screenManager.pivot.x = this.innerResolution.width / 2 // this.screenManager.scale.x
+                this.screenManager.x = this.desktopResolution.width / 2 - this.desktopResolution.width / 2 * newScaleX; ///- (this.innerResolution.width / 2 *newScaleX) // this.screenManager.scale.y
+                this.screenManager.pivot.y = this.innerResolution.height / 2 - this.innerResolution.height / 2 / newScaleY; // this.screenManager.scale.y
+
+                // 	this.screenManager.x = 0//window.innerWidth/2 * sclX - this.desktopResolution.width/2* sclX//this.innerResolution.width / 2 // this.screenManager.scale.x
+                // 	this.screenManager.y = 0// window.innerHeight/2 * sclY - this.desktopResolution.height/2* sclY // this.screenManager.scale.y
+
+                // 	//console.log(window.appScale)
+
+                // 	this.screenManager.resize(this.resolution, this.innerResolution);
             }
-            // if (window.innerWidth / window.innerHeight >= this.ratio) {
-            //     var w = window.innerHeight * this.ratio;
-            //     var h = window.innerHeight;
-            // } else {
-            //     var w = window.innerWidth;
-            //     var h = window.innerWidth / this.ratio;
-            // }
-            // window.renderer.view.style.width = w + 'px';
-            // window.renderer.view.style.height = h + 'px';
         }
+
+        /**
+         * 
+         *  let sclX = this.innerResolution.width / config.width
+            let sclY = this.innerResolution.height / config.height
+                let scl = Math.min(sclX, sclY)
+            const newSize = {
+                width: this.desktopResolution.width * scl,
+                height: this.desktopResolution.height * scl,
+            };
+              window.renderer.view.style.width = `${newSize.width}px`;
+            window.renderer.view.style.height = `${newSize.height}px`;
+        
+            window.renderer.view.style.left = `${this.innerResolution.width / 2 - (newSize.width) / 2}px`;
+            window.renderer.view.style.top = `${this.innerResolution.height / 2 - (newSize.height) / 2}px`;
+         * 
+         * 
+         * 
+         */
+
     }, {
         key: 'update',
         value: function update() {
@@ -59786,11 +59897,11 @@ var assets = [{
 	"id": "fiveLetters_",
 	"url": "assets/json\\fiveLetters_.json"
 }, {
-	"id": "modifyers",
-	"url": "assets/json\\modifyers.json"
-}, {
 	"id": "fourLetters_",
 	"url": "assets/json\\fourLetters_.json"
+}, {
+	"id": "modifyers",
+	"url": "assets/json\\modifyers.json"
 }, {
 	"id": "resources",
 	"url": "assets/json\\resources.json"
@@ -60097,7 +60208,7 @@ module.exports = exports["default"];
 /* 341 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/particles/particles.json","image/entities/entities.json","image/background/background.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
+module.exports = {"default":["image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 342 */
@@ -60146,7 +60257,7 @@ var _ScreenManager2 = __webpack_require__(155);
 
 var _ScreenManager3 = _interopRequireDefault(_ScreenManager2);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -60476,7 +60587,7 @@ var _UIButton = __webpack_require__(27);
 
 var _UIButton2 = _interopRequireDefault(_UIButton);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -60532,14 +60643,17 @@ var MergeScreen = function (_Screen) {
                 _this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * _this.areaConfig.gameArea.w, config.height * _this.areaConfig.gameArea.h);
                 _this.container.addChild(_this.gridWrapper);
                 _this.gridWrapper.visible = false;
+                //this.gridWrapper.alpha = 0;
 
                 _this.resourcesWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * _this.areaConfig.resourcesArea.w, config.height * _this.areaConfig.resourcesArea.h);
                 _this.container.addChild(_this.resourcesWrapper);
                 _this.resourcesWrapper.visible = false;
+                //this.resourcesWrapper.alpha = 0;
 
                 _this.resourcesWrapperRight = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * _this.areaConfig.resourcesArea.w, config.height * _this.areaConfig.resourcesArea.h);
                 _this.container.addChild(_this.resourcesWrapperRight);
                 _this.resourcesWrapperRight.visible = false;
+                //this.resourcesWrapperRight.alpha = 0;
 
                 _this.mergeSystemContainer = new PIXI.Container();
                 _this.container.addChild(_this.mergeSystemContainer);
@@ -60888,6 +61002,7 @@ var MergeScreen = function (_Screen) {
         }, {
                 key: 'resize',
                 value: function resize(resolution) {
+
                         this.mergeSystem1.resize(resolution);
                         this.spaceBackground.resize(resolution, this.screenManager.scale);
 
@@ -60994,11 +61109,11 @@ var _UIButton = __webpack_require__(27);
 
 var _UIButton2 = _interopRequireDefault(_UIButton);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -61730,7 +61845,7 @@ var _UIList2 = __webpack_require__(48);
 
 var _UIList3 = _interopRequireDefault(_UIList2);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -62141,7 +62256,7 @@ var ShopButton = function (_PIXI$Container) {
         _this.addChild(_this.container);
         // this.background = new PIXI.Graphics().beginFill(0xFFFFFF).drawRect(0, 0, 120, 40);
 
-        _this.backButton = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10);
+        _this.backButton = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('small-no-pattern'), 20, 20, 20, 20);
         _this.backButton.width = 100;
         _this.backButton.height = 40;
 
@@ -62159,7 +62274,7 @@ var ShopButton = function (_PIXI$Container) {
         _this.sprite.anchor.set(0, 0.5);
         _this.defaultSpriteScale = _this.h / _this.sprite.height * 0.5;
         _this.sprite.scale.set(_this.defaultSpriteScale);
-        _this.sprite.x = _this.sprite.width * 0.25;
+        _this.sprite.x = _this.sprite.width * 0.5;
         _this.sprite.y = _this.h / 2;
         _this.interactive = true;
         _this.buttonMode = true;
@@ -62267,7 +62382,7 @@ var ShopButton = function (_PIXI$Container) {
             this.enabled = true;
             this.deactived = false;
             this.sprite.visible = true;
-            this.backButton.tint = 0x6250e5;
+            //this.backButton.tint = 0x6250e5;
             this.backButton.alpha = 1;
             this.priceLabel.style.fill = 0xFFFFFF;
         }
@@ -63201,11 +63316,11 @@ var _signals = __webpack_require__(9);
 
 var _signals2 = _interopRequireDefault(_signals);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -63310,6 +63425,9 @@ var MergeSystem = function () {
         this.systems = [];
 
         this.loadData();
+        setTimeout(function () {
+            _this.adjustSlotsPosition();
+        }, 100);
     }
 
     (0, _createClass3.default)(MergeSystem, [{
@@ -64174,11 +64292,11 @@ var _signals = __webpack_require__(9);
 
 var _signals2 = _interopRequireDefault(_signals);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -64474,7 +64592,7 @@ var _UIBar = __webpack_require__(80);
 
 var _UIBar2 = _interopRequireDefault(_UIBar);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -64526,13 +64644,12 @@ var ResourceTile = function (_MergeTile) {
         _this.priceLabel.x = _this.backSlot.width / 2 - _this.label.width / 2;
         _this.priceLabel.visible = false;
 
-        _this.costLabelContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10);
-        _this.costLabelContainer.width = 100;
-        _this.costLabelContainer.height = 30;
+        _this.costLabelContainer = new PIXI.Sprite.fromFrame('large-square-pattern');
+        // this.costLabelContainer.width = 100
+        // this.costLabelContainer.height = 30 
         _this.container.addChild(_this.costLabelContainer);
 
         _this.initialCostLabel = new PIXI.Text('Ready', LABELS.LABEL1);
-        _this.costLabelContainer.addChild(_this.initialCostLabel);
         _this.initialCostLabel.style.stroke = 0;
         _this.initialCostLabel.style.strokeThickness = 6;
 
@@ -64540,9 +64657,10 @@ var ResourceTile = function (_MergeTile) {
         _this.costLabelContainer.y = _this.backSlot.height - _this.costLabelContainer.height;
 
         _this.exclamationMark = new PIXI.Sprite.fromFrame('new_item');
-        _this.costLabelContainer.addChild(_this.exclamationMark);
         _this.exclamationMark.anchor.set(0.5);
-
+        _this.exclamationMark.x = _this.costLabelContainer.width;
+        _this.costLabelContainer.addChild(_this.exclamationMark);
+        _this.costLabelContainer.addChild(_this.initialCostLabel);
         //this.initialCostLabel.visible = false;
 
         _this.label.visible = false;
@@ -64827,11 +64945,11 @@ var _pixi = __webpack_require__(0);
 
 var PIXI = _interopRequireWildcard(_pixi);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -65119,7 +65237,7 @@ var _WorduoScreen = __webpack_require__(371);
 
 var _WorduoScreen2 = _interopRequireDefault(_WorduoScreen);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -65318,7 +65436,7 @@ var _WordMakerSystem = __webpack_require__(373);
 
 var _WordMakerSystem2 = _interopRequireDefault(_WordMakerSystem);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -65613,7 +65731,7 @@ var _gsap = __webpack_require__(17);
 
 var _gsap2 = _interopRequireDefault(_gsap);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -66440,11 +66558,11 @@ var _UIList = __webpack_require__(48);
 
 var _UIList2 = _interopRequireDefault(_UIList);
 
-var _config = __webpack_require__(12);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _utils = __webpack_require__(13);
+var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
