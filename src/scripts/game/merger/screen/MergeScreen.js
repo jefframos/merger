@@ -63,14 +63,17 @@ export default class MergeScreen extends Screen {
         this.gridWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.gameArea.w, config.height * this.areaConfig.gameArea.h);
         this.container.addChild(this.gridWrapper);
         this.gridWrapper.visible = false;
+        //this.gridWrapper.alpha = 0;
 
         this.resourcesWrapper = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
         this.container.addChild(this.resourcesWrapper);
         this.resourcesWrapper.visible = false;
+        //this.resourcesWrapper.alpha = 0;
 
         this.resourcesWrapperRight = new PIXI.Graphics().lineStyle(1, 0x132215).drawRect(0, 0, config.width * this.areaConfig.resourcesArea.w, config.height * this.areaConfig.resourcesArea.h);
         this.container.addChild(this.resourcesWrapperRight);
         this.resourcesWrapperRight.visible = false;
+        //this.resourcesWrapperRight.alpha = 0;
 
         this.mergeSystemContainer = new PIXI.Container()
         this.container.addChild(this.mergeSystemContainer);
@@ -411,6 +414,7 @@ export default class MergeScreen extends Screen {
 
     }
     resize(resolution) {
+
         this.mergeSystem1.resize(resolution);
         this.spaceBackground.resize(resolution, this.screenManager.scale);
 

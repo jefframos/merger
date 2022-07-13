@@ -14,7 +14,7 @@ export default class ShopButton extends PIXI.Container
             // this.background = new PIXI.Graphics().beginFill(0xFFFFFF).drawRect(0, 0, 120, 40);
 
             this.backButton = new PIXI.mesh.NineSlicePlane(
-                PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10)
+                PIXI.Texture.fromFrame('small-no-pattern'), 20, 20, 20, 20)
             this.backButton.width = 100
             this.backButton.height = 40 
 
@@ -33,7 +33,7 @@ export default class ShopButton extends PIXI.Container
             this.sprite.anchor.set(0, 0.5)
             this.defaultSpriteScale = this.h / this.sprite.height * 0.5;
             this.sprite.scale.set(this.defaultSpriteScale)
-            this.sprite.x = this.sprite.width * 0.25;
+            this.sprite.x = this.sprite.width * 0.5;
             this.sprite.y = this.h / 2;
             this.interactive = true;
             this.buttonMode = true;
@@ -140,7 +140,7 @@ export default class ShopButton extends PIXI.Container
         this.enabled = true;
         this.deactived = false;
         this.sprite.visible = true;
-        this.backButton.tint = 0x6250e5;
+        //this.backButton.tint = 0x6250e5;
         this.backButton.alpha = 1;
         this.priceLabel.style.fill = 0xFFFFFF;
     }

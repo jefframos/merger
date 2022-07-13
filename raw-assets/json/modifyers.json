@@ -2,7 +2,7 @@
     "modifyers": [
         {
             "nameID": "drill_speed",
-            "displayName": "Drill Speed",
+            "displayName": "Drill",
             "imageSrc": "drill",
             "tileImageSrc": "asteroid (2)",
             "initialCost": 60,
@@ -16,7 +16,7 @@
         },
         {
             "nameID": "drill_speed",
-            "displayName": "DresourcesMultiplierd",
+            "displayName": "Resources",
             "imageSrc": "drill",
             "tileImageSrc": "asteroid (2)",
             "initialCost": 60,
@@ -30,7 +30,7 @@
         },
         {
             "nameID": "drill_speed",
-            "displayName": "damageMultiplier",
+            "displayName": "Damage",
             "imageSrc": "drill",
             "tileImageSrc": "asteroid (2)",
             "initialCost": 60,

@@ -95,11 +95,14 @@ export default class MergeSystem {
         setTimeout(() => {
             this.resize(config, true)
         }, 1);
-
+        
         this.enemySystem = null;
         this.systems = [];
-
+        
         this.loadData();
+        setTimeout(() => {            
+            this.adjustSlotsPosition()
+        }, 100);
     }
 
     loadData() {

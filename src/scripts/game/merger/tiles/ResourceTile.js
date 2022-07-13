@@ -54,25 +54,24 @@ export default class ResourceTile extends MergeTile {
 
 
 
-        this.costLabelContainer = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10)
-        this.costLabelContainer.width = 100
-        this.costLabelContainer.height = 30 
+        this.costLabelContainer = new PIXI.Sprite.fromFrame(('large-square-pattern'))
+        // this.costLabelContainer.width = 100
+        // this.costLabelContainer.height = 30 
         this.container.addChild(this.costLabelContainer)
 
         this.initialCostLabel = new PIXI.Text('Ready', LABELS.LABEL1);
-        this.costLabelContainer.addChild(this.initialCostLabel)
         this.initialCostLabel.style.stroke = 0
         this.initialCostLabel.style.strokeThickness = 6
-
-
+        
+        
         this.costLabelContainer.x = this.backSlot.width / 2 - this.costLabelContainer.width / 2;
         this.costLabelContainer.y = this.backSlot.height - this.costLabelContainer.height;
-
+        
         this.exclamationMark = new PIXI.Sprite.fromFrame('new_item')
-        this.costLabelContainer.addChild(this.exclamationMark)
         this.exclamationMark.anchor.set(0.5)
-
+        this.exclamationMark.x = this.costLabelContainer.width
+        this.costLabelContainer.addChild(this.exclamationMark)
+        this.costLabelContainer.addChild(this.initialCostLabel)
         //this.initialCostLabel.visible = false;
 
         this.label.visible = false

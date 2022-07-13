@@ -5,7 +5,7 @@ import TweenLite from 'gsap';
 import utils from '../../utils';
 
 export default class UIButton1 extends PIXI.Container {
-	constructor(color, icon, iconColor = 0xFFFFFF, width = 50, height = 50) {
+	constructor(color, icon, iconColor = 0xFFFFFF, width = 65, height = 65) {
 		super();
 
 		this.w = width;
@@ -38,7 +38,7 @@ export default class UIButton1 extends PIXI.Container {
 
 		this.padding = 8;
 		this.backShapeBorder = new PIXI.mesh.NineSlicePlane(
-			PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15)
+			PIXI.Texture.fromFrame('small-no-pattern'), 15, 15, 15, 15)
 		this.backShapeBorder.width = width + this.padding
 		this.backShapeBorder.height = height + this.padding
 		this.backShapeBorder.pivot.set((width + this.padding) / 2, (height + this.padding) / 2)
@@ -46,20 +46,20 @@ export default class UIButton1 extends PIXI.Container {
 
 		//this.backShape = PIXI.Sprite.fromFrame('largeCard.png')
 		this.backShape = new PIXI.mesh.NineSlicePlane(
-			PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15)
+			PIXI.Texture.fromFrame('small-no-pattern'), 15, 15, 15, 15)
 		this.backShape.width = width
 		this.backShape.height = height
 		this.backShape.pivot.set(width / 2, height / 2)
 		//this.backShape.scale.set(width / this.backShape.width);
 		//this.backShape.anchor.set(0.5)
-		this.backShape.tint = color;
+		// //this.backShape.tint = color;
 
 		//this.updateRotation(Math.PI * 0.25)
 
 		this.icon.anchor.set(0.5);
 
 		this.updateIconScale();
-		this.mainContainer.addChild(this.backShapeBorder);
+		//this.mainContainer.addChild(this.backShapeBorder);
 		this.mainContainer.addChild(this.backShape);
 		this.mainContainer.addChild(this.icon);
 		this.addChild(this.mainContainer);
@@ -79,11 +79,11 @@ export default class UIButton1 extends PIXI.Container {
 	}
 	disableState(color) {
 		this.icon.alpha = 0.5
-		this.backShape.tint = color;
+		// this.backShape.tint = color;
 	}
 	enableState(color) {
 		this.icon.alpha = 1
-		this.backShape.tint = color;
+		// this.backShape.tint = color;
 	}
 	addFrontShape() {
 		this.backShape.y = -10

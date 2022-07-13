@@ -1,6 +1,6 @@
 export default {
-	width: 720 * 0.9,
-	height: 1280 * 0.8,
+	width: 750 * 0.8,
+	height: 1334 * 0.8,
 	webgl: true,
 	effectsLayer:null,
 	colors: {

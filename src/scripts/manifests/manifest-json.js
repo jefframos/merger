@@ -12,12 +12,12 @@ const assets = [
 	"url":"assets/json\\fiveLetters_.json"
 	},
 	{
-	"id":"modifyers",
-	"url":"assets/json\\modifyers.json"
-	},
-	{
 	"id":"fourLetters_",
 	"url":"assets/json\\fourLetters_.json"
+	},
+	{
+	"id":"modifyers",
+	"url":"assets/json\\modifyers.json"
 	},
 	{
 	"id":"resources",
