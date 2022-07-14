@@ -3,7 +3,7 @@ export default class StarParticle extends PIXI.Container {
     constructor(size) {
         super();
 
-        let listParticles = ['spark2']
+        let listParticles = ['star1', 'star2']
         let p = listParticles[Math.floor(Math.random() * listParticles.length)];
         // console.log(p);
         this.graphics = new PIXI.Sprite(PIXI.Texture.from(p)); // new PIXI.Graphics().beginFill(0xFFFFFF).drawRect(0,0,size,size);

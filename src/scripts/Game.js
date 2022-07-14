@@ -32,6 +32,7 @@ export default class Game {
 
         PIXI.ticker.shared.add(this._onTickEvent, this);
 
+        this.forceResizeTimer = 5;
 
         setTimeout(() => {
             this.resize()
@@ -42,61 +43,12 @@ export default class Game {
     _onTickEvent(deltaTime) {
         this.dt = deltaTime / 60;
         this.update();
+
+        if(this.forceResizeTimer > 0){
+            this.forceResizeTimer -= this.dt;
+            //this.resize()
+        }
     }
-    // resize2() {
-    //     if (window.innerWidth / window.innerHeight >= this.ratio) {
-    //         var w = window.innerHeight * this.ratio;
-    //     } else {
-    //         var h = window.innerWidth / this.ratio;
-    //     }
-    //     var w = window.innerWidth;
-    //     var h = window.innerHeight;
-    //     window.renderer.view.style.position = 'absolute';
-    //     this.innerResolution = { width: window.innerWidth, height: window.innerHeight };
-
-    //     const sclX = window.innerWidth < this.desktopResolution.width ? window.innerWidth / this.desktopResolution.width : 10;
-    //     const sclY = window.innerHeight / this.desktopResolution.height// window.innerHeight < this.desktopResolution.height ? window.innerHeight / this.desktopResolution.height : 1;
-
-    //     const scl = Math.min(sclX, sclY);
-
-    //     window.renderer.view.style.position = 'absolute';
-
-    //     const newSize = {
-    //         width: window.innerWidth,//* scl,
-    //         height: window.innerHeight//this.desktopResolution.height * scl,
-    //     };
-
-
-    //     window.renderer.view.style.width = `${newSize.width}px`;
-    //     window.renderer.view.style.height = `${newSize.height}px`;
-
-    //     if (newSize.height < window.innerHeight) {
-    //         window.renderer.view.style.top = `${window.innerHeight / 2 - (newSize.height) / 2}px`;
-    //     }
-    //     if (newSize.width < window.innerWidth) {
-    //     }
-    //     window.renderer.view.style.left = `${window.innerWidth / 2 - (newSize.width) / 2}px`;
-
-    //     if (this.screenManager) {
-    //         this.screenManager.resize(newSize);
-
-    //         this.screenManager.scale.x = (config.width / newSize.width) / (config.height / window.innerHeight)
-    //         this.screenManager.pivot.x = config.width / 2
-    //         let s = (newSize.width / config.width)
-    //         //this.screenManager.x = window.innerWidth / 2 / s
-    //     }
-    //     // if (window.innerWidth / window.innerHeight >= this.ratio) {
-    //     //     var w = window.innerHeight * this.ratio;
-    //     //     var h = window.innerHeight;
-    //     // } else {
-    //     //     var w = window.innerWidth;
-    //     //     var h = window.innerWidth / this.ratio;
-    //     // }
-    //     // window.renderer.view.style.width = w + 'px';
-    //     // window.renderer.view.style.height = h + 'px';
-    // }
-
-
     resize() {
         var w = window.innerHeight
         var h = window.innerWidth;

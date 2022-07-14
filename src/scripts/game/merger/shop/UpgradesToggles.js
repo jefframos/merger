@@ -15,6 +15,7 @@ export default class UpgradesToggles extends PIXI.Container {
         this.backShape.width = width
         this.backShape.height = height
         this.addChild(this.backShape)
+        
 
 
         this.lockList = new UIList()
@@ -28,11 +29,18 @@ export default class UpgradesToggles extends PIXI.Container {
         this.values = [1, 10, 100, 500]
         this.toggles = []
         for (let index = 0; index < this.values.length; index++) {
-            let toggle = new UIButton1(0, this.values[index]+'toggle', 0xFFffff)
+            let texture = null;
+            if(this.values[index] < 500){
+                texture =window.TILE_ASSSETS_POOL['image-'+ this.values[index]]
+            }else{
+                texture =window.TILE_ASSSETS_POOL['image-MAX']
+            }
+            let toggle = new UIButton1(0xFFffff, texture, 0xFFffff, 150)
             toggle.changePivot(0, 0)
             toggle.disableState(0x555555)
             toggle.value = this.values[index]
             toggle.fitHeight = 0.8
+            toggle.icon.y -= 4
             this.lockList.addElement(toggle)
             toggle.onClick.add(() => {
 

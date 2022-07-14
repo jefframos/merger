@@ -444,7 +444,7 @@ export default class MergeSystem {
         let horizontal = (this.slots[0].length - sides)
         let vertical = (this.slots.length - ups)
 
-        this.fixedSize.width = horizontal * this.slotSize.width + (this.slotSize.distance * (horizontal - 1))
+        this.fixedSize.width = horizontal * this.slotSize.width + (this.slotSize.distance * (horizontal - 1)+this.slotSize.distance*2)
         this.fixedSize.height = vertical * this.slotSize.height + (this.slotSize.distance * (vertical - 1))
 
         for (var i = 0; i < this.slots.length; i++) {
@@ -456,7 +456,7 @@ export default class MergeSystem {
 
                     let scale = ((slot.y + this.slotSize.distance) / this.fixedSize.height) * this.area.perspective + (1 - this.area.perspective)
                     slot.scale.set(scale)
-                    slot.x = ((this.slotSize.width + this.slotSize.distance) * scale) * j + (horizontal * this.slotSize.width * (1 - scale)) / 2 - this.slotSize.distance
+                    slot.x = ((this.slotSize.width + this.slotSize.distance) * scale) * j + (horizontal * this.slotSize.width * (1 - scale)) / 2 //- this.slotSize.distance
                     slot.y = ((this.slotSize.height + this.slotSize.distance) * scale) * i + (this.slotSize.distance * scale) * vertical - this.slotSize.distance * 2
                 }
             }
@@ -470,7 +470,7 @@ export default class MergeSystem {
     resize(resolution, force) {
 
         if (!force && this.currentResolution.width == resolution.width && this.currentResolution.height == resolution.height) {
-            return;
+            //return;
         }
         this.currentResolution.width = resolution.width;
         this.currentResolution.height = resolution.height;
@@ -479,7 +479,6 @@ export default class MergeSystem {
 
     }
     updateGridPosition() {
-
 
         utils.resizeToFitARCap(this.wrapper, this.container, this.fixedSize)
 

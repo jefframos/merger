@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Signals from 'signals';
+import CircleCounter from '../../ui/hudElements/CircleCounter';
+import ProgressBar from '../ProgressBar';
 export default class MergeTile extends PIXI.Container {
     constructor(i, j, size, lockIcon) {
         super();
@@ -24,10 +26,10 @@ export default class MergeTile extends PIXI.Container {
         
 
         
-        this.backShape = new PIXI.Sprite.fromFrame('backTiles')
+        this.backShape = new PIXI.Sprite.fromFrame('backTilesSquare')
         this.backShape.width = size
         this.backShape.height = size
-        this.backShape.alpha = 0.1
+        this.backShape.alpha = 0.8
         this.container.addChild(this.backShape)
 
         this.label = new PIXI.Text('', LABELS.LABEL1);
@@ -81,6 +83,16 @@ export default class MergeTile extends PIXI.Container {
 
         window.gameModifyers.onUpdateModifyers.add(this.updateModifyers.bind(this))
 
+
+        this.damageTimerView = new ProgressBar({width:40, height:12}, 3,3)
+        this.damageTimerView.updateBackgroundColor(0x20516c)
+        this.damageTimerView.x = 0
+        this.damageTimerView.y = 40
+        //this.damageTimerView = new CircleCounter(10,10)
+        this.container.addChild(this.damageTimerView)
+        this.damageTimerView.rotation = -Math.PI * 0.5
+        //this.damageTimerView.build()
+
     }
     reset() {
         this.generateResource = 0;
@@ -105,12 +117,12 @@ export default class MergeTile extends PIXI.Container {
             this.sin %= Math.PI * 2;
             this.updatePosition();
         }
-
+        this.damageTimerView.visible = false;
         //console.log(this, dateTimeStamp)
         if(autoUpdateResources){
             this.updateResource(delta, dateTimeStamp)
-            this.updateDamage(delta, dateTimeStamp)
         }
+        this.updateDamage(delta, dateTimeStamp)
     }
     updateResource(delta, dateTimeStamp) {
         if (this.generateResourceTime > 0) {
@@ -131,6 +143,9 @@ export default class MergeTile extends PIXI.Container {
         }
     }
     updateDamage(delta, dateTimeStamp) {
+        if(this.holding){
+            return;
+        }
         if (this.generateDamageTime > 0) {
             if (this.updatedDamageTimestamp) {
                 this.generateDamage = dateTimeStamp - this.updatedDamageTimestamp
@@ -144,9 +159,12 @@ export default class MergeTile extends PIXI.Container {
                     this.generateDamageNormal = Math.min(this.generateDamageNormal, 1)
                     
                 }
+                this.damageTimerView.visible = true
+                this.damageTimerView.setProgressBar(this.generateDamageNormal, 0xf2cb0d)
             }
         } else {
             this.generateDamageNormal = 0;
+            this.damageTimerView.visible = false;
         }
     }
     lookAt(target) {

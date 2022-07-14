@@ -17,36 +17,53 @@ export default class EntityShop extends PIXI.Container {
         }
 
         
+        this.background = new PIXI.Graphics().beginFill(0).drawRect(-config.width * 5, -config.height * 5,config.width*10, config.height * 10) 
+        this.addChild(this.background)
+        this.background.alpha = 0.5;
+
+        this.background.interactive = true;
+        this.background.buttonMode = true;
+        this.background.on('mousedown', this.confirm.bind(this)).on('touchstart', this.confirm.bind(this));
+
+        this.container = new PIXI.Container();
+        this.addChild(this.container)
+        this.container.pivot.x = this.size.w / 2
+        this.container.pivot.y = this.size.h / 2
         this.backContainer = new PIXI.mesh.NineSlicePlane(
             PIXI.Texture.fromFrame('button-1'), 10, 10, 10, 10)
         this.backContainer.width = this.size.w
         this.backContainer.height = this.size.h
         this.backContainer.tint = 0x529898
-        this.addChild(this.backContainer);
+        this.container.addChild(this.backContainer);
 
 
       
         this.shopList = new ShopList({ w: this.size.w, h: this.size.h * 0.8 }, 6)
         this.shopList.y = 100
-        this.addChild(this.shopList);
+        this.container.addChild(this.shopList);
 
 
         this.shopList.onItemShop.add(this.confirmItemShop.bind(this))
 
-        this.openShop = new UIButton1(0, 'icon-close', 0xFFffff)
-        this.addChild(this.openShop)
+        this.openShop = new UIButton1(0xFFffff, window.TILE_ASSSETS_POOL['image-X'], 0xFFffff,40,40)
+        this.openShop.updateIconScale(0.5)
+        this.container.addChild(this.openShop)
         this.openShop.x = this.size.w - this.openShop.width
         this.openShop.y = this.openShop.height
         this.openShop.onClick.add(() => {
             this.hide()
         })
 
-        this.toggles = new UpgradesToggles({ w: this.size.w * 0.3, h: this.size.h * 0.05 })
-        this.addChild(this.toggles);
-        this.toggles.x = this.size.w / 2 - this.size.w * 0.15
+        this.toggles = new UpgradesToggles({ w: this.size.w * 0.7, h: this.size.h * 0.05 })
+        this.container.addChild(this.toggles);
+        this.toggles.x = this.size.w / 2 - this.size.w * 0.35
         this.toggles.y = this.openShop.y - this.size.h * 0.025
         this.toggles.onUpdateValue.add(this.updateToggleValue.bind(this))
 
+    }
+    confirm()
+    {
+        this.hide();
     }
     hideCallback() {
         this.hide();

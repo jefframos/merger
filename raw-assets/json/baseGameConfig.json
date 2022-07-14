@@ -8,11 +8,11 @@
         "modifyersData":"modifyers",
         "entitiesData":"entities",
         "gameMap": [
-            [0,0,0,13],
-            [0,0,0,11],
-            [2,1,3,10],
-            [5,4,6,12],
-            [8,7,9,14]
+               [2,1,3,13],
+               [0,0,0,11],
+               [0,0,0,10],
+               [5,4,6,12],
+               [8,7,9,14]
         ],
         "resourcesData":"resources",
         "resourcesMap": [
@@ -24,8 +24,8 @@
      ],
         "lockIcon":"starship_01",
         "slotSize":{
-            "width": 150,
-            "height": 150,
+            "width": 140,
+            "height": 140,
             "distance":10,
             "distanceResources":20
         },
@@ -34,56 +34,7 @@
             "topArea": 0.15,
             "gameArea": {"w":0.7, "h":0.6},
             "resourcesArea": {"w":0.15, "h":0.6},
-            "perspective": 0.3
-          },
-        "entities":{
-            "list":[
-                {
-                    "imageSrc":"starship_01"
-                },
-                {
-                     "imageSrc":"starship_02"
-                },
-                {
-                     "imageSrc":"starship_03"
-                },
-                {
-                     "imageSrc":"starship_04"
-                },
-                {
-                     "imageSrc":"starship_05"
-                },
-                {
-                     "imageSrc":"starship_06"
-                },
-                {
-                     "imageSrc":"starship_07"
-                },
-                {
-                     "imageSrc":"starship_08"
-                },
-                {
-                     "imageSrc":"starship_09"
-                },
-                {
-                     "imageSrc":"starship_10"
-                },
-                {
-                     "imageSrc":"starship_11"
-                },
-                {
-                     "imageSrc":"starship_12"
-                },
-                {
-                     "imageSrc":"starship_13"
-                },
-                {
-                     "imageSrc":"starship_14"
-                },
-                {
-                    "imageSrc":"starship_15"
-               }
-            ]
-        }
+            "perspective": 0
+          }        
     }
 }

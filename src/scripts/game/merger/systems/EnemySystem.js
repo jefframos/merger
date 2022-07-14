@@ -42,13 +42,13 @@ export default class EnemySystem {
         this.nextBoss = 10;
         this.bossGap = 10;
 
-        this.enemyLifeBar = new ProgressBar({ width: 200, height: 18 });
+        this.enemyLifeBar = new ProgressBar({ width: 200, height: 18 },4,4);
         this.container.addChild(this.enemyLifeBar)
         this.enemyLifeBar.pivot.x = this.enemyLifeBar.width / 2
         this.enemyLifeBar.y = -5
 
 
-        this.bossBattleTimer = new ProgressBar({ width: 200, height: 10 });
+        this.bossBattleTimer = new ProgressBar({ width: 200, height: 12 },3,3);
         this.container.addChild(this.bossBattleTimer)
         this.bossBattleTimer.pivot.x = this.bossBattleTimer.width / 2
         this.bossBattleTimer.y = 15
@@ -62,7 +62,9 @@ export default class EnemySystem {
 
 
         this.label = new PIXI.Text('', LABELS.LABEL1);
-        this.label.style.fontSize = 14
+        this.label.style.fontSize = 12
+        this.label.style.stroke = 0
+        this.label.style.strokeThickness = 3
         this.container.addChild(this.label)
 
 
@@ -254,7 +256,7 @@ export default class EnemySystem {
     updateLifeLabel() {
         this.label.text = utils.formatPointsLabel(Math.ceil(this.enemyCurrentLife)) + "/" + utils.formatPointsLabel(Math.ceil(this.enemyLife))
         this.label.x = -this.label.width / 2
-        this.label.y = this.enemyLifeBar.y + 1
+        this.label.y = this.enemyLifeBar.y 
     }
     updateVisibleUI() {
         this.label.alpha = this.mainEnemy.alpha
@@ -262,5 +264,9 @@ export default class EnemySystem {
         this.bossBattleTimer.alpha = this.mainEnemy.alpha
         this.bossBattleTimer.visible = this.inABossBattle;
         this.bossTimerLabel.visible = this.bossBattleTimer.visible;
+    }
+
+    resize(){
+
     }
 }

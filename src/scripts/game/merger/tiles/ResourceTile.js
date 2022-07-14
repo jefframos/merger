@@ -10,6 +10,8 @@ export default class ResourceTile extends MergeTile {
     constructor(i, j, size, lockIcon) {
         super(i, j, size, lockIcon);
 
+
+
         this.onCompleteCharge = new Signals();
 
         this.resourceSource = new PIXI.Sprite.fromFrame('backTiles')
@@ -19,7 +21,7 @@ export default class ResourceTile extends MergeTile {
         this.resourceSource.y = size / 2
         this.resourceSource.visible = false;
 
-
+        this.backShape.alpha = 0
 
         this.resourceReadyToCollectSprite = new PIXI.Sprite.fromFrame('shine')
         this.container.addChildAt(this.resourceReadyToCollectSprite, 0)
@@ -28,20 +30,21 @@ export default class ResourceTile extends MergeTile {
         this.resourceReadyToCollectSprite.y = size / 2
         this.resourceReadyToCollectSprite.visible = false;
         this.resourceReadyToCollectSprite.scale.set(size / this.resourceReadyToCollectSprite.width)
-        this.resourceReadyToCollectSprite.tint = 0x0055ff
+        this.resourceReadyToCollectSprite.tint = 0x00ee33
+        this.resourceReadyToCollectSprite.alpha = 0
 
 
-        
+
 
         this.collectLabelContainer = new PIXI.Container()
         this.container.addChild(this.collectLabelContainer)
-        
+
         this.readyLabel = new PIXI.Text('Ready', LABELS.LABEL1);
         this.collectCoinIcon = new PIXI.Sprite.fromFrame('coin')
         this.collectLabelContainer.addChild(this.collectCoinIcon)
-        
-        this.collectCoinIcon.scale.set(this.readyLabel.height /this.collectCoinIcon.height)
-        this.collectLabelContainer.addChild( this.readyLabel)
+
+        this.collectCoinIcon.scale.set(this.readyLabel.height / this.collectCoinIcon.height)
+        this.collectLabelContainer.addChild(this.readyLabel)
         this.readyLabel.x = this.collectCoinIcon.width + 2
         this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
         this.collectLabelContainer.visible = false;
@@ -62,11 +65,11 @@ export default class ResourceTile extends MergeTile {
         this.initialCostLabel = new PIXI.Text('Ready', LABELS.LABEL1);
         this.initialCostLabel.style.stroke = 0
         this.initialCostLabel.style.strokeThickness = 6
-        
-        
+
+
         this.costLabelContainer.x = this.backSlot.width / 2 - this.costLabelContainer.width / 2;
         this.costLabelContainer.y = this.backSlot.height - this.costLabelContainer.height;
-        
+
         this.exclamationMark = new PIXI.Sprite.fromFrame('new_item')
         this.exclamationMark.anchor.set(0.5)
         this.exclamationMark.x = this.costLabelContainer.width
@@ -93,22 +96,29 @@ export default class ResourceTile extends MergeTile {
         // this.container.addChild(this.circleCounter)
         // this.circleCounter.build()
 
+        this.container.removeChild(this.damageTimerView)
+
         this.drillSin = Math.random() * 3.14 * 2
     }
 
     update(delta, timestamp) {
         //console.log(timestamp)
         super.update(delta, timestamp);
-        if(this.particlesDelay > 0){
+        if (this.particlesDelay > 0) {
             this.particlesDelay -= delta;
         }
         //console.log(this.generateResource ,this.generateResourceTime)
         this.collectLabelContainer.visible = this.readyToCollect
         this.resourceReadyToCollectSprite.visible = this.readyToCollect
-        this.resourceReadyToCollectSprite.rotation += delta;
+        if (this.readyToCollect) {
+            this.resourceReadyToCollectSprite.alpha = utils.lerp(this.resourceReadyToCollectSprite.alpha, 0.5, 0.05)
+            this.resourceReadyToCollectSprite.rotation += delta;
+        }else{
+            this.resourceReadyToCollectSprite.alpha = 0;
+        }
         if (this.tileData) {
-            this.sin += delta * Math.min(15 * window.gameModifyers.modifyersData.drillSpeed * 0.1 , 40)
-            this.drillSin += delta * Math.min(5 * window.gameModifyers.modifyersData.drillSpeed * 0.1 , 40)
+            this.sin += delta * Math.min(15 * window.gameModifyers.modifyersData.drillSpeed * 0.1, 40)
+            this.drillSin += delta * Math.min(5 * window.gameModifyers.modifyersData.drillSpeed * 0.1, 40)
             this.levelBar.visible = true;
             this.levelBar.updatePowerBar(this.generateResourceNormal, 0, true);
 
@@ -152,7 +162,7 @@ export default class ResourceTile extends MergeTile {
     }
     updatePriceLabel(value) {
         this.initialCostLabel.text = value
-        this.initialCostLabel.x =  this.costLabelContainer.width / 2 - this.initialCostLabel.width / 2;
+        this.initialCostLabel.x = this.costLabelContainer.width / 2 - this.initialCostLabel.width / 2;
         this.initialCostLabel.y = this.costLabelContainer.height / 2 - this.initialCostLabel.height / 2 - 1;
     }
     addEntity(tile) {
@@ -160,30 +170,30 @@ export default class ResourceTile extends MergeTile {
     }
     updatePosition() {
 
-        if(this.tileData){
-            if(this.tileData.isRight){
+        if (this.tileData) {
+            if (this.tileData.isRight) {
 
                 this.positionOffset.x = 60 + this.entityScale + Math.cos(this.drillSin) * 4
-            }else{
-                
+            } else {
+
                 this.positionOffset.x = -60 - this.entityScale + Math.cos(this.drillSin) * 4
 
                 this.tileSprite.scale.x = Math.abs(this.tileSprite.scale.x) * -1
             }
         }
 
-        this.resourceSource.x = this.backSlot.height / 2 + Math.sin(this.sin) 
+        this.resourceSource.x = this.backSlot.height / 2 + Math.sin(this.sin)
 
         this.tileSprite.x = this.backSlot.width / 2 + this.positionOffset.x;
         this.tileSprite.y = this.backSlot.height / 2 + this.positionOffset.y;
     }
-    updateResourcePosition(){
-        this.resourceSource.y = this.backSlot.height / 2 + Math.sin(this.sin) *5
+    updateResourcePosition() {
+        this.resourceSource.y = this.backSlot.height / 2 + Math.sin(this.sin) * 5
     }
     enterAnimation() {
         this.entityScale = this.size / this.tileSprite.width * 0.4
         TweenLite.to(this.tileSprite.scale, 0.5, {
-            x: this.tileData.isRight ? this.entityScale: -this.entityScale,
+            x: this.tileData.isRight ? this.entityScale : -this.entityScale,
             y: this.entityScale,
             ease: Elastic.easeOut,
             onComplete: () => {
@@ -234,15 +244,16 @@ export default class ResourceTile extends MergeTile {
         this.currentCollect += this.tileData.getResources();
 
         if (this.tileData.getGenerateResourceTime() > 0.1) {
-            //COOKIE_MANAGER.addPendingResource(this.tileData, this.currentCollect)
+            COOKIE_MANAGER.addPendingResource(this.tileData, this.currentCollect)
         }
 
         this.readyLabel.text = utils.formatPointsLabel(this.currentCollect)
-        this.collectLabelContainer.x = this.backSlot.width/2 - this.collectLabelContainer.width / 2;
+        this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
         //this.onGenerateResource.dispatch(this, this.tileData);
     }
     collectResources() {
         this.readyToCollect = false;
+        this.resourceReadyToCollectSprite.alpha = 0
         this.generateResourceNormal = 0
         this.levelBar.updatePowerBar(this.generateResourceNormal, 0);
     }
@@ -251,7 +262,7 @@ export default class ResourceTile extends MergeTile {
         if ((this.isOver || forced) && this.readyToCollect) {
             let skipParticles = this.particlesDelay <= 0
             this.onGenerateResource.dispatch(this, this.tileData, this.currentCollect, skipParticles);
-            if(this.particlesDelay <= 0){
+            if (this.particlesDelay <= 0) {
                 this.particlesDelay = 0.5
             }
             this.readyToCollect = false;

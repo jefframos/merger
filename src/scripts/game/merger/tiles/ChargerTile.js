@@ -9,6 +9,7 @@ import UIBar from '../../ui/uiElements/UIBar';
 export default class ChargerTile extends MergeTile {
     constructor(i, j, size, lockIcon, standardChargeTime = 2) {
         super(i, j, size, lockIcon);
+        this.backShape.texture = PIXI.Texture.fromFrame('backTilesRound')
 
         this.defaultChargeTime = standardChargeTime;
         this.currentChargeTime = this.defaultChargeTime;
@@ -31,6 +32,8 @@ export default class ChargerTile extends MergeTile {
 
         this.circleCounter.x = size/2
         this.circleCounter.y = size/2
+
+        this.container.removeChild(this.damageTimerView)
 
     }
     update(delta, timeStamp){

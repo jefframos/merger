@@ -12,7 +12,6 @@ import imageManifest from './manifests/manifest-image'
 import audioManifest from './manifests/manifest-audio'
 import spritesheetManifest from './manifests/manifest'
 import MergerScreenManager from './game/merger/screen/MergerScreenManager';
-import WorduoScreenManager from './game/worduo/screen/WorduoScreenManager';
 
 
 
@@ -98,7 +97,6 @@ function startLoader() {
 }
 
 window.COOKIE_MANAGER = new CookieManager();
-
 function configGame(evt) {
     SOUND_MANAGER.load(audioManifest);
     // FbManager.start()
@@ -112,11 +110,26 @@ function configGame(evt) {
     window.RESOURCES = evt.resources;
     window.game = new Game(config);
 
+window.TILE_ASSSETS_POOL = []
+
+    let toGenerate = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, '?', '!', 'X', 'v', '+', '<', '>', 't','MAX', 100]
+    for (let index = 0; index < toGenerate.length; index++) {
+
+        let container = new PIXI.Container()
+        let text = new PIXI.Text(toGenerate[index], LABELS.LABEL2);
+        text.style.fontSize = 64
+        text.style.fill = 0xFFFFFF
+        text.style.strokeThickness = 0
+        container.addChild(text)
+        let tex = utils.generateTextureFromContainer('image-' + toGenerate[index], container, window.TILE_ASSSETS_POOL)
+
+    }
+    
+
     const urlParams = new URLSearchParams(window.location.search);
     if(urlParams){
         if (urlParams.get('worduo')){
-
-            window.screenManager = new WorduoScreenManager();
+           
         }
     }
     if(!window.screenManager){

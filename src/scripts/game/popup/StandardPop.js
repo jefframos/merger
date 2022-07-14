@@ -21,9 +21,14 @@ export default class StandardPop extends PIXI.Container
         this.w = config.width * 0.5;
         this.h = config.width * 0.5;
 
-        this.background = new PIXI.Graphics().beginFill(0).drawRect(-config.width/2, -config.height/2,config.width, config.height) 
-        this.container.addChild(this.background)
+        this.background = new PIXI.Graphics().beginFill(0).drawRect(-config.width * 5, -config.height * 5,config.width*10, config.height * 10) 
+        this.addChild(this.background)
         this.background.alpha = 0.5;
+
+        this.background.interactive = true;
+        this.background.buttonMode = true;
+        this.background.on('mousedown', this.confirm.bind(this)).on('touchstart', this.confirm.bind(this));
+        this.background.visible = false
 
         this.popUp = new PIXI.mesh.NineSlicePlane(
 			PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15)
@@ -36,14 +41,14 @@ export default class StandardPop extends PIXI.Container
         this.popUp.alpha = 1;
         this.popUp.tint = 0xFFFFFF;
         // this.popUp.blendMode = PIXI.BLEND_MODES.ADD;
-        this.container.addChild(this.popUp)
-        this.container.x = config.width / 2;
-        this.container.y = config.height / 2;
-        this.addChild(this.container)
 
         this.container.interactive = true;
-        this.container.buttonMode = true;
-        this.container.on('mousedown', this.confirm.bind(this)).on('touchstart', this.confirm.bind(this));
+        this.container.addChild(this.popUp)
+        this.container.x = 0//-this.container.width / 2;
+        this.container.y = 0//-this.container.height / 2;
+        this.addChild(this.container)
+
+     
 
         this.readyLabel = new PIXI.Text('!', LABELS.LABEL2);
         this.readyLabel.style.fontSize = 14
@@ -58,6 +63,7 @@ export default class StandardPop extends PIXI.Container
         this.confirmButton.onClick.add(()=>{
             if(this.confirmCallback){
                 this.confirmCallback()
+                this.confirm()
             }
         })
         this.cancelButton = new UIButton1(null,'icon_close')
@@ -67,6 +73,8 @@ export default class StandardPop extends PIXI.Container
         this.cancelButton.onClick.add(()=>{
             if(this.cancelCallback){
                 this.cancelCallback()
+                this.cancelButton()
+
             }
         })
 
@@ -77,9 +85,11 @@ export default class StandardPop extends PIXI.Container
     }
     show(param)
     {
+        this.visible = true;
+
         this.isShowing = true;
         this.container.visible = true;
-
+        this.background.visible = true;
         this.toRemove = false;
         this.onShow.dispatch(this);
         
@@ -105,6 +115,7 @@ export default class StandardPop extends PIXI.Container
         }
         this.isShowing = false;
 
+        TweenLite.to(this.background, 0.25, {alpha:0});
         TweenLite.to(this.container, 0.25, {alpha:0});
         TweenLite.to(this.popUp.scale, 0.25,
         {
@@ -122,7 +133,7 @@ export default class StandardPop extends PIXI.Container
                 this.afterHide();
                 this.toRemove = true
 
-                this.container.visible = false;
+                this.visible = false;
             }
         })
     }

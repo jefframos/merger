@@ -2,7 +2,7 @@ import TweenMax from 'gsap';
 import * as PIXI from 'pixi.js';
 
 export default class ProgressBar extends PIXI.Container {
-    constructor(size, border = 0) {
+    constructor(size, border = 0, padding = 0) {
         super();
 
         this.barContainer = new PIXI.Container();
@@ -16,33 +16,34 @@ export default class ProgressBar extends PIXI.Container {
         this.infoLabel.x = 125
         this.infoLabel.y = 19
 
-        this.round = border?border:size.height / 2
+        this.border = border?border:size.height / 2
+        this.padding = padding
         this.sizeHeight = size.height
         this.sizeWidth = size.width
 
         
         this.loadingBar = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('progressbar_frame'), 6, 6, 6, 6)
+            PIXI.Texture.fromFrame('simple-bar'), 4,4,4,4)
         this.loadingBar.width = this.sizeWidth
         this.loadingBar.height = this.sizeHeight
         
         this.loadingBarFillBack = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('progressbar_bar'), 2.5, 2.5, 2.5, 2.5)
-        this.loadingBarFillBack.width = this.sizeWidth- this.round / 2
-        this.loadingBarFillBack.height = this.sizeHeight- this.round / 2
+            PIXI.Texture.fromFrame('simple-bar'), 4,4,4,4)
+        this.loadingBarFillBack.width = this.sizeWidth- this.border 
+        this.loadingBarFillBack.height = this.sizeHeight- this.border 
         this.loadingBarFillBack.tint = 0;
         
-        this.loadingBarFillBack.x = this.round / 4
-        this.loadingBarFillBack.y = this.round / 4
+        this.loadingBarFillBack.x = this.border / 2
+        this.loadingBarFillBack.y = this.border / 2
         this.loadingBarFillBack.cacheAsBitmap = true;
 
         this.loadingBarFill = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('progressbar_bar'), 2.5, 2.5, 2.5, 2.5)
+            PIXI.Texture.fromFrame('simple-bar'), 4,4,4,4)
         this.loadingBarFill.width = 0
-        this.loadingBarFill.height = this.sizeHeight- this.round / 2
+        this.loadingBarFill.height = this.sizeHeight  - this.border - this.padding//- (this.border - padding  ) 
         this.loadingBarFill.tint = 0xFF0011;
-        this.loadingBarFill.x = this.round / 4
-        this.loadingBarFill.y = this.round / 4
+        this.loadingBarFill.x = (this.border + padding) / 2
+        this.loadingBarFill.y = (this.border + padding) / 2
 
         this.loadingBarFill.visible = false;
         //this.loadingBarFill.scale.x = 0;
@@ -77,7 +78,7 @@ export default class ProgressBar extends PIXI.Container {
         this.loadingBar.width = this.sizeWidth
         this.loadingBar.height = this.sizeHeight
 
-        let add = this.round / 2
+        let add = this.border / 2
         if(hideBorder){
             add = 0;
             this.loadingBarFillBack.position.set(0)
@@ -102,7 +103,7 @@ export default class ProgressBar extends PIXI.Container {
         //this.loadingBarFill.visible = value > 0.075
         this.currentValue = value;
         this.loadingBarFill.tint = color;
-        this.loadingBarFill.width =  (this.sizeWidth - this.round / 2) * value;
+        this.loadingBarFill.width =  (this.sizeWidth - this.border * 2  - this.padding) * value + this.border ;
 
     }
 }

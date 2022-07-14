@@ -16,6 +16,7 @@ import StandardPop from '../../popup/StandardPop';
 import TweenMax from 'gsap';
 import UIButton1 from '../../ui/UIButton1';
 import utils from '../../../utils';
+import UIList from '../../ui/uiElements/UIList';
 
 export default class MergeScreen extends Screen {
     constructor(label) {
@@ -29,6 +30,8 @@ export default class MergeScreen extends Screen {
         window.baseModifyers = PIXI.loader.resources[window.baseConfigGame.modifyersData].data;
         window.gameEconomy = new GameEconomy()
         window.gameModifyers = new GameModifyers()
+
+        this.systemsList = [];
 
         this.areaConfig = window.baseConfigGame.area;
         if (!this.areaConfig.bottomArea) {
@@ -102,7 +105,6 @@ export default class MergeScreen extends Screen {
         this.dataTiles = []
         this.dataResourcesTiles = []
 
-        window.TILE_ASSSETS_POOL = []
 
         this.rawModifyers = []
         for (let index = 0; index < window.baseModifyers.modifyers.length; index++) {
@@ -156,6 +158,12 @@ export default class MergeScreen extends Screen {
         this.enemiesSystem = new EnemySystem({
             mainContainer: this.enemiesContainer
         });
+
+        this.addSystem(this.mergeSystem1)
+        this.addSystem(this.resourceSystem)
+        this.addSystem(this.resourceSystemRight)
+        this.addSystem(this.enemiesSystem)
+
         this.mergeSystem1.enemySystem = this.enemiesSystem;
 
         this.resourceSystem.onParticles.add(this.addParticles.bind(this));
@@ -192,9 +200,13 @@ export default class MergeScreen extends Screen {
         this.interactive = true;
         this.on('mousemove', this.onMouseMove.bind(this)).on('touchmove', this.onMouseMove.bind(this));
 
+        this.statsList = new UIList()
+        this.statsList.w = 50
+        this.statsList.h = 200
+        this.container.addChild(this.statsList)
 
         this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
-        this.container.addChild(this.resourcesLabel)
+        this.statsList.addElement(this.resourcesLabel)
 
         this.coinTexture = new PIXI.Sprite.from('coin')
         this.resourcesLabel.addChild(this.coinTexture)
@@ -202,10 +214,12 @@ export default class MergeScreen extends Screen {
         this.coinTexture.x = -25
 
         this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
-        this.container.addChild(this.rpsLabel)
+        this.statsList.addElement(this.rpsLabel)
 
         this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
-        this.container.addChild(this.dpsLabel)
+        this.statsList.addElement(this.dpsLabel)
+
+        this.statsList.updateVerticalList();
 
         this.particleSystem = new ParticleSystem();
         this.frontLayer.addChild(this.particleSystem)
@@ -298,6 +312,8 @@ export default class MergeScreen extends Screen {
                 let saved = this.savedResources.entities[element.rawData.nameID];
                 let time = saved.latestResourceAdd - saved.latestResourceCollect
                 this.sumStart += time * element.getRPS();
+
+                console.log(this.sumStart, element.getRPS(), time)
             }
         });
 
@@ -306,7 +322,9 @@ export default class MergeScreen extends Screen {
 
         let now = Date.now() / 1000 | 0
         let diff = now - this.savedEconomy.lastChanged
-        if (diff > 10 && this.sumStart > 10) {
+
+        console.log(diff, this.sumStart)
+        if (diff > 600 && this.sumStart > 10) {
             let params = {
                 label: 'your ships\ncollected\n' + utils.formatPointsLabel(this.sumStart) + '\n\nWould you like to watch\na video and double?',
                 onConfirm: this.collectStartAmountDouble.bind(this),
@@ -316,6 +334,11 @@ export default class MergeScreen extends Screen {
         }
 
         //this.mergeItemsShop.show()
+    }
+    addSystem(system){
+        if(!this.systemsList.includes(system)){
+            this.systemsList.push(system)
+        }
     }
     collectStartAmountDouble() {
         this.resourceSystem.collectStartAmount(2)
@@ -404,9 +427,9 @@ export default class MergeScreen extends Screen {
 
         this.resourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources);
 
-        this.rpsLabel.text = utils.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps) + "/rps";
+        this.rpsLabel.text = "rps\n"+ utils.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps);
 
-        this.dpsLabel.text = utils.formatPointsLabel(this.mergeSystem1.dps) + "/dps";
+        this.dpsLabel.text = "dps\n"+  utils.formatPointsLabel(this.mergeSystem1.dps);
 
         this.timestamp = (Date.now() / 1000 | 0);
 
@@ -415,7 +438,6 @@ export default class MergeScreen extends Screen {
     }
     resize(resolution) {
 
-        this.mergeSystem1.resize(resolution);
         this.spaceBackground.resize(resolution, this.screenManager.scale);
 
         this.spaceBackground.x = config.width / 2
@@ -428,17 +450,23 @@ export default class MergeScreen extends Screen {
         this.resourcesWrapperRight.x = this.gridWrapper.x + this.gridWrapper.width;
         this.resourcesWrapperRight.y = this.gridWrapper.y;
 
-        this.dpsLabel.y = config.height - 80
-        this.rpsLabel.y = config.height - 50
-        this.resourcesLabel.x = 25;
-        this.resourcesLabel.y = config.height - 110
+
+        this.statsList.y = config.height - 270
+        // this.dpsLabel.y = config.height - 80
+        // this.rpsLabel.y = config.height - 50
+        // this.resourcesLabel.x = 25;
+        // this.resourcesLabel.y = config.height - 110
 
         this.enemiesContainer.x = config.width / 2;
         this.enemiesContainer.y = config.height * this.areaConfig.topArea * 0.5;
 
         this.uiPanels.forEach(element => {
-            element.x = config.width / 2 - element.width / 2
-            element.y = config.height / 2 - element.height / 2
+            element.x = config.width / 2
+            element.y = config.height / 2
+        });
+
+        this.systemsList.forEach(element => {
+            element.resize(resolution);
         });
         // this.entityShop.x = config.width / 2 - this.entityShop.width / 2
         // this.entityShop.y = config.height / 2 - this.entityShop.height / 2

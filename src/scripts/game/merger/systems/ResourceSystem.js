@@ -157,10 +157,12 @@ export default class ResourceSystem {
     resize(resolution, force) {
 
         if (!force && this.currentResolution.width == resolution.width && this.currentResolution.height == resolution.height) {
-            return;
+            //return;
         }
         this.currentResolution.width = resolution.width;
         this.currentResolution.height = resolution.height;
+
+        console.log("Res")
 
         this.updateGridPosition();
 
@@ -180,6 +182,7 @@ export default class ResourceSystem {
         this.container.x = this.wrapper.x//this.wrapper.x + this.wrapper.width / 2 - (this.fixedSize.width * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.x;;
         this.container.y = this.wrapper.y + this.wrapper.height / 2 - (this.fixedSize.height * this.container.scale.x) / 2 + this.slotSize.distanceResources * this.container.scale.y;
 
+        console.log('wrapper',this.wrapper.y )
         for (let index = this.resourceSlots.length - 1; index >= 0; index--) {
             const element = this.resourceSlots[this.resourceSlots.length - 1 - index];
             element.y = (this.slotSize.height + this.slotSize.distanceResources) * index

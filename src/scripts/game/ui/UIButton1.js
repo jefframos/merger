@@ -12,14 +12,15 @@ export default class UIButton1 extends PIXI.Container {
 		this.h = height;
 
 		this.mainContainer = new PIXI.Container();
-		//this.backShape = PIXI.Sprite.fromImage('./assets/images/rect.png');
+		//this.backShape = PIXI.Sprite.fromImage(
+
 		if (!icon) {
 			this.icon = new PIXI.Sprite();
 
 		} else {
-
-			if (typeof (icon) == PIXI.RenderTexture ||
-				typeof (icon) == PIXI.Texture) {
+			//console.log(typeof (icon))
+			if (icon instanceof PIXI.RenderTexture ||
+				icon instanceof PIXI.Texture) {
 				this.icon = new PIXI.Sprite();
 				this.icon.texture = icon;
 			} else {
@@ -57,6 +58,7 @@ export default class UIButton1 extends PIXI.Container {
 		//this.updateRotation(Math.PI * 0.25)
 
 		this.icon.anchor.set(0.5);
+		
 
 		this.updateIconScale();
 		//this.mainContainer.addChild(this.backShapeBorder);

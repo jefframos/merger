@@ -48,16 +48,18 @@ export default class ScreenManager extends PIXI.Container{
 		this.currentScreen.build(param);
 		this.currentScreen.transitionIn();
 		this.screensContainer.addChild(this.currentScreen);	
+		this.resize(this.resolution);
 	}
 	//update manager
 	update(delta){
 		this.resolution = {width:innerWidth, height:innerHeight};
-		this.resize(this.resolution);
+		//this.resize(this.resolution);
 		if(this.screenList != null){
 			this.currentScreen.update(delta);
 		}
 	}
 	resize(newSize){
+
 		for(let i = 0; i < this.screenList.length; i++){
 			if(this.screenList[i].resize){
 				this.screenList[i].resize(newSize)
