@@ -19,7 +19,7 @@ export default class StarParticle extends PIXI.Container {
     }
     update(velY, size) {
 
-        this.y += velY * this.alpha
+        this.y += velY * this.alpha* this.alpha
 
         if (this.y > size.height) {
             this.y = -size.height / 2 //-= size.height * 1.1

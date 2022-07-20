@@ -49,6 +49,9 @@ export default class MergerData {
     getUpgradeCost(totalUpgrades) {
         return this.rawData.initialCost * Math.pow(this.rawData.costCoefficient, this.currentLevel + totalUpgrades)
     }
+    getUpgradeRawCost(totalUpgrades) {
+        return this.rawData.initialCost * Math.pow(this.rawData.costCoefficient, totalUpgrades)
+    }
     upgrade(quant) {
         this.currentLevel += quant;
     }

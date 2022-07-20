@@ -5,6 +5,8 @@ import EntityShop from './EntityShop';
 export default class GeneralShop extends EntityShop {
     constructor(mainSystem, size, border = 0) {
         super(mainSystem, size, border = 0)
+
+        this.toggles.removeButton(2)
     }
 
     confirmItemShop(item) {

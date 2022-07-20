@@ -103,6 +103,11 @@ export default class ShopItem extends UIList {
         this.realCost = 0
         this.previewValue = 1;
         this.unlockItem();
+        this.currentTogglePreviewValue = 1;
+
+        console.log("adicionar aqui botoes pra auto generate and auto collect");
+
+
     }
     lockItem() {
         this.lockStateContainer.visible = true;
@@ -197,16 +202,11 @@ export default class ShopItem extends UIList {
     }
 
     hide() {
-        if (this.isVideo) {
-            TweenLite.killTweensOf(this.currentColorTween);
-            clearTimeout(this.specialTimeout);
-            this.backGraphic.tint = 0xFF00FF;
-        }
+        this.isShowing = false;
     }
     show() {
-        if (this.isVideo) {
-            this.changeBgColor()
-        }
+        this.isShowing = true;
+
     }
     updatePreviewValue(value) {
         if(this.lockStateContainer.visible){
@@ -215,21 +215,21 @@ export default class ShopItem extends UIList {
         this.previewValue = value;
         let max = this.itemData.rawData.levelMax - this.itemData.currentLevel;
         this.previewValue = Math.min(this.previewValue, max)
+
         if (value >= this.itemData.rawData.levelMax) {
             let findMax = this.previewValue;
             let found = false;
-            for (let index = this.itemData.currentLevel; index <= this.previewValue; index++) {
-                if (this.itemData.getUpgradeCost(index) <= window.gameEconomy.currentResources) {
-                    findMax = index;
-                    found = true;
+            for (let index = this.itemData.currentLevel; index <= this.itemData.currentLevel + this.previewValue; index++) {                
+                if (this.itemData.getUpgradeRawCost(index) <= window.gameEconomy.currentResources) {
+                    findMax = index - this.itemData.currentLevel;
+                    found = true;                    
                 } else {
                     break;
                 }
             }
-
-            if (!found && findMax == this.previewValue) {
+            
+            if (!found){// && findMax == this.previewValue) {
                 this.previewValue = 1;
-                console.log(this.previewValue)
             }else{
                 this.previewValue = findMax
             }

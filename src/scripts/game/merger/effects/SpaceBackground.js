@@ -19,6 +19,15 @@ export default class SpaceBackground extends PIXI.Container {
 		this.tiledBackground.width = 5000
 		this.tiledBackground.height = 5000
 		this.tiledBackground.anchor.set(0.5)
+
+
+		this.tiledBackground2 = new PIXI.TilingSprite(PIXI.Texture.fromFrame('seamless-starfield-texture', 256, 256))
+		this.addChild(this.tiledBackground2);
+		this.tiledBackground2.width = 5000
+		this.tiledBackground2.height = 5000
+		this.tiledBackground2.anchor.set(0.5)
+
+
 		this.backgroundShape = new PIXI.Graphics().beginFill(0x111a20).drawRect(-50, -50, 100, 100);
 		this.addChild(this.backgroundShape);
 		this.backgroundShape.alpha = 0.5
@@ -58,7 +67,7 @@ export default class SpaceBackground extends PIXI.Container {
 		this.innerResolution = { width: config.width, height: config.height }
 
 
-		this.addStars();
+		//this.addStars();
 
 
 		this.starsMoveTimer = 0;
@@ -103,9 +112,14 @@ export default class SpaceBackground extends PIXI.Container {
 				window.fxSpeed = 1;
 			}
 		}
-		this.currentSpeed.y = this.innerResolution.height * 0.01 * (window.fxSpeed * 2)
-		this.tiledBackground.tilePosition.y +=  delta * 3;
-		this.tiledBackground.tilePosition.y %= 128;
+		this.currentSpeed.y = this.innerResolution.height * 0.01 * (window.fxSpeed * 2) * 5
+		this.tiledBackground.tilePosition.y +=  delta * 5;
+		this.tiledBackground.tilePosition.y %= 256;
+
+		this.tiledBackground2.tilePosition.y +=  delta * 3;
+		this.tiledBackground2.tilePosition.y %= 256;
+
+		this.tiledBackground.rotation += delta * 0.01
 		//console.log(this.currentSpeed.y, delta)
 		let spd = this.currentSpeed.y * delta;
 
@@ -125,7 +139,7 @@ export default class SpaceBackground extends PIXI.Container {
 		for (var i = 0; i < totalStars; i++) {
 			let dist = Math.random() * (l * 2) + l;
 			let tempStar = new StarParticle(dist * 2);
-			tempStar.alpha = (Math.min(dist, 3) / 3 * 0.5) + 0.2
+			tempStar.alpha = (Math.min(dist, 3) / 3 * 0.2) + 0.1
 			tempStar.tint = 0x7C8284
 			let toClose = true;
 			let acc = 5;

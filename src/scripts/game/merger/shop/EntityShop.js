@@ -16,14 +16,14 @@ export default class EntityShop extends PIXI.Container {
             h: config.height * 0.8
         }
 
-        
-        this.background = new PIXI.Graphics().beginFill(0).drawRect(-config.width * 5, -config.height * 5,config.width*10, config.height * 10) 
+        this.currentItens = [];
+        this.background = new PIXI.Graphics().beginFill(0).drawRect(-config.width * 5, -config.height * 5, config.width * 10, config.height * 10)
         this.addChild(this.background)
         this.background.alpha = 0.5;
 
         this.background.interactive = true;
         this.background.buttonMode = true;
-        this.background.on('mousedown', this.confirm.bind(this)).on('touchstart', this.confirm.bind(this));
+        //this.background.on('mousedown', this.confirm.bind(this)).on('touchstart', this.confirm.bind(this));
 
         this.container = new PIXI.Container();
         this.addChild(this.container)
@@ -37,7 +37,7 @@ export default class EntityShop extends PIXI.Container {
         this.container.addChild(this.backContainer);
 
 
-      
+
         this.shopList = new ShopList({ w: this.size.w, h: this.size.h * 0.8 }, 6)
         this.shopList.y = 100
         this.container.addChild(this.shopList);
@@ -45,7 +45,7 @@ export default class EntityShop extends PIXI.Container {
 
         this.shopList.onItemShop.add(this.confirmItemShop.bind(this))
 
-        this.openShop = new UIButton1(0xFFffff, window.TILE_ASSSETS_POOL['image-X'], 0xFFffff,40,40)
+        this.openShop = new UIButton1(0xFFffff, window.TILE_ASSSETS_POOL['image-X'], 0xFFffff, 40, 40)
         this.openShop.updateIconScale(0.5)
         this.container.addChild(this.openShop)
         this.openShop.x = this.size.w - this.openShop.width
@@ -60,9 +60,11 @@ export default class EntityShop extends PIXI.Container {
         this.toggles.y = this.openShop.y - this.size.h * 0.025
         this.toggles.onUpdateValue.add(this.updateToggleValue.bind(this))
 
+        window.gameEconomy.onMoneySpent.add(this.moneySpent.bind(this))
+
+
     }
-    confirm()
-    {
+    confirm() {
         this.hide();
     }
     hideCallback() {
@@ -70,6 +72,12 @@ export default class EntityShop extends PIXI.Container {
     }
     hide() {
         this.visible = false;
+        this.currentItens.forEach(element => {
+            element.hide();
+        });
+    }
+    moneySpent() {
+        this.updateToggleValue();
     }
     updateToggleValue() {
         this.currentItens.forEach(element => {
@@ -88,19 +96,20 @@ export default class EntityShop extends PIXI.Container {
                 currentEntities.push(key);
             }
         }
-        this.currentItens.forEach(element => {            
+        this.currentItens.forEach(element => {
             if (currentEntities.indexOf(element.nameID) > -1) {
                 element.unlockItem();
             } else {
                 element.lockItem();
             }
+            element.show();
             element.updatePreviewValue(this.toggles.currentActiveValue)
         });
 
 
 
     }
-    confirmItemShop(item,button,totalUpgrades) {
+    confirmItemShop(item, button, totalUpgrades) {
 
         console.log(totalUpgrades)
         this.mainSystem.forEach(resourceSystem => {

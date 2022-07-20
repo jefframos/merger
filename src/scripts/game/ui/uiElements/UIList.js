@@ -15,6 +15,21 @@ export default class UIList extends PIXI.Container {
         this.container.addChild(this.debugGr)
         this.debugGr.alpha = 0.5;
     }
+    removeElement(element) {
+        this.container.removeChild(element)
+
+        let toRemove = -1;
+        for (let index = 0; index < this.elementsList.length; index++) {
+            if(element == this.elementsList[index]){
+                toRemove = index
+            }
+            
+        }
+        if(toRemove >= 0){
+
+            this.elementsList.splice(toRemove,1)
+        }
+    }
     addElement(element) {
         this.container.addChild(element)
         this.elementsList.push(element)

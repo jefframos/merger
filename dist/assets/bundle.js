@@ -16803,6 +16803,22 @@ var UIList = function (_PIXI$Container) {
             this.debugGr.alpha = 0.5;
         }
     }, {
+        key: 'removeElement',
+        value: function removeElement(element) {
+            this.container.removeChild(element);
+
+            var toRemove = -1;
+            for (var index = 0; index < this.elementsList.length; index++) {
+                if (element == this.elementsList[index]) {
+                    toRemove = index;
+                }
+            }
+            if (toRemove >= 0) {
+
+                this.elementsList.splice(toRemove, 1);
+            }
+        }
+    }, {
         key: 'addElement',
         value: function addElement(element) {
             this.container.addChild(element);
@@ -22009,13 +22025,14 @@ var EntityShop = function (_PIXI$Container) {
             h: _config2.default.height * 0.8
         };
 
+        _this.currentItens = [];
         _this.background = new PIXI.Graphics().beginFill(0).drawRect(-_config2.default.width * 5, -_config2.default.height * 5, _config2.default.width * 10, _config2.default.height * 10);
         _this.addChild(_this.background);
         _this.background.alpha = 0.5;
 
         _this.background.interactive = true;
         _this.background.buttonMode = true;
-        _this.background.on('mousedown', _this.confirm.bind(_this)).on('touchstart', _this.confirm.bind(_this));
+        //this.background.on('mousedown', this.confirm.bind(this)).on('touchstart', this.confirm.bind(this));
 
         _this.container = new PIXI.Container();
         _this.addChild(_this.container);
@@ -22048,6 +22065,8 @@ var EntityShop = function (_PIXI$Container) {
         _this.toggles.y = _this.openShop.y - _this.size.h * 0.025;
         _this.toggles.onUpdateValue.add(_this.updateToggleValue.bind(_this));
 
+        window.gameEconomy.onMoneySpent.add(_this.moneySpent.bind(_this));
+
         return _this;
     }
 
@@ -22065,6 +22084,14 @@ var EntityShop = function (_PIXI$Container) {
         key: 'hide',
         value: function hide() {
             this.visible = false;
+            this.currentItens.forEach(function (element) {
+                element.hide();
+            });
+        }
+    }, {
+        key: 'moneySpent',
+        value: function moneySpent() {
+            this.updateToggleValue();
         }
     }, {
         key: 'updateToggleValue',
@@ -22097,6 +22124,7 @@ var EntityShop = function (_PIXI$Container) {
                 } else {
                     element.lockItem();
                 }
+                element.show();
                 element.updatePreviewValue(_this3.toggles.currentActiveValue);
             });
         }
@@ -22602,7 +22630,7 @@ var MergeTile = function (_PIXI$Container) {
     }, {
         key: 'damageReady',
         value: function damageReady() {
-            console.log("sort out damage multiplier");
+            //console.log("sort out damage multiplier")
             this.onGenerateDamage.dispatch(this, this.tileData);
         }
     }, {
@@ -59159,11 +59187,17 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 var assets = [{
+	"id": "entities",
+	"url": "assets/json\\entities.json"
+}, {
 	"id": "baseGameConfig",
 	"url": "assets/json\\baseGameConfig.json"
 }, {
-	"id": "entities",
-	"url": "assets/json\\entities.json"
+	"id": "resources",
+	"url": "assets/json\\resources.json"
+}, {
+	"id": "modifyers",
+	"url": "assets/json\\modifyers.json"
 }, {
 	"id": "fiveLetters_",
 	"url": "assets/json\\fiveLetters_.json"
@@ -59171,23 +59205,17 @@ var assets = [{
 	"id": "fourLetters_",
 	"url": "assets/json\\fourLetters_.json"
 }, {
-	"id": "modifyers",
-	"url": "assets/json\\modifyers.json"
-}, {
-	"id": "resources",
-	"url": "assets/json\\resources.json"
-}, {
 	"id": "sixLetters_",
 	"url": "assets/json\\sixLetters_.json"
 }, {
-	"id": "scrabble",
-	"url": "assets/json\\scrabble.json"
+	"id": "worduoConfig",
+	"url": "assets/json\\worduoConfig.json"
 }, {
 	"id": "threeLetters_",
 	"url": "assets/json\\threeLetters_.json"
 }, {
-	"id": "worduoConfig",
-	"url": "assets/json\\worduoConfig.json"
+	"id": "scrabble",
+	"url": "assets/json\\scrabble.json"
 }];
 
 exports.default = assets;
@@ -61261,6 +61289,10 @@ var ShopItem = function (_UIList) {
         _this.realCost = 0;
         _this.previewValue = 1;
         _this.unlockItem();
+        _this.currentTogglePreviewValue = 1;
+
+        console.log("adicionar aqui botoes pra auto generate and auto collect");
+
         return _this;
     }
 
@@ -61366,18 +61398,12 @@ var ShopItem = function (_UIList) {
     }, {
         key: 'hide',
         value: function hide() {
-            if (this.isVideo) {
-                TweenLite.killTweensOf(this.currentColorTween);
-                clearTimeout(this.specialTimeout);
-                this.backGraphic.tint = 0xFF00FF;
-            }
+            this.isShowing = false;
         }
     }, {
         key: 'show',
         value: function show() {
-            if (this.isVideo) {
-                this.changeBgColor();
-            }
+            this.isShowing = true;
         }
     }, {
         key: 'updatePreviewValue',
@@ -61388,21 +61414,22 @@ var ShopItem = function (_UIList) {
             this.previewValue = value;
             var max = this.itemData.rawData.levelMax - this.itemData.currentLevel;
             this.previewValue = Math.min(this.previewValue, max);
+
             if (value >= this.itemData.rawData.levelMax) {
                 var findMax = this.previewValue;
                 var found = false;
-                for (var index = this.itemData.currentLevel; index <= this.previewValue; index++) {
-                    if (this.itemData.getUpgradeCost(index) <= window.gameEconomy.currentResources) {
-                        findMax = index;
+                for (var index = this.itemData.currentLevel; index <= this.itemData.currentLevel + this.previewValue; index++) {
+                    if (this.itemData.getUpgradeRawCost(index) <= window.gameEconomy.currentResources) {
+                        findMax = index - this.itemData.currentLevel;
                         found = true;
                     } else {
                         break;
                     }
                 }
 
-                if (!found && findMax == this.previewValue) {
+                if (!found) {
+                    // && findMax == this.previewValue) {
                     this.previewValue = 1;
-                    console.log(this.previewValue);
                 } else {
                     this.previewValue = findMax;
                 }
@@ -62185,6 +62212,10 @@ var _classCallCheck2 = __webpack_require__(1);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
+var _createClass2 = __webpack_require__(2);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
 var _possibleConstructorReturn2 = __webpack_require__(6);
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
@@ -62231,6 +62262,7 @@ var UpgradesToggles = function (_PIXI$Container) {
         _this.backShape.width = width;
         _this.backShape.height = height;
         _this.addChild(_this.backShape);
+        _this.backShape.interactive = true;
 
         _this.lockList = new _UIList2.default();
         _this.lockList.w = width;
@@ -62283,6 +62315,14 @@ var UpgradesToggles = function (_PIXI$Container) {
         return _this;
     }
 
+    (0, _createClass3.default)(UpgradesToggles, [{
+        key: 'removeButton',
+        value: function removeButton(id) {
+
+            this.lockList.removeElement(this.toggles[id]);
+            this.lockList.updateHorizontalList();
+        }
+    }]);
     return UpgradesToggles;
 }(PIXI.Container);
 
@@ -62308,6 +62348,10 @@ var _createClass2 = __webpack_require__(2);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
+var _signals = __webpack_require__(9);
+
+var _signals2 = _interopRequireDefault(_signals);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var GameEconomy = function () {
@@ -62317,29 +62361,33 @@ var GameEconomy = function () {
         this.economyData = COOKIE_MANAGER.getEconomy();
         console.log(this.economyData);
         this.currentResources = this.economyData.resources;
+        this.onMoneySpent = new _signals2.default();
     }
 
     (0, _createClass3.default)(GameEconomy, [{
-        key: "addResources",
+        key: 'addResources',
         value: function addResources(res) {
             this.currentResources += res;
             this.saveResources();
+            this.onMoneySpent.dispatch(-res);
         }
     }, {
-        key: "hasEnoughtResources",
+        key: 'hasEnoughtResources',
         value: function hasEnoughtResources(cost) {
 
             return Math.ceil(cost) <= Math.floor(this.currentResources);
         }
     }, {
-        key: "useResources",
+        key: 'useResources',
         value: function useResources(cost) {
             this.currentResources -= cost;
             this.currentResources = Math.max(this.currentResources, 0);
             this.saveResources();
+
+            this.onMoneySpent.dispatch(cost);
         }
     }, {
-        key: "saveResources",
+        key: 'saveResources',
         value: function saveResources() {
             COOKIE_MANAGER.updateResources(this.currentResources);
         }
@@ -62348,7 +62396,7 @@ var GameEconomy = function () {
 }();
 
 exports.default = GameEconomy;
-module.exports = exports["default"];
+module.exports = exports['default'];
 
 /***/ }),
 /* 355 */
@@ -62462,7 +62510,11 @@ var GeneralShop = function (_EntityShop) {
     function GeneralShop(mainSystem, size) {
         var border = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
         (0, _classCallCheck3.default)(this, GeneralShop);
-        return (0, _possibleConstructorReturn3.default)(this, (GeneralShop.__proto__ || (0, _getPrototypeOf2.default)(GeneralShop)).call(this, mainSystem, size, border = 0));
+
+        var _this = (0, _possibleConstructorReturn3.default)(this, (GeneralShop.__proto__ || (0, _getPrototypeOf2.default)(GeneralShop)).call(this, mainSystem, size, border = 0));
+
+        _this.toggles.removeButton(2);
+        return _this;
     }
 
     (0, _createClass3.default)(GeneralShop, [{
@@ -63546,6 +63598,11 @@ var MergerData = function () {
         key: "getUpgradeCost",
         value: function getUpgradeCost(totalUpgrades) {
             return this.rawData.initialCost * Math.pow(this.rawData.costCoefficient, this.currentLevel + totalUpgrades);
+        }
+    }, {
+        key: "getUpgradeRawCost",
+        value: function getUpgradeRawCost(totalUpgrades) {
+            return this.rawData.initialCost * Math.pow(this.rawData.costCoefficient, totalUpgrades);
         }
     }, {
         key: "upgrade",
@@ -64712,6 +64769,13 @@ var SpaceBackground = function (_PIXI$Container) {
 				_this.tiledBackground.width = 5000;
 				_this.tiledBackground.height = 5000;
 				_this.tiledBackground.anchor.set(0.5);
+
+				_this.tiledBackground2 = new PIXI.TilingSprite(PIXI.Texture.fromFrame('seamless-starfield-texture', 256, 256));
+				_this.addChild(_this.tiledBackground2);
+				_this.tiledBackground2.width = 5000;
+				_this.tiledBackground2.height = 5000;
+				_this.tiledBackground2.anchor.set(0.5);
+
 				_this.backgroundShape = new PIXI.Graphics().beginFill(0x111a20).drawRect(-50, -50, 100, 100);
 				_this.addChild(_this.backgroundShape);
 				_this.backgroundShape.alpha = 0.5;
@@ -64745,11 +64809,12 @@ var SpaceBackground = function (_PIXI$Container) {
 				_this.starsContainer = new PIXI.Container();
 				_this.addChild(_this.starsContainer);
 
-				_this.innerResolution = { width: _config2.default.width, height: _config2.default.height };
+				_this.innerResolution = { width: _config2.default.width, height: _config2.default.height
 
-				_this.addStars();
+						//this.addStars();
 
-				_this.starsMoveTimer = 0;
+
+				};_this.starsMoveTimer = 0;
 
 				_this.starsDeacc = 0.9;
 
@@ -64792,9 +64857,14 @@ var SpaceBackground = function (_PIXI$Container) {
 										window.fxSpeed = 1;
 								}
 						}
-						this.currentSpeed.y = this.innerResolution.height * 0.01 * (window.fxSpeed * 2);
-						this.tiledBackground.tilePosition.y += delta * 3;
-						this.tiledBackground.tilePosition.y %= 128;
+						this.currentSpeed.y = this.innerResolution.height * 0.01 * (window.fxSpeed * 2) * 5;
+						this.tiledBackground.tilePosition.y += delta * 5;
+						this.tiledBackground.tilePosition.y %= 256;
+
+						this.tiledBackground2.tilePosition.y += delta * 3;
+						this.tiledBackground2.tilePosition.y %= 256;
+
+						this.tiledBackground.rotation += delta * 0.01;
 						//console.log(this.currentSpeed.y, delta)
 						var spd = this.currentSpeed.y * delta;
 
@@ -64816,7 +64886,7 @@ var SpaceBackground = function (_PIXI$Container) {
 						for (var i = 0; i < totalStars; i++) {
 								var dist = Math.random() * (l * 2) + l;
 								var tempStar = new _StarParticle2.default(dist * 2);
-								tempStar.alpha = Math.min(dist, 3) / 3 * 0.5 + 0.2;
+								tempStar.alpha = Math.min(dist, 3) / 3 * 0.2 + 0.1;
 								tempStar.tint = 0x7C8284;
 								var toClose = true;
 								var acc = 5;
@@ -64914,7 +64984,7 @@ var StarParticle = function (_PIXI$Container) {
         key: 'update',
         value: function update(velY, size) {
 
-            this.y += velY * this.alpha;
+            this.y += velY * this.alpha * this.alpha;
 
             if (this.y > size.height) {
                 this.y = -size.height / 2; //-= size.height * 1.1

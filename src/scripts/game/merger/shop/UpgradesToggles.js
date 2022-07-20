@@ -15,6 +15,7 @@ export default class UpgradesToggles extends PIXI.Container {
         this.backShape.width = width
         this.backShape.height = height
         this.addChild(this.backShape)
+        this.backShape.interactive = true;
         
 
 
@@ -61,5 +62,11 @@ export default class UpgradesToggles extends PIXI.Container {
 
         this.lockList.updateHorizontalList()
 
+    }
+
+    removeButton(id){
+        
+        this.lockList.removeElement(this.toggles[id])
+        this.lockList.updateHorizontalList()
     }
 }

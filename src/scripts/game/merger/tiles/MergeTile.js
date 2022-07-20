@@ -180,7 +180,7 @@ export default class MergeTile extends PIXI.Container {
         this.onGenerateResource.dispatch(this, this.tileData);
     }
     damageReady() {
-        console.log("sort out damage multiplier")
+        //console.log("sort out damage multiplier")
         this.onGenerateDamage.dispatch(this, this.tileData);
     }
     showSprite() {
