@@ -1,5 +1,6 @@
 import TweenMax from 'gsap';
 import * as PIXI from 'pixi.js';
+import { utils } from 'pixi.js/lib/core';
 import EntityShop from './EntityShop';
 
 export default class GeneralShop extends EntityShop {
@@ -25,9 +26,11 @@ export default class GeneralShop extends EntityShop {
 
     }
     show() {
+        this.title.text = "GENERAL"        
         this.visible = true;
         this.currentItens.forEach(element => { 
             element.updatePreviewValue(this.toggles.currentActiveValue)
         });
+        this.posShow();
     }
 }

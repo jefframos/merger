@@ -18,6 +18,7 @@ export default class MergeItemsShop extends EntityShop {
     }
     show() {
         this.visible = true;
+        this.title.text = "SHIPS"
         let currentResources = COOKIE_MANAGER.getBoard();
         let currentEntities = []
         for (const key in currentResources.entities) {
@@ -40,5 +41,6 @@ export default class MergeItemsShop extends EntityShop {
             
         }
         this.currentItens[0].unlockItem();        
+        this.posShow();
     }
 }

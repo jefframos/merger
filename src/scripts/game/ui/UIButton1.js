@@ -5,7 +5,7 @@ import TweenLite from 'gsap';
 import utils from '../../utils';
 
 export default class UIButton1 extends PIXI.Container {
-	constructor(color, icon, iconColor = 0xFFFFFF, width = 65, height = 65) {
+	constructor(color, icon, iconColor = 0xFFFFFF, width = 65, height = 65, texture = 'square-pattern1') {
 		super();
 
 		this.w = width;
@@ -39,7 +39,7 @@ export default class UIButton1 extends PIXI.Container {
 
 		this.padding = 8;
 		this.backShapeBorder = new PIXI.mesh.NineSlicePlane(
-			PIXI.Texture.fromFrame('small-no-pattern'), 15, 15, 15, 15)
+			PIXI.Texture.fromFrame(texture), 30, 15, 15, 20)
 		this.backShapeBorder.width = width + this.padding
 		this.backShapeBorder.height = height + this.padding
 		this.backShapeBorder.pivot.set((width + this.padding) / 2, (height + this.padding) / 2)
@@ -47,7 +47,7 @@ export default class UIButton1 extends PIXI.Container {
 
 		//this.backShape = PIXI.Sprite.fromFrame('largeCard.png')
 		this.backShape = new PIXI.mesh.NineSlicePlane(
-			PIXI.Texture.fromFrame('small-no-pattern'), 15, 15, 15, 15)
+			PIXI.Texture.fromFrame(texture), 30, 30, 25, 10)
 		this.backShape.width = width
 		this.backShape.height = height
 		this.backShape.pivot.set(width / 2, height / 2)
@@ -58,7 +58,7 @@ export default class UIButton1 extends PIXI.Container {
 		//this.updateRotation(Math.PI * 0.25)
 
 		this.icon.anchor.set(0.5);
-		
+
 
 		this.updateIconScale();
 		//this.mainContainer.addChild(this.backShapeBorder);
@@ -68,9 +68,13 @@ export default class UIButton1 extends PIXI.Container {
 
 		this.onClick = new signals.Signal()
 
-		this.on('touchstart', this.click.bind(this));
+		this.on('touchstart', this.touchStart.bind(this));
+		this.on('touchend', this.click.bind(this));
 		this.interactive = true;
 		this.buttonMode = true;
+	}
+	touchStart() {
+		this.backShape.scale.set(1.1)
 	}
 	changePivot(x, y) {
 		this.backShapeBorder.pivot.set((this.w * x + this.padding) / 2, (this.h * y + this.padding) / 2)
@@ -79,11 +83,17 @@ export default class UIButton1 extends PIXI.Container {
 		this.icon.x = this.w * x + this.w / 2
 		this.icon.y = this.h * y + this.h / 2
 	}
-	disableState(color) {
-		this.icon.alpha = 0.5
+	disableState(color, texture) {
+
+		if (texture)
+			this.backShape.texture = PIXI.Texture.fromFrame(texture)
+		//this.icon.alpha = 0.5
 		// this.backShape.tint = color;
 	}
-	enableState(color) {
+	enableState(color, texture) {
+
+		if (texture)
+			this.backShape.texture = PIXI.Texture.fromFrame(texture)
 		this.icon.alpha = 1
 		// this.backShape.tint = color;
 	}
@@ -132,6 +142,8 @@ export default class UIButton1 extends PIXI.Container {
 		this.icon.texture = texture;
 	}
 	click() {
+		this.backShape.scale.set(1)
+
 		this.onClick.dispatch();
 		//window.SOUND_MANAGER.play('tap2', { volume: 0.5 })
 	}

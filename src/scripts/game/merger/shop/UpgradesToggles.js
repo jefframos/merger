@@ -15,6 +15,7 @@ export default class UpgradesToggles extends PIXI.Container {
         this.backShape.width = width
         this.backShape.height = height
         this.addChild(this.backShape)
+        this.backShape.alpha = 0
         this.backShape.interactive = true;
         
 
@@ -36,8 +37,9 @@ export default class UpgradesToggles extends PIXI.Container {
             }else{
                 texture =window.TILE_ASSSETS_POOL['image-MAX']
             }
-            let toggle = new UIButton1(0xFFffff, texture, 0xFFffff, 150)
+            let toggle = new UIButton1(0xFFffff, texture, 0xFFffff, 120,65, 'large-square-pattern-green')
             toggle.changePivot(0, 0)
+            toggle.updateIconScale(0.4)
             toggle.disableState(0x555555)
             toggle.value = this.values[index]
             toggle.fitHeight = 0.8
@@ -46,9 +48,9 @@ export default class UpgradesToggles extends PIXI.Container {
             toggle.onClick.add(() => {
 
                 this.toggles.forEach(element => {
-                    element.disableState(0x555555)
+                    element.disableState(0x555555, 'large-square-pattern-green')
                 });
-                toggle.enableState(0)
+                toggle.enableState(0, 'large-square-pattern-cyan')
                 this.currentActiveValue = toggle.value;
 
                 this.onUpdateValue.dispatch()
@@ -56,7 +58,7 @@ export default class UpgradesToggles extends PIXI.Container {
 
             this.toggles.push(toggle)
         }
-        this.toggles[0].enableState(0)
+        this.toggles[0].enableState(0, 'large-square-pattern-cyan')
 
         this.currentActiveValue = this.toggles[0].value;
 

@@ -112,7 +112,7 @@ function configGame(evt) {
 
 window.TILE_ASSSETS_POOL = []
 
-    let toGenerate = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, '?', '!', 'X', 'v', '+', '<', '>', 't','MAX', 100]
+    let toGenerate = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '?', '!', 'X', 'v', '+', '<', '>', 't','MAX','Fight boss', '100']
     for (let index = 0; index < toGenerate.length; index++) {
 
         let container = new PIXI.Container()
@@ -121,7 +121,9 @@ window.TILE_ASSSETS_POOL = []
         text.style.fill = 0xFFFFFF
         text.style.strokeThickness = 0
         container.addChild(text)
-        let tex = utils.generateTextureFromContainer('image-' + toGenerate[index], container, window.TILE_ASSSETS_POOL)
+
+        let id = toGenerate[index].substring(0,4)
+        let tex = utils.generateTextureFromContainer('image-' + id, container, window.TILE_ASSSETS_POOL)
 
     }
     

@@ -7,7 +7,7 @@ export default class ShopLockState extends PIXI.Container {
     constructor(width, height) {
         super()
         this.backShape = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('progressBarSmall'), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame('small-no-pattern-grey'), 10, 10, 10, 10)
         this.backShape.width = width
         this.backShape.height = height
         this.addChild(this.backShape)
@@ -21,11 +21,13 @@ export default class ShopLockState extends PIXI.Container {
 
         this.lockIcon = new PIXI.Sprite.fromFrame('results_lock')
         this.lockList.addElement(this.lockIcon)
+        this.lockIcon.tint = 0
 
         this.labelContainer = new PIXI.Container();
         this.infoLabel = new PIXI.Text('Unlock this upgrade at level XXXX', LABELS.LABEL2);
         this.labelContainer.addChild(this.infoLabel);
         this.infoLabel.style.fontSize = 12
+        this.infoLabel.style.fill = 0xFFFFFF
         this.labelContainer.listScl = 0.75;
         this.lockList.addElement(this.labelContainer)
 

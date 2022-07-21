@@ -24,7 +24,7 @@ export default class EnemySystem {
 
         //color, icon, iconColor =0xFFFFFF, width = 40, height = 40
 
-        this.invokeBossBattle = new UIButton1(0xff2299, 'capital_ship_01', 0xFFFFFF, 80, 50)
+        this.invokeBossBattle = new UIButton1(0xFFFFFF, TILE_ASSSETS_POOL['image-Figh'], 0xFFFFFF, 120, 50, 'boss-button')
         this.container.addChild(this.invokeBossBattle)
         this.invokeBossBattle.x = config.width / 2 - 70
         this.invokeBossBattle.y = 50

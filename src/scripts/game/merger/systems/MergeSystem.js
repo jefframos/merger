@@ -153,7 +153,7 @@ export default class MergeSystem {
         this.systems.push(system);
     }
     addPieceGenerator() {
-        let piece = new ChargerTile(0, 0, this.slotSize.width, 'coin', this.gameplayData.entityGeneratorBaseTime);
+        let piece = new ChargerTile(0, 0, this.slotSize.width * 0.8, 'coin', this.gameplayData.entityGeneratorBaseTime);
         piece.isGenerator = true;
 
         let targetScale = config.height * 0.2 / piece.height
@@ -491,9 +491,9 @@ export default class MergeSystem {
         let maxPos = 0
         this.pieceGeneratorsList.forEach(piece => {
             if (piece.visible) {
-                piece.x = (this.slotSize.width + this.slotSize.distance) * accumPiece
+                piece.x = (piece.width + this.slotSize.distance) * accumPiece
                 accumPiece++
-                maxPos = piece.x + this.slotSize.width
+                maxPos = piece.x + piece.width
             }
         });
         this.uiContainer.x = this.wrapper.x + this.wrapper.width / 2 - (maxPos * this.uiContainer.scale.x) / 2
@@ -502,7 +502,7 @@ export default class MergeSystem {
         let targetScale = bottomDiff / this.slotSize.height * 0.55
         targetScale = Math.min(1, targetScale)
         this.uiContainer.scale.set(targetScale)
-        this.uiContainer.y = bottomWrapperDiff + (bottomDiff) / 2 - (this.slotSize.height * this.uiContainer.scale.y) / 2// - this.wrapper.y + this.wrapper.height //- (this.slotSize.height * this.uiContainer.scale.y) - config.height * 0.05
+        this.uiContainer.y = bottomWrapperDiff + (bottomDiff) / 2 - (this.slotSize.height * this.uiContainer.scale.y) / 2 - 50// - this.wrapper.y + this.wrapper.height //- (this.slotSize.height * this.uiContainer.scale.y) - config.height * 0.05
 
     }
 

@@ -6,14 +6,15 @@ import TweenMax from 'gsap';
 import UIButton1 from '../../ui/UIButton1';
 import UpgradesToggles from './UpgradesToggles';
 import config from '../../../config';
+import utils from '../../../utils';
 
 export default class EntityShop extends PIXI.Container {
     constructor(mainSystem, size, border = 0) {
         super()
         this.mainSystem = mainSystem;
         this.size = {
-            w: config.width * 0.8,
-            h: config.height * 0.8
+            w: config.width - 20,
+            h: config.height - 20
         }
 
         this.currentItens = [];
@@ -30,13 +31,22 @@ export default class EntityShop extends PIXI.Container {
         this.container.pivot.x = this.size.w / 2
         this.container.pivot.y = this.size.h / 2
         this.backContainer = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('button-1'), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame('small-no-pattern'), 10, 10, 10, 10)
         this.backContainer.width = this.size.w
         this.backContainer.height = this.size.h
-        this.backContainer.tint = 0x529898
         this.container.addChild(this.backContainer);
 
+        this.tiledBackground2 = new PIXI.TilingSprite(PIXI.Texture.fromFrame('patter-square', 64, 64))
+		this.container.addChild(this.tiledBackground2);
+		this.tiledBackground2.width = this.size.w
+		this.tiledBackground2.height = this.size.h
+       // this.tiledBackground2.anchor.set(0.5)
+        this.tiledBackground2.tileScale.set(0.2)
+        this.tiledBackground2.alpha = 0.1
 
+        this.title = new PIXI.Text('RESOURCES', LABELS.LABEL1);
+        this.title.style.fontSize = 48
+        this.container.addChild(this.title);
 
         this.shopList = new ShopList({ w: this.size.w, h: this.size.h * 0.8 }, 6)
         this.shopList.y = 100
@@ -45,19 +55,19 @@ export default class EntityShop extends PIXI.Container {
 
         this.shopList.onItemShop.add(this.confirmItemShop.bind(this))
 
-        this.openShop = new UIButton1(0xFFffff, window.TILE_ASSSETS_POOL['image-X'], 0xFFffff, 40, 40)
+        this.openShop = new UIButton1(0xFFffff, window.TILE_ASSSETS_POOL['image-X'], 0xFFffff, 60, 60, 'boss-button')
         this.openShop.updateIconScale(0.5)
         this.container.addChild(this.openShop)
         this.openShop.x = this.size.w - this.openShop.width
-        this.openShop.y = this.openShop.height
+        this.openShop.y = this.size.h - this.openShop.height / 2 - 30
         this.openShop.onClick.add(() => {
             this.hide()
         })
 
-        this.toggles = new UpgradesToggles({ w: this.size.w * 0.7, h: this.size.h * 0.05 })
+        this.toggles = new UpgradesToggles({ w: this.size.w * 0.7, h: 60 })
         this.container.addChild(this.toggles);
-        this.toggles.x = this.size.w / 2 - this.size.w * 0.35
-        this.toggles.y = this.openShop.y - this.size.h * 0.025
+        this.toggles.x = this.size.w / 2 - this.size.w * 0.35 - 30
+        this.toggles.y = this.size.h - this.toggles.height - 30
         this.toggles.onUpdateValue.add(this.updateToggleValue.bind(this))
 
         window.gameEconomy.onMoneySpent.add(this.moneySpent.bind(this))
@@ -84,6 +94,10 @@ export default class EntityShop extends PIXI.Container {
             element.updatePreviewValue(this.toggles.currentActiveValue)
         });
     }
+    posShow() {
+        utils.centerObject(this.title, this.container)
+        this.title.y = 30
+    }
     show() {
         this.visible = true;
 
@@ -106,6 +120,7 @@ export default class EntityShop extends PIXI.Container {
             element.updatePreviewValue(this.toggles.currentActiveValue)
         });
 
+        this.posShow();
 
 
     }

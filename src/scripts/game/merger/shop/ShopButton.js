@@ -15,10 +15,16 @@ export default class ShopButton extends PIXI.Container
 
             this.backButton = new PIXI.mesh.NineSlicePlane(
                 PIXI.Texture.fromFrame('small-no-pattern'), 20, 20, 20, 20)
-            this.backButton.width = 100
+            this.backButton.width = 110
             this.backButton.height = 40 
 
+            // this.grey = new PIXI.mesh.NineSlicePlane(
+            //     PIXI.Texture.fromFrame('small-no-pattern-grey'), 20, 20, 20, 20)
+            // this.grey.width = 110
+            // this.grey.height = 40 
+
             this.container.addChild(this.backButton);
+//            this.container.addChild(this.grey);
 
             this.w = this.backButton.width;
             this.h = this.backButton.height;
@@ -123,7 +129,9 @@ export default class ShopButton extends PIXI.Container
         this.priceLabel.text = 'MAX'
         this.priceLabel.x = this.backButton.width / 2 - this.priceLabel.width / 2;
         this.backButton.alpha = 1;
+        this.backButton.texture = PIXI.Texture.fromFrame('small-no-pattern-grey')
         this.sprite.visible = false;
+
         clearInterval(this.timeoutHold);
     }
     deactive()
@@ -134,6 +142,9 @@ export default class ShopButton extends PIXI.Container
         this.backButton.tint = 0xFFFFFF;
         this.priceLabel.style.fill = 0x666666;
         this.backButton.alpha = 1;
+        this.backButton.texture = PIXI.Texture.fromFrame('small-no-pattern-grey')
+
+
     }
     enable()
     {
@@ -143,6 +154,9 @@ export default class ShopButton extends PIXI.Container
         //this.backButton.tint = 0x6250e5;
         this.backButton.alpha = 1;
         this.priceLabel.style.fill = 0xFFFFFF;
+        this.backButton.texture = PIXI.Texture.fromFrame('small-no-pattern-green')
+
+
     }
 
     shake(force = 0.25, steps = 5, time = 0.4)

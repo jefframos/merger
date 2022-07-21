@@ -202,21 +202,24 @@ export default class MergeScreen extends Screen {
 
         this.statsList = new UIList()
         this.statsList.w = 50
-        this.statsList.h = 200
+        this.statsList.h = 140
         this.container.addChild(this.statsList)
 
         this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
+        this.resourcesLabel.style.fontSize = 14
         this.statsList.addElement(this.resourcesLabel)
-
+        
         this.coinTexture = new PIXI.Sprite.from('coin')
         this.resourcesLabel.addChild(this.coinTexture)
         this.coinTexture.scale.set(1.8)
         this.coinTexture.x = -25
-
+        
         this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
+        this.rpsLabel.style.fontSize = 14
         this.statsList.addElement(this.rpsLabel)
-
+        
         this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
+        this.dpsLabel.style.fontSize = 14
         this.statsList.addElement(this.dpsLabel)
 
         this.statsList.updateVerticalList();
@@ -224,9 +227,11 @@ export default class MergeScreen extends Screen {
         this.particleSystem = new ParticleSystem();
         this.frontLayer.addChild(this.particleSystem)
 
-
+        this.helperButtonList = new UIList();
+        this.helperButtonList.h = 60;
+        this.helperButtonList.w = 140;
         this.speedUpToggle = new UIButton1(0x002299, 'fast_forward_icon')
-        this.container.addChild(this.speedUpToggle)
+        this.helperButtonList.addElement(this.speedUpToggle)
         this.speedUpToggle.x = 50
         this.speedUpToggle.y = 50
         this.speedUpToggle.onClick.add(() => {
@@ -240,39 +245,44 @@ export default class MergeScreen extends Screen {
         })
 
         this.clearData = new UIButton1(0x002299, 'icon_reset')
-        this.container.addChild(this.clearData)
+        this.helperButtonList.addElement(this.clearData)
         this.clearData.x = 130
         this.clearData.y = 50
         this.clearData.onClick.add(() => {
             COOKIE_MANAGER.wipeData()
         })
 
+        this.helperButtonList.updateHorizontalList();
+        this.container.addChild(this.helperButtonList)
 
-        this.openSettingsShop = new UIButton1(0x002299, 'icon_shop')
-        this.container.addChild(this.openSettingsShop)
-        this.openSettingsShop.x = config.width - 45
-        this.openSettingsShop.y = config.height - 80
+        let buttonSize = 80
+        this.shopButtonsList = new UIList();
+        this.shopButtonsList.w = buttonSize * 3 + 15;
+        this.shopButtonsList.h = buttonSize ;
+        this.container.addChild(this.shopButtonsList)
+
+        this.openSettingsShop = new UIButton1(0x002299, 'shop',0xFFFFFF, buttonSize,buttonSize)
+        this.openSettingsShop.updateIconScale(0.5)
+        this.shopButtonsList.addElement(this.openSettingsShop)
         this.openSettingsShop.onClick.add(() => {
             this.openPopUp(this.generalShop)
         })
-
-        this.openShop = new UIButton1(0x002299, 'drill')
-        this.container.addChild(this.openShop)
-        this.openShop.x = config.width - 45
-        this.openShop.y = config.height - 150
+        
+        this.openShop = new UIButton1(0x002299, 'drill-icon',0xFFFFFF, buttonSize,buttonSize)
+        this.openShop.updateIconScale(0.5)
+        this.shopButtonsList.addElement(this.openShop)
         this.openShop.onClick.add(() => {
             this.openPopUp(this.entityShop)
         })
-
-        this.openMergeShop = new UIButton1(0x002299, 'starship_01')
-        this.container.addChild(this.openMergeShop)
-        this.openMergeShop.x = config.width - 45
-        this.openMergeShop.y = config.height - 220
+        
+        this.openMergeShop = new UIButton1(0x002299, 'spiky-field',0xFFFFFF, buttonSize,buttonSize)
+        this.openMergeShop.updateIconScale(0.5)
+        this.shopButtonsList.addElement(this.openMergeShop)
         this.openMergeShop.onClick.add(() => {
             this.openPopUp(this.mergeItemsShop)
         })
 
-
+        this.shopButtonsList.updateHorizontalList();
 
         window.TIME_SCALE = 1
 
@@ -359,7 +369,6 @@ export default class MergeScreen extends Screen {
             }
         });
 
-        console.log('show', params)
         target.show(params)
     }
     popLabel(targetPosition, label) {
@@ -451,11 +460,11 @@ export default class MergeScreen extends Screen {
         this.resourcesWrapperRight.y = this.gridWrapper.y;
 
 
-        this.statsList.y = config.height - 270
-        // this.dpsLabel.y = config.height - 80
-        // this.rpsLabel.y = config.height - 50
-        // this.resourcesLabel.x = 25;
-        // this.resourcesLabel.y = config.height - 110
+        this.statsList.y = 20//config.height - 270
+        this.shopButtonsList.x = config.width - this.shopButtonsList.w +20
+        this.shopButtonsList.y = config.height - this.shopButtonsList.h + 20
+        this.helperButtonList.x = 50
+        this.helperButtonList.y = config.height - this.shopButtonsList.h + 30
 
         this.enemiesContainer.x = config.width / 2;
         this.enemiesContainer.y = config.height * this.areaConfig.topArea * 0.5;
@@ -468,11 +477,6 @@ export default class MergeScreen extends Screen {
         this.systemsList.forEach(element => {
             element.resize(resolution);
         });
-        // this.entityShop.x = config.width / 2 - this.entityShop.width / 2
-        // this.entityShop.y = config.height / 2 - this.entityShop.height / 2
-
-        // this.mergeItemsShop.x = config.width / 2 - this.mergeItemsShop.width / 2
-        // this.mergeItemsShop.y = config.height / 2 - this.mergeItemsShop.height / 2
     }
 
     transitionOut(nextScreen) {
