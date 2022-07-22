@@ -1,13 +1,5 @@
 {"frames": {
 
-"patter-square.png":
-{
-	"frame": {"x":1,"y":259,"w":64,"h":64},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
-	"sourceSize": {"w":64,"h":64}
-},
 "seamless-starfield-texture.jpg":
 {
 	"frame": {"x":1,"y":1,"w":256,"h":256},
@@ -21,8 +13,8 @@
 	"version": "1.0",
 	"image": "pattern.png",
 	"format": "RGBA8888",
-	"size": {"w":258,"h":324},
+	"size": {"w":258,"h":258},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:215dea2365f6dd2595f3dc1d39698187:1b20f27c2ce767235ddd65ba16347893:df33f26ecbbb8b6297526de363462989$"
+	"smartupdate": "$TexturePacker:SmartUpdate:b1018c1e55d6c8b03794be6ca9d37bfa:4aacf7e0e6269505868a915348e98138:df33f26ecbbb8b6297526de363462989$"
 }
 }

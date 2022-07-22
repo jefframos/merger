@@ -126,7 +126,7 @@ export default class EntityShop extends PIXI.Container {
     }
     confirmItemShop(item, button, totalUpgrades) {
 
-        console.log(totalUpgrades)
+        //console.log(totalUpgrades)
         this.mainSystem.forEach(resourceSystem => {
             resourceSystem.findUpgrade(item)
         });

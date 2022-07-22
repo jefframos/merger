@@ -22171,7 +22171,7 @@ var EntityShop = function (_PIXI$Container) {
         key: 'confirmItemShop',
         value: function confirmItemShop(item, button, totalUpgrades) {
 
-            console.log(totalUpgrades);
+            //console.log(totalUpgrades)
             this.mainSystem.forEach(function (resourceSystem) {
                 resourceSystem.findUpgrade(item);
             });
@@ -59231,11 +59231,11 @@ var assets = [{
 	"id": "baseGameConfig",
 	"url": "assets/json\\baseGameConfig.json"
 }, {
-	"id": "fiveLetters_",
-	"url": "assets/json\\fiveLetters_.json"
-}, {
 	"id": "entities",
 	"url": "assets/json\\entities.json"
+}, {
+	"id": "fiveLetters_",
+	"url": "assets/json\\fiveLetters_.json"
 }, {
 	"id": "fourLetters_",
 	"url": "assets/json\\fourLetters_.json"
@@ -59246,11 +59246,11 @@ var assets = [{
 	"id": "resources",
 	"url": "assets/json\\resources.json"
 }, {
-	"id": "sixLetters_",
-	"url": "assets/json\\sixLetters_.json"
-}, {
 	"id": "scrabble",
 	"url": "assets/json\\scrabble.json"
+}, {
+	"id": "sixLetters_",
+	"url": "assets/json\\sixLetters_.json"
 }, {
 	"id": "threeLetters_",
 	"url": "assets/json\\threeLetters_.json"
@@ -59548,7 +59548,7 @@ module.exports = exports["default"];
 /* 337 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
+module.exports = {"default":["image/particles/particles.json","image/pattern2/pattern2.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 338 */
@@ -59970,8 +59970,10 @@ var MergeScreen = function (_Screen) {
                         _this.areaConfig.resourcesArea = { w: 0.5, h: 0.5 };
                 }
 
-                _this.spaceBackground = new _SpaceBackground2.default();
-                _this.addChild(_this.spaceBackground);
+                setTimeout(function () {
+                        _this.spaceBackground = new _SpaceBackground2.default();
+                        _this.addChildAt(_this.spaceBackground, 0);
+                }, 10);
                 _this.container = new PIXI.Container();
                 _this.addChild(_this.container);
                 _this.frontLayer = new PIXI.Container();
@@ -60239,7 +60241,7 @@ var MergeScreen = function (_Screen) {
                                 var time = saved.latestResourceAdd - saved.latestResourceCollect;
                                 _this.sumStart += time * element.getRPS();
 
-                                console.log(_this.sumStart, element.getRPS(), time);
+                                //console.log(this.sumStart, element.getRPS(), time)
                         }
                 });
 
@@ -60248,8 +60250,8 @@ var MergeScreen = function (_Screen) {
                 var now = Date.now() / 1000 | 0;
                 var diff = now - _this.savedEconomy.lastChanged;
 
-                console.log(diff, _this.sumStart);
-                if (diff > 600 && _this.sumStart > 10) {
+                //console.log(diff, this.sumStart)
+                if (diff > 60 && _this.sumStart > 10) {
                         var params = {
                                 label: 'your ships\ncollected\n' + _utils2.default.formatPointsLabel(_this.sumStart) + '\n\nWould you like to watch\na video and double?',
                                 onConfirm: _this.collectStartAmountDouble.bind(_this),
@@ -60378,16 +60380,22 @@ var MergeScreen = function (_Screen) {
 
                         this.timestamp = Date.now() / 1000 | 0;
 
-                        this.spaceBackground.update(delta);
+                        if (this.spaceBackground) {
+
+                                this.spaceBackground.update(delta);
+                        }
                 }
         }, {
                 key: 'resize',
                 value: function resize(resolution) {
 
-                        this.spaceBackground.resize(resolution, this.screenManager.scale);
+                        if (this.spaceBackground) {
 
-                        this.spaceBackground.x = config.width / 2;
-                        this.spaceBackground.y = config.height / 2;
+                                this.spaceBackground.resize(resolution, this.screenManager.scale);
+
+                                this.spaceBackground.x = config.width / 2;
+                                this.spaceBackground.y = config.height / 2;
+                        }
 
                         this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2;
                         this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height;

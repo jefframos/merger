@@ -47,8 +47,10 @@ export default class MergeScreen extends Screen {
             this.areaConfig.resourcesArea = { w: 0.5, h: 0.5 }
         }
 
-        this.spaceBackground = new SpaceBackground();
-        this.addChild(this.spaceBackground);
+        setTimeout(() => {            
+            this.spaceBackground = new SpaceBackground();
+            this.addChildAt(this.spaceBackground, 0);
+        }, 10);
         this.container = new PIXI.Container()
         this.addChild(this.container);
         this.frontLayer = new PIXI.Container()
@@ -323,7 +325,7 @@ export default class MergeScreen extends Screen {
                 let time = saved.latestResourceAdd - saved.latestResourceCollect
                 this.sumStart += time * element.getRPS();
 
-                console.log(this.sumStart, element.getRPS(), time)
+                //console.log(this.sumStart, element.getRPS(), time)
             }
         });
 
@@ -333,8 +335,8 @@ export default class MergeScreen extends Screen {
         let now = Date.now() / 1000 | 0
         let diff = now - this.savedEconomy.lastChanged
 
-        console.log(diff, this.sumStart)
-        if (diff > 600 && this.sumStart > 10) {
+        //console.log(diff, this.sumStart)
+        if (diff > 60 && this.sumStart > 10) {
             let params = {
                 label: 'your ships\ncollected\n' + utils.formatPointsLabel(this.sumStart) + '\n\nWould you like to watch\na video and double?',
                 onConfirm: this.collectStartAmountDouble.bind(this),
@@ -442,15 +444,21 @@ export default class MergeScreen extends Screen {
 
         this.timestamp = (Date.now() / 1000 | 0);
 
-        this.spaceBackground.update(delta)
+        if(this.spaceBackground){
+
+            this.spaceBackground.update(delta)
+        }
 
     }
     resize(resolution) {
 
-        this.spaceBackground.resize(resolution, this.screenManager.scale);
+        if(this.spaceBackground){
 
-        this.spaceBackground.x = config.width / 2
-        this.spaceBackground.y = config.height / 2
+            this.spaceBackground.resize(resolution, this.screenManager.scale);
+            
+            this.spaceBackground.x = config.width / 2
+            this.spaceBackground.y = config.height / 2
+        }
 
         this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2
         this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height
