@@ -59246,11 +59246,11 @@ var assets = [{
 	"id": "resources",
 	"url": "assets/json\\resources.json"
 }, {
-	"id": "scrabble",
-	"url": "assets/json\\scrabble.json"
-}, {
 	"id": "sixLetters_",
 	"url": "assets/json\\sixLetters_.json"
+}, {
+	"id": "scrabble",
+	"url": "assets/json\\scrabble.json"
 }, {
 	"id": "threeLetters_",
 	"url": "assets/json\\threeLetters_.json"
@@ -63597,7 +63597,7 @@ var MergerData = function () {
         rawData.id = index;
         rawData.value = pow;
         rawData.texture = tex;
-        rawData.initialDamage = 2 * Math.pow(1.1, index * 16);
+        rawData.initialDamage = 2 * Math.pow(1.2, index * 16);
         this.rawData = rawData;
 
         this.currentLevel = 1;
@@ -63827,7 +63827,7 @@ var ParticleSystem = function (_PIXI$Container) {
                                 }
                                 coin.velocity.x = this.lerp(coin.velocity.x, targetX, 0.05);
                                 coin.velocity.y = this.lerp(coin.velocity.y, targetY, 0.05);
-                                if (_utils2.default.distance(coin.x, coin.y, coin.target.x, coin.target.y) < Math.max(coin.height, coin.width)) {
+                                if (_utils2.default.distance(coin.x, coin.y, coin.target.x, coin.target.y) < Math.max(coin.height, coin.width) * window.TIME_SCALE) {
                                     coin.alpha = 0;
                                 }
                             } else {

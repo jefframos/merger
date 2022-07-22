@@ -6,7 +6,7 @@ export default class MergerData {
         rawData.id = index;
         rawData.value = pow;
         rawData.texture = tex;
-        rawData.initialDamage = 2 * Math.pow(1.1, index * 16)
+        rawData.initialDamage = 2 * Math.pow(1.2, index * 16)
         this.rawData = rawData;
 
         this.currentLevel = 1;

@@ -63,7 +63,7 @@ export default class ParticleSystem extends PIXI.Container
                             }
                             coin.velocity.x = this.lerp(coin.velocity.x, targetX, 0.05)
                             coin.velocity.y = this.lerp(coin.velocity.y, targetY, 0.05)
-                            if (utils.distance(coin.x, coin.y, coin.target.x, coin.target.y) < Math.max(coin.height, coin.width))
+                            if (utils.distance(coin.x, coin.y, coin.target.x, coin.target.y) < Math.max(coin.height, coin.width) * window.TIME_SCALE)
                             {
                                 coin.alpha = 0;
                             }

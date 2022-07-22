@@ -24,12 +24,12 @@ const assets = [
 	"url":"assets/json\\resources.json"
 	},
 	{
-	"id":"scrabble",
-	"url":"assets/json\\scrabble.json"
-	},
-	{
 	"id":"sixLetters_",
 	"url":"assets/json\\sixLetters_.json"
+	},
+	{
+	"id":"scrabble",
+	"url":"assets/json\\scrabble.json"
 	},
 	{
 	"id":"threeLetters_",

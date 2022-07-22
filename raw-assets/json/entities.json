@@ -113,12 +113,12 @@
                 "nameID": "entity_starship_10",
                 "imageSrc": "starship_10",
                 "displayName": "starship_10",
-                "damageCoeficient": 1.1,
+                "damageCoeficient": 1.11,
                 "initialDamage": 0.6,
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 11.09,
+                "initialTime": 10.09,
                 "levelMax": 500
             },
             {
