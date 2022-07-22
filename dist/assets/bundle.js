@@ -21872,7 +21872,10 @@ var ProgressBar = function (_PIXI$Container) {
         _this.loadingBarFillBack.y = _this.border / 2;
         _this.loadingBarFillBack.cacheAsBitmap = true;
 
-        _this.loadingBarFill = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('simple-bar'), 4, 4, 4, 4);
+        //this.loadingBarFill = new PIXI.Sprite.fromFrame('simple-bar')
+        _this.loadingBarFill = new PIXI.Sprite.fromFrame('simple-bar');
+        // new PIXI.mesh.NineSlicePlane(
+        //     PIXI.Texture.fromFrame('simple-bar'), 4,4,4,4)
         _this.loadingBarFill.width = 0;
         _this.loadingBarFill.height = _this.sizeHeight - _this.border - _this.padding; //- (this.border - padding  ) 
         _this.loadingBarFill.tint = 0xFF0011;
@@ -55408,7 +55411,7 @@ var Game = function () {
                 key: 'update',
                 value: function update() {
                         this.screenManager.update(this.dt);
-                        window.renderer.render(this.stage);
+                        // window.renderer.render(this.stage);
                 }
         }, {
                 key: 'start',
@@ -59225,14 +59228,14 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 var assets = [{
-	"id": "entities",
-	"url": "assets/json\\entities.json"
+	"id": "baseGameConfig",
+	"url": "assets/json\\baseGameConfig.json"
 }, {
 	"id": "fiveLetters_",
 	"url": "assets/json\\fiveLetters_.json"
 }, {
-	"id": "baseGameConfig",
-	"url": "assets/json\\baseGameConfig.json"
+	"id": "entities",
+	"url": "assets/json\\entities.json"
 }, {
 	"id": "fourLetters_",
 	"url": "assets/json\\fourLetters_.json"
@@ -59243,11 +59246,11 @@ var assets = [{
 	"id": "resources",
 	"url": "assets/json\\resources.json"
 }, {
-	"id": "scrabble",
-	"url": "assets/json\\scrabble.json"
-}, {
 	"id": "sixLetters_",
 	"url": "assets/json\\sixLetters_.json"
+}, {
+	"id": "scrabble",
+	"url": "assets/json\\scrabble.json"
 }, {
 	"id": "threeLetters_",
 	"url": "assets/json\\threeLetters_.json"
@@ -64344,6 +64347,8 @@ var ResourceTile = function (_MergeTile) {
         // this.costLabelContainer.height = 30 
         _this.container.addChild(_this.costLabelContainer);
 
+        _this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern');
+
         _this.initialCostLabel = new PIXI.Text('Ready', LABELS.LABEL1);
         _this.initialCostLabel.style.stroke = 0;
         _this.initialCostLabel.style.strokeThickness = 6;
@@ -64418,6 +64423,12 @@ var ResourceTile = function (_MergeTile) {
                 this.costLabelContainer.visible = true;
 
                 this.exclamationMark.visible = this.targetData.rawData.isFirst || window.gameEconomy.currentResources >= this.targetData.rawData.initialCost;
+
+                if (this.exclamationMark.visible) {
+                    this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern-green');
+                } else {
+                    this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern');
+                }
 
                 this.sin += delta;
                 this.drillSin += delta;

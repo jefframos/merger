@@ -1,15 +1,15 @@
 const assets = [
 	{
-	"id":"entities",
-	"url":"assets/json\\entities.json"
+	"id":"baseGameConfig",
+	"url":"assets/json\\baseGameConfig.json"
 	},
 	{
 	"id":"fiveLetters_",
 	"url":"assets/json\\fiveLetters_.json"
 	},
 	{
-	"id":"baseGameConfig",
-	"url":"assets/json\\baseGameConfig.json"
+	"id":"entities",
+	"url":"assets/json\\entities.json"
 	},
 	{
 	"id":"fourLetters_",
@@ -24,12 +24,12 @@ const assets = [
 	"url":"assets/json\\resources.json"
 	},
 	{
-	"id":"scrabble",
-	"url":"assets/json\\scrabble.json"
-	},
-	{
 	"id":"sixLetters_",
 	"url":"assets/json\\sixLetters_.json"
+	},
+	{
+	"id":"scrabble",
+	"url":"assets/json\\scrabble.json"
 	},
 	{
 	"id":"threeLetters_",

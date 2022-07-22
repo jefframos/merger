@@ -37,8 +37,10 @@ export default class ProgressBar extends PIXI.Container {
         this.loadingBarFillBack.y = this.border / 2
         this.loadingBarFillBack.cacheAsBitmap = true;
 
-        this.loadingBarFill = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('simple-bar'), 4,4,4,4)
+        //this.loadingBarFill = new PIXI.Sprite.fromFrame('simple-bar')
+        this.loadingBarFill = new PIXI.Sprite.fromFrame('simple-bar')
+        // new PIXI.mesh.NineSlicePlane(
+        //     PIXI.Texture.fromFrame('simple-bar'), 4,4,4,4)
         this.loadingBarFill.width = 0
         this.loadingBarFill.height = this.sizeHeight  - this.border - this.padding//- (this.border - padding  ) 
         this.loadingBarFill.tint = 0xFF0011;

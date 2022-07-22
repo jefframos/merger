@@ -165,7 +165,7 @@ export default class Game {
      */
     update() {
         this.screenManager.update(this.dt)
-        window.renderer.render(this.stage);
+       // window.renderer.render(this.stage);
     }
 
     start() {

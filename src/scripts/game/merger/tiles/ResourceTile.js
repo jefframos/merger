@@ -62,6 +62,8 @@ export default class ResourceTile extends MergeTile {
         // this.costLabelContainer.height = 30 
         this.container.addChild(this.costLabelContainer)
 
+        this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern')
+
         this.initialCostLabel = new PIXI.Text('Ready', LABELS.LABEL1);
         this.initialCostLabel.style.stroke = 0
         this.initialCostLabel.style.strokeThickness = 6
@@ -138,6 +140,12 @@ export default class ResourceTile extends MergeTile {
             this.costLabelContainer.visible = true;
 
             this.exclamationMark.visible = this.targetData.rawData.isFirst || window.gameEconomy.currentResources >= this.targetData.rawData.initialCost
+
+            if(this.exclamationMark.visible){
+                this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern-green')
+            }else{
+                this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern')
+            }
 
             this.sin += delta
             this.drillSin += delta
