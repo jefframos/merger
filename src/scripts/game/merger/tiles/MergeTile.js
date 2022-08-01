@@ -146,21 +146,29 @@ export default class MergeTile extends PIXI.Container {
         if(this.holding){
             return;
         }
+        dateTimeStamp = Date.now()
         if (this.generateDamageTime > 0) {
             if (this.updatedDamageTimestamp) {
+                let targetColor = 0xf2cb0d
                 this.generateDamage = dateTimeStamp - this.updatedDamageTimestamp
-                if (this.generateDamage >= this.generateDamageTime / window.TIME_SCALE) {
-                    this.updatedDamageTimestamp = (Date.now() / 1000 | 0);
+                if (this.generateDamage > (this.generateDamageTime / window.TIME_SCALE / gameModifyers.modifyersData.attackSpeedValue) * 1000) {
+                    this.updatedDamageTimestamp = Date.now()//(Date.now() / 1000 | 0);
                     this.generateDamageNormal = 1;
+                    // console.log(this.generateDamage,  this.generateDamageTime,  gameModifyers.modifyersData.attackSpeedValue)
                     this.damageReady();
                 } else {
-                    this.milisecTimeStamp = Date.now() / 1000
-                    this.generateDamageNormal = (this.milisecTimeStamp - this.updatedDamageTimestamp) / (this.generateDamageTime / window.TIME_SCALE);
-                    this.generateDamageNormal = Math.min(this.generateDamageNormal, 1)
+                    if(this.generateDamageTime/ gameModifyers.modifyersData.attackSpeedValue < 0.5){
+                        this.generateDamageNormal = 1
+                        targetColor =0x22ff88
+                    }else{
+                        this.milisecTimeStamp = Date.now()//Date.now() / 1000
+                        this.generateDamageNormal = (this.milisecTimeStamp - this.updatedDamageTimestamp) / 1000
+                        this.generateDamageNormal = Math.min(this.generateDamageNormal, 1)
+                    }
                     
                 }
                 this.damageTimerView.visible = true
-                this.damageTimerView.setProgressBar(this.generateDamageNormal, 0xf2cb0d)
+                this.damageTimerView.setProgressBar(this.generateDamageNormal, targetColor)
             }
         } else {
             this.generateDamageNormal = 0;
@@ -223,6 +231,8 @@ export default class MergeTile extends PIXI.Container {
             return;
         }
         this.generateDamageTime = this.tileData.getGenerateDamageTime() || 0;
+
+        console.log(this.generateDamageTime)
         this.generateResourceTime = this.tileData.getGenerateResourceTime() || 0;
     }
     addEntity(tileData) {
@@ -235,7 +245,7 @@ export default class MergeTile extends PIXI.Container {
         this.reset();
         this.generateDamageTime = tileData.getGenerateDamageTime() || 0;
         this.generateResourceTime = tileData.getGenerateResourceTime() || 0;
-        this.generateDamageTimeStamp = (Date.now() / 1000 | 0);
+        this.generateDamageTimeStamp = Date.now()//(Date.now() / 1000 | 0);
         this.generateResourceTimeStamp = (Date.now() / 1000 | 0);
         this.updatedResourceTimestamp = (Date.now() / 1000 | 0);
         this.updatedDamageTimestamp = (Date.now() / 1000 | 0);

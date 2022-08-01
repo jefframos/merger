@@ -47,7 +47,7 @@ export default class MergeScreen extends Screen {
             this.areaConfig.resourcesArea = { w: 0.5, h: 0.5 }
         }
 
-        setTimeout(() => {            
+        setTimeout(() => {
             this.spaceBackground = new SpaceBackground();
             this.addChildAt(this.spaceBackground, 0);
         }, 10);
@@ -210,16 +210,16 @@ export default class MergeScreen extends Screen {
         this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
         this.resourcesLabel.style.fontSize = 14
         this.statsList.addElement(this.resourcesLabel)
-        
+
         this.coinTexture = new PIXI.Sprite.from('coin')
         this.resourcesLabel.addChild(this.coinTexture)
         this.coinTexture.scale.set(1.8)
         this.coinTexture.x = -25
-        
+
         this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
         this.rpsLabel.style.fontSize = 14
         this.statsList.addElement(this.rpsLabel)
-        
+
         this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
         this.dpsLabel.style.fontSize = 14
         this.statsList.addElement(this.dpsLabel)
@@ -260,24 +260,24 @@ export default class MergeScreen extends Screen {
         let buttonSize = 80
         this.shopButtonsList = new UIList();
         this.shopButtonsList.w = buttonSize * 3 + 15;
-        this.shopButtonsList.h = buttonSize ;
+        this.shopButtonsList.h = buttonSize;
         this.container.addChild(this.shopButtonsList)
 
-        this.openSettingsShop = new UIButton1(0x002299, 'shop',0xFFFFFF, buttonSize,buttonSize)
+        this.openSettingsShop = new UIButton1(0x002299, 'shop', 0xFFFFFF, buttonSize, buttonSize)
         this.openSettingsShop.updateIconScale(0.5)
         this.shopButtonsList.addElement(this.openSettingsShop)
         this.openSettingsShop.onClick.add(() => {
             this.openPopUp(this.generalShop)
         })
-        
-        this.openShop = new UIButton1(0x002299, 'drill-icon',0xFFFFFF, buttonSize,buttonSize)
+
+        this.openShop = new UIButton1(0x002299, 'drill-icon', 0xFFFFFF, buttonSize, buttonSize)
         this.openShop.updateIconScale(0.5)
         this.shopButtonsList.addElement(this.openShop)
         this.openShop.onClick.add(() => {
             this.openPopUp(this.entityShop)
         })
-        
-        this.openMergeShop = new UIButton1(0x002299, 'spiky-field',0xFFFFFF, buttonSize,buttonSize)
+
+        this.openMergeShop = new UIButton1(0x002299, 'spiky-field', 0xFFFFFF, buttonSize, buttonSize)
         this.openMergeShop.updateIconScale(0.5)
         this.shopButtonsList.addElement(this.openMergeShop)
         this.openMergeShop.onClick.add(() => {
@@ -347,8 +347,8 @@ export default class MergeScreen extends Screen {
 
         //this.mergeItemsShop.show()
     }
-    addSystem(system){
-        if(!this.systemsList.includes(system)){
+    addSystem(system) {
+        if (!this.systemsList.includes(system)) {
             this.systemsList.push(system)
         }
     }
@@ -392,8 +392,8 @@ export default class MergeScreen extends Screen {
     addResourceParticles(targetPosition, customData, totalResources, quantParticles, showParticles = true) {
         window.gameEconomy.addResources(totalResources)
         let toLocal = this.particleSystem.toLocal(targetPosition)
-        
-        if(!showParticles){
+
+        if (!showParticles) {
             quantParticles = 1
         }
         for (let index = 0; index < quantParticles; index++) {
@@ -438,24 +438,26 @@ export default class MergeScreen extends Screen {
 
         this.resourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources);
 
-        this.rpsLabel.text = "rps\n"+ utils.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps);
+        this.rpsLabel.text = "rps\n" + utils.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps);
 
-        this.dpsLabel.text = "dps\n"+  utils.formatPointsLabel(this.mergeSystem1.dps);
+        this.dpsLabel.text = "dps\n" + utils.formatPointsLabel(this.mergeSystem1.dps);
 
         this.timestamp = (Date.now() / 1000 | 0);
 
-        if(this.spaceBackground){
+        if (this.spaceBackground) {
 
             this.spaceBackground.update(delta)
         }
 
     }
     resize(resolution) {
-
-        if(this.spaceBackground){
+        if (!resolution || !resolution.width || !resolution.height) {
+            return;
+        }
+        if (this.spaceBackground) {
 
             this.spaceBackground.resize(resolution, this.screenManager.scale);
-            
+
             this.spaceBackground.x = config.width / 2
             this.spaceBackground.y = config.height / 2
         }
@@ -469,7 +471,7 @@ export default class MergeScreen extends Screen {
 
 
         this.statsList.y = 20//config.height - 270
-        this.shopButtonsList.x = config.width - this.shopButtonsList.w +20
+        this.shopButtonsList.x = config.width - this.shopButtonsList.w + 20
         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 20
         this.helperButtonList.x = 50
         this.helperButtonList.y = config.height - this.shopButtonsList.h + 30

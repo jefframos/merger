@@ -84,22 +84,24 @@ export default class SpaceBackground extends PIXI.Container {
 	}
 
 	resize(innerResolution, scale) {
+		if (innerResolution && innerResolution.width && innerResolution.height) {
 
-		this.innerResolution = innerResolution;
-		this.backgroundShape.width = innerResolution.width * 4 // scale.x
-		this.backgroundShape.height = window.innerHeight * 4// scale.x
+			this.innerResolution = innerResolution;
+			this.backgroundShape.width = innerResolution.width * 4 // scale.x
+			this.backgroundShape.height = window.innerHeight * 4// scale.x
 
-		//console.log(innerResolution.height / config.height)
-		let globalScale = innerResolution.height / config.height
-		this.baseGradient.y = innerResolution.height / 2 / globalScale
-		this.baseTopGradient.y = -innerResolution.height / 2 / globalScale
+			//console.log(innerResolution.height / config.height)
+			let globalScale = innerResolution.height / config.height
+			this.baseGradient.y = innerResolution.height / 2 / globalScale
+			this.baseTopGradient.y = -innerResolution.height / 2 / globalScale
 
-		this.baseGradient.width = innerResolution.width * 4
-		this.baseTopGradient.width = innerResolution.width * 4
+			this.baseGradient.width = innerResolution.width * 4
+			this.baseTopGradient.width = innerResolution.width * 4
 
 
-		// this.starsContainer.x = innerResolution.width / 2
-		// this.starsContainer.y = innerResolution.height / 2
+			// this.starsContainer.x = innerResolution.width / 2
+			// this.starsContainer.y = innerResolution.height / 2
+		}
 
 	}
 
@@ -113,10 +115,10 @@ export default class SpaceBackground extends PIXI.Container {
 			}
 		}
 		this.currentSpeed.y = this.innerResolution.height * 0.01 * (window.fxSpeed * 2) * 5
-		this.tiledBackground.tilePosition.y +=  delta * 5;
+		this.tiledBackground.tilePosition.y += delta * 5;
 		this.tiledBackground.tilePosition.y %= 256;
 
-		this.tiledBackground2.tilePosition.y +=  delta * 3;
+		this.tiledBackground2.tilePosition.y += delta * 3;
 		this.tiledBackground2.tilePosition.y %= 256;
 
 		this.tiledBackground.rotation += delta * 0.01

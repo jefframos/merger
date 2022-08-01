@@ -8,36 +8,12 @@ const assets = [
 	"url":"assets/json\\entities.json"
 	},
 	{
-	"id":"fiveLetters_",
-	"url":"assets/json\\fiveLetters_.json"
-	},
-	{
-	"id":"fourLetters_",
-	"url":"assets/json\\fourLetters_.json"
-	},
-	{
 	"id":"modifyers",
 	"url":"assets/json\\modifyers.json"
 	},
 	{
 	"id":"resources",
 	"url":"assets/json\\resources.json"
-	},
-	{
-	"id":"sixLetters_",
-	"url":"assets/json\\sixLetters_.json"
-	},
-	{
-	"id":"scrabble",
-	"url":"assets/json\\scrabble.json"
-	},
-	{
-	"id":"threeLetters_",
-	"url":"assets/json\\threeLetters_.json"
-	},
-	{
-	"id":"worduoConfig",
-	"url":"assets/json\\worduoConfig.json"
 	}
 ];
 

@@ -29,6 +29,8 @@ export default class CookieManager {
 			drillSpeed: 1,
 			resourcesMultiplier: 1,
 			damageMultiplier: 1,
+			attackSpeed: 1,
+			attackSpeedValue:1
 		}
 		this.economy = {}
 		this.stats = {}

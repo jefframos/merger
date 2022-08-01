@@ -10,7 +10,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 1.09,
+                "initialTime": 3.09,
                 "levelMax": 500
             },
             {
@@ -34,7 +34,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 4.09,
+                "initialTime": 3.5,
                 "levelMax": 500
             },
             {
@@ -46,7 +46,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 5.09,
+                "initialTime": 4.09,
                 "levelMax": 500
             },
             {
@@ -58,7 +58,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 6.09,
+                "initialTime": 4.5,
                 "levelMax": 500
             },
             {

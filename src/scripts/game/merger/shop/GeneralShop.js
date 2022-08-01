@@ -16,6 +16,7 @@ export default class GeneralShop extends EntityShop {
             console.log(item.rawData.modifyer, item.getResources())
         }
 
+        
 
         window.gameModifyers.saveModifyers(item.rawData.modifyer, item.currentLevel, item.getResources())
         // this.mainSystem.forEach(resourceSystem => {

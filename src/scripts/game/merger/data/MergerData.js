@@ -22,20 +22,26 @@ export default class MergerData {
     getValue() {
         return this.rawData.value;
     }
+    getCurrentTime(){
+        return this.rawData.initialTime
+    }
+    getInitialAttackTime(){
+        return this.rawData.initialTime
+    }
     getRawDamage(simulate = 0) {
-        return (this.rawData.initialDamage * this.rawData.initialTime) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)
+        return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)
     }
     getDamage(simulate = 0) {
-        return (this.rawData.initialDamage * this.rawData.initialTime) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)  * window.gameModifyers.modifyersData.damageMultiplier
+        return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)  * window.gameModifyers.modifyersData.damageMultiplier
     }
     getTexture() {
         return this.rawData.texture
     }
     getGenerateDamageTime(simulate = 0) {
-        return this.rawData.initialTime
+        return this.getCurrentTime() // gameModifyers.modifyersData.attackSpeedValue || 1;
     }
     getGenerateResourceTime(simulate = 0) {
-        return this.rawData.initialTime / gameModifyers.modifyersData.drillSpeedValue || 1;
+        return this.getCurrentTime() / gameModifyers.modifyersData.drillSpeedValue || 1;
     }
     getRawResources(simulate = 0) {
         return (this.rawData.initialRevenue / this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) 
