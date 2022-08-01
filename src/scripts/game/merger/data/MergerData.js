@@ -32,22 +32,24 @@ export default class MergerData {
         return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)
     }
     getDamage(simulate = 0) {
-        return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)  * window.gameModifyers.modifyersData.damageMultiplier
+        return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)  * window.gameModifyers.getDamageMultiplier()
     }
     getTexture() {
         return this.rawData.texture
     }
     getGenerateDamageTime(simulate = 0) {
-        return this.getCurrentTime() // gameModifyers.modifyersData.attackSpeedValue || 1;
+        return this.getCurrentTime() / window.gameModifyers.getAttackSpeed();
     }
     getGenerateResourceTime(simulate = 0) {
-        return this.getCurrentTime() / gameModifyers.modifyersData.drillSpeedValue || 1;
+        return this.getCurrentTime() /  window.gameModifyers.getDrillSpeed();
     }
     getRawResources(simulate = 0) {
-        return (this.rawData.initialRevenue / this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) 
+        //return (this.rawData.initialRevenue / this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate)
+        return (this.rawData.initialRevenue) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate)
     }
     getResources(simulate = 0) {
-        return (this.rawData.initialRevenue / this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) * window.gameModifyers.modifyersData.resourcesMultiplier
+        //OLD return (this.rawData.initialRevenue / this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) * window.gameModifyers.getResourcesMultiplier()
+        return (this.rawData.initialRevenue * this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) * window.gameModifyers.getResourcesMultiplier()
     }
     getCoast() {
         return this.rawData.initialCost
@@ -72,8 +74,8 @@ export default class MergerData {
     }
     getDPS(simulate = 0) {
         let res = this.getDamage(simulate);
-        let time = this.getGenerateDamageTime(simulate);
-
+        let time = this.getGenerateDamageTime(simulate)  // window.gameModifyers.getAttackSpeed();
+//console.log(time)
         return res / time;
     }
 }

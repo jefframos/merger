@@ -8,7 +8,7 @@ import utils from '../../../utils';
 
 export default class MergeSystem {
     constructor(containers, data, dataTiles) {
-        
+
         this.gameplayData = data.general;
 
         this.container = containers.mainContainer;
@@ -95,12 +95,12 @@ export default class MergeSystem {
         setTimeout(() => {
             this.resize(config, true)
         }, 1);
-        
+
         this.enemySystem = null;
         this.systems = [];
-        
+
         this.loadData();
-        setTimeout(() => {            
+        setTimeout(() => {
             this.adjustSlotsPosition()
         }, 100);
     }
@@ -180,10 +180,18 @@ export default class MergeSystem {
 
         });
         piece.onCompleteCharge.add((slot) => {
+
+            //upgrade this
             piece.addEntity(this.dataTiles[0]);
+
+            if(window.gameModifyers.modifyersData.autoMerge){
+                this.autoPlace(piece);
+                this.autoMerge()
+            }
         });
         this.pieceGeneratorsList.push(piece);
     }
+
     updateMouseSystems(e) {
         this.updateMouse(e);
 
@@ -297,7 +305,8 @@ export default class MergeSystem {
             let customData = {}
             customData.texture = 'shoot'
             customData.scale = 0.002
-
+            customData.topLimit = this.enemySystem.getEnemy().getGlobalPosition().y
+            //console.log(this.enemySystem.getEnemy().getGlobalPosition().y)
             customData.gravity = 0
             customData.alphaDecress = 0
             if (this.enemySystem) {
@@ -374,6 +383,84 @@ export default class MergeSystem {
 
 
     }
+    findMergeInBoard(piece, diff) {
+        if (piece.tileData.isDirty) {
+            return
+        }
+        let firstAvailable = null;
+        for (var i = 0; i < this.slots.length; i++) {
+            for (var j = 0; j < this.slots[i].length; j++) {
+                if (diff.i != i || diff.j != j) {
+
+                    if (this.slots[i][j].tileData && !this.slots[i][j].tileData.isDirty) {
+                        let slot = this.slots[i][j];
+                        if (slot.tileData.getValue() == piece.tileData.getValue()) {
+                            firstAvailable = this.slots[i][j];
+                            piece.tileData.isDirty = true;
+                            slot.tileData.isDirty = true;
+                            break;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        if (firstAvailable) {
+            this.currentDragSlot = piece;
+            this.releaseEntity(firstAvailable)
+        }
+    }
+    autoMerge() {
+
+        for (var i = 0; i < this.slots.length; i++) {
+            for (var j = 0; j < this.slots[i].length; j++) {
+                if (this.slots[i][j] && this.slots[i][j].tileData) {
+                    this.slots[i][j].tileData.isDirty = false;
+                }
+            }
+        }
+        for (var i = 0; i < this.slots.length; i++) {
+            for (var j = 0; j < this.slots[i].length; j++) {
+                if (this.slots[i][j] && this.slots[i][j].tileData && !this.slots[i][j].tileData.isDirty) {
+                    this.findMergeInBoard(this.slots[i][j], { i, j });
+                }
+            }
+        }
+    }
+    autoPlace(piece) {
+        let firstAvailable = null;
+        for (var i = 0; i < this.slots.length; i++) {
+            for (var j = 0; j < this.slots[i].length; j++) {
+                if (this.slots[i][j].tileData) {
+                    let slot = this.slots[i][j];
+                    if (slot.tileData.getValue() == piece.tileData.getValue()) {
+                        firstAvailable = this.slots[i][j];
+                        break;
+                    }
+
+                } else if (!firstAvailable) {
+                    firstAvailable = this.slots[i][j];
+                }
+            }
+        }
+
+        this.currentDragSlot = piece;
+
+        if (piece.isGenerator) {
+            this.endDrag(piece)
+            setTimeout(() => {
+                if (!piece.tileData) {
+                    piece.startCharging()
+                }
+            }, 10);
+        }
+
+        this.releaseEntity(firstAvailable)
+
+        //this.autoMerge();
+    }
+
     releaseEntity(slot) {
         if (!this.currentDragSlot) {
             return;
@@ -444,7 +531,7 @@ export default class MergeSystem {
         let horizontal = (this.slots[0].length - sides)
         let vertical = (this.slots.length - ups)
 
-        this.fixedSize.width = horizontal * this.slotSize.width + (this.slotSize.distance * (horizontal - 1)+this.slotSize.distance*2)
+        this.fixedSize.width = horizontal * this.slotSize.width + (this.slotSize.distance * (horizontal - 1) + this.slotSize.distance * 2)
         this.fixedSize.height = vertical * this.slotSize.height + (this.slotSize.distance * (vertical - 1))
 
         for (var i = 0; i < this.slots.length; i++) {
@@ -502,7 +589,7 @@ export default class MergeSystem {
         let targetScale = bottomDiff / this.slotSize.height * 0.55
         targetScale = Math.min(1, targetScale)
         this.uiContainer.scale.set(targetScale)
-        this.uiContainer.y = bottomWrapperDiff + (bottomDiff) / 2 - (this.slotSize.height * this.uiContainer.scale.y) / 2 - 50// - this.wrapper.y + this.wrapper.height //- (this.slotSize.height * this.uiContainer.scale.y) - config.height * 0.05
+        this.uiContainer.y = bottomWrapperDiff + (bottomDiff) / 2 - (this.slotSize.height * this.uiContainer.scale.y) / 2 - 20// - this.wrapper.y + this.wrapper.height //- (this.slotSize.height * this.uiContainer.scale.y) - config.height * 0.05
 
     }
 

@@ -2427,8 +2427,7 @@ exports.default = (_resizeToFitMaxAR$res = {
         if ((0, _isNan2.default)(max)) {
             return 0;
         }
-        console.log(window.gameModifyers.modifyersData.damageMultiplier);
-        return max * window.gameModifyers.modifyersData.damageMultiplier;
+        return max * window.gameModifyers.getDamageMultiplier();
     },
     findRPS2: function findRPS2(target) {
         var max = 0;
@@ -15046,8 +15045,9 @@ var UIButton1 = function (_PIXI$Container) {
 		value: function disableState(color, texture) {
 
 			if (texture) this.backShape.texture = PIXI.Texture.fromFrame(texture);
-			//this.icon.alpha = 0.5
+			this.icon.alpha = 0.5;
 			// this.backShape.tint = color;
+			//this.alpha = 0.5
 		}
 	}, {
 		key: 'enableState',
@@ -15055,6 +15055,7 @@ var UIButton1 = function (_PIXI$Container) {
 
 			if (texture) this.backShape.texture = PIXI.Texture.fromFrame(texture);
 			this.icon.alpha = 1;
+			//this.alpha = 1
 			// this.backShape.tint = color;
 		}
 	}, {
@@ -22161,6 +22162,7 @@ var EntityShop = function (_PIXI$Container) {
                 } else {
                     element.lockItem();
                 }
+                //element.unlockItem();
                 element.show();
                 element.updatePreviewValue(_this3.toggles.currentActiveValue);
             });
@@ -22630,20 +22632,30 @@ var MergeTile = function (_PIXI$Container) {
             if (this.holding) {
                 return;
             }
+            dateTimeStamp = Date.now();
             if (this.generateDamageTime > 0) {
                 if (this.updatedDamageTimestamp) {
+                    var targetColor = 0xf2cb0d;
                     this.generateDamage = dateTimeStamp - this.updatedDamageTimestamp;
-                    if (this.generateDamage >= this.generateDamageTime / window.TIME_SCALE) {
-                        this.updatedDamageTimestamp = Date.now() / 1000 | 0;
+                    var calcTiime = this.generateDamageTime / window.TIME_SCALE * 1000;
+                    if (this.generateDamage > calcTiime) {
+                        this.updatedDamageTimestamp = Date.now(); //(Date.now() / 1000 | 0);
                         this.generateDamageNormal = 1;
+                        // console.log(this.generateDamage,  this.generateDamageTime,  gameModifyers.getAttackSpeed())
                         this.damageReady();
                     } else {
-                        this.milisecTimeStamp = Date.now() / 1000;
-                        this.generateDamageNormal = (this.milisecTimeStamp - this.updatedDamageTimestamp) / (this.generateDamageTime / window.TIME_SCALE);
-                        this.generateDamageNormal = Math.min(this.generateDamageNormal, 1);
+                        if (this.generateDamageTime < 0.5) {
+                            this.generateDamageNormal = 1;
+                            targetColor = 0x22ff88;
+                        } else {
+                            this.milisecTimeStamp = Date.now(); //Date.now() / 1000
+                            this.generateDamageNormal = this.generateDamage / calcTiime;
+                            //console.log(this.generateDamageNormal)
+                            this.generateDamageNormal = Math.min(this.generateDamageNormal, 1);
+                        }
                     }
                     this.damageTimerView.visible = true;
-                    this.damageTimerView.setProgressBar(this.generateDamageNormal, 0xf2cb0d);
+                    this.damageTimerView.setProgressBar(this.generateDamageNormal, targetColor);
                 }
             } else {
                 this.generateDamageNormal = 0;
@@ -22722,6 +22734,8 @@ var MergeTile = function (_PIXI$Container) {
                 return;
             }
             this.generateDamageTime = this.tileData.getGenerateDamageTime() || 0;
+
+            console.log(this.generateDamageTime);
             this.generateResourceTime = this.tileData.getGenerateResourceTime() || 0;
         }
     }, {
@@ -22736,7 +22750,7 @@ var MergeTile = function (_PIXI$Container) {
             this.reset();
             this.generateDamageTime = tileData.getGenerateDamageTime() || 0;
             this.generateResourceTime = tileData.getGenerateResourceTime() || 0;
-            this.generateDamageTimeStamp = Date.now() / 1000 | 0;
+            this.generateDamageTimeStamp = Date.now(); //(Date.now() / 1000 | 0);
             this.generateResourceTimeStamp = Date.now() / 1000 | 0;
             this.updatedResourceTimestamp = Date.now() / 1000 | 0;
             this.updatedDamageTimestamp = Date.now() / 1000 | 0;
@@ -22746,6 +22760,7 @@ var MergeTile = function (_PIXI$Container) {
             this.tileSprite.anchor.set(0.5);
             this.sin = Math.random();
             this.label.text = this.tileData.getValue();
+            //this.label.text = this.tileData.getGenerateDamageTime() +' --'+  this.tileData.rawData.initialTime
             this.label.x = this.backSlot.width / 2 - this.label.width / 2;
             this.showSprite();
             this.enterAnimation();
@@ -32759,6 +32774,16 @@ window.LABELS.LABEL2 = {
     fill: 0x000000,
     align: 'center',
     fontWeight: '800'
+};
+
+window.LABELS.LABEL_DAMAGE = {
+    fontFamily: 'retro_computerregular',
+    fontSize: '14px',
+    fill: 0xFFFFFF,
+    align: 'center',
+    stroke: 0,
+    strokeThickness: 4,
+    fontWeight: '600'
 };
 
 window.iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
@@ -55597,7 +55622,11 @@ var CookieManager = function () {
 			entities: {},
 			drillSpeed: 1,
 			resourcesMultiplier: 1,
-			damageMultiplier: 1
+			damageMultiplier: 1,
+			attackSpeed: 1,
+			attackSpeedValue: 1,
+			autoMerge: false,
+			autoCollectResource: false
 		};
 		this.economy = {};
 		this.stats = {};
@@ -59234,29 +59263,11 @@ var assets = [{
 	"id": "entities",
 	"url": "assets/json\\entities.json"
 }, {
-	"id": "fiveLetters_",
-	"url": "assets/json\\fiveLetters_.json"
-}, {
-	"id": "fourLetters_",
-	"url": "assets/json\\fourLetters_.json"
-}, {
 	"id": "modifyers",
 	"url": "assets/json\\modifyers.json"
 }, {
 	"id": "resources",
 	"url": "assets/json\\resources.json"
-}, {
-	"id": "sixLetters_",
-	"url": "assets/json\\sixLetters_.json"
-}, {
-	"id": "scrabble",
-	"url": "assets/json\\scrabble.json"
-}, {
-	"id": "threeLetters_",
-	"url": "assets/json\\threeLetters_.json"
-}, {
-	"id": "worduoConfig",
-	"url": "assets/json\\worduoConfig.json"
 }];
 
 exports.default = assets;
@@ -60100,7 +60111,7 @@ var MergeScreen = function (_Screen) {
                 _this.mergeSystem1.onPopLabel.add(_this.popLabel.bind(_this));
 
                 _this.enemiesSystem.onParticles.add(_this.addParticles.bind(_this));
-                _this.enemiesSystem.onPopLabel.add(_this.popLabel.bind(_this));
+                _this.enemiesSystem.onPopLabel.add(_this.popLabelDamage.bind(_this));
                 _this.enemiesSystem.onGetResources.add(_this.addResourceParticles.bind(_this));
 
                 _this.mergeSystem1.addSystem(_this.enemiesSystem);
@@ -60148,11 +60159,9 @@ var MergeScreen = function (_Screen) {
 
                 _this.helperButtonList = new _UIList2.default();
                 _this.helperButtonList.h = 60;
-                _this.helperButtonList.w = 140;
+                _this.helperButtonList.w = 320;
                 _this.speedUpToggle = new _UIButton2.default(0x002299, 'fast_forward_icon');
                 _this.helperButtonList.addElement(_this.speedUpToggle);
-                _this.speedUpToggle.x = 50;
-                _this.speedUpToggle.y = 50;
                 _this.speedUpToggle.onClick.add(function () {
                         if (window.TIME_SCALE > 1) {
                                 window.TIME_SCALE = 1;
@@ -60165,11 +60174,33 @@ var MergeScreen = function (_Screen) {
 
                 _this.clearData = new _UIButton2.default(0x002299, 'icon_reset');
                 _this.helperButtonList.addElement(_this.clearData);
-                _this.clearData.x = 130;
-                _this.clearData.y = 50;
                 _this.clearData.onClick.add(function () {
                         COOKIE_MANAGER.wipeData();
                 });
+
+                _this.addCash = new _UIButton2.default(0x002299, 'coin');
+                _this.helperButtonList.addElement(_this.addCash);
+                _this.addCash.onClick.add(function () {
+                        window.gameEconomy.addResources(80000000000000000000000000000000000000000000000000000000000000);
+                });
+
+                _this.autoMergeToggle = new _UIButton2.default(0x002299, 'auto-merge');
+                _this.helperButtonList.addElement(_this.autoMergeToggle);
+                _this.autoMergeToggle.onClick.add(function () {
+                        var toggleValue = !window.gameModifyers.modifyersData.autoMerge;
+                        window.gameModifyers.saveBoolModifyers('autoMerge', toggleValue);
+                        _this.refreshToggles();
+                });
+
+                _this.autoCollectToggle = new _UIButton2.default(0x002299, 'auto-collect');
+                //this.helperButtonList.addElement(this.autoCollectToggle)
+                _this.autoCollectToggle.onClick.add(function () {
+                        var toggleValue = !window.gameModifyers.modifyersData.autoCollectResource;
+                        window.gameModifyers.saveBoolModifyers('autoCollectResource', toggleValue);
+
+                        _this.refreshToggles();
+                });
+                _this.refreshToggles();
 
                 _this.helperButtonList.updateHorizontalList();
                 _this.container.addChild(_this.helperButtonList);
@@ -60265,6 +60296,24 @@ var MergeScreen = function (_Screen) {
         }
 
         (0, _createClass3.default)(MergeScreen, [{
+                key: 'refreshToggles',
+                value: function refreshToggles() {
+                        var toggleValue = window.gameModifyers.modifyersData.autoCollectResource;
+
+                        if (toggleValue) {
+                                this.autoCollectToggle.enableState();
+                        } else {
+                                this.autoCollectToggle.disableState();
+                        }
+
+                        toggleValue = window.gameModifyers.modifyersData.autoMerge;
+                        if (toggleValue) {
+                                this.autoMergeToggle.enableState();
+                        } else {
+                                this.autoMergeToggle.disableState();
+                        }
+                }
+        }, {
                 key: 'addSystem',
                 value: function addSystem(system) {
                         if (!this.systemsList.includes(system)) {
@@ -60308,6 +60357,13 @@ var MergeScreen = function (_Screen) {
                         this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL1);
                 }
         }, {
+                key: 'popLabelDamage',
+                value: function popLabelDamage(targetPosition, label) {
+                        var toLocal = this.particleSystem.toLocal(targetPosition);
+
+                        this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL_DAMAGE);
+                }
+        }, {
                 key: 'addParticles',
                 value: function addParticles(targetPosition, customData, quant) {
                         var toLocal = this.particleSystem.toLocal(targetPosition);
@@ -60326,18 +60382,22 @@ var MergeScreen = function (_Screen) {
                         var showParticles = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
 
                         window.gameEconomy.addResources(totalResources);
-                        var toLocal = this.particleSystem.toLocal(targetPosition);
 
+                        if (quantParticles <= 0) {
+                                return;
+                        }
+                        var toLocal = this.particleSystem.toLocal(targetPosition);
                         if (!showParticles) {
                                 quantParticles = 1;
                         }
+
                         for (var index = 0; index < quantParticles; index++) {
                                 customData.target = { x: this.resourcesLabel.x, y: this.resourcesLabel.y, timer: 0.2 + Math.random() * 0.75 };
                                 this.particleSystem.show(toLocal, 1, customData);
                         }
 
                         if (showParticles) {
-                                this.particleSystem.popLabel(toLocal, "+" + _utils2.default.formatPointsLabel(totalResources), 0, 1, 1, LABELS.LABEL1);
+                                //this.particleSystem.popLabel(toLocal, "+" + utils.formatPointsLabel(totalResources), 0, 1, 1, LABELS.LABEL1)
                         }
                 }
         }, {
@@ -60388,7 +60448,9 @@ var MergeScreen = function (_Screen) {
         }, {
                 key: 'resize',
                 value: function resize(resolution) {
-
+                        if (!resolution || !resolution.width || !resolution.height) {
+                                return;
+                        }
                         if (this.spaceBackground) {
 
                                 this.spaceBackground.resize(resolution, this.screenManager.scale);
@@ -60407,7 +60469,7 @@ var MergeScreen = function (_Screen) {
                         this.statsList.y = 20; //config.height - 270
                         this.shopButtonsList.x = config.width - this.shopButtonsList.w + 20;
                         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 20;
-                        this.helperButtonList.x = 50;
+                        this.helperButtonList.x = 0;
                         this.helperButtonList.y = config.height - this.shopButtonsList.h + 30;
 
                         this.enemiesContainer.x = config.width / 2;
@@ -62500,6 +62562,30 @@ var GameModifyers = function () {
 
         this.modifyersData = COOKIE_MANAGER.getModifyers();
         this.onUpdateModifyers = new _signals2.default();
+
+        var defaultModifyers = {
+            drillSpeed: 1,
+            resourcesMultiplier: 1,
+            damageMultiplier: 1,
+            attackSpeed: 1,
+            attackSpeedValue: 1,
+            autoMerge: false,
+            autoCollectResource: false
+        };
+
+        this.bonusData = {
+            damageBonus: 1,
+            resourceBonus: 1,
+            damageSpeed: 1,
+            resourceSpeed: 1
+        };
+
+        this.permanentBonusData = {
+            damageBonus: 1,
+            resourceBonus: 1,
+            damageSpeed: 1,
+            resourceSpeed: 1
+        };
     }
 
     (0, _createClass3.default)(GameModifyers, [{
@@ -62517,9 +62603,36 @@ var GameModifyers = function () {
             COOKIE_MANAGER.updateModifyers(this.modifyersData);
         }
     }, {
+        key: 'saveBoolModifyers',
+        value: function saveBoolModifyers(type, value) {
+            this.modifyersData[type] = value;
+            this.onUpdateModifyers.dispatch();
+            COOKIE_MANAGER.updateModifyers(this.modifyersData);
+        }
+    }, {
         key: 'getLevel',
         value: function getLevel(data) {
             return this.modifyersData[data.rawData.modifyer] || 1;
+        }
+    }, {
+        key: 'getDamageMultiplier',
+        value: function getDamageMultiplier() {
+            return (this.modifyersData.damageMultiplierValue || 1) * this.bonusData.damageBonus * this.permanentBonusData.damageBonus;
+        }
+    }, {
+        key: 'getResourcesMultiplier',
+        value: function getResourcesMultiplier() {
+            return (this.modifyersData.resourcesMultiplierValue || 1) * this.bonusData.resourceBonus * this.permanentBonusData.resourceBonus;
+        }
+    }, {
+        key: 'getDrillSpeed',
+        value: function getDrillSpeed() {
+            return (this.modifyersData.drillSpeedValue || 1) * this.bonusData.damageSpeed * this.permanentBonusData.damageSpeed;
+        }
+    }, {
+        key: 'getAttackSpeed',
+        value: function getAttackSpeed() {
+            return (this.modifyersData.attackSpeedValue || 1) * this.bonusData.resourceSpeed * this.permanentBonusData.resourceSpeed;
         }
     }]);
     return GameModifyers;
@@ -62595,10 +62708,10 @@ var GeneralShop = function (_EntityShop) {
         value: function confirmItemShop(item) {
 
             if (item.rawData.modifyer) {
-                console.log(item.rawData.modifyer, item.getResources());
+                console.log(item.rawData.modifyer, item.getRawResources());
             }
 
-            window.gameModifyers.saveModifyers(item.rawData.modifyer, item.currentLevel, item.getResources());
+            window.gameModifyers.saveModifyers(item.rawData.modifyer, item.currentLevel, item.getRawResources());
             // this.mainSystem.forEach(resourceSystem => {
             //     resourceSystem.findUpgrade(item)
             // });
@@ -62960,7 +63073,14 @@ var MergeSystem = function () {
                 }, 10);
             });
             piece.onCompleteCharge.add(function (slot) {
+
+                //upgrade this
                 piece.addEntity(_this2.dataTiles[0]);
+
+                if (window.gameModifyers.modifyersData.autoMerge) {
+                    _this2.autoPlace(piece);
+                    _this2.autoMerge();
+                }
             });
             this.pieceGeneratorsList.push(piece);
         }
@@ -63090,7 +63210,8 @@ var MergeSystem = function () {
                 var customData = {};
                 customData.texture = 'shoot';
                 customData.scale = 0.002;
-
+                customData.topLimit = _this3.enemySystem.getEnemy().getGlobalPosition().y;
+                //console.log(this.enemySystem.getEnemy().getGlobalPosition().y)
                 customData.gravity = 0;
                 customData.alphaDecress = 0;
                 if (_this3.enemySystem) {
@@ -63173,6 +63294,87 @@ var MergeSystem = function () {
             }
 
             this.updateAllData();
+        }
+    }, {
+        key: 'findMergeInBoard',
+        value: function findMergeInBoard(piece, diff) {
+            if (piece.tileData.isDirty) {
+                return;
+            }
+            var firstAvailable = null;
+            for (var i = 0; i < this.slots.length; i++) {
+                for (var j = 0; j < this.slots[i].length; j++) {
+                    if (diff.i != i || diff.j != j) {
+
+                        if (this.slots[i][j].tileData && !this.slots[i][j].tileData.isDirty) {
+                            var slot = this.slots[i][j];
+                            if (slot.tileData.getValue() == piece.tileData.getValue()) {
+                                firstAvailable = this.slots[i][j];
+                                piece.tileData.isDirty = true;
+                                slot.tileData.isDirty = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (firstAvailable) {
+                this.currentDragSlot = piece;
+                this.releaseEntity(firstAvailable);
+            }
+        }
+    }, {
+        key: 'autoMerge',
+        value: function autoMerge() {
+
+            for (var i = 0; i < this.slots.length; i++) {
+                for (var j = 0; j < this.slots[i].length; j++) {
+                    if (this.slots[i][j] && this.slots[i][j].tileData) {
+                        this.slots[i][j].tileData.isDirty = false;
+                    }
+                }
+            }
+            for (var i = 0; i < this.slots.length; i++) {
+                for (var j = 0; j < this.slots[i].length; j++) {
+                    if (this.slots[i][j] && this.slots[i][j].tileData && !this.slots[i][j].tileData.isDirty) {
+                        this.findMergeInBoard(this.slots[i][j], { i: i, j: j });
+                    }
+                }
+            }
+        }
+    }, {
+        key: 'autoPlace',
+        value: function autoPlace(piece) {
+            var firstAvailable = null;
+            for (var i = 0; i < this.slots.length; i++) {
+                for (var j = 0; j < this.slots[i].length; j++) {
+                    if (this.slots[i][j].tileData) {
+                        var slot = this.slots[i][j];
+                        if (slot.tileData.getValue() == piece.tileData.getValue()) {
+                            firstAvailable = this.slots[i][j];
+                            break;
+                        }
+                    } else if (!firstAvailable) {
+                        firstAvailable = this.slots[i][j];
+                    }
+                }
+            }
+
+            this.currentDragSlot = piece;
+
+            if (piece.isGenerator) {
+                this.endDrag(piece);
+                setTimeout(function () {
+                    if (!piece.tileData) {
+                        piece.startCharging();
+                    }
+                }, 10);
+            }
+
+            this.releaseEntity(firstAvailable);
+
+            //this.autoMerge();
         }
     }, {
         key: 'releaseEntity',
@@ -63308,7 +63510,7 @@ var MergeSystem = function () {
             var targetScale = bottomDiff / this.slotSize.height * 0.55;
             targetScale = Math.min(1, targetScale);
             this.uiContainer.scale.set(targetScale);
-            this.uiContainer.y = bottomWrapperDiff + bottomDiff / 2 - this.slotSize.height * this.uiContainer.scale.y / 2 - 50; // - this.wrapper.y + this.wrapper.height //- (this.slotSize.height * this.uiContainer.scale.y) - config.height * 0.05
+            this.uiContainer.y = bottomWrapperDiff + bottomDiff / 2 - this.slotSize.height * this.uiContainer.scale.y / 2 - 20; // - this.wrapper.y + this.wrapper.height //- (this.slotSize.height * this.uiContainer.scale.y) - config.height * 0.05
         }
     }]);
     return MergeSystem;
@@ -63392,7 +63594,7 @@ var ChargerTile = function (_MergeTile) {
         _this.backShape.texture = PIXI.Texture.fromFrame('backTilesRound');
 
         _this.defaultChargeTime = standardChargeTime;
-        _this.currentChargeTime = _this.defaultChargeTime;
+        _this.currentChargeTime = _this.defaultChargeTime * Math.random();
 
         _this.onCompleteCharge = new _signals2.default();
 
@@ -63620,18 +63822,28 @@ var MergerData = function () {
             return this.rawData.value;
         }
     }, {
+        key: "getCurrentTime",
+        value: function getCurrentTime() {
+            return this.rawData.initialTime;
+        }
+    }, {
+        key: "getInitialAttackTime",
+        value: function getInitialAttackTime() {
+            return this.rawData.initialTime;
+        }
+    }, {
         key: "getRawDamage",
         value: function getRawDamage() {
             var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-            return this.rawData.initialDamage * this.rawData.initialTime * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate);
+            return this.rawData.initialDamage * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate);
         }
     }, {
         key: "getDamage",
         value: function getDamage() {
             var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-            return this.rawData.initialDamage * this.rawData.initialTime * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate) * window.gameModifyers.modifyersData.damageMultiplier;
+            return this.rawData.initialDamage * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate) * window.gameModifyers.getDamageMultiplier();
         }
     }, {
         key: "getTexture",
@@ -63643,28 +63855,30 @@ var MergerData = function () {
         value: function getGenerateDamageTime() {
             var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-            return this.rawData.initialTime;
+            return this.getCurrentTime() / window.gameModifyers.getAttackSpeed();
         }
     }, {
         key: "getGenerateResourceTime",
         value: function getGenerateResourceTime() {
             var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-            return this.rawData.initialTime / gameModifyers.modifyersData.drillSpeedValue || 1;
+            return this.getCurrentTime() / window.gameModifyers.getDrillSpeed();
         }
     }, {
         key: "getRawResources",
         value: function getRawResources() {
             var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-            return this.rawData.initialRevenue / this.getGenerateResourceTime() * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate);
+            //return (this.rawData.initialRevenue / this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate)
+            return this.rawData.initialRevenue * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate);
         }
     }, {
         key: "getResources",
         value: function getResources() {
             var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-            return this.rawData.initialRevenue / this.getGenerateResourceTime() * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) * window.gameModifyers.modifyersData.resourcesMultiplier;
+            //OLD return (this.rawData.initialRevenue / this.getGenerateResourceTime()) * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) * window.gameModifyers.getResourcesMultiplier()
+            return this.rawData.initialRevenue * this.getGenerateResourceTime() * Math.pow(this.rawData.coefficientProductivity, this.currentLevel + simulate) * window.gameModifyers.getResourcesMultiplier();
         }
     }, {
         key: "getCoast",
@@ -63707,8 +63921,8 @@ var MergerData = function () {
             var simulate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
             var res = this.getDamage(simulate);
-            var time = this.getGenerateDamageTime(simulate);
-
+            var time = this.getGenerateDamageTime(simulate); // window.gameModifyers.getAttackSpeed();
+            //console.log(time)
             return res / time;
         }
     }]);
@@ -63782,7 +63996,11 @@ var ParticleSystem = function (_PIXI$Container) {
 
         _this.particles = [];
 
-        _this.maxParticles = 60;
+        _this.maxParticles = 200;
+
+        if (window.isMobile) {
+            _this.maxParticles = 80;
+        }
 
         return _this;
     }
@@ -63815,6 +64033,10 @@ var ParticleSystem = function (_PIXI$Container) {
                         coin.y += coin.velocity.y * delta;
                         coin.rotation += coin.angSpeed * delta;
                         coin.alpha -= 1 * delta * coin.alphaDecress;
+
+                        if (coin.topLimit && coin.topLimit > coin.y) {
+                            coin.alpha = 0;
+                        }
                         if (coin.target) {
                             coin.timer -= delta;
                             if (coin.timer <= 0) {
@@ -63874,7 +64096,6 @@ var ParticleSystem = function (_PIXI$Container) {
             }
             tempLabel.style = style;
             tempLabel.text = label;
-            tempLabel.fill = style.color;
 
             this.addChild(tempLabel);
             tempLabel.x = pos.x;
@@ -63908,7 +64129,7 @@ var ParticleSystem = function (_PIXI$Container) {
 
             this.totParticles = tot;
             for (var i = 0; i < this.totParticles; i++) {
-                if (this.particles.lenght > this.maxParticles) {
+                if (customData.callback == null && this.particles.length > this.maxParticles) {
                     break;
                 }
                 var coin = void 0;
@@ -63919,13 +64140,15 @@ var ParticleSystem = function (_PIXI$Container) {
                 if (!coin) {
                     coin = new PIXI.Sprite();
                 }
-                coin.texture = PIXI.Texture.from(customData.texture || 'cat_coin_particle');
+                coin.texture = PIXI.Texture.from(customData.texture || 'coin');
                 coin.gravity = customData.gravity != undefined ? customData.gravity : 900;
                 coin.alpha = 1;
                 coin.tint = customData.tint || 0xFFFFFF;
                 coin.alphaDecress = customData.alphaDecress != undefined ? customData.alphaDecress : 1;
                 coin.x = position.x;
                 coin.y = position.y;
+                coin.topLimit = customData.topLimit != undefined ? customData.topLimit : null;
+
                 coin.callback = customData.callback;
                 coin.angSpeed = customData.angSpeed || 0;
                 coin.rotation = 0;
@@ -64015,7 +64238,6 @@ var ResourceSystem = function () {
         (0, _classCallCheck3.default)(this, ResourceSystem);
 
 
-        console.log("RESOURCES", dataTiles);
         this.dataTiles = dataTiles;
         this.gameplayData = data.general;
 
@@ -64139,7 +64361,7 @@ var ResourceSystem = function () {
 
                 _this4.onParticles.dispatch(slot.resourceSource.getGlobalPosition(), customData, 1);
             });
-            piece.onGenerateResource.add(function (slot, data, totalResources, skipParticles) {
+            piece.onGenerateResource.add(function (slot, data, totalResources, quant, skipParticles) {
                 var customData = {};
                 customData.texture = 'coin';
                 customData.scale = 0.01;
@@ -64148,7 +64370,8 @@ var ResourceSystem = function () {
                 COOKIE_MANAGER.pickResource(data);
 
                 var targetPos = slot.tileSprite.getGlobalPosition();
-                _this4.onGetResources.dispatch(targetPos, customData, totalResources, 5, skipParticles);
+
+                _this4.onGetResources.dispatch(targetPos, customData, totalResources, quant, skipParticles);
             });
             this.container.addChild(piece);
 
@@ -64572,6 +64795,23 @@ var ResourceTile = function (_MergeTile) {
 
             this.readyLabel.text = _utils2.default.formatPointsLabel(this.currentCollect);
             this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
+
+            if (window.gameModifyers.modifyersData.autoCollectResource) {
+
+                var quant = 3;
+                if (this.particlesDelay > 0) {
+                    quant = 0;
+                }
+
+                if (this.particlesDelay <= 0) {
+                    this.particlesDelay = 2;
+                }
+
+                //window.gameEconomy.addResources(this.currentCollect)
+                //console.log(quant)
+                //this.onGenerateResource.dispatch(this, this.tileData, this.currentCollect, quant, true);
+                this.collectResources();
+            }
             //this.onGenerateResource.dispatch(this, this.tileData);
         }
     }, {
@@ -64592,7 +64832,7 @@ var ResourceTile = function (_MergeTile) {
                 var skipParticles = this.particlesDelay <= 0;
                 this.onGenerateResource.dispatch(this, this.tileData, this.currentCollect, skipParticles);
                 if (this.particlesDelay <= 0) {
-                    this.particlesDelay = 0.5;
+                    this.particlesDelay = 2;
                 }
                 this.readyToCollect = false;
                 this.currentCollect = 0;
@@ -64915,21 +65155,23 @@ var SpaceBackground = function (_PIXI$Container) {
 		(0, _createClass3.default)(SpaceBackground, [{
 				key: 'resize',
 				value: function resize(innerResolution, scale) {
+						if (innerResolution && innerResolution.width && innerResolution.height) {
 
-						this.innerResolution = innerResolution;
-						this.backgroundShape.width = innerResolution.width * 4; // scale.x
-						this.backgroundShape.height = window.innerHeight * 4; // scale.x
+								this.innerResolution = innerResolution;
+								this.backgroundShape.width = innerResolution.width * 4; // scale.x
+								this.backgroundShape.height = window.innerHeight * 4; // scale.x
 
-						//console.log(innerResolution.height / config.height)
-						var globalScale = innerResolution.height / _config2.default.height;
-						this.baseGradient.y = innerResolution.height / 2 / globalScale;
-						this.baseTopGradient.y = -innerResolution.height / 2 / globalScale;
+								//console.log(innerResolution.height / config.height)
+								var globalScale = innerResolution.height / _config2.default.height;
+								this.baseGradient.y = innerResolution.height / 2 / globalScale;
+								this.baseTopGradient.y = -innerResolution.height / 2 / globalScale;
 
-						this.baseGradient.width = innerResolution.width * 4;
-						this.baseTopGradient.width = innerResolution.width * 4;
+								this.baseGradient.width = innerResolution.width * 4;
+								this.baseTopGradient.width = innerResolution.width * 4;
 
-						// this.starsContainer.x = innerResolution.width / 2
-						// this.starsContainer.y = innerResolution.height / 2
+								// this.starsContainer.x = innerResolution.width / 2
+								// this.starsContainer.y = innerResolution.height / 2
+						}
 				}
 		}, {
 				key: 'update',
@@ -65395,6 +65637,9 @@ var ScreenManager = function (_PIXI$Container) {
 			this.currentScreen.build(param);
 			this.currentScreen.transitionIn();
 			this.screensContainer.addChild(this.currentScreen);
+			if (!this.resolution) {
+				this.resolution = { width: innerWidth, height: innerHeight };
+			}
 			this.resize(this.resolution);
 		}
 		//update manager

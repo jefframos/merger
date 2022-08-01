@@ -116,6 +116,7 @@ export default class EntityShop extends PIXI.Container {
             } else {
                 element.lockItem();
             }
+            //element.unlockItem();
             element.show();
             element.updatePreviewValue(this.toggles.currentActiveValue)
         });

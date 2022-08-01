@@ -73,8 +73,7 @@ export default
             if (Number.isNaN(max)) {
                 return 0
             }
-            console.log(window.gameModifyers.modifyersData.damageMultiplier)
-            return max * window.gameModifyers.modifyersData.damageMultiplier
+            return max * window.gameModifyers.getDamageMultiplier()
         },
         findRPS2(target) {
             let max = 0;

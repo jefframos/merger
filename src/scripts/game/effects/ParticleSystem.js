@@ -15,7 +15,11 @@ export default class ParticleSystem extends PIXI.Container
 
         this.particles = [];
 
-        this.maxParticles = 60;
+        this.maxParticles = 200;
+
+        if(window.isMobile){
+            this.maxParticles = 80;
+        }
 
     }
 
@@ -49,6 +53,10 @@ export default class ParticleSystem extends PIXI.Container
                     coin.y += coin.velocity.y * delta;
                     coin.rotation += coin.angSpeed * delta;
                     coin.alpha -= 1 * delta * coin.alphaDecress;
+
+                    if(coin.topLimit && coin.topLimit > coin.y){
+                        coin.alpha = 0;
+                    }
                     if (coin.target)
                     {
                         coin.timer -= delta;
@@ -110,7 +118,6 @@ export default class ParticleSystem extends PIXI.Container
 		}
 		tempLabel.style = style;
 		tempLabel.text = label;
-		tempLabel.fill = style.color;
 
 		this.addChild(tempLabel);
 		tempLabel.x = pos.x;
@@ -141,7 +148,7 @@ export default class ParticleSystem extends PIXI.Container
         this.totParticles = tot;
         for (var i = 0; i < this.totParticles; i++)
         {
-            if (this.particles.lenght > this.maxParticles)
+            if (customData.callback == null && this.particles.length > this.maxParticles)
             {
                 break;
             }
@@ -155,13 +162,15 @@ export default class ParticleSystem extends PIXI.Container
             {
                 coin = new PIXI.Sprite();
             }
-            coin.texture = PIXI.Texture.from(customData.texture || 'cat_coin_particle')
+            coin.texture = PIXI.Texture.from(customData.texture || 'coin')
             coin.gravity = (customData.gravity != undefined ? customData.gravity : 900)
             coin.alpha = 1
             coin.tint = customData.tint || 0xFFFFFF
             coin.alphaDecress = (customData.alphaDecress != undefined ? customData.alphaDecress : 1)
             coin.x = position.x;
             coin.y = position.y;
+            coin.topLimit = (customData.topLimit != undefined ? customData.topLimit : null)
+        
             coin.callback = customData.callback;
             coin.angSpeed = customData.angSpeed || 0
             coin.rotation = 0;

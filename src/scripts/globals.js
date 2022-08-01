@@ -72,5 +72,15 @@ window.LABELS.LABEL2 = {
     fontWeight: '800'
 }
 
+window.LABELS.LABEL_DAMAGE= {
+    fontFamily: 'retro_computerregular',
+    fontSize: '14px',
+    fill: 0xFFFFFF,
+    align: 'center',
+    stroke:0,
+    strokeThickness:4,
+    fontWeight: '600'
+}
+
 window.iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 window.isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);

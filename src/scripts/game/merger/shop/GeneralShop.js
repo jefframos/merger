@@ -13,12 +13,12 @@ export default class GeneralShop extends EntityShop {
     confirmItemShop(item) {
 
         if(item.rawData.modifyer){
-            console.log(item.rawData.modifyer, item.getResources())
+            console.log(item.rawData.modifyer, item.getRawResources())
         }
 
-        
 
-        window.gameModifyers.saveModifyers(item.rawData.modifyer, item.currentLevel, item.getResources())
+
+        window.gameModifyers.saveModifyers(item.rawData.modifyer, item.currentLevel, item.getRawResources())
         // this.mainSystem.forEach(resourceSystem => {
         //     resourceSystem.findUpgrade(item)
         // });

@@ -15,7 +15,7 @@
             "levelMax": 100
         },
         {
-            "nameID": "drill_speed",
+            "nameID": "resources",
             "displayName": "Resources amount",
             "imageSrc": "drill",
             "tileImageSrc": "asteroid (2)",
@@ -29,7 +29,7 @@
             "levelMax": 100
         },
         {
-            "nameID": "drill_speed",
+            "nameID": "attack_speed",
             "displayName": "Attack Speed",
             "imageSrc": "drill",
             "tileImageSrc": "asteroid (2)",
@@ -37,13 +37,13 @@
             "costCoefficient": 1.95,
             "initialTime": 1,
             "initialRevenue": 1,
-            "coefficientProductivity": 1.02,
+            "coefficientProductivity": 1.04,
             "initialProductivity": 1,
             "modifyer":"attackSpeed",
             "levelMax": 100        
         },
         {
-            "nameID": "drill_speed",
+            "nameID": "attack_damage",
             "displayName": "ship Damage",
             "imageSrc": "drill",
             "tileImageSrc": "asteroid (2)",

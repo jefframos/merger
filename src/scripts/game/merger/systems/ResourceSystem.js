@@ -7,7 +7,6 @@ import ResourceTile from '../tiles/ResourceTile';
 export default class ResourceSystem {
     constructor(containers, data, dataTiles) {
 
-        console.log("RESOURCES",dataTiles)
         this.dataTiles = dataTiles;
         this.gameplayData = data.general;
 
@@ -119,7 +118,7 @@ export default class ResourceSystem {
 
             this.onParticles.dispatch(slot.resourceSource.getGlobalPosition(), customData, 1)
         })
-        piece.onGenerateResource.add((slot, data, totalResources, skipParticles) => {
+        piece.onGenerateResource.add((slot, data, totalResources, quant, skipParticles) => {
             let customData = {}
             customData.texture = 'coin'
             customData.scale = 0.01
@@ -128,7 +127,9 @@ export default class ResourceSystem {
             COOKIE_MANAGER.pickResource(data)
 
             let targetPos = slot.tileSprite.getGlobalPosition()
-            this.onGetResources.dispatch(targetPos, customData, totalResources, 5, skipParticles)
+
+
+            this.onGetResources.dispatch(targetPos, customData, totalResources, quant, skipParticles)
 
         });
         this.container.addChild(piece);

@@ -183,7 +183,7 @@ export default class MergeScreen extends Screen {
         this.mergeSystem1.onPopLabel.add(this.popLabel.bind(this));
 
         this.enemiesSystem.onParticles.add(this.addParticles.bind(this));
-        this.enemiesSystem.onPopLabel.add(this.popLabel.bind(this));
+        this.enemiesSystem.onPopLabel.add(this.popLabelDamage.bind(this));
         this.enemiesSystem.onGetResources.add(this.addResourceParticles.bind(this));
 
         this.mergeSystem1.addSystem(this.enemiesSystem);
@@ -231,11 +231,9 @@ export default class MergeScreen extends Screen {
 
         this.helperButtonList = new UIList();
         this.helperButtonList.h = 60;
-        this.helperButtonList.w = 140;
+        this.helperButtonList.w = 320;
         this.speedUpToggle = new UIButton1(0x002299, 'fast_forward_icon')
         this.helperButtonList.addElement(this.speedUpToggle)
-        this.speedUpToggle.x = 50
-        this.speedUpToggle.y = 50
         this.speedUpToggle.onClick.add(() => {
             if (window.TIME_SCALE > 1) {
                 window.TIME_SCALE = 1
@@ -248,11 +246,35 @@ export default class MergeScreen extends Screen {
 
         this.clearData = new UIButton1(0x002299, 'icon_reset')
         this.helperButtonList.addElement(this.clearData)
-        this.clearData.x = 130
-        this.clearData.y = 50
         this.clearData.onClick.add(() => {
             COOKIE_MANAGER.wipeData()
         })
+
+        this.addCash = new UIButton1(0x002299, 'coin')
+        this.helperButtonList.addElement(this.addCash)
+        this.addCash.onClick.add(() => {
+            window.gameEconomy.addResources(80000000000000000000000000000000000000000000000000000000000000)
+        })
+
+        this.autoMergeToggle = new UIButton1(0x002299, 'auto-merge')
+        this.helperButtonList.addElement(this.autoMergeToggle)
+        this.autoMergeToggle.onClick.add(() => {
+            let toggleValue = !window.gameModifyers.modifyersData.autoMerge
+            window.gameModifyers.saveBoolModifyers('autoMerge', toggleValue)
+            this.refreshToggles();
+        })
+
+
+        this.autoCollectToggle = new UIButton1(0x002299, 'auto-collect')
+        //this.helperButtonList.addElement(this.autoCollectToggle)
+        this.autoCollectToggle.onClick.add(() => {
+            let toggleValue = !window.gameModifyers.modifyersData.autoCollectResource
+            window.gameModifyers.saveBoolModifyers('autoCollectResource', toggleValue)
+
+            this.refreshToggles();
+
+        })
+        this.refreshToggles();
 
         this.helperButtonList.updateHorizontalList();
         this.container.addChild(this.helperButtonList)
@@ -347,6 +369,23 @@ export default class MergeScreen extends Screen {
 
         //this.mergeItemsShop.show()
     }
+    refreshToggles() {
+        let toggleValue = window.gameModifyers.modifyersData.autoCollectResource
+
+        if (toggleValue) {
+            this.autoCollectToggle.enableState();
+        } else {
+            this.autoCollectToggle.disableState();
+        }
+
+        toggleValue = window.gameModifyers.modifyersData.autoMerge
+        if (toggleValue) {
+            this.autoMergeToggle.enableState();
+        } else {
+            this.autoMergeToggle.disableState();
+        }
+    }
+
     addSystem(system) {
         if (!this.systemsList.includes(system)) {
             this.systemsList.push(system)
@@ -376,9 +415,15 @@ export default class MergeScreen extends Screen {
     popLabel(targetPosition, label) {
         let toLocal = this.particleSystem.toLocal(targetPosition)
 
+
         this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL1)
     }
+    popLabelDamage(targetPosition, label) {
+        let toLocal = this.particleSystem.toLocal(targetPosition)
 
+
+        this.particleSystem.popLabel(toLocal, "+" + label, 0, 1, 1, LABELS.LABEL_DAMAGE)
+    }
     addParticles(targetPosition, customData, quant) {
         let toLocal = this.particleSystem.toLocal(targetPosition)
         this.particleSystem.show(toLocal, quant, customData)
@@ -391,18 +436,23 @@ export default class MergeScreen extends Screen {
     }
     addResourceParticles(targetPosition, customData, totalResources, quantParticles, showParticles = true) {
         window.gameEconomy.addResources(totalResources)
-        let toLocal = this.particleSystem.toLocal(targetPosition)
 
+        if(quantParticles <= 0){
+            return;
+        }
+        let toLocal = this.particleSystem.toLocal(targetPosition)
         if (!showParticles) {
             quantParticles = 1
         }
+
+
         for (let index = 0; index < quantParticles; index++) {
             customData.target = { x: this.resourcesLabel.x, y: this.resourcesLabel.y, timer: 0.2 + Math.random() * 0.75 }
             this.particleSystem.show(toLocal, 1, customData)
         }
 
         if (showParticles) {
-            this.particleSystem.popLabel(toLocal, "+" + utils.formatPointsLabel(totalResources), 0, 1, 1, LABELS.LABEL1)
+            //this.particleSystem.popLabel(toLocal, "+" + utils.formatPointsLabel(totalResources), 0, 1, 1, LABELS.LABEL1)
         }
     }
     onMouseMove(e) {
@@ -473,7 +523,7 @@ export default class MergeScreen extends Screen {
         this.statsList.y = 20//config.height - 270
         this.shopButtonsList.x = config.width - this.shopButtonsList.w + 20
         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 20
-        this.helperButtonList.x = 50
+        this.helperButtonList.x = 0
         this.helperButtonList.y = config.height - this.shopButtonsList.h + 30
 
         this.enemiesContainer.x = config.width / 2;

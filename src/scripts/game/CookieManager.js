@@ -30,7 +30,9 @@ export default class CookieManager {
 			resourcesMultiplier: 1,
 			damageMultiplier: 1,
 			attackSpeed: 1,
-			attackSpeedValue:1
+			attackSpeedValue:1,
+			autoMerge: false,
+            autoCollectResource: false
 		}
 		this.economy = {}
 		this.stats = {}

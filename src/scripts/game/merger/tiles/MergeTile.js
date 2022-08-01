@@ -151,18 +151,20 @@ export default class MergeTile extends PIXI.Container {
             if (this.updatedDamageTimestamp) {
                 let targetColor = 0xf2cb0d
                 this.generateDamage = dateTimeStamp - this.updatedDamageTimestamp
-                if (this.generateDamage > (this.generateDamageTime / window.TIME_SCALE / gameModifyers.modifyersData.attackSpeedValue) * 1000) {
+                let calcTiime = (this.generateDamageTime / window.TIME_SCALE ) * 1000
+                if (this.generateDamage > calcTiime) {
                     this.updatedDamageTimestamp = Date.now()//(Date.now() / 1000 | 0);
                     this.generateDamageNormal = 1;
-                    // console.log(this.generateDamage,  this.generateDamageTime,  gameModifyers.modifyersData.attackSpeedValue)
+                    // console.log(this.generateDamage,  this.generateDamageTime,  gameModifyers.getAttackSpeed())
                     this.damageReady();
                 } else {
-                    if(this.generateDamageTime/ gameModifyers.modifyersData.attackSpeedValue < 0.5){
+                    if(this.generateDamageTime < 0.5){
                         this.generateDamageNormal = 1
                         targetColor =0x22ff88
                     }else{
                         this.milisecTimeStamp = Date.now()//Date.now() / 1000
-                        this.generateDamageNormal = (this.milisecTimeStamp - this.updatedDamageTimestamp) / 1000
+                        this.generateDamageNormal = this.generateDamage / calcTiime
+                        //console.log(this.generateDamageNormal)
                         this.generateDamageNormal = Math.min(this.generateDamageNormal, 1)
                     }
                     
@@ -255,6 +257,7 @@ export default class MergeTile extends PIXI.Container {
         this.tileSprite.anchor.set(0.5)
         this.sin = Math.random();
         this.label.text = this.tileData.getValue()
+        //this.label.text = this.tileData.getGenerateDamageTime() +' --'+  this.tileData.rawData.initialTime
         this.label.x = this.backSlot.width / 2 - this.label.width / 2;
         this.showSprite()
         this.enterAnimation()

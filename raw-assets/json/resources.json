@@ -25,7 +25,7 @@
                 "initialCost": 60,
                 "costCoefficient": 1.153,
                 "initialTime": 3,
-                "initialRevenue": 20,
+                "initialRevenue": 30,
                 "coefficientProductivity": 1.152,
                 "initialProductivity": 20,
                 "levelMax": 500
@@ -40,7 +40,7 @@
                 "initialCost": 800,
                 "costCoefficient": 1.155,
                 "initialTime": 20,
-                "initialRevenue": 140,
+                "initialRevenue": 10000,
                 "coefficientProductivity": 1.18,
                 "initialProductivity": 90,
                 "levelMax": 500
@@ -55,7 +55,7 @@
                 "initialCost": 80600,
                 "costCoefficient": 1.162,
                 "initialTime": 60,
-                "initialRevenue": 3000,
+                "initialRevenue": 500000,
                 "coefficientProductivity": 1.191,
                 "initialProductivity": 360,
                 "levelMax": 500
@@ -70,7 +70,7 @@
                 "initialCost": 1000000,
                 "costCoefficient": 1.168,
                 "initialTime": 150,
-                "initialRevenue": 350000,
+                "initialRevenue": 35000000,
                 "coefficientProductivity": 1.192,
                 "initialProductivity": 2160,
                 "levelMax": 500
@@ -85,7 +85,7 @@
                 "initialCost": 5000000000,
                 "costCoefficient": 1.15,
                 "initialTime": 250,
-                "initialRevenue": 42000000,
+                "initialRevenue": 420000000,
                 "coefficientProductivity": 1.175,
                 "initialProductivity": 2160,
                 "levelMax": 500
@@ -100,7 +100,7 @@
                 "initialCost": 700000000000,
                 "costCoefficient": 1.15,
                 "initialTime": 500,
-                "initialRevenue": 5500000000,
+                "initialRevenue": 550000000000,
                 "coefficientProductivity": 1.181,
                 "initialProductivity": 2160,
                 "levelMax": 500
@@ -115,7 +115,7 @@
                 "initialCost": 90000000000000,
                 "costCoefficient": 1.149,
                 "initialTime": 650,
-                "initialRevenue": 85500000000,
+                "initialRevenue": 85500000000000,
                 "coefficientProductivity": 1.186,
                 "initialProductivity": 2160,
                 "levelMax": 500
@@ -130,7 +130,7 @@
                 "initialCost": 1020000000000000,
                 "costCoefficient": 1.156,
                 "initialTime": 825,
-                "initialRevenue": 1205506500000,
+                "initialRevenue": 120550650000000,
                 "coefficientProductivity": 1.194,
                 "initialProductivity": 2160,
                 "levelMax": 500
@@ -145,7 +145,7 @@
                 "initialCost": 5000000000000000000,
                 "costCoefficient": 1.164,
                 "initialTime": 1000,
-                "initialRevenue": 80312055065000000,
+                "initialRevenue": 8031205506500000000,
                 "coefficientProductivity": 1.197,
                 "initialProductivity": 2160,
                 "levelMax": 500

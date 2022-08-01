@@ -115,7 +115,7 @@ export default class ResourceTile extends MergeTile {
         if (this.readyToCollect) {
             this.resourceReadyToCollectSprite.alpha = utils.lerp(this.resourceReadyToCollectSprite.alpha, 0.5, 0.05)
             this.resourceReadyToCollectSprite.rotation += delta;
-        }else{
+        } else {
             this.resourceReadyToCollectSprite.alpha = 0;
         }
         if (this.tileData) {
@@ -141,9 +141,9 @@ export default class ResourceTile extends MergeTile {
 
             this.exclamationMark.visible = this.targetData.rawData.isFirst || window.gameEconomy.currentResources >= this.targetData.rawData.initialCost
 
-            if(this.exclamationMark.visible){
+            if (this.exclamationMark.visible) {
                 this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern-green')
-            }else{
+            } else {
                 this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern')
             }
 
@@ -257,6 +257,25 @@ export default class ResourceTile extends MergeTile {
 
         this.readyLabel.text = utils.formatPointsLabel(this.currentCollect)
         this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
+
+
+        if (window.gameModifyers.modifyersData.autoCollectResource) {
+
+            let quant = 3;
+            if (this.particlesDelay > 0) {
+                quant = 0;
+            }
+
+            if (this.particlesDelay <= 0) {
+                this.particlesDelay = 2
+            }
+
+
+            //window.gameEconomy.addResources(this.currentCollect)
+            //console.log(quant)
+            //this.onGenerateResource.dispatch(this, this.tileData, this.currentCollect, quant, true);
+            this.collectResources()
+        }
         //this.onGenerateResource.dispatch(this, this.tileData);
     }
     collectResources() {
@@ -271,7 +290,7 @@ export default class ResourceTile extends MergeTile {
             let skipParticles = this.particlesDelay <= 0
             this.onGenerateResource.dispatch(this, this.tileData, this.currentCollect, skipParticles);
             if (this.particlesDelay <= 0) {
-                this.particlesDelay = 0.5
+                this.particlesDelay = 2
             }
             this.readyToCollect = false;
             this.currentCollect = 0;

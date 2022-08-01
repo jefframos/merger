@@ -87,14 +87,16 @@ export default class UIButton1 extends PIXI.Container {
 
 		if (texture)
 			this.backShape.texture = PIXI.Texture.fromFrame(texture)
-		//this.icon.alpha = 0.5
+		this.icon.alpha = 0.5
 		// this.backShape.tint = color;
+		//this.alpha = 0.5
 	}
 	enableState(color, texture) {
 
 		if (texture)
 			this.backShape.texture = PIXI.Texture.fromFrame(texture)
 		this.icon.alpha = 1
+		//this.alpha = 1
 		// this.backShape.tint = color;
 	}
 	addFrontShape() {
