@@ -10,7 +10,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 3.09,
+                "initialTime": 4.20,
                 "levelMax": 500
             },
             {
@@ -22,7 +22,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 3.09,
+                "initialTime": 5.88,
                 "levelMax": 500
             },
             {
@@ -34,7 +34,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 3.5,
+                "initialTime": 8.23,
                 "levelMax": 500
             },
             {
@@ -46,7 +46,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 4.09,
+                "initialTime": 11.52,
                 "levelMax": 500
             },
             {
@@ -58,7 +58,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 4.5,
+                "initialTime": 16.13,
                 "levelMax": 500
             },
             {
@@ -70,7 +70,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 7.09,
+                "initialTime": 22.59,
                 "levelMax": 500
             },
             {
@@ -82,7 +82,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 8.09,
+                "initialTime": 31.62,
                 "levelMax": 500
             },
             {
@@ -94,7 +94,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 9.09,
+                "initialTime": 44.27,
                 "levelMax": 500
             },
             {
@@ -106,7 +106,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 10.09,
+                "initialTime": 61.98,
                 "levelMax": 500
             },
             {
@@ -118,7 +118,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 10.09,
+                "initialTime": 86.78,
                 "levelMax": 500
             },
             {
@@ -130,7 +130,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 12.09,
+                "initialTime": 121.49,
                 "levelMax": 500
             },
             {
@@ -142,7 +142,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 13.09,
+                "initialTime": 170.08,
                 "levelMax": 500
             },
             {
@@ -154,7 +154,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 14.09,
+                "initialTime": 238.11,
                 "levelMax": 500
             },
             {
@@ -166,7 +166,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 15.09,
+                "initialTime": 333.36,
                 "levelMax": 500
             },
             {
@@ -178,7 +178,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 16.09,
+                "initialTime": 466.70,
                 "levelMax": 500
             }
         ]
