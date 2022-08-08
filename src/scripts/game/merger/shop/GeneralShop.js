@@ -36,4 +36,7 @@ export default class GeneralShop extends EntityShop {
         });
         this.posShow();
     }
+    addItems(items, skipCheck = false) {
+        super.addItems(items, true);
+    }
 }

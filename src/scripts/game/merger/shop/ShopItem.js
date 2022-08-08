@@ -29,7 +29,7 @@ export default class ShopItem extends UIList {
         this.backShapeGeneral.width = this.w
         this.backShapeGeneral.height = this.h
 
-        this.backgroundContainer.addChildAt(this.backShapeGeneral,0);
+        this.backgroundContainer.addChildAt(this.backShapeGeneral, 0);
 
         this.itemIcon = new PIXI.Sprite.from('starship_31');
         // this.itemIcon.scaleContent = true;
@@ -103,8 +103,8 @@ export default class ShopItem extends UIList {
         this.container.addChild(this.infoButton);
 
         // this.itemIcon.scaleContent = false;
+        this.isLocked = false;
 
-        
 
 
         this.lockStateContainer = new PIXI.Container();
@@ -125,21 +125,25 @@ export default class ShopItem extends UIList {
 
     }
     lockItem() {
-        if(this.itemData){
-            if(this.itemData.rawData.type == "resource"){
-                this.lockState.setLabel("Purchase " + this.itemData.rawData.displayName +" to upgrade")
+        if (this.itemData) {
+            if (this.itemData.rawData.type == "resource") {
+                this.lockState.setLabel("Purchase " + this.itemData.rawData.displayName + " to upgrade")
                 this.lockState.setIcon(this.itemData.rawData.tileImageSrc)
-            }else{
-                this.lockState.setLabel("Unlock " + this.itemData.rawData.displayName +" to upgrade")
+            } else {
+                this.lockState.setLabel("Unlock " + this.itemData.rawData.displayName + " to upgrade")
                 this.lockState.setIcon(this.itemData.rawData.imageSrc, 0.8)
             }
         }
         this.lockStateContainer.visible = true;
         this.container.visible = false;
+        this.isLocked = true;
+
     }
     unlockItem() {
         this.lockStateContainer.visible = false;
         this.container.visible = true;
+        this.isLocked = false;
+
         //this.lockState
     }
     onInfoCallback() {
@@ -232,8 +236,15 @@ export default class ShopItem extends UIList {
         this.isShowing = true;
 
     }
+    canBuyOne() {
+        if (this.itemData.currentLevel >= this.itemData.rawData.levelMax) {
+            return false;
+        }
+
+        return this.itemData.getUpgradeRawCost(this.itemData.currentLevel + 1) <= window.gameEconomy.currentResources;
+    }
     updatePreviewValue(value) {
-        if(this.lockStateContainer.visible){
+        if (this.lockStateContainer.visible) {
             return;
         }
         this.previewValue = value;
@@ -243,23 +254,23 @@ export default class ShopItem extends UIList {
         if (value >= this.itemData.rawData.levelMax) {
             let findMax = this.previewValue;
             let found = false;
-            for (let index = this.itemData.currentLevel; index <= this.itemData.currentLevel + this.previewValue; index++) {                
+            for (let index = this.itemData.currentLevel; index <= this.itemData.currentLevel + this.previewValue; index++) {
                 if (this.itemData.getUpgradeRawCost(index) <= window.gameEconomy.currentResources) {
                     findMax = index - this.itemData.currentLevel;
-                    found = true;                    
+                    found = true;
                 } else {
                     break;
                 }
             }
-            
-            if (!found){// && findMax == this.previewValue) {
+
+            if (!found) {// && findMax == this.previewValue) {
                 this.previewValue = 1;
-            }else{
+            } else {
                 this.previewValue = findMax
             }
         }
 
-        this.infoUpgrade.text = '+'+this.previewValue;
+        this.infoUpgrade.text = '+' + this.previewValue;
         this.updateData()
     }
     updateData() {
@@ -289,9 +300,9 @@ export default class ShopItem extends UIList {
 
 
         let isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax;
-        if(this.itemData.rawData.quantify && this.itemData.rawData.quantifyBoolean && this.itemData.currentLevel > 1){
+        if (this.itemData.rawData.quantify && this.itemData.rawData.quantifyBoolean && this.itemData.currentLevel > 1) {
             isMax = true;
-        }else{
+        } else {
             isMax = false
         }
         this.levelLabel.text = 'Level\n' + this.itemData.currentLevel
@@ -302,19 +313,19 @@ export default class ShopItem extends UIList {
             this.shopButton.deactiveMax()
             this.infoUpgrade.text = ''
             this.attributesList['c_value'].visible = false
-            
-            if(this.itemData.rawData.quantify){
-                
+
+            if (this.itemData.rawData.quantify) {
+
                 this.attributesList['c_cost'].visible = false
-                if(this.itemData.rawData.quantifyBoolean){
+                if (this.itemData.rawData.quantifyBoolean) {
                     this.levelBar.visible = false;
                     this.attributesList['c_cost'].visible = false
                     this.attributesList['c_value'].visible = false
                     this.levelLabel.text = 'Enabled'
-    
-                }else{
 
-                    this.levelLabel.text = this.itemData.rawData.quantifyMessage+'\n' + this.itemData.currentLevel
+                } else {
+
+                    this.levelLabel.text = this.itemData.rawData.quantifyMessage + '\n' + this.itemData.currentLevel
                 }
 
             }
@@ -322,16 +333,16 @@ export default class ShopItem extends UIList {
         else {
             //this.updateValues();
             this.levelBar.updatePowerBar(Math.max(0.05, this.itemData.currentLevel / this.itemData.rawData.levelMax))
-            if(this.itemData.rawData.quantify){
-                if(this.itemData.rawData.quantifyBoolean){
+            if (this.itemData.rawData.quantify) {
+                if (this.itemData.rawData.quantifyBoolean) {
                     this.levelBar.visible = false;
                     this.attributesList['c_cost'].visible = false
                     this.attributesList['c_value'].visible = false
                     this.levelLabel.text = 'Disabled'
-    
-                }else{
-    
-                    this.levelLabel.text = this.itemData.rawData.quantifyMessage+'\n' + this.itemData.currentLevel
+
+                } else {
+
+                    this.levelLabel.text = this.itemData.rawData.quantifyMessage + '\n' + this.itemData.currentLevel
                 }
             }
         }
@@ -346,7 +357,7 @@ export default class ShopItem extends UIList {
         this.descriptionLabel.text = this.itemData.rawData.displayName
         let types = [{ name: 'cost', icon: 'coin' }, { name: 'value', icon: 'icon_increase' }]
 
-       
+
         if (!this.attributesList) {
             this.attributesList = new UIList();
             this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.9;
@@ -375,7 +386,7 @@ export default class ShopItem extends UIList {
                 this.attributesList.container.addChild(attContainer);
 
                 this.attributesList[element.name] = attValue;
-                this.attributesList["c_"+element.name] = attContainer;
+                this.attributesList["c_" + element.name] = attContainer;
 
 
             });

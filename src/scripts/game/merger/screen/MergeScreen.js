@@ -290,6 +290,12 @@ export default class MergeScreen extends Screen {
 
         this.openSettingsShop = new UIButton1(0x002299, 'shop', 0xFFFFFF, buttonSize, buttonSize)
         this.openSettingsShop.updateIconScale(0.5)
+        this.openSettingsShop.newItem = new PIXI.Sprite.fromFrame('new_item')
+        this.openSettingsShop.newItem.scale.set(0.7)
+        this.openSettingsShop.newItem.anchor.set(0)
+        this.openSettingsShop.newItem.position.set(-buttonSize/2)
+        this.openSettingsShop.newItem.visible = false;
+        this.openSettingsShop.addChild(this.openSettingsShop.newItem)
         this.shopButtonsList.addElement(this.openSettingsShop)
         this.openSettingsShop.onClick.add(() => {
             this.openPopUp(this.generalShop)
@@ -297,6 +303,12 @@ export default class MergeScreen extends Screen {
 
         this.openShop = new UIButton1(0x002299, 'drill-icon', 0xFFFFFF, buttonSize, buttonSize)
         this.openShop.updateIconScale(0.5)
+        this.openShop.newItem = new PIXI.Sprite.fromFrame('new_item')
+        this.openShop.newItem.scale.set(0.7)
+        this.openShop.newItem.anchor.set(0)
+        this.openShop.newItem.position.set(-buttonSize/2)
+        this.openShop.newItem.visible = false;
+        this.openShop.addChild(this.openShop.newItem)
         this.shopButtonsList.addElement(this.openShop)
         this.openShop.onClick.add(() => {
             this.openPopUp(this.entityShop)
@@ -304,6 +316,12 @@ export default class MergeScreen extends Screen {
 
         this.openMergeShop = new UIButton1(0x002299, 'spiky-field', 0xFFFFFF, buttonSize, buttonSize)
         this.openMergeShop.updateIconScale(0.5)
+        this.openMergeShop.newItem = new PIXI.Sprite.fromFrame('new_item')
+        this.openMergeShop.newItem.scale.set(0.7)
+        this.openMergeShop.newItem.anchor.set(0)
+        this.openMergeShop.newItem.position.set(-buttonSize/2)
+        this.openMergeShop.newItem.visible = false;
+        this.openMergeShop.addChild(this.openMergeShop.newItem)
         this.shopButtonsList.addElement(this.openMergeShop)
         this.openMergeShop.onClick.add(() => {
             this.openPopUp(this.mergeItemsShop)
@@ -344,6 +362,15 @@ export default class MergeScreen extends Screen {
         this.uiPanels.push(this.generalShop)
         this.uiPanels.push(this.standardPopUp)
 
+        this.entityShop.onPossiblePurchase.add((canBuy)=>{
+            this.openShop.newItem.visible = canBuy;
+        })
+        this.mergeItemsShop.onPossiblePurchase.add((canBuy)=>{
+            this.openMergeShop.newItem.visible = canBuy;
+        })
+        this.generalShop.onPossiblePurchase.add((canBuy)=>{
+            this.openSettingsShop.newItem.visible = canBuy;
+        })
         //this.openPopUp(this.generalShop)
 
         this.sumStart = 0;

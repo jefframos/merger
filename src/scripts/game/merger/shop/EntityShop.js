@@ -15,7 +15,7 @@ export default class EntityShop extends PIXI.Container {
         this.mainSystem = mainSystem;
         this.size = {
             w: config.width - 20,
-            h: config.height - 50
+            h: config.height - 80
         }
 
         this.currentItens = [];
@@ -38,10 +38,10 @@ export default class EntityShop extends PIXI.Container {
         this.container.addChild(this.backContainer);
 
         this.tiledBackground2 = new PIXI.TilingSprite(PIXI.Texture.fromFrame('patter-square', 64, 64))
-		this.container.addChild(this.tiledBackground2);
-		this.tiledBackground2.width = this.size.w
-		this.tiledBackground2.height = this.size.h
-       // this.tiledBackground2.anchor.set(0.5)
+        this.container.addChild(this.tiledBackground2);
+        this.tiledBackground2.width = this.size.w
+        this.tiledBackground2.height = this.size.h
+        // this.tiledBackground2.anchor.set(0.5)
         this.tiledBackground2.tileScale.set(0.2)
         this.tiledBackground2.alpha = 0.1
 
@@ -74,9 +74,15 @@ export default class EntityShop extends PIXI.Container {
         window.gameEconomy.onMoneySpent.add(this.moneySpent.bind(this))
 
         this.onPurchase = new Signals();
+        this.onPossiblePurchase = new Signals();
 
 
+        this.isPossibleBuy = false;
 
+        setTimeout(() => {
+            
+            this.updateToggleValue();
+        }, 500);
     }
     confirm() {
         this.hide();
@@ -94,9 +100,17 @@ export default class EntityShop extends PIXI.Container {
         this.updateToggleValue();
     }
     updateToggleValue() {
+        this.isPossibleBuy = false;
         this.currentItens.forEach(element => {
             element.updatePreviewValue(this.toggles.currentActiveValue)
+
+            if (!this.isPossibleBuy && !element.isLocked) {
+                this.isPossibleBuy = element.canBuyOne();                
+            }
         });
+
+        //console.log(this.isPossibleBuy)
+        this.onPossiblePurchase.dispatch(this.isPossibleBuy);
     }
     posShow() {
         utils.centerObject(this.title, this.container)
@@ -141,7 +155,7 @@ export default class EntityShop extends PIXI.Container {
         COOKIE_MANAGER.addResourceUpgrade(item);
 
     }
-    addItems(items) {
+    addItems(items, skipCheck = false) {
 
         this.currentItens = []
         for (let index = 0; index < items.length; index++) {
@@ -153,5 +167,27 @@ export default class EntityShop extends PIXI.Container {
 
         this.shopList.addItens(this.currentItens)
         this.shopList.x = this.size.w * 0.05
+
+
+if(skipCheck){
+    return;
+}
+        let currentResources = COOKIE_MANAGER.getResources();
+
+        let currentEntities = []
+        for (const key in currentResources.entities) {
+            const element = currentResources.entities[key];
+            if (element.currentLevel) {
+                currentEntities.push(key);
+            }
+        }
+        this.currentItens.forEach(element => {
+            if (currentEntities.indexOf(element.nameID) > -1) {
+                element.unlockItem();
+            } else {
+                element.lockItem();
+            }
+        });
+
     }
 }
