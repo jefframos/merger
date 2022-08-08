@@ -259,7 +259,8 @@ export default class MergeScreen extends Screen {
         this.autoMergeToggle = new UIButton1(0x002299, 'auto-merge')
         this.helperButtonList.addElement(this.autoMergeToggle)
         this.autoMergeToggle.onClick.add(() => {
-            let toggleValue = !window.gameModifyers.modifyersData.autoMerge
+            let toggleValue = window.gameModifyers.modifyersData.autoMerge+1
+            toggleValue %= 2
             window.gameModifyers.saveBoolModifyers('autoMerge', toggleValue)
             this.refreshToggles();
         })
@@ -284,6 +285,8 @@ export default class MergeScreen extends Screen {
         this.shopButtonsList.w = buttonSize * 3 + 15;
         this.shopButtonsList.h = buttonSize;
         this.container.addChild(this.shopButtonsList)
+
+        this.currentOpenPopUp = null;
 
         this.openSettingsShop = new UIButton1(0x002299, 'shop', 0xFFFFFF, buttonSize, buttonSize)
         this.openSettingsShop.updateIconScale(0.5)
@@ -328,6 +331,10 @@ export default class MergeScreen extends Screen {
         this.uiLayer.addChild(this.generalShop);
         this.generalShop.addItems(this.rawModifyers)
         this.generalShop.hide();
+        this.generalShop.onPurchase.add(()=>{
+            this.mergeSystem1.findAllAutomerges();
+            this.mergeSystem1.updateAllData();
+        });
 
         this.standardPopUp = new StandardPop('any', this.screenManager)
         this.uiLayer.addChild(this.standardPopUp)
@@ -378,7 +385,7 @@ export default class MergeScreen extends Screen {
             this.autoCollectToggle.disableState();
         }
 
-        toggleValue = window.gameModifyers.modifyersData.autoMerge
+        toggleValue = window.gameModifyers.modifyersData.autoMerge == 1
         if (toggleValue) {
             this.autoMergeToggle.enableState();
         } else {
@@ -410,6 +417,7 @@ export default class MergeScreen extends Screen {
             }
         });
 
+        this.currentOpenPopUp = target;
         target.show(params)
     }
     popLabel(targetPosition, label) {
@@ -456,6 +464,11 @@ export default class MergeScreen extends Screen {
         }
     }
     onMouseMove(e) {
+
+        if(this.currentOpenPopUp && this.currentOpenPopUp.visible){
+            return;
+        }
+
         this.mergeSystem1.updateMouseSystems(e)
         this.mousePosition = e.data.global;
         if (!this.draggingEntity) {

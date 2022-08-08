@@ -35,6 +35,8 @@ export default class ChargerTile extends MergeTile {
 
         this.container.removeChild(this.damageTimerView)
 
+        this.isCharged = false;
+
     }
     update(delta, timeStamp){
         super.update(delta, timeStamp);
@@ -54,6 +56,7 @@ export default class ChargerTile extends MergeTile {
         this.label.visible = this.tileSprite.visible;
     }
     startCharging(){
+        this.isCharged = false;
         this.tileData = null;
         this.currentChargeTime = this.defaultChargeTime;
         this.levelBar.visible = false;
@@ -61,6 +64,7 @@ export default class ChargerTile extends MergeTile {
         this.circleCounter.update(0, true);
     }
     completeCharge(){
+        this.isCharged = true;
         this.tileSprite.visible = true;
         this.onCompleteCharge.dispatch();
     }

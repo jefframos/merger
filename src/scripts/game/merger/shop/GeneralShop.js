@@ -25,6 +25,8 @@ export default class GeneralShop extends EntityShop {
 
         // COOKIE_MANAGER.addMergePieceUpgrade(item);
 
+        this.onPurchase.dispatch(item);
+
     }
     show() {
         this.title.text = "GENERAL"        

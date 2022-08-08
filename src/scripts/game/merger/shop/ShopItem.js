@@ -21,6 +21,16 @@ export default class ShopItem extends UIList {
         this.rect = rect;
 
 
+        this.backgroundContainer = new PIXI.Container();
+        this.addChildAt(this.backgroundContainer, 0);
+
+        this.backShapeGeneral = new PIXI.mesh.NineSlicePlane(
+            PIXI.Texture.fromFrame('small-no-pattern'), 10, 10, 10, 10)
+        this.backShapeGeneral.width = this.w
+        this.backShapeGeneral.height = this.h
+
+        this.backgroundContainer.addChildAt(this.backShapeGeneral,0);
+
         this.itemIcon = new PIXI.Sprite.from('starship_31');
         // this.itemIcon.scaleContent = true;
         this.itemIcon.listScl = 0.15;
@@ -94,28 +104,43 @@ export default class ShopItem extends UIList {
 
         // this.itemIcon.scaleContent = false;
 
+        
+
+
         this.lockStateContainer = new PIXI.Container();
         this.addChild(this.lockStateContainer);
         this.lockState = new ShopLockState(this.w, this.h);
         this.lockStateContainer.addChild(this.lockState);
         this.lockStateContainer.interactive = true;
+
+
         this.currentColor = 0;
         this.realCost = 0
         this.previewValue = 1;
         this.unlockItem();
         this.currentTogglePreviewValue = 1;
 
-        console.log("adicionar aqui botoes pra auto generate and auto collect");
+        //console.log("adicionar aqui botoes pra auto generate and auto collect");
 
 
     }
     lockItem() {
+        if(this.itemData){
+            if(this.itemData.rawData.type == "resource"){
+                this.lockState.setLabel("Purchase " + this.itemData.rawData.displayName +" to upgrade")
+                this.lockState.setIcon(this.itemData.rawData.tileImageSrc)
+            }else{
+                this.lockState.setLabel("Unlock " + this.itemData.rawData.displayName +" to upgrade")
+                this.lockState.setIcon(this.itemData.rawData.imageSrc, 0.8)
+            }
+        }
         this.lockStateContainer.visible = true;
         this.container.visible = false;
     }
     unlockItem() {
         this.lockStateContainer.visible = false;
         this.container.visible = true;
+        //this.lockState
     }
     onInfoCallback() {
         this.onShowInfo.dispatch(this.itemData, this.infoButton);
@@ -126,7 +151,6 @@ export default class ShopItem extends UIList {
 
             window.gameEconomy.useResources(this.realCost)
             this.onConfirmShop.dispatch(this.itemData, this.realCost, this.shopButton, this.previewValue);
-
             this.updateData();
         }
 
@@ -263,19 +287,56 @@ export default class ShopItem extends UIList {
             this.shopButton.deactive()
         }
 
+
+        let isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax;
+        if(this.itemData.rawData.quantify && this.itemData.rawData.quantifyBoolean && this.itemData.currentLevel > 1){
+            isMax = true;
+        }else{
+            isMax = false
+        }
         this.levelLabel.text = 'Level\n' + this.itemData.currentLevel
         // this.itemData = GAME_DATA.getUpdatedItem(this.itemData.dataType, this.itemData.id)
-        if (this.itemData.currentLevel >= this.itemData.rawData.levelMax) {
+        if (isMax) {
             this.levelLabel.text = 'Level\n' + this.itemData.rawData.levelMax;
             this.levelBar.updatePowerBar(1)
             this.shopButton.deactiveMax()
             this.infoUpgrade.text = ''
-            this.attributesList['value'].visible = false
+            this.attributesList['c_value'].visible = false
+            
+            if(this.itemData.rawData.quantify){
+                
+                this.attributesList['c_cost'].visible = false
+                if(this.itemData.rawData.quantifyBoolean){
+                    this.levelBar.visible = false;
+                    this.attributesList['c_cost'].visible = false
+                    this.attributesList['c_value'].visible = false
+                    this.levelLabel.text = 'Enabled'
+    
+                }else{
+
+                    this.levelLabel.text = this.itemData.rawData.quantifyMessage+'\n' + this.itemData.currentLevel
+                }
+
+            }
         }
         else {
             //this.updateValues();
             this.levelBar.updatePowerBar(Math.max(0.05, this.itemData.currentLevel / this.itemData.rawData.levelMax))
+            if(this.itemData.rawData.quantify){
+                if(this.itemData.rawData.quantifyBoolean){
+                    this.levelBar.visible = false;
+                    this.attributesList['c_cost'].visible = false
+                    this.attributesList['c_value'].visible = false
+                    this.levelLabel.text = 'Disabled'
+    
+                }else{
+    
+                    this.levelLabel.text = this.itemData.rawData.quantifyMessage+'\n' + this.itemData.currentLevel
+                }
+            }
         }
+
+
         this.updateHorizontalList();
     }
     setData(itemData) {
@@ -284,6 +345,8 @@ export default class ShopItem extends UIList {
         this.itemIcon.texture = new PIXI.Texture.from(image);
         this.descriptionLabel.text = this.itemData.rawData.displayName
         let types = [{ name: 'cost', icon: 'coin' }, { name: 'value', icon: 'icon_increase' }]
+
+       
         if (!this.attributesList) {
             this.attributesList = new UIList();
             this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.9;
@@ -312,6 +375,7 @@ export default class ShopItem extends UIList {
                 this.attributesList.container.addChild(attContainer);
 
                 this.attributesList[element.name] = attValue;
+                this.attributesList["c_"+element.name] = attContainer;
 
 
             });

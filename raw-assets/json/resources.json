@@ -3,6 +3,7 @@
         [
             {
                 "isFirst":true,
+                "type": "resource",
                 "nameID": "resource_starship_35",
                 "displayName": "Asteroid1",
                 "imageSrc": "drill",
@@ -18,6 +19,7 @@
         ],
         [
             {
+                "type": "resource",
                 "nameID": "resource_starship_34",
                 "displayName": "Asteroid2",
                 "imageSrc": "drill",
@@ -33,6 +35,7 @@
         ],
         [
             {
+                "type": "resource",
                 "nameID": "resource_starship_33",
                 "displayName": "Asteroid3",
                 "imageSrc": "drill",
@@ -48,6 +51,7 @@
         ],
         [
             {
+                "type": "resource",
                 "nameID": "resource_starship_32",
                 "displayName": "Asteroid4",
                 "imageSrc": "drill",
@@ -63,6 +67,7 @@
         ],
         [
             {
+                "type": "resource",
                 "nameID": "resource_starship_31",
                 "displayName": "Asteroid5",
                 "imageSrc": "drill",
@@ -78,6 +83,7 @@
         ],
         [
             {
+                "type": "resource",
                 "nameID": "1starship_30",
                 "displayName": "Asteroid6",
                 "imageSrc": "drill",
@@ -93,6 +99,7 @@
         ],
         [
             {
+                "type": "resource",
                 "nameID": "2starship_30",
                 "displayName": "Asteroid7",
                 "imageSrc": "drill",
@@ -108,6 +115,7 @@
         ],
         [
             {
+                "type": "resource",
                 "nameID": "3starship_30",
                 "displayName": "Asteroid8",
                 "imageSrc": "drill",
@@ -123,6 +131,7 @@
         ],
         [
             {
+                "type": "resource",
                 "nameID": "4starship_30",
                 "displayName": "Asteroid9",
                 "imageSrc": "drill",
@@ -138,6 +147,7 @@
         ],
         [
             {
+                "type": "resource",
                 "nameID": "5starship_30",
                 "displayName": "Asteroid10",
                 "imageSrc": "drill",

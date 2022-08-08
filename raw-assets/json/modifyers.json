@@ -51,10 +51,43 @@
             "costCoefficient": 2.55,
             "initialTime": 1,
             "initialRevenue": 1,
-            "coefficientProductivity": 1.15,
+            "coefficientProductivity": 1.18,
             "initialProductivity": 1.08,
             "modifyer":"damageMultiplier",
             "levelMax": 100
+        },
+        {
+            "nameID": "extra_generators",
+            "displayName": "Ship Generator",
+            "imageSrc": "drill",
+            "tileImageSrc": "asteroid (2)",
+            "initialCost": 10000000000000,
+            "costCoefficient": 100,
+            "initialTime": 1,
+            "initialRevenue": 1,
+            "coefficientProductivity": 1,
+            "initialProductivity": 1,
+            "modifyer":"totalGenerators",
+            "levelMax": 4,
+            "quantify":true,
+            "quantifyMessage":"Total"
+        },
+        {
+            "nameID": "auto_place_ships",
+            "displayName": "Auto Merge Ship",
+            "imageSrc": "drill",
+            "tileImageSrc": "asteroid (2)",
+            "initialCost": 10000000000000000000000,
+            "costCoefficient": 1,
+            "initialTime": 1,
+            "initialRevenue": 1,
+            "coefficientProductivity": 1,
+            "initialProductivity": 1,
+            "modifyer":"autoMerge",
+            "levelMax": 2,
+            "quantify":true,
+            "quantifyBoolean":true,
+            "quantifyMessage":"Total"
         }
     ]
 }

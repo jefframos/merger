@@ -8,9 +8,10 @@ export default class GameModifyers {
             drillSpeed: 1,
             resourcesMultiplier: 1,
             damageMultiplier: 1,
+            totalGenerators: 1,
             attackSpeed: 1,
             attackSpeedValue: 1,
-            autoMerge: false,
+            autoMerge: 1,
             autoCollectResource: false
         }
 
@@ -35,6 +36,12 @@ export default class GameModifyers {
     }
 
     saveModifyers(type, level, value) {
+
+        
+        // if(typeof this.modifyersData[type] == "boolean" ){
+        //     this.saveBoolModifyers(type, level> 1);
+        //     return;
+        // }
         this.modifyersData[type] = level;
         this.modifyersData[type + 'Value'] = value;
         this.onUpdateModifyers.dispatch();
@@ -59,5 +66,8 @@ export default class GameModifyers {
     }
     getAttackSpeed() {
         return (this.modifyersData.attackSpeedValue || 1) * this.bonusData.resourceSpeed * this.permanentBonusData.resourceSpeed
+    }
+    getTotalGenerators() {
+        return (this.modifyersData.totalGenerators || 1)
     }
 }

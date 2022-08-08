@@ -7,6 +7,7 @@ import UIButton1 from '../../ui/UIButton1';
 import UpgradesToggles from './UpgradesToggles';
 import config from '../../../config';
 import utils from '../../../utils';
+import Signals from 'signals';
 
 export default class EntityShop extends PIXI.Container {
     constructor(mainSystem, size, border = 0) {
@@ -14,7 +15,7 @@ export default class EntityShop extends PIXI.Container {
         this.mainSystem = mainSystem;
         this.size = {
             w: config.width - 20,
-            h: config.height - 20
+            h: config.height - 50
         }
 
         this.currentItens = [];
@@ -72,6 +73,9 @@ export default class EntityShop extends PIXI.Container {
 
         window.gameEconomy.onMoneySpent.add(this.moneySpent.bind(this))
 
+        this.onPurchase = new Signals();
+
+
 
     }
     confirm() {
@@ -128,6 +132,8 @@ export default class EntityShop extends PIXI.Container {
     confirmItemShop(item, button, totalUpgrades) {
 
         //console.log(totalUpgrades)
+
+        this.onPurchase.dispatch(item, button, totalUpgrades);
         this.mainSystem.forEach(resourceSystem => {
             resourceSystem.findUpgrade(item)
         });
@@ -139,7 +145,7 @@ export default class EntityShop extends PIXI.Container {
 
         this.currentItens = []
         for (let index = 0; index < items.length; index++) {
-            let shopItem = new ShopItem({ w: this.size.w * 0.9, h: 70 })
+            let shopItem = new ShopItem({ w: this.size.w * 0.9, h: 90 })
             shopItem.setData(items[index])
             shopItem.nameID = items[index].rawData.nameID;
             this.currentItens.push(shopItem)

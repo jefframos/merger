@@ -31,7 +31,7 @@ export default class CookieManager {
 			damageMultiplier: 1,
 			attackSpeed: 1,
 			attackSpeedValue:1,
-			autoMerge: false,
+			autoMerge: 1,
             autoCollectResource: false
 		}
 		this.economy = {}

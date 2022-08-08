@@ -84,6 +84,8 @@ export default class MergeSystem {
 
         this.addPieceGenerator();
         this.addPieceGenerator();
+        this.addPieceGenerator();
+        this.addPieceGenerator();
         this.adjustSlotsPosition();
 
         this.entityDragSprite = new PIXI.Sprite.from('');
@@ -184,14 +186,28 @@ export default class MergeSystem {
             //upgrade this
             piece.addEntity(this.dataTiles[0]);
 
-            if(window.gameModifyers.modifyersData.autoMerge){
-                this.autoPlace(piece);
-                this.autoMerge()
-            }
+            this.sortAutoMerge(piece)
         });
         this.pieceGeneratorsList.push(piece);
+        if (this.pieceGeneratorsList.length > 1) {
+            piece.visible = false;
+        }
     }
-
+    findAllAutomerges() {
+        if (window.gameModifyers.modifyersData.autoMerge > 1) {
+            this.pieceGeneratorsList.forEach(element => {
+                if (element.isCharged) {
+                    this.sortAutoMerge(element);
+                }
+            });
+        }
+    }
+    sortAutoMerge(piece) {
+        if (window.gameModifyers.modifyersData.autoMerge > 1) {
+            this.autoPlace(piece);
+            this.autoMerge()
+        }
+    }
     updateMouseSystems(e) {
         this.updateMouse(e);
 
@@ -249,7 +265,9 @@ export default class MergeSystem {
     }
     update(delta) {
         this.pieceGeneratorsList.forEach(piece => {
-            piece.update(delta);
+            if (piece.visible) {
+                piece.update(delta);
+            }
         });
 
         this.systems.forEach(element => {
@@ -518,6 +536,14 @@ export default class MergeSystem {
         this.updateAllData();
 
     }
+    updateTotalGenerators() {
+
+        for (let index = 0; index < this.pieceGeneratorsList.length; index++) {
+            var piece = this.pieceGeneratorsList[index]
+            piece.visible = index < window.gameModifyers.getTotalGenerators();
+        }
+
+    }
     updateAllData() {
         this.dps = utils.findDPS(this.slots);
         this.rps = utils.findRPS(this.slots);
@@ -549,6 +575,7 @@ export default class MergeSystem {
             }
         }
 
+        this.updateTotalGenerators();
         if (this.wrapper) {
             this.updateGridPosition();
         }
