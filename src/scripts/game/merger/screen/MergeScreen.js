@@ -209,7 +209,7 @@ export default class MergeScreen extends Screen {
 
         
         this.resourcesContainer = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('large-diagonal-lines'), 20, 20, 20, 5)
+            PIXI.Texture.fromFrame('large-square-pattern'), 20, 20, 20, 5)
         this.resourcesContainer.width = this.statsList.w 
         this.resourcesContainer.height = 40
 
@@ -229,7 +229,7 @@ export default class MergeScreen extends Screen {
 
 
         this.rpsContainer = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('large-diagonal-lines'), 20, 20, 20, 5)
+            PIXI.Texture.fromFrame('large-square-pattern-cyan'), 20, 20, 20, 5)
         this.rpsContainer.width = this.statsList.w 
         this.rpsContainer.height = 40
 
@@ -241,7 +241,7 @@ export default class MergeScreen extends Screen {
         
         
         this.dpsContainer = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('large-diagonal-lines'), 20, 20, 20, 5)
+            PIXI.Texture.fromFrame('large-square-pattern-orange'), 20, 20, 20, 5)
             this.dpsContainer.width = this.statsList.w 
             this.dpsContainer.height = 40
             
