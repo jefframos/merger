@@ -26,7 +26,7 @@ export default class GameEconomy {
         this.onMoneySpent.dispatch(cost);
     }
 
-    saveResources() {
+    saveResources() {        
         COOKIE_MANAGER.updateResources(this.currentResources)
     }
 }

@@ -31,7 +31,7 @@ export default class StandardPop extends PIXI.Container
         this.background.visible = false
 
         this.popUp = new PIXI.mesh.NineSlicePlane(
-			PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15)
+			PIXI.Texture.fromFrame('small-no-pattern'), 15, 15, 15, 15)
 		this.popUp.width = this.w
 		this.popUp.height = this.h
 
@@ -52,24 +52,26 @@ export default class StandardPop extends PIXI.Container
 
         this.readyLabel = new PIXI.Text('!', LABELS.LABEL2);
         this.readyLabel.style.fontSize = 14
+        this.readyLabel.style.fill = 0xffffff
         this.readyLabel.pivot.x = this.readyLabel.width / 2;
         this.readyLabel.pivot.y = this.readyLabel.height  / 2 + 45
         this.container.addChild(this.readyLabel)
-        
-        this.confirmButton = new UIButton1(null,'icon_confirm')
+        this.confirmButton = new UIButton1(null,'video-icon', 0xffffff, 85, 65, 'small-no-pattern-green')
         this.container.addChild(this.confirmButton)
-        this.confirmButton.x = 120
-        this.confirmButton.y = this.h / 2 - 45
+        this.confirmButton.x = 75
+        this.confirmButton.y = this.h / 2 - 60
         this.confirmButton.onClick.add(()=>{
             if(this.confirmCallback){
                 this.confirmCallback()
                 this.confirm()
             }
         })
-        this.cancelButton = new UIButton1(null,'icon_close')
+        this.cancelButton = new UIButton1(null,'icon-close', 0xffffff, 85, 65, 'small-no-pattern-grey')
         this.container.addChild(this.cancelButton)
-        this.cancelButton.x = -120
-        this.cancelButton.y = this.h / 2 - 45
+        this.cancelButton.x = -75
+        this.cancelButton.y = this.h / 2 - 60
+
+        this.cancelButton.updateIconScale(0.4)
         this.cancelButton.onClick.add(()=>{
             if(this.cancelCallback){
                 this.cancelCallback()
@@ -80,8 +82,12 @@ export default class StandardPop extends PIXI.Container
 
         this.container.visible = false;
 
+        this.readySin = 0;
+
     }
     update(delta){
+        this.readySin += delta * 8
+        this.confirmButton.scale.set(Math.sin(this.readySin) * 0.05 + 0.95)
     }
     show(param)
     {

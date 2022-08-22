@@ -159,14 +159,14 @@ export default class EntityShop extends PIXI.Container {
 
         this.currentItens = []
         for (let index = 0; index < items.length; index++) {
-            let shopItem = new ShopItem({ w: this.size.w * 0.9, h: 90 })
+            let shopItem = new ShopItem({ w: this.size.w * 0.95, h: 90 })
             shopItem.setData(items[index])
             shopItem.nameID = items[index].rawData.nameID;
             this.currentItens.push(shopItem)
         }
 
         this.shopList.addItens(this.currentItens)
-        this.shopList.x = this.size.w * 0.05
+        this.shopList.x = this.size.w * 0.025
 
 
 if(skipCheck){

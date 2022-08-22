@@ -31,7 +31,7 @@ export default class ShopItem extends UIList {
 
         this.backgroundContainer.addChildAt(this.backShapeGeneral, 0);
 
-        this.itemIcon = new PIXI.Sprite.from('starship_31');
+        this.itemIcon = new PIXI.Sprite.from('ship01');
         // this.itemIcon.scaleContent = true;
         this.itemIcon.listScl = 0.15;
         // this.itemIcon.fitHeight = 0.7;
@@ -63,10 +63,10 @@ export default class ShopItem extends UIList {
         this.descriptionContainer = new PIXI.Container();
 
         this.descriptionLabel = new PIXI.Text('this is a description', LABELS.LABEL1);
-        this.descriptionLabel.style.fontSize = 14
+        this.descriptionLabel.style.fontSize = 12
         this.descriptionContainer.scaleContentMax = true;
         this.descriptionContainer.listScl = 0.4;
-        this.descriptionContainer.align = 0.5;
+        this.descriptionContainer.align = 0;
         this.descriptionContainer.addChild(this.descriptionLabel)
 
         this.elementsList.push(this.descriptionContainer);
@@ -97,7 +97,7 @@ export default class ShopItem extends UIList {
         // this.itemIcon.scaleContent = true;
         this.infoButton.listScl = 0.1;
         this.infoButton.align = 0.5;
-        this.infoButton.fitHeight = 0.2;
+        this.infoButton.fitHeight = 0.15;
         // this.infoButton.scaleContentMax = true;
         this.elementsList.push(this.infoButton);
         this.container.addChild(this.infoButton);
@@ -299,11 +299,9 @@ export default class ShopItem extends UIList {
         }
 
 
-        let isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax;
-        if (this.itemData.rawData.quantify && this.itemData.rawData.quantifyBoolean && this.itemData.currentLevel > 1) {
-            isMax = true;
-        } else {
-            isMax = false
+        let isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax - 1;
+        if (this.itemData.rawData.quantify && this.itemData.rawData.quantifyBoolean) {
+            isMax = this.itemData.currentLevel > 1;
         }
         this.levelLabel.text = 'Level\n' + this.itemData.currentLevel
         // this.itemData = GAME_DATA.getUpdatedItem(this.itemData.dataType, this.itemData.id)
@@ -338,7 +336,7 @@ export default class ShopItem extends UIList {
                     this.levelBar.visible = false;
                     this.attributesList['c_cost'].visible = false
                     this.attributesList['c_value'].visible = false
-                    this.levelLabel.text = 'Disabled'
+                    this.levelLabel.text = 'Disable'
 
                 } else {
 
@@ -359,40 +357,41 @@ export default class ShopItem extends UIList {
 
 
         if (!this.attributesList) {
-            this.attributesList = new UIList();
-            this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.9;
-            this.attributesList.h = this.h * 0.75
+            this.attributesList = new PIXI.Container();
+            //this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.9;
+            //this.attributesList.h = this.h * 0.75
 
             this.descriptionContainer.addChild(this.attributesList);
 
-
+            let count = 0
             types.forEach(element => {
                 let attContainer = new PIXI.Container();
+                attContainer.y = 25
 
                 let attIcon = new PIXI.Sprite.from(element.icon);
-                attIcon.scale.set(this.attributesList.w / attIcon.width * 0.1)
+                attIcon.scale.set(20 / attIcon.width)
                 let attValue = new PIXI.Text(element.name, LABELS.LABEL1);
                 attValue.style.fontSize = 12
                 attContainer.addChild(attIcon);
                 attContainer.addChild(attValue);
-
-                attValue.scale.set(this.attributesList.h / attValue.height * 0.2)
-                attValue.x = attIcon.x + attIcon.width + 5;
+                attIcon.x = 100 * count;
+                attValue.scale.set(15 / attValue.height)
+                attValue.x = attIcon.x + attIcon.width + 5
                 attValue.y = attIcon.y + attIcon.height / 2 - attValue.height / 2;
 
                 attContainer.align = 0
 
-                this.attributesList.elementsList.push(attContainer);
-                this.attributesList.container.addChild(attContainer);
+                //this.attributesList.elementsList.push(attContainer);
+                this.attributesList.addChild(attContainer);
 
                 this.attributesList[element.name] = attValue;
                 this.attributesList["c_" + element.name] = attContainer;
-
+                count++
 
             });
 
 
-            this.attributesList.updateHorizontalList();
+            //this.attributesList.updateHorizontalList();
             this.descriptionContainer.y = 0;
         }
         this.updateHorizontalList();

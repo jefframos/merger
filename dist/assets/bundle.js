@@ -22211,14 +22211,14 @@ var EntityShop = function (_PIXI$Container) {
 
             this.currentItens = [];
             for (var index = 0; index < items.length; index++) {
-                var shopItem = new _ShopItem2.default({ w: this.size.w * 0.9, h: 90 });
+                var shopItem = new _ShopItem2.default({ w: this.size.w * 0.95, h: 90 });
                 shopItem.setData(items[index]);
                 shopItem.nameID = items[index].rawData.nameID;
                 this.currentItens.push(shopItem);
             }
 
             this.shopList.addItens(this.currentItens);
-            this.shopList.x = this.size.w * 0.05;
+            this.shopList.x = this.size.w * 0.025;
 
             if (skipCheck) {
                 return;
@@ -22801,7 +22801,7 @@ var MergeTile = function (_PIXI$Container) {
             this.updatedDamageTimestamp = Date.now() / 1000 | 0;
             this.tileSprite.texture = PIXI.Texture.from(this.tileData.getTexture());
             this.updatePosition();
-            this.entityScale = 1.5; //Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
+            this.entityScale = 0.5; //Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
             this.tileSprite.anchor.set(0.5);
             this.sin = Math.random();
             this.label.text = this.tileData.getValue();
@@ -32655,10 +32655,6 @@ function configGame(evt) {
         var tex = utils.generateTextureFromContainer('image-' + id, container, window.TILE_ASSSETS_POOL);
     }
 
-    var urlParams = new URLSearchParams(window.location.search);
-    if (urlParams) {
-        if (urlParams.get('worduo')) {}
-    }
     if (!window.screenManager) {
         window.screenManager = new _MergerScreenManager2.default();
     }
@@ -59604,7 +59600,7 @@ module.exports = exports["default"];
 /* 337 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/pattern2/pattern2.json","image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
+module.exports = {"default":["image/particles/particles.json","image/pattern2/pattern2.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 338 */
@@ -59736,7 +59732,12 @@ var MergerScreenManager = function (_ScreenManager) {
         //         }, 1);
         //     }
         // }
-
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams) {
+            if (urlParams.get('debug')) {
+                _this.mergeScreen.helperButtonList.visible = true;
+            }
+        }
 
         return _this;
     }
@@ -60176,26 +60177,45 @@ var MergeScreen = function (_Screen) {
                 _this.on('mousemove', _this.onMouseMove.bind(_this)).on('touchmove', _this.onMouseMove.bind(_this));
 
                 _this.statsList = new _UIList2.default();
-                _this.statsList.w = 50;
+                _this.statsList.w = 110;
                 _this.statsList.h = 140;
                 _this.container.addChild(_this.statsList);
 
+                _this.resourcesContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('large-diagonal-lines'), 20, 20, 20, 5);
+                _this.resourcesContainer.width = _this.statsList.w;
+                _this.resourcesContainer.height = 40;
+
                 _this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
-                _this.resourcesLabel.style.fontSize = 14;
-                _this.statsList.addElement(_this.resourcesLabel);
+                _this.resourcesLabel.style.fontSize = 12;
+                _utils2.default.centerObject(_this.resourcesLabel, _this.resourcesContainer);
+                _this.resourcesLabel.x -= 10;
+                _this.resourcesContainer.addChild(_this.resourcesLabel);
+                _this.statsList.addElement(_this.resourcesContainer);
 
                 _this.coinTexture = new PIXI.Sprite.from('coin');
                 _this.resourcesLabel.addChild(_this.coinTexture);
                 _this.coinTexture.scale.set(1.8);
                 _this.coinTexture.x = -25;
+                _this.coinTexture.y = -3;
+
+                _this.rpsContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('large-diagonal-lines'), 20, 20, 20, 5);
+                _this.rpsContainer.width = _this.statsList.w;
+                _this.rpsContainer.height = 40;
 
                 _this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
-                _this.rpsLabel.style.fontSize = 14;
-                _this.statsList.addElement(_this.rpsLabel);
+                _this.rpsLabel.style.fontSize = 12;
+                _this.rpsContainer.addChild(_this.rpsLabel);
+
+                _this.statsList.addElement(_this.rpsContainer);
+
+                _this.dpsContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('large-diagonal-lines'), 20, 20, 20, 5);
+                _this.dpsContainer.width = _this.statsList.w;
+                _this.dpsContainer.height = 40;
 
                 _this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
-                _this.dpsLabel.style.fontSize = 14;
-                _this.statsList.addElement(_this.dpsLabel);
+                _this.dpsLabel.style.fontSize = 12;
+                _this.dpsContainer.addChild(_this.dpsLabel);
+                _this.statsList.addElement(_this.dpsContainer);
 
                 _this.statsList.updateVerticalList();
 
@@ -60250,6 +60270,8 @@ var MergeScreen = function (_Screen) {
 
                 _this.helperButtonList.updateHorizontalList();
                 _this.container.addChild(_this.helperButtonList);
+
+                _this.helperButtonList.visible = false;
 
                 var buttonSize = 80;
                 _this.shopButtonsList = new _UIList2.default();
@@ -60471,8 +60493,9 @@ var MergeScreen = function (_Screen) {
                                 quantParticles = 1;
                         }
 
+                        var coinPosition = this.coinTexture.getGlobalPosition();
                         for (var index = 0; index < quantParticles; index++) {
-                                customData.target = { x: this.resourcesLabel.x, y: this.resourcesLabel.y, timer: 0.2 + Math.random() * 0.75 };
+                                customData.target = { x: coinPosition.x - 50, y: coinPosition.y, timer: 0.2 + Math.random() * 0.75 };
                                 this.particleSystem.show(toLocal, 1, customData);
                         }
 
@@ -60517,11 +60540,21 @@ var MergeScreen = function (_Screen) {
                         // this.mergeSystem1.update(delta);
                         this.particleSystem.update(delta);
 
+                        this.uiPanels.forEach(function (element) {
+                                if (element.update) {
+                                        element.update(delta);
+                                }
+                        });
+
                         this.resourcesLabel.text = _utils2.default.formatPointsLabel(window.gameEconomy.currentResources);
+                        _utils2.default.centerObject(this.resourcesLabel, this.resourcesContainer);
+                        this.resourcesLabel.x += 10;
 
-                        this.rpsLabel.text = "rps\n" + _utils2.default.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps);
+                        this.rpsLabel.text = "rps/" + _utils2.default.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps);
+                        _utils2.default.centerObject(this.rpsLabel, this.rpsContainer);
 
-                        this.dpsLabel.text = "dps\n" + _utils2.default.formatPointsLabel(this.mergeSystem1.dps);
+                        this.dpsLabel.text = "dps/" + _utils2.default.formatPointsLabel(this.mergeSystem1.dps);
+                        _utils2.default.centerObject(this.dpsLabel, this.dpsContainer);
 
                         this.timestamp = Date.now() / 1000 | 0;
 
@@ -60551,7 +60584,13 @@ var MergeScreen = function (_Screen) {
                         this.resourcesWrapperRight.x = this.gridWrapper.x + this.gridWrapper.width;
                         this.resourcesWrapperRight.y = this.gridWrapper.y;
 
-                        this.statsList.y = 20; //config.height - 270
+                        if (this.helperButtonList.visible) {
+
+                                this.statsList.y = config.height - 240;
+                        } else {
+                                this.statsList.y = config.height - 160;
+                        }
+                        this.statsList.x = 5;
                         this.shopButtonsList.x = config.width - this.shopButtonsList.w + 20;
                         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 20;
                         this.helperButtonList.x = 0;
@@ -61421,7 +61460,7 @@ var ShopItem = function (_UIList) {
 
         _this.backgroundContainer.addChildAt(_this.backShapeGeneral, 0);
 
-        _this.itemIcon = new PIXI.Sprite.from('starship_31');
+        _this.itemIcon = new PIXI.Sprite.from('ship01');
         // this.itemIcon.scaleContent = true;
         _this.itemIcon.listScl = 0.15;
         // this.itemIcon.fitHeight = 0.7;
@@ -61452,10 +61491,10 @@ var ShopItem = function (_UIList) {
         _this.descriptionContainer = new PIXI.Container();
 
         _this.descriptionLabel = new PIXI.Text('this is a description', LABELS.LABEL1);
-        _this.descriptionLabel.style.fontSize = 14;
+        _this.descriptionLabel.style.fontSize = 12;
         _this.descriptionContainer.scaleContentMax = true;
         _this.descriptionContainer.listScl = 0.4;
-        _this.descriptionContainer.align = 0.5;
+        _this.descriptionContainer.align = 0;
         _this.descriptionContainer.addChild(_this.descriptionLabel);
 
         _this.elementsList.push(_this.descriptionContainer);
@@ -61486,7 +61525,7 @@ var ShopItem = function (_UIList) {
         // this.itemIcon.scaleContent = true;
         _this.infoButton.listScl = 0.1;
         _this.infoButton.align = 0.5;
-        _this.infoButton.fitHeight = 0.2;
+        _this.infoButton.fitHeight = 0.15;
         // this.infoButton.scaleContentMax = true;
         _this.elementsList.push(_this.infoButton);
         _this.container.addChild(_this.infoButton);
@@ -61702,11 +61741,9 @@ var ShopItem = function (_UIList) {
                 this.shopButton.deactive();
             }
 
-            var isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax;
-            if (this.itemData.rawData.quantify && this.itemData.rawData.quantifyBoolean && this.itemData.currentLevel > 1) {
-                isMax = true;
-            } else {
-                isMax = false;
+            var isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax - 1;
+            if (this.itemData.rawData.quantify && this.itemData.rawData.quantifyBoolean) {
+                isMax = this.itemData.currentLevel > 1;
             }
             this.levelLabel.text = 'Level\n' + this.itemData.currentLevel;
             // this.itemData = GAME_DATA.getUpdatedItem(this.itemData.dataType, this.itemData.id)
@@ -61738,7 +61775,7 @@ var ShopItem = function (_UIList) {
                         this.levelBar.visible = false;
                         this.attributesList['c_cost'].visible = false;
                         this.attributesList['c_value'].visible = false;
-                        this.levelLabel.text = 'Disabled';
+                        this.levelLabel.text = 'Disable';
                     } else {
 
                         this.levelLabel.text = this.itemData.rawData.quantifyMessage + '\n' + this.itemData.currentLevel;
@@ -61760,36 +61797,39 @@ var ShopItem = function (_UIList) {
             var types = [{ name: 'cost', icon: 'coin' }, { name: 'value', icon: 'icon_increase' }];
 
             if (!this.attributesList) {
-                this.attributesList = new _UIList3.default();
-                this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.9;
-                this.attributesList.h = this.h * 0.75;
+                this.attributesList = new PIXI.Container();
+                //this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.9;
+                //this.attributesList.h = this.h * 0.75
 
                 this.descriptionContainer.addChild(this.attributesList);
 
+                var count = 0;
                 types.forEach(function (element) {
                     var attContainer = new PIXI.Container();
+                    attContainer.y = 25;
 
                     var attIcon = new PIXI.Sprite.from(element.icon);
-                    attIcon.scale.set(_this3.attributesList.w / attIcon.width * 0.1);
+                    attIcon.scale.set(20 / attIcon.width);
                     var attValue = new PIXI.Text(element.name, LABELS.LABEL1);
                     attValue.style.fontSize = 12;
                     attContainer.addChild(attIcon);
                     attContainer.addChild(attValue);
-
-                    attValue.scale.set(_this3.attributesList.h / attValue.height * 0.2);
+                    attIcon.x = 100 * count;
+                    attValue.scale.set(15 / attValue.height);
                     attValue.x = attIcon.x + attIcon.width + 5;
                     attValue.y = attIcon.y + attIcon.height / 2 - attValue.height / 2;
 
                     attContainer.align = 0;
 
-                    _this3.attributesList.elementsList.push(attContainer);
-                    _this3.attributesList.container.addChild(attContainer);
+                    //this.attributesList.elementsList.push(attContainer);
+                    _this3.attributesList.addChild(attContainer);
 
                     _this3.attributesList[element.name] = attValue;
                     _this3.attributesList["c_" + element.name] = attContainer;
+                    count++;
                 });
 
-                this.attributesList.updateHorizontalList();
+                //this.attributesList.updateHorizontalList();
                 this.descriptionContainer.y = 0;
             }
             this.updateHorizontalList();
@@ -62110,7 +62150,10 @@ var ShopLockState = function (_PIXI$Container) {
         //this.lockIcon.fitHeight = 1;
         _this.lockIcon.listScl = 0.15;
         _this.lockIcon.align = 0.5;
-        _this.lockIcon.scaleContentMax = 0.9;
+        _this.lockIcon.scaleContentMax = true;
+        _this.lockIcon.fitWidth = 0.65;
+        _this.lockIcon.tint = 0;
+        //this.lockIcon.scaleContentMax = 0.9;
         _this.labelContainer = new PIXI.Container();
         _this.infoLabel = new PIXI.Text('Unlock this upgrade at level XXXX', LABELS.LABEL2);
         _this.labelContainer.addChild(_this.infoLabel);
@@ -65645,7 +65688,7 @@ var StandardPop = function (_PIXI$Container) {
         _this.background.on('mousedown', _this.confirm.bind(_this)).on('touchstart', _this.confirm.bind(_this));
         _this.background.visible = false;
 
-        _this.popUp = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('button-1'), 15, 15, 15, 15);
+        _this.popUp = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('small-no-pattern'), 15, 15, 15, 15);
         _this.popUp.width = _this.w;
         _this.popUp.height = _this.h;
 
@@ -65664,24 +65707,26 @@ var StandardPop = function (_PIXI$Container) {
 
         _this.readyLabel = new PIXI.Text('!', LABELS.LABEL2);
         _this.readyLabel.style.fontSize = 14;
+        _this.readyLabel.style.fill = 0xffffff;
         _this.readyLabel.pivot.x = _this.readyLabel.width / 2;
         _this.readyLabel.pivot.y = _this.readyLabel.height / 2 + 45;
         _this.container.addChild(_this.readyLabel);
-
-        _this.confirmButton = new _UIButton2.default(null, 'icon_confirm');
+        _this.confirmButton = new _UIButton2.default(null, 'video-icon', 0xffffff, 85, 65, 'small-no-pattern-green');
         _this.container.addChild(_this.confirmButton);
-        _this.confirmButton.x = 120;
-        _this.confirmButton.y = _this.h / 2 - 45;
+        _this.confirmButton.x = 75;
+        _this.confirmButton.y = _this.h / 2 - 60;
         _this.confirmButton.onClick.add(function () {
             if (_this.confirmCallback) {
                 _this.confirmCallback();
                 _this.confirm();
             }
         });
-        _this.cancelButton = new _UIButton2.default(null, 'icon_close');
+        _this.cancelButton = new _UIButton2.default(null, 'icon-close', 0xffffff, 85, 65, 'small-no-pattern-grey');
         _this.container.addChild(_this.cancelButton);
-        _this.cancelButton.x = -120;
-        _this.cancelButton.y = _this.h / 2 - 45;
+        _this.cancelButton.x = -75;
+        _this.cancelButton.y = _this.h / 2 - 60;
+
+        _this.cancelButton.updateIconScale(0.4);
         _this.cancelButton.onClick.add(function () {
             if (_this.cancelCallback) {
                 _this.cancelCallback();
@@ -65691,12 +65736,17 @@ var StandardPop = function (_PIXI$Container) {
 
         _this.container.visible = false;
 
+        _this.readySin = 0;
+
         return _this;
     }
 
     (0, _createClass3.default)(StandardPop, [{
         key: 'update',
-        value: function update(delta) {}
+        value: function update(delta) {
+            this.readySin += delta * 8;
+            this.confirmButton.scale.set(Math.sin(this.readySin) * 0.05 + 0.95);
+        }
     }, {
         key: 'show',
         value: function show(param) {

@@ -24,7 +24,10 @@ export default class ShopLockState extends PIXI.Container {
         //this.lockIcon.fitHeight = 1;
         this.lockIcon.listScl = 0.15;
         this.lockIcon.align = 0.5;
-        this.lockIcon.scaleContentMax = 0.9;
+        this.lockIcon.scaleContentMax = true;
+        this.lockIcon.fitWidth = 0.65;
+        this.lockIcon.tint = 0
+        //this.lockIcon.scaleContentMax = 0.9;
         this.labelContainer = new PIXI.Container();
         this.infoLabel = new PIXI.Text('Unlock this upgrade at level XXXX', LABELS.LABEL2);
         this.labelContainer.addChild(this.infoLabel);

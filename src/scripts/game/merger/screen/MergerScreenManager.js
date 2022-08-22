@@ -83,7 +83,12 @@ export default class MergerScreenManager extends ScreenManager {
         //         }, 1);
         //     }
         // }
-
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams){
+            if (urlParams.get('debug')){
+                this.mergeScreen.helperButtonList.visible = true
+            }
+        }
 
     }
     addCoinsParticles(pos, quant = 5, customData = {}) {

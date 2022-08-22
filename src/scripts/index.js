@@ -125,15 +125,8 @@ window.TILE_ASSSETS_POOL = []
         let id = toGenerate[index].substring(0,4)
         let tex = utils.generateTextureFromContainer('image-' + id, container, window.TILE_ASSSETS_POOL)
 
-    }
+    }    
     
-
-    const urlParams = new URLSearchParams(window.location.search);
-    if(urlParams){
-        if (urlParams.get('worduo')){
-           
-        }
-    }
     if(!window.screenManager){
         window.screenManager = new MergerScreenManager();
     }
