@@ -32,7 +32,7 @@ export default class MergerData {
         return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)
     }
     getDamage(simulate = 0) {
-        return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)  * window.gameModifyers.getDamageMultiplier()
+        return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)  * window.gameModifyers.getDamageMultiplier();
     }
     getTexture() {
         return this.rawData.texture

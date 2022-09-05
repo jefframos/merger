@@ -17,8 +17,8 @@ export default class ResourceTile extends MergeTile {
         this.resourceSource = new PIXI.Sprite.fromFrame('backTiles')
         this.container.addChildAt(this.resourceSource, 0)
         this.resourceSource.anchor.set(0.5)
-        this.resourceSource.x = size / 2
-        this.resourceSource.y = size / 2
+        this.resourceSource.x = size / 2 * 0.8
+        this.resourceSource.y = size / 2 * 0.8
         this.resourceSource.visible = false;
 
         this.backShape.alpha = 0
@@ -102,7 +102,11 @@ export default class ResourceTile extends MergeTile {
 
         this.drillSin = Math.random() * 3.14 * 2
     }
-
+    resetTile() {
+        if (this.targetData){
+            this.setTargetData(this.targetData)
+        }
+    }
     update(delta, timestamp) {
         //console.log(timestamp)
         super.update(delta, timestamp);

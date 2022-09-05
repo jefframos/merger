@@ -52,7 +52,7 @@ export default
             let matrix = []
             for (let index = 0; index < target.length; index++) {
                 for (let j = 0; j < target[index].length; j++) {
-                    if (target[index][j].tileData) {
+                    if (target[index][j] && target[index][j].tileData) {
 
                         matrix.push(target[index][j].tileData.getID())
                     }
@@ -87,7 +87,7 @@ export default
             if (Number.isNaN(max)) {
                 return 0
             }
-            return max * window.gameModifyers.modifyersData.resourcesMultiplier
+            return max * window.gameModifyers.getResourcesMultiplier()
         },
         findRPS(target) {
             let max = 0;
@@ -102,7 +102,7 @@ export default
             if (Number.isNaN(max)) {
                 return 0
             }
-            return max* window.gameModifyers.modifyersData.resourcesMultiplier
+            return max* window.gameModifyers.getResourcesMultiplier()
         },
         generateTextureFromContainer(id, content, list) {
             if (list[id]) {

@@ -19,15 +19,20 @@ export default class GameModifyers {
             damageBonus: 1,
             resourceBonus: 1,
             damageSpeed: 1,
-            resourceSpeed: 1
+            resourceSpeed: 1,
+            generateTimerBonus : 1
         }
 
-        this.permanentBonusData = {
-            damageBonus: 1,
-            resourceBonus: 1,
-            damageSpeed: 1,
-            resourceSpeed: 1
-        }
+        this.permanentBonusData = this.modifyersData.permanentBonusData
+
+
+    }
+    addShards(value){
+        this.permanentBonusData.shards += value;
+        this.modifyersData.permanentBonusData = this.permanentBonusData
+        console.log(this.modifyersData.permanentBonusData)
+        this.onUpdateModifyers.dispatch();
+        COOKIE_MANAGER.updateModifyers(this.modifyersData)
     }
     addResources(res) {
 
@@ -36,16 +41,13 @@ export default class GameModifyers {
     }
 
     saveModifyers(type, level, value) {
-
-        
-        // if(typeof this.modifyersData[type] == "boolean" ){
-        //     this.saveBoolModifyers(type, level> 1);
-        //     return;
-        // }
         this.modifyersData[type] = level;
         this.modifyersData[type + 'Value'] = value;
         this.onUpdateModifyers.dispatch();
         COOKIE_MANAGER.updateModifyers(this.modifyersData)
+    }
+    resetAll(){
+        
     }
     saveBoolModifyers(type, value) {
         this.modifyersData[type] = value;
@@ -56,16 +58,16 @@ export default class GameModifyers {
         return (this.modifyersData[data.rawData.modifyer] || 1)
     }
     getDamageMultiplier() {
-        return (this.modifyersData.damageMultiplierValue || 1) * this.bonusData.damageBonus * this.permanentBonusData.damageBonus
+        return (this.modifyersData.damageMultiplierValue || 1) * this.bonusData.damageBonus * this.permanentBonusData.damageBonus + this.permanentBonusData.shards;
     }
     getResourcesMultiplier() {
-        return (this.modifyersData.resourcesMultiplierValue || 1) * this.bonusData.resourceBonus * this.permanentBonusData.resourceBonus
-    }
-    getDrillSpeed() {
-        return (this.modifyersData.drillSpeedValue || 1) * this.bonusData.damageSpeed * this.permanentBonusData.damageSpeed
+        return (this.modifyersData.resourcesMultiplierValue || 1) * this.bonusData.resourceBonus * this.permanentBonusData.resourceBonus + this.permanentBonusData.shards;
     }
     getAttackSpeed() {
-        return (this.modifyersData.attackSpeedValue || 1) * this.bonusData.resourceSpeed * this.permanentBonusData.resourceSpeed
+        return (this.modifyersData.attackSpeedValue || 1) * this.bonusData.damageSpeed * this.permanentBonusData.damageSpeed
+    }
+    getDrillSpeed() {
+        return (this.modifyersData.drillSpeedValue || 1) * this.bonusData.resourceSpeed * this.permanentBonusData.resourceSpeed
     }
     getTotalGenerators() {
         return (this.modifyersData.totalGenerators || 1)

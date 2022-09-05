@@ -20,14 +20,14 @@ export default class EnemySystem {
         this.container.addChild(this.mainEnemy);
 
         this.enemyProgressionView = new EnemyProgressionView(this);
-        this.container.addChild(this.enemyProgressionView);        
+        this.container.addChild(this.enemyProgressionView);
 
         //color, icon, iconColor =0xFFFFFF, width = 40, height = 40
 
-        this.invokeBossBattle = new UIButton1(0xFFFFFF, TILE_ASSSETS_POOL['image-Figh'], 0xFFFFFF, 120, 50, 'boss-button')
+        this.invokeBossBattle = new UIButton1(0xFFFFFF, TILE_ASSSETS_POOL['image-Figh'], 0xFFFFFF, 120, 40, 'boss-button')
         this.container.addChild(this.invokeBossBattle)
-        this.invokeBossBattle.x = config.width / 2 - 70
-        this.invokeBossBattle.y = 50
+        this.invokeBossBattle.x = 0
+        this.invokeBossBattle.y = 155
         this.invokeBossBattle.onClick.add(() => {
             this.invokeBoss()
         })
@@ -42,13 +42,13 @@ export default class EnemySystem {
         this.nextBoss = 10;
         this.bossGap = 10;
 
-        this.enemyLifeBar = new ProgressBar({ width: 200, height: 18 },4,4);
+        this.enemyLifeBar = new ProgressBar({ width: 200, height: 18 }, 4, 4);
         this.container.addChild(this.enemyLifeBar)
         this.enemyLifeBar.pivot.x = this.enemyLifeBar.width / 2
         this.enemyLifeBar.y = -5
 
 
-        this.bossBattleTimer = new ProgressBar({ width: 200, height: 12 },3,3);
+        this.bossBattleTimer = new ProgressBar({ width: 200, height: 12 }, 3, 3);
         this.container.addChild(this.bossBattleTimer)
         this.bossBattleTimer.pivot.x = this.bossBattleTimer.width / 2
         this.bossBattleTimer.y = 15
@@ -68,7 +68,7 @@ export default class EnemySystem {
         this.container.addChild(this.label)
 
 
-        this.mainEnemy.y =80
+        this.mainEnemy.y = 80
         this.lockOnLevel = false;
         this.loadData();
         this.updateEnemyLife();
@@ -81,7 +81,12 @@ export default class EnemySystem {
         this.bossDefaultTimer = 60;
 
     }
-
+    resetSystem(){
+        this.updateLevelView();
+        this.enemyLevel = 0
+        COOKIE_MANAGER.saveEnemyLevel(1);
+        this.nextEnemy();
+    }
     loadData() {
         this.savedProgression = COOKIE_MANAGER.getProgression();
         this.enemyLevel = this.savedProgression.currentEnemyLevel;
@@ -176,9 +181,12 @@ export default class EnemySystem {
         COOKIE_MANAGER.saveEnemyLevel(this.enemyLevel);
         this.updateEnemyLife();
         this.updateLevelView();
-
+        if (this.mainEnemy.isBoss) {
+            window.gameModifyers.addShards(1)
+        }
         if (bossWin) {
             this.mainEnemy.setAsEnemy();
+
             return
         }
 
@@ -256,7 +264,7 @@ export default class EnemySystem {
     updateLifeLabel() {
         this.label.text = utils.formatPointsLabel(Math.ceil(this.enemyCurrentLife)) + "/" + utils.formatPointsLabel(Math.ceil(this.enemyLife))
         this.label.x = -this.label.width / 2
-        this.label.y = this.enemyLifeBar.y 
+        this.label.y = this.enemyLifeBar.y
     }
     updateVisibleUI() {
         this.label.alpha = this.mainEnemy.alpha
@@ -266,7 +274,7 @@ export default class EnemySystem {
         this.bossTimerLabel.visible = this.bossBattleTimer.visible;
     }
 
-    resize(){
+    resize() {
 
     }
 }

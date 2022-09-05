@@ -75,7 +75,8 @@ export default class StandardPop extends PIXI.Container
         this.cancelButton.onClick.add(()=>{
             if(this.cancelCallback){
                 this.cancelCallback()
-                this.cancelButton()
+                //this.cancelButton()
+                this.hide();
 
             }
         })

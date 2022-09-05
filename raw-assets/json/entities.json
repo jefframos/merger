@@ -70,7 +70,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 22.59,
+                "initialTime": 20,
                 "levelMax": 500
             },
             {
@@ -82,7 +82,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 31.62,
+                "initialTime": 25,
                 "levelMax": 500
             },
             {
@@ -94,7 +94,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 44.27,
+                "initialTime": 32,
                 "levelMax": 500
             },
             {
@@ -106,7 +106,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 61.98,
+                "initialTime": 40,
                 "levelMax": 500
             },
             {
@@ -118,7 +118,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 86.78,
+                "initialTime": 50,
                 "levelMax": 500
             },
             {
@@ -130,7 +130,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 121.49,
+                "initialTime": 65,
                 "levelMax": 500
             },
             {
@@ -142,7 +142,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 170.08,
+                "initialTime": 80,
                 "levelMax": 500
             },
             {
@@ -154,7 +154,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 238.11,
+                "initialTime": 100,
                 "levelMax": 500
             },
             {
@@ -166,7 +166,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 333.36,
+                "initialTime": 120,
                 "levelMax": 500
             },
             {
@@ -178,7 +178,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 466.70,
+                "initialTime": 150,
                 "levelMax": 500
             },
             {
@@ -190,7 +190,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 566.70,
+                "initialTime": 180,
                 "levelMax": 500
             },
             {
@@ -202,7 +202,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 600.70,
+                "initialTime": 220,
                 "levelMax": 500
             },
             {
@@ -214,7 +214,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 660.70,
+                "initialTime": 260,
                 "levelMax": 500
             }
         ]

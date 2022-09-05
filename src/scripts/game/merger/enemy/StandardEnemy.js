@@ -13,10 +13,12 @@ export default class StandardEnemy extends PIXI.Container {
         this.positionOffset = { x: 0, y: 0 }
         this.sin = Math.random();
 
+        this.isBoss = false;
+        
     }
     updatePosition() {
         this.positionOffset.y = Math.cos(this.sin) * 4
-
+        
         this.enemySprite.x = 0;
         this.enemySprite.y = this.positionOffset.y;
     }
@@ -27,8 +29,10 @@ export default class StandardEnemy extends PIXI.Container {
     }
     setAsBoss(){
         this.enemySprite.texture = PIXI.Texture.fromFrame(this.bossSpriteSrc);
+        this.isBoss = true;
     }
     setAsEnemy(){
         this.enemySprite.texture = PIXI.Texture.fromFrame(this.enemySpriteSrc);
+        this.isBoss = false;
     }
 }

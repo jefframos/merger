@@ -7,6 +7,10 @@ export default class GameEconomy {
         this.currentResources = this.economyData.resources
         this.onMoneySpent = new Signals();
     }
+    resetAll(){
+        this.currentResources = 0;
+        this.saveResources()
+    }
     addResources(res) {
         this.currentResources += res;
         this.saveResources()

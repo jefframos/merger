@@ -11,6 +11,7 @@ export default class ResourceSystem {
         this.gameplayData = data.general;
 
         this.slotSize = data.slotSize;
+        this.resourceSlotSize = data.slotSize;
         this.area = data.area;
 
         this.container = containers.mainContainer;
@@ -52,6 +53,11 @@ export default class ResourceSystem {
 
         this.rps = 0;
     }
+    resetSystem(){
+        this.dataTiles.forEach(element => {
+            element
+        })
+    }
     loadData(){
         this.dataTiles.forEach(element => {
             if(this.savedResources.entities[element.rawData.nameID]){            
@@ -81,7 +87,7 @@ export default class ResourceSystem {
     }
 
     addResourceSlot(dataToAdd, savedStats) {
-        let piece = new ResourceTile(0, 0, this.slotSize.width, 'coin', this.gameplayData.entityGeneratorBaseTime);
+        let piece = new ResourceTile(0, 0, this.resourceSlotSize.width, 'coin', this.gameplayData.entityGeneratorBaseTime);
         let targetScale = config.height * 0.2 / piece.height
         piece.scale.set(Math.min(targetScale, 1))
 
@@ -151,8 +157,8 @@ export default class ResourceSystem {
 
         let vertical = this.resourceSlots.length
         let horizontal = 1
-        this.fixedSize.width = this.slotSize.width
-        this.fixedSize.height = vertical * this.slotSize.height + (this.slotSize.distance * (vertical - 1))
+        this.fixedSize.width = this.resourceSlotSize.width
+        this.fixedSize.height = vertical * this.resourceSlotSize.height + (this.resourceSlotSize.distance * (vertical - 1))
 
     }
     resize(resolution, force) {
@@ -201,7 +207,7 @@ export default class ResourceSystem {
                     let globalPosition = element.getCenterPosition();
                     if (element.tileData) {
                         let dist = utils.distance(globalPosition.x, globalPosition.y, this.mousePosition.x, this.mousePosition.y)
-                        let scaled = (this.slotSize.height * this.container.scale.x) / 2
+                        let scaled = (this.resourceSlotSize.height * this.container.scale.x) / 2
                         if (dist < scaled) {
                             element.onMouseMoveOver(true);
                         }else{
