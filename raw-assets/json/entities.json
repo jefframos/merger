@@ -1,5 +1,136 @@
 {
     "mergeEntities": {
+        "enemies": {
+            "levels": [
+                {
+                    "available":[
+                        "e1v1",
+                        "e1v2",
+                        "e1v3",
+                        "e2v1",
+                        "e2v2",
+                        "e2v3",
+                        "e3v1",
+                        "e3v2",
+                        "e3v3"
+                    ]
+                }
+            ],
+            "list": [
+                {
+                    "portrait": "portrait (2)",
+                    "id": "e1v1",
+                    "prefix": "ship$_e1_v1",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (18)",
+                    "id": "e1v2",
+                    "prefix": "ship$_e1_v2",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (16)",
+                    "id": "e1v3",
+                    "prefix": "ship$_e1_v3",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (15)",
+                    "id": "e2v1",
+                    "prefix": "ship$_e2_v1",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (1)",
+                    "id": "e2v2",
+                    "prefix": "ship$_e2_v2",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (19)",
+                    "id": "e2v3",
+                    "prefix": "ship$_e2_v3",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (4)",
+                    "id": "e3v1",
+                    "prefix": "ship$_e3_v1",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (20)",
+                    "id": "e3v2",
+                    "prefix": "ship$_e3_v2",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (17)",
+                    "id": "e3v3",
+                    "prefix": "ship$_e3_v3",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (12)",
+                    "id": "b1v1",
+                    "prefix": "Boss_ship$_b1_v1",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (13)",
+                    "id": "b1v2",
+                    "prefix": "Boss_ship$_b1_v2",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (8)",
+                    "id": "b2v1",
+                    "prefix": "Boss_ship$_b2_v1",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (10)",
+                    "id": "b2v2",
+                    "prefix": "Boss_ship$_b2_v2",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (7)",
+                    "id": "b2v3",
+                    "prefix": "Boss_ship$_b2_v3",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (3)",
+                    "id": "b3v1",
+                    "prefix": "Boss_ship$_b3_v1",
+                    "max": 7,
+                    "min": 1
+                },
+                {
+                    "portrait": "portrait (11)",
+                    "id": "b3v2",
+                    "prefix": "Boss_ship$_b3_v2",
+                    "max": 7,
+                    "min": 1
+                }
+            ]
+        },
         "list": [
             {
                 "nameID": "entity_starship_01",
@@ -22,7 +153,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 5.88,
+                "initialTime": 5.20,
                 "levelMax": 500
             },
             {
@@ -34,7 +165,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 8.23,
+                "initialTime": 6.20,
                 "levelMax": 500
             },
             {
@@ -46,7 +177,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 11.52,
+                "initialTime": 7.20,
                 "levelMax": 500
             },
             {
@@ -58,7 +189,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 16.13,
+                "initialTime": 9,
                 "levelMax": 500
             },
             {
@@ -70,7 +201,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 20,
+                "initialTime": 12,
                 "levelMax": 500
             },
             {
@@ -82,7 +213,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 25,
+                "initialTime": 15,
                 "levelMax": 500
             },
             {
@@ -94,7 +225,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 32,
+                "initialTime": 18,
                 "levelMax": 500
             },
             {
@@ -106,7 +237,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 40,
+                "initialTime": 21,
                 "levelMax": 500
             },
             {
@@ -118,7 +249,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 50,
+                "initialTime": 23,
                 "levelMax": 500
             },
             {
@@ -130,7 +261,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 65,
+                "initialTime": 26,
                 "levelMax": 500
             },
             {
@@ -142,7 +273,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 80,
+                "initialTime": 29,
                 "levelMax": 500
             },
             {
@@ -154,7 +285,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 100,
+                "initialTime": 32,
                 "levelMax": 500
             },
             {
@@ -166,7 +297,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 120,
+                "initialTime": 35,
                 "levelMax": 500
             },
             {
@@ -178,7 +309,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 150,
+                "initialTime": 39,
                 "levelMax": 500
             },
             {
@@ -190,7 +321,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 180,
+                "initialTime": 43,
                 "levelMax": 500
             },
             {
@@ -202,7 +333,7 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 220,
+                "initialTime": 46,
                 "levelMax": 500
             },
             {
@@ -214,7 +345,31 @@
                 "initialCost": 4,
                 "costCoefficient": 1.14,
                 "timeCoeficient": 1,
-                "initialTime": 260,
+                "initialTime": 50,
+                "levelMax": 500
+            },
+            {
+                "nameID": "entity_starship_19",
+                "imageSrc": "ship19",
+                "displayName": "Ship - 19",
+                "damageCoeficient": 1.1,
+                "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
+                "timeCoeficient": 1,
+                "initialTime": 55,
+                "levelMax": 500
+            },
+            {
+                "nameID": "entity_starship_20",
+                "imageSrc": "ship20",
+                "displayName": "Ship - 20",
+                "damageCoeficient": 1.1,
+                "initialDamage": 0.6,
+                "initialCost": 4,
+                "costCoefficient": 1.14,
+                "timeCoeficient": 1,
+                "initialTime": 59.5,
                 "levelMax": 500
             }
         ]

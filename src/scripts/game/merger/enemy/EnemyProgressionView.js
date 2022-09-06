@@ -13,7 +13,7 @@ export default class EnemyProgressionView extends PIXI.Container {
 
         this.currentLevelContainer = new EnemyProgressionSlot(25);
         this.addChild(this.currentLevelContainer)
-        this.currentLevelContainer.setFontSize(20)
+        //this.currentLevelContainer.setFontSize(20)
 
         this.nextLevelContainer = new EnemyProgressionSlot(20);
         this.addChild(this.nextLevelContainer)
@@ -28,6 +28,10 @@ export default class EnemyProgressionView extends PIXI.Container {
         this.bossCounter.x = 250
 
     }
+    setEnemySet(enemySet){
+        this.enemySet = enemySet;
+        this.bossCounter.addSprite(this.enemySet.portrait)
+    }
     updateLevel() {
         let nextLevel = this.enemySystem.enemyLevel - 1
         let isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;
@@ -38,14 +42,34 @@ export default class EnemyProgressionView extends PIXI.Container {
         } else {
             this.prevLevelContainer.visible = false;
         }
+
+        if(isBoss){
+            this.prevLevelContainer.addSprite(this.enemySet.portrait)
+        }else{
+            this.prevLevelContainer.removeSprite()
+        }
+
         nextLevel = this.enemySystem.enemyLevel
         isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;        
 
         this.currentLevelContainer.updateLevel(nextLevel, isBoss)
 
+        if(isBoss){
+            this.currentLevelContainer.addSprite(this.enemySet.portrait)
+        }else{
+            this.currentLevelContainer.removeSprite()
+        }
+
+
         nextLevel = this.enemySystem.enemyLevel + 1
         isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;
         this.nextLevelContainer.updateLevel(nextLevel, isBoss)
         this.bossCounter.updateLevel(this.enemySystem.nextBoss)
+
+        if(isBoss){
+            this.nextLevelContainer.addSprite(this.enemySet.portrait)
+        }else{
+            this.nextLevelContainer.removeSprite()
+        }
     }
 }

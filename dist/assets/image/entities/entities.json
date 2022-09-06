@@ -2,159 +2,175 @@
 
 "aiships/ship01.png":
 {
-	"frame": {"x":270,"y":167,"w":86,"h":88},
-	"rotated": false,
+	"frame": {"x":379,"y":452,"w":58,"h":60},
+	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":88},
-	"sourceSize": {"w":100,"h":101}
+	"spriteSourceSize": {"x":1,"y":1,"w":58,"h":60},
+	"sourceSize": {"w":60,"h":62}
 },
 "aiships/ship02.png":
 {
-	"frame": {"x":578,"y":1,"w":86,"h":134},
+	"frame": {"x":285,"y":360,"w":70,"h":66},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":134},
-	"sourceSize": {"w":100,"h":148}
+	"spriteSourceSize": {"x":1,"y":1,"w":70,"h":66},
+	"sourceSize": {"w":72,"h":68}
 },
 "aiships/ship03.png":
 {
-	"frame": {"x":314,"y":1,"w":86,"h":158},
-	"rotated": false,
+	"frame": {"x":182,"y":290,"w":74,"h":68},
+	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":158},
-	"sourceSize": {"w":100,"h":172}
+	"spriteSourceSize": {"x":1,"y":1,"w":74,"h":68},
+	"sourceSize": {"w":76,"h":70}
 },
 "aiships/ship04.png":
 {
-	"frame": {"x":886,"y":130,"w":86,"h":84},
-	"rotated": true,
+	"frame": {"x":204,"y":226,"w":78,"h":60},
+	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":84},
-	"sourceSize": {"w":100,"h":97}
+	"spriteSourceSize": {"x":1,"y":1,"w":78,"h":60},
+	"sourceSize": {"w":80,"h":62}
 },
 "aiships/ship05.png":
 {
-	"frame": {"x":972,"y":130,"w":86,"h":84},
+	"frame": {"x":252,"y":288,"w":70,"h":78},
 	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":84},
-	"sourceSize": {"w":100,"h":97}
+	"spriteSourceSize": {"x":1,"y":1,"w":70,"h":78},
+	"sourceSize": {"w":72,"h":80}
 },
 "aiships/ship06.png":
 {
-	"frame": {"x":798,"y":130,"w":86,"h":100},
-	"rotated": false,
+	"frame": {"x":379,"y":372,"w":78,"h":82},
+	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":100},
-	"sourceSize": {"w":100,"h":113}
+	"spriteSourceSize": {"x":1,"y":1,"w":78,"h":82},
+	"sourceSize": {"w":80,"h":84}
 },
 "aiships/ship07.png":
 {
-	"frame": {"x":710,"y":130,"w":86,"h":120},
-	"rotated": false,
+	"frame": {"x":284,"y":220,"w":66,"h":80},
+	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":120},
-	"sourceSize": {"w":100,"h":134}
+	"spriteSourceSize": {"x":1,"y":1,"w":66,"h":80},
+	"sourceSize": {"w":68,"h":82}
 },
 "aiships/ship08.png":
 {
-	"frame": {"x":94,"y":179,"w":86,"h":66},
+	"frame": {"x":358,"y":312,"w":94,"h":58},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":66},
-	"sourceSize": {"w":100,"h":80}
+	"spriteSourceSize": {"x":1,"y":1,"w":94,"h":58},
+	"sourceSize": {"w":96,"h":60}
 },
 "aiships/ship09.png":
 {
-	"frame": {"x":402,"y":1,"w":86,"h":156},
+	"frame": {"x":94,"y":290,"w":86,"h":74},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":156},
-	"sourceSize": {"w":100,"h":169}
+	"spriteSourceSize": {"x":1,"y":1,"w":86,"h":74},
+	"sourceSize": {"w":88,"h":76}
 },
 "aiships/ship10.png":
 {
-	"frame": {"x":182,"y":174,"w":86,"h":80},
-	"rotated": false,
+	"frame": {"x":285,"y":428,"w":82,"h":92},
+	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":80},
-	"sourceSize": {"w":100,"h":95}
+	"spriteSourceSize": {"x":1,"y":1,"w":82,"h":92},
+	"sourceSize": {"w":84,"h":94}
 },
 "aiships/ship11.png":
 {
-	"frame": {"x":490,"y":1,"w":86,"h":148},
+	"frame": {"x":358,"y":512,"w":90,"h":90},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":148},
-	"sourceSize": {"w":100,"h":162}
+	"spriteSourceSize": {"x":1,"y":1,"w":90,"h":90},
+	"sourceSize": {"w":92,"h":92}
 },
 "aiships/ship12.png":
 {
-	"frame": {"x":94,"y":1,"w":86,"h":176},
+	"frame": {"x":285,"y":130,"w":70,"h":88},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":176},
-	"sourceSize": {"w":100,"h":189}
+	"spriteSourceSize": {"x":1,"y":1,"w":70,"h":88},
+	"sourceSize": {"w":72,"h":90}
 },
 "aiships/ship13.png":
 {
-	"frame": {"x":226,"y":1,"w":86,"h":164},
+	"frame": {"x":174,"y":518,"w":90,"h":86},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":164},
-	"sourceSize": {"w":100,"h":177}
+	"spriteSourceSize": {"x":1,"y":1,"w":90,"h":86},
+	"sourceSize": {"w":92,"h":88}
 },
 "aiships/ship14.png":
 {
-	"frame": {"x":534,"y":151,"w":86,"h":104},
-	"rotated": false,
+	"frame": {"x":366,"y":220,"w":90,"h":96},
+	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":104},
-	"sourceSize": {"w":100,"h":118}
+	"spriteSourceSize": {"x":1,"y":1,"w":90,"h":96},
+	"sourceSize": {"w":92,"h":98}
 },
 "aiships/ship15.png":
 {
-	"frame": {"x":622,"y":137,"w":86,"h":116},
-	"rotated": false,
+	"frame": {"x":204,"y":130,"w":94,"h":78},
+	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":116},
-	"sourceSize": {"w":100,"h":130}
+	"spriteSourceSize": {"x":1,"y":1,"w":94,"h":78},
+	"sourceSize": {"w":96,"h":80}
 },
 "aiships/ship16.png":
 {
-	"frame": {"x":358,"y":161,"w":86,"h":94},
+	"frame": {"x":266,"y":518,"w":90,"h":84},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":94},
-	"sourceSize": {"w":100,"h":108}
+	"spriteSourceSize": {"x":1,"y":1,"w":90,"h":84},
+	"sourceSize": {"w":92,"h":86}
 },
 "aiships/ship17.png":
 {
-	"frame": {"x":446,"y":159,"w":86,"h":94},
+	"frame": {"x":358,"y":130,"w":122,"h":88},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":94},
-	"sourceSize": {"w":100,"h":107}
+	"spriteSourceSize": {"x":1,"y":1,"w":122,"h":88},
+	"sourceSize": {"w":124,"h":90}
 },
 "aiships/ship18.png":
 {
-	"frame": {"x":1058,"y":130,"w":86,"h":78},
+	"frame": {"x":94,"y":130,"w":158,"h":108},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":158,"h":108},
+	"sourceSize": {"w":160,"h":110}
+},
+"aiships/ship19.png":
+{
+	"frame": {"x":165,"y":366,"w":118,"h":150},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":7,"y":7,"w":86,"h":78},
-	"sourceSize": {"w":100,"h":92}
+	"spriteSourceSize": {"x":1,"y":1,"w":118,"h":150},
+	"sourceSize": {"w":120,"h":152}
+},
+"aiships/ship20.png":
+{
+	"frame": {"x":1,"y":368,"w":178,"h":162},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":178,"h":162},
+	"sourceSize": {"w":180,"h":164}
 },
 "arrow.png":
 {
-	"frame": {"x":182,"y":1,"w":42,"h":171},
-	"rotated": false,
+	"frame": {"x":1,"y":548,"w":42,"h":171},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":67,"y":0,"w":42,"h":171},
 	"sourceSize": {"w":175,"h":175}
 },
 "capital_ship_01.png":
 {
-	"frame": {"x":666,"y":1,"w":483,"h":127},
+	"frame": {"x":1,"y":1,"w":483,"h":127},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":11,"y":1,"w":483,"h":127},
@@ -162,7 +178,7 @@
 },
 "capital_ship_05.png":
 {
-	"frame": {"x":1,"y":1,"w":236,"h":91},
+	"frame": {"x":1,"y":130,"w":236,"h":91},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":10,"y":4,"w":236,"h":91},
@@ -170,22 +186,22 @@
 },
 "cure.png":
 {
-	"frame": {"x":1,"y":239,"w":15,"h":37},
-	"rotated": true,
+	"frame": {"x":464,"y":220,"w":15,"h":37},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":13,"y":15,"w":15,"h":37},
 	"sourceSize": {"w":40,"h":68}
 },
 "fire.png":
 {
-	"frame": {"x":40,"y":239,"w":15,"h":37},
-	"rotated": true,
+	"frame": {"x":464,"y":259,"w":15,"h":37},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":13,"y":15,"w":15,"h":37},
 	"sourceSize": {"w":40,"h":68}
 }},
 "animations": {
-	"aiships/ship": ["aiships/ship01.png","aiships/ship02.png","aiships/ship03.png","aiships/ship04.png","aiships/ship05.png","aiships/ship06.png","aiships/ship07.png","aiships/ship08.png","aiships/ship09.png","aiships/ship10.png","aiships/ship11.png","aiships/ship12.png","aiships/ship13.png","aiships/ship14.png","aiships/ship15.png","aiships/ship16.png","aiships/ship17.png","aiships/ship18.png"],
+	"aiships/ship": ["aiships/ship01.png","aiships/ship02.png","aiships/ship03.png","aiships/ship04.png","aiships/ship05.png","aiships/ship06.png","aiships/ship07.png","aiships/ship08.png","aiships/ship09.png","aiships/ship10.png","aiships/ship11.png","aiships/ship12.png","aiships/ship13.png","aiships/ship14.png","aiships/ship15.png","aiships/ship16.png","aiships/ship17.png","aiships/ship18.png","aiships/ship19.png","aiships/ship20.png"],
 	"capital_ship": ["capital_ship_01.png","capital_ship_05.png"]
 },
 "meta": {
@@ -193,8 +209,8 @@
 	"version": "1.0",
 	"image": "entities.png",
 	"format": "RGBA8888",
-	"size": {"w":1150,"h":256},
+	"size": {"w":485,"h":605},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:96d488e1ec260b011f4fd90e13e51256:5325abb261d2c7cb99180adb30a45fe4:d80676a5e85c5032e708efda4f84d8e3$"
+	"smartupdate": "$TexturePacker:SmartUpdate:62f55837b4fd895385c6bb0f32e553e9:6071cd24521719c32dda0c6bed7cd02c:d80676a5e85c5032e708efda4f84d8e3$"
 }
 }

@@ -13,6 +13,15 @@ export default class EnemyProgressionSlot extends PIXI.Container {
         this.backShape.anchor.set(0.5)
         this.addChild(this.backShape)
 
+        
+        this.bossSprite = new PIXI.Sprite.fromFrame('backTilesSmall')
+        this.bossSprite.width = size * 2
+        this.bossSprite.height = size * 2
+        this.bossSprite.anchor.set(0.5)
+        this.bossSprite.y = -5
+        this.addChild(this.bossSprite)
+
+
         this.levelLabel = new PIXI.Text('0', window.LABELS.LABEL2)
         this.levelLabel.style.stroke = 0xFFFF45
         this.levelLabel.style.strokeThickness = 4
@@ -20,11 +29,18 @@ export default class EnemyProgressionSlot extends PIXI.Container {
         this.addChild(this.levelLabel)
 
     }
+    addSprite(sprite){
+        this.bossSprite.visible = true;
+        this.bossSprite.texture = new PIXI.Texture.fromFrame(sprite)
+    }
 
+    removeSprite(){
+        this.bossSprite.visible = false;
+    }
     updateLevel(level, isboss = false) {
         this.levelLabel.text = level
         this.levelLabel.pivot.x = this.levelLabel.width / 2
-
+        this.levelLabel.y = 12
 
         this.levelLabel.style.stroke = isboss ? 0xff2255 :0xFFFF45
     }

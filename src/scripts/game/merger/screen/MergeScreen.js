@@ -27,6 +27,7 @@ export default class MergeScreen extends Screen {
 
         window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
         window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
+        window.baseEnemies = PIXI.loader.resources[window.baseConfigGame.entitiesData].data.mergeEntities.enemies;
         window.baseResources = PIXI.loader.resources[window.baseConfigGame.resourcesData].data;
         window.baseModifyers = PIXI.loader.resources[window.baseConfigGame.modifyersData].data;
         window.gameEconomy = new GameEconomy()
@@ -160,7 +161,7 @@ export default class MergeScreen extends Screen {
 
         this.enemiesSystem = new EnemySystem({
             mainContainer: this.enemiesContainer
-        });
+        }, window.baseEnemies);
 
         this.addSystem(this.mergeSystem1)
         this.addSystem(this.resourceSystem)

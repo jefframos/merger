@@ -22801,7 +22801,7 @@ var MergeTile = function (_PIXI$Container) {
             this.updatedDamageTimestamp = Date.now() / 1000 | 0;
             this.tileSprite.texture = PIXI.Texture.from(this.tileData.getTexture());
             this.updatePosition();
-            this.entityScale = 0.5; //Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
+            this.entityScale = 1; //Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
             this.tileSprite.anchor.set(0.5);
             this.sin = Math.random();
             this.label.text = this.tileData.getValue();
@@ -59625,7 +59625,7 @@ module.exports = exports["default"];
 /* 337 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/particles/particles.json","image/pattern2/pattern2.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/asteroids/asteroids.json","image/environment/environment.json","image/ui/ui.json"]}
+module.exports = {"default":["image/pattern2/pattern2.json","image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/asteroids/asteroids.json","image/portraits/portraits.json","image/environment/environment.json","image/enemies/enemies.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 338 */
@@ -60035,6 +60035,7 @@ var MergeScreen = function (_Screen) {
 
                 window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
                 window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
+                window.baseEnemies = PIXI.loader.resources[window.baseConfigGame.entitiesData].data.mergeEntities.enemies;
                 window.baseResources = PIXI.loader.resources[window.baseConfigGame.resourcesData].data;
                 window.baseModifyers = PIXI.loader.resources[window.baseConfigGame.modifyersData].data;
                 window.gameEconomy = new _GameEconomy2.default();
@@ -60162,7 +60163,7 @@ var MergeScreen = function (_Screen) {
 
                 _this.enemiesSystem = new _EnemySystem2.default({
                         mainContainer: _this.enemiesContainer
-                });
+                }, window.baseEnemies);
 
                 _this.addSystem(_this.mergeSystem1);
                 _this.addSystem(_this.resourceSystem);
@@ -60823,12 +60824,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var EnemySystem = function () {
-    function EnemySystem(containers) {
+    function EnemySystem(containers, baseEnemies) {
         var _this = this;
 
         (0, _classCallCheck3.default)(this, EnemySystem);
 
         this.container = containers.mainContainer;
+        this.baseEnemies = baseEnemies;
         this.onPopLabel = new _signals2.default();
         this.onNextEnemy = new _signals2.default();
         this.onParticles = new _signals2.default();
@@ -60840,6 +60842,16 @@ var EnemySystem = function () {
         this.enemyProgressionView = new _EnemyProgressionView2.default(this);
         this.container.addChild(this.enemyProgressionView);
 
+        this.allEnemies = {};
+        this.baseEnemies.list.forEach(function (element) {
+            _this.allEnemies[element.id] = element;
+        });
+        this.currentEnemySetID = this.baseEnemies.levels[0].available[1];
+        this.currentEnemySetIDNext = this.baseEnemies.levels[0].available[2];
+
+        this.sortNextEnemy();
+
+        this.mainEnemy.setAsEnemy(this.getNextEnemySprite());
         //color, icon, iconColor =0xFFFFFF, width = 40, height = 40
 
         this.invokeBossBattle = new _UIButton2.default(0xFFFFFF, TILE_ASSSETS_POOL['image-Figh'], 0xFFFFFF, 120, 40, 'boss-button');
@@ -60885,6 +60897,7 @@ var EnemySystem = function () {
 
         this.mainEnemy.y = 80;
         this.lockOnLevel = false;
+        this.enemyProgressionView.setEnemySet(this.currentEnemySet);
         this.loadData();
         this.updateEnemyLife();
         this.updateLevelView();
@@ -60897,6 +60910,17 @@ var EnemySystem = function () {
     }
 
     (0, _createClass3.default)(EnemySystem, [{
+        key: 'sortNextEnemy',
+        value: function sortNextEnemy() {
+            var next = this.baseEnemies.levels[0].available[Math.floor(this.baseEnemies.levels[0].available.length * Math.random())];
+            while (next == this.currentEnemySetID) {
+                next = this.baseEnemies.levels[0].available[Math.floor(this.baseEnemies.levels[0].available.length * Math.random())];
+            }
+
+            this.currentEnemySetID = next;
+            this.currentEnemySet = this.allEnemies[this.currentEnemySetID];
+        }
+    }, {
         key: 'resetSystem',
         value: function resetSystem() {
             this.updateLevelView();
@@ -60992,12 +61016,25 @@ var EnemySystem = function () {
 
             this.updateEnemyLife(true);
             this.inABossBattle = true;
-            this.mainEnemy.setAsBoss();
+            this.mainEnemy.setAsBoss(this.getNextBossSprite());
             this.mainEnemy.alpha = 0;
             this.bossTimer = this.bossDefaultTimer;
             this.enemyDeathTimer = 2;
             this.updateLevelView();
             this.calcNextBoss();
+        }
+    }, {
+        key: 'getNextEnemySprite',
+        value: function getNextEnemySprite() {
+            var pref = this.currentEnemySet.prefix;
+            var id = Math.floor(Math.random() * this.currentEnemySet.max) + this.currentEnemySet.min;
+            return pref.replace("$", id);
+        }
+    }, {
+        key: 'getNextBossSprite',
+        value: function getNextBossSprite() {
+            var pref = this.currentEnemySet.prefix;
+            return pref.replace("$", this.currentEnemySet.max);
         }
     }, {
         key: 'nextEnemy',
@@ -61016,7 +61053,7 @@ var EnemySystem = function () {
                 window.gameModifyers.addShards(1);
             }
             if (bossWin) {
-                this.mainEnemy.setAsEnemy();
+                this.mainEnemy.setAsEnemy(this.getNextEnemySprite());
 
                 return;
             }
@@ -61025,7 +61062,7 @@ var EnemySystem = function () {
             if (this.inABossBattle || this.enemyLevel == this.nextBoss) {
                 this.setAsBos();
             } else {
-                this.mainEnemy.setAsEnemy();
+                this.mainEnemy.setAsEnemy(this.getNextEnemySprite());
             }
             this.calcNextBoss();
 
@@ -61086,6 +61123,7 @@ var EnemySystem = function () {
                 this.updateLifeLabel();
                 if (this.inABossBattle) {
                     this.lockOnLevel = false;
+                    this.sortNextEnemy();
                 }
                 this.nextEnemy();
             } else {
@@ -61189,7 +61227,7 @@ var EnemyProgressionView = function (_PIXI$Container) {
 
                 _this.currentLevelContainer = new _EnemyProgressionSlot2.default(25);
                 _this.addChild(_this.currentLevelContainer);
-                _this.currentLevelContainer.setFontSize(20);
+                //this.currentLevelContainer.setFontSize(20)
 
                 _this.nextLevelContainer = new _EnemyProgressionSlot2.default(20);
                 _this.addChild(_this.nextLevelContainer);
@@ -61206,6 +61244,12 @@ var EnemyProgressionView = function (_PIXI$Container) {
         }
 
         (0, _createClass3.default)(EnemyProgressionView, [{
+                key: 'setEnemySet',
+                value: function setEnemySet(enemySet) {
+                        this.enemySet = enemySet;
+                        this.bossCounter.addSprite(this.enemySet.portrait);
+                }
+        }, {
                 key: 'updateLevel',
                 value: function updateLevel() {
                         var nextLevel = this.enemySystem.enemyLevel - 1;
@@ -61217,15 +61261,34 @@ var EnemyProgressionView = function (_PIXI$Container) {
                         } else {
                                 this.prevLevelContainer.visible = false;
                         }
+
+                        if (isBoss) {
+                                this.prevLevelContainer.addSprite(this.enemySet.portrait);
+                        } else {
+                                this.prevLevelContainer.removeSprite();
+                        }
+
                         nextLevel = this.enemySystem.enemyLevel;
                         isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;
 
                         this.currentLevelContainer.updateLevel(nextLevel, isBoss);
 
+                        if (isBoss) {
+                                this.currentLevelContainer.addSprite(this.enemySet.portrait);
+                        } else {
+                                this.currentLevelContainer.removeSprite();
+                        }
+
                         nextLevel = this.enemySystem.enemyLevel + 1;
                         isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;
                         this.nextLevelContainer.updateLevel(nextLevel, isBoss);
                         this.bossCounter.updateLevel(this.enemySystem.nextBoss);
+
+                        if (isBoss) {
+                                this.nextLevelContainer.addSprite(this.enemySet.portrait);
+                        } else {
+                                this.nextLevelContainer.removeSprite();
+                        }
                 }
         }]);
         return EnemyProgressionView;
@@ -61294,6 +61357,13 @@ var EnemyProgressionSlot = function (_PIXI$Container) {
         _this.backShape.anchor.set(0.5);
         _this.addChild(_this.backShape);
 
+        _this.bossSprite = new PIXI.Sprite.fromFrame('backTilesSmall');
+        _this.bossSprite.width = size * 2;
+        _this.bossSprite.height = size * 2;
+        _this.bossSprite.anchor.set(0.5);
+        _this.bossSprite.y = -5;
+        _this.addChild(_this.bossSprite);
+
         _this.levelLabel = new PIXI.Text('0', window.LABELS.LABEL2);
         _this.levelLabel.style.stroke = 0xFFFF45;
         _this.levelLabel.style.strokeThickness = 4;
@@ -61304,12 +61374,24 @@ var EnemyProgressionSlot = function (_PIXI$Container) {
     }
 
     (0, _createClass3.default)(EnemyProgressionSlot, [{
+        key: 'addSprite',
+        value: function addSprite(sprite) {
+            this.bossSprite.visible = true;
+            this.bossSprite.texture = new PIXI.Texture.fromFrame(sprite);
+        }
+    }, {
+        key: 'removeSprite',
+        value: function removeSprite() {
+            this.bossSprite.visible = false;
+        }
+    }, {
         key: 'updateLevel',
         value: function updateLevel(level) {
             var isboss = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
             this.levelLabel.text = level;
             this.levelLabel.pivot.x = this.levelLabel.width / 2;
+            this.levelLabel.y = 12;
 
             this.levelLabel.style.stroke = isboss ? 0xff2255 : 0xFFFF45;
         }
@@ -61383,22 +61465,34 @@ var BossCounter = function (_PIXI$Container) {
         _this.backShape.height = size * 2;
         _this.backShape.alpha = 0.5;
         _this.backShape.anchor.set(0.5);
-        _this.addChild(_this.backShape);
+        //this.addChild(this.backShape)
+
+        _this.bossSprite = new PIXI.Sprite.fromFrame('backTilesSmall');
+        _this.bossSprite.width = size * 2;
+        _this.bossSprite.height = size * 2;
+        _this.bossSprite.anchor.set(0.5);
+        _this.addChild(_this.bossSprite);
 
         _this.levelLabel = new PIXI.Text('0', window.LABELS.LABEL2);
         _this.levelLabel.style.stroke = 0xFF0045;
-        _this.levelLabel.style.strokeThickness = 4;
-        _this.levelLabel.style.fontSize = 14;
+        _this.levelLabel.style.strokeThickness = 3;
+        _this.levelLabel.style.fontSize = 12;
         _this.addChild(_this.levelLabel);
 
         return _this;
     }
 
     (0, _createClass3.default)(BossCounter, [{
+        key: 'addSprite',
+        value: function addSprite(sprite) {
+            this.bossSprite.texture = new PIXI.Texture.fromFrame(sprite);
+        }
+    }, {
         key: 'updateLevel',
         value: function updateLevel(level) {
-            this.levelLabel.text = 'boss at\n' + level;
+            this.levelLabel.text = 'Level ' + level;
             this.levelLabel.pivot.x = this.levelLabel.width / 2;
+            this.levelLabel.y = 20;
         }
     }, {
         key: 'setFontSize',
@@ -61463,8 +61557,8 @@ var StandardEnemy = function (_PIXI$Container) {
 
         var _this = (0, _possibleConstructorReturn3.default)(this, (StandardEnemy.__proto__ || (0, _getPrototypeOf2.default)(StandardEnemy)).call(this));
 
-        _this.bossSpriteSrc = 'capital_ship_01';
-        _this.enemySpriteSrc = 'capital_ship_05';
+        _this.bossSpriteSrc = 'ship1_e3_v3';
+        _this.enemySpriteSrc = 'ship7_e3_v3';
         _this.enemySprite = new PIXI.Sprite.from(_this.enemySpriteSrc);
         _this.addChild(_this.enemySprite);
         _this.enemySprite.anchor.set(0.5);
@@ -61494,14 +61588,14 @@ var StandardEnemy = function (_PIXI$Container) {
         }
     }, {
         key: 'setAsBoss',
-        value: function setAsBoss() {
-            this.enemySprite.texture = PIXI.Texture.fromFrame(this.bossSpriteSrc);
+        value: function setAsBoss(sprite) {
+            this.enemySprite.texture = PIXI.Texture.fromFrame(sprite ? sprite : this.bossSpriteSrc);
             this.isBoss = true;
         }
     }, {
         key: 'setAsEnemy',
-        value: function setAsEnemy() {
-            this.enemySprite.texture = PIXI.Texture.fromFrame(this.enemySpriteSrc);
+        value: function setAsEnemy(sprite) {
+            this.enemySprite.texture = PIXI.Texture.fromFrame(sprite ? sprite : this.enemySpriteSrc);
             this.isBoss = false;
         }
     }]);
