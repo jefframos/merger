@@ -530,7 +530,7 @@ Object.defineProperty(exports, 'WebGLManager', {
   }
 });
 
-var _ObjectRenderer = __webpack_require__(43);
+var _ObjectRenderer = __webpack_require__(44);
 
 Object.defineProperty(exports, 'ObjectRenderer', {
   enumerable: true,
@@ -539,7 +539,7 @@ Object.defineProperty(exports, 'ObjectRenderer', {
   }
 });
 
-var _RenderTarget = __webpack_require__(45);
+var _RenderTarget = __webpack_require__(46);
 
 Object.defineProperty(exports, 'RenderTarget', {
   enumerable: true,
@@ -609,7 +609,7 @@ var _CanvasRenderer = __webpack_require__(36);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
-var _WebGLRenderer = __webpack_require__(44);
+var _WebGLRenderer = __webpack_require__(45);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -12463,7 +12463,7 @@ if (true) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(21);
-var createDesc = __webpack_require__(41);
+var createDesc = __webpack_require__(42);
 module.exports = __webpack_require__(22) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -12486,7 +12486,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(58)('wks');
-var uid = __webpack_require__(42);
+var uid = __webpack_require__(43);
 var Symbol = __webpack_require__(18).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
@@ -15290,6 +15290,179 @@ Mesh.DRAW_MODES = {
 
 /***/ }),
 /* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _getPrototypeOf = __webpack_require__(3);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(1);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(2);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(5);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(6);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _gsap = __webpack_require__(17);
+
+var _gsap2 = _interopRequireDefault(_gsap);
+
+var _pixi = __webpack_require__(0);
+
+var PIXI = _interopRequireWildcard(_pixi);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ProgressBar = function (_PIXI$Container) {
+    (0, _inherits3.default)(ProgressBar, _PIXI$Container);
+
+    function ProgressBar(size) {
+        var border = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        var padding = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+        (0, _classCallCheck3.default)(this, ProgressBar);
+
+        var _this = (0, _possibleConstructorReturn3.default)(this, (ProgressBar.__proto__ || (0, _getPrototypeOf2.default)(ProgressBar)).call(this));
+
+        _this.barContainer = new PIXI.Container();
+
+        _this.addChild(_this.barContainer);
+        _this.infoLabel = new PIXI.Text('COMPLETE', { font: '16px', fill: 0xFF0000 });
+        _this.infoLabel.pivot.x = _this.infoLabel.width / 2;
+        _this.infoLabel.pivot.y = _this.infoLabel.height / 2;
+        _this.barContainer.addChild(_this.infoLabel);
+
+        _this.infoLabel.x = 125;
+        _this.infoLabel.y = 19;
+
+        _this.border = border ? border : size.height / 2;
+        _this.padding = padding;
+        _this.sizeHeight = size.height;
+        _this.sizeWidth = size.width;
+
+        _this.loadingBar = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('simple-bar'), 4, 4, 4, 4);
+        _this.loadingBar.width = _this.sizeWidth;
+        _this.loadingBar.height = _this.sizeHeight;
+
+        _this.loadingBarFillBack = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('simple-bar'), 4, 4, 4, 4);
+        _this.loadingBarFillBack.width = _this.sizeWidth - _this.border;
+        _this.loadingBarFillBack.height = _this.sizeHeight - _this.border;
+        _this.loadingBarFillBack.tint = 0;
+
+        _this.loadingBarFillBack.x = _this.border / 2;
+        _this.loadingBarFillBack.y = _this.border / 2;
+        _this.loadingBarFillBack.cacheAsBitmap = true;
+
+        //this.loadingBarFill = new PIXI.Sprite.fromFrame('simple-bar')
+        _this.loadingBarFill = new PIXI.Sprite.fromFrame('simple-bar');
+        // new PIXI.mesh.NineSlicePlane(
+        //     PIXI.Texture.fromFrame('simple-bar'), 4,4,4,4)
+        _this.loadingBarFill.width = 0;
+        _this.loadingBarFill.height = _this.sizeHeight - _this.border - _this.padding; //- (this.border - padding  ) 
+        _this.loadingBarFill.tint = 0xFF0011;
+        _this.loadingBarFill.x = (_this.border + padding) / 2;
+        _this.loadingBarFill.y = (_this.border + padding) / 2;
+
+        _this.loadingBarFill.visible = false;
+        //this.loadingBarFill.scale.x = 0;
+
+        _this.infoLabel.visible = false;
+
+        _this.barContainer.addChild(_this.loadingBar);
+        _this.barContainer.addChild(_this.loadingBarFillBack);
+        _this.barContainer.addChild(_this.loadingBarFill);
+
+        _this.currentValue = 0;
+        _this.state = 0;
+
+        return _this;
+    }
+
+    (0, _createClass3.default)(ProgressBar, [{
+        key: 'updateBackgroundColor',
+        value: function updateBackgroundColor(color) {
+            var alpha = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+            this.loadingBarFillBack.tint = color;
+            this.loadingBarFillBack.alpha = alpha;
+        }
+    }, {
+        key: 'updateBackgroundFront',
+        value: function updateBackgroundFront(color) {
+            this.currentColor = color;
+            this.loadingBarFill.tint = color;
+        }
+    }, {
+        key: 'resizeBar',
+        value: function resizeBar(width) {
+            var height = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 30;
+            var hideBorder = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+            if (width == this.sizeWidth) {
+                return;
+            }
+            this.sizeHeight = height;
+            this.sizeWidth = width;
+            this.loadingBar.width = this.sizeWidth;
+            this.loadingBar.height = this.sizeHeight;
+
+            var add = this.border / 2;
+            if (hideBorder) {
+                add = 0;
+                this.loadingBarFillBack.position.set(0);
+                this.loadingBarFill.position.set(0);
+            }
+            this.loadingBarFillBack.width = this.sizeWidth - add;
+            this.loadingBarFillBack.height = this.sizeHeight - add;
+            this.loadingBarFill.width = this.sizeWidth - add;
+            this.loadingBarFill.height = this.sizeHeight - add;
+
+            this.loadingBar.visible = !hideBorder;
+            this.setProgressBar(this.currentValue);
+        }
+    }, {
+        key: 'setProgressBar',
+        value: function setProgressBar() {
+            var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+            var color = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+            if (value <= 0) {
+                return;
+            }
+
+            this.loadingBarFill.visible = true;
+            value = Math.max(value, 0);
+            //this.loadingBarFill.visible = value > 0.075
+            this.currentValue = value;
+            this.loadingBarFill.tint = this.currentColor;
+            this.loadingBarFill.width = (this.sizeWidth - this.border * 2 - this.padding) * value + this.border;
+        }
+    }]);
+    return ProgressBar;
+}(PIXI.Container);
+
+exports.default = ProgressBar;
+module.exports = exports['default'];
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -15303,7 +15476,7 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -15314,7 +15487,7 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15397,7 +15570,7 @@ exports.default = ObjectRenderer;
 //# sourceMappingURL=ObjectRenderer.js.map
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15421,11 +15594,11 @@ var _FilterManager = __webpack_require__(223);
 
 var _FilterManager2 = _interopRequireDefault(_FilterManager);
 
-var _RenderTarget = __webpack_require__(45);
+var _RenderTarget = __webpack_require__(46);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
-var _ObjectRenderer = __webpack_require__(43);
+var _ObjectRenderer = __webpack_require__(44);
 
 var _ObjectRenderer2 = _interopRequireDefault(_ObjectRenderer);
 
@@ -16219,7 +16392,7 @@ _utils.pluginTarget.mixin(WebGLRenderer);
 //# sourceMappingURL=WebGLRenderer.js.map
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16551,7 +16724,7 @@ exports.default = RenderTarget;
 //# sourceMappingURL=RenderTarget.js.map
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16824,179 +16997,6 @@ function buildNativeLine(graphicsData, webGLData) {
     }
 }
 //# sourceMappingURL=buildLine.js.map
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _getPrototypeOf = __webpack_require__(3);
-
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-var _classCallCheck2 = __webpack_require__(1);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(2);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = __webpack_require__(5);
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = __webpack_require__(6);
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _gsap = __webpack_require__(17);
-
-var _gsap2 = _interopRequireDefault(_gsap);
-
-var _pixi = __webpack_require__(0);
-
-var PIXI = _interopRequireWildcard(_pixi);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ProgressBar = function (_PIXI$Container) {
-    (0, _inherits3.default)(ProgressBar, _PIXI$Container);
-
-    function ProgressBar(size) {
-        var border = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-        var padding = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-        (0, _classCallCheck3.default)(this, ProgressBar);
-
-        var _this = (0, _possibleConstructorReturn3.default)(this, (ProgressBar.__proto__ || (0, _getPrototypeOf2.default)(ProgressBar)).call(this));
-
-        _this.barContainer = new PIXI.Container();
-
-        _this.addChild(_this.barContainer);
-        _this.infoLabel = new PIXI.Text('COMPLETE', { font: '16px', fill: 0xFF0000 });
-        _this.infoLabel.pivot.x = _this.infoLabel.width / 2;
-        _this.infoLabel.pivot.y = _this.infoLabel.height / 2;
-        _this.barContainer.addChild(_this.infoLabel);
-
-        _this.infoLabel.x = 125;
-        _this.infoLabel.y = 19;
-
-        _this.border = border ? border : size.height / 2;
-        _this.padding = padding;
-        _this.sizeHeight = size.height;
-        _this.sizeWidth = size.width;
-
-        _this.loadingBar = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('simple-bar'), 4, 4, 4, 4);
-        _this.loadingBar.width = _this.sizeWidth;
-        _this.loadingBar.height = _this.sizeHeight;
-
-        _this.loadingBarFillBack = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('simple-bar'), 4, 4, 4, 4);
-        _this.loadingBarFillBack.width = _this.sizeWidth - _this.border;
-        _this.loadingBarFillBack.height = _this.sizeHeight - _this.border;
-        _this.loadingBarFillBack.tint = 0;
-
-        _this.loadingBarFillBack.x = _this.border / 2;
-        _this.loadingBarFillBack.y = _this.border / 2;
-        _this.loadingBarFillBack.cacheAsBitmap = true;
-
-        //this.loadingBarFill = new PIXI.Sprite.fromFrame('simple-bar')
-        _this.loadingBarFill = new PIXI.Sprite.fromFrame('simple-bar');
-        // new PIXI.mesh.NineSlicePlane(
-        //     PIXI.Texture.fromFrame('simple-bar'), 4,4,4,4)
-        _this.loadingBarFill.width = 0;
-        _this.loadingBarFill.height = _this.sizeHeight - _this.border - _this.padding; //- (this.border - padding  ) 
-        _this.loadingBarFill.tint = 0xFF0011;
-        _this.loadingBarFill.x = (_this.border + padding) / 2;
-        _this.loadingBarFill.y = (_this.border + padding) / 2;
-
-        _this.loadingBarFill.visible = false;
-        //this.loadingBarFill.scale.x = 0;
-
-        _this.infoLabel.visible = false;
-
-        _this.barContainer.addChild(_this.loadingBar);
-        _this.barContainer.addChild(_this.loadingBarFillBack);
-        _this.barContainer.addChild(_this.loadingBarFill);
-
-        _this.currentValue = 0;
-        _this.state = 0;
-
-        return _this;
-    }
-
-    (0, _createClass3.default)(ProgressBar, [{
-        key: 'updateBackgroundColor',
-        value: function updateBackgroundColor(color) {
-            var alpha = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
-            this.loadingBarFillBack.tint = color;
-            this.loadingBarFillBack.alpha = alpha;
-        }
-    }, {
-        key: 'updateBackgroundFront',
-        value: function updateBackgroundFront(color) {
-            this.currentColor = color;
-            this.loadingBarFill.tint = color;
-        }
-    }, {
-        key: 'resizeBar',
-        value: function resizeBar(width) {
-            var height = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 30;
-            var hideBorder = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-            if (width == this.sizeWidth) {
-                return;
-            }
-            this.sizeHeight = height;
-            this.sizeWidth = width;
-            this.loadingBar.width = this.sizeWidth;
-            this.loadingBar.height = this.sizeHeight;
-
-            var add = this.border / 2;
-            if (hideBorder) {
-                add = 0;
-                this.loadingBarFillBack.position.set(0);
-                this.loadingBarFill.position.set(0);
-            }
-            this.loadingBarFillBack.width = this.sizeWidth - add;
-            this.loadingBarFillBack.height = this.sizeHeight - add;
-            this.loadingBarFill.width = this.sizeWidth - add;
-            this.loadingBarFill.height = this.sizeHeight - add;
-
-            this.loadingBar.visible = !hideBorder;
-            this.setProgressBar(this.currentValue);
-        }
-    }, {
-        key: 'setProgressBar',
-        value: function setProgressBar() {
-            var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-            var color = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
-            if (value <= 0) {
-                return;
-            }
-
-            this.loadingBarFill.visible = true;
-            value = Math.max(value, 0);
-            //this.loadingBarFill.visible = value > 0.075
-            this.currentValue = value;
-            this.loadingBarFill.tint = color;
-            this.loadingBarFill.width = (this.sizeWidth - this.border * 2 - this.padding) * value + this.border;
-        }
-    }]);
-    return ProgressBar;
-}(PIXI.Container);
-
-exports.default = ProgressBar;
-module.exports = exports['default'];
 
 /***/ }),
 /* 48 */
@@ -17373,7 +17373,7 @@ module.exports = Object.keys || function keys(O) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(58)('keys');
-var uid = __webpack_require__(42);
+var uid = __webpack_require__(43);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -17448,7 +17448,7 @@ exports.f = {}.propertyIsEnumerable;
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(63);
-var createDesc = __webpack_require__(41);
+var createDesc = __webpack_require__(42);
 var toIObject = __webpack_require__(24);
 var toPrimitive = __webpack_require__(49);
 var has = __webpack_require__(23);
@@ -22590,7 +22590,7 @@ var _CircleCounter = __webpack_require__(82);
 
 var _CircleCounter2 = _interopRequireDefault(_CircleCounter);
 
-var _ProgressBar = __webpack_require__(47);
+var _ProgressBar = __webpack_require__(41);
 
 var _ProgressBar2 = _interopRequireDefault(_ProgressBar);
 
@@ -22751,7 +22751,7 @@ var MergeTile = function (_PIXI$Container) {
             dateTimeStamp = Date.now();
             if (this.generateDamageTime > 0) {
                 if (this.updatedDamageTimestamp) {
-                    var targetColor = 0xf2cb0d;
+                    var targetColor = 0xff810a;
                     this.generateDamage = dateTimeStamp - this.updatedDamageTimestamp;
                     var calcTiime = this.generateDamageTime / window.TIME_SCALE * 1000;
                     if (this.generateDamage > calcTiime) {
@@ -22771,6 +22771,7 @@ var MergeTile = function (_PIXI$Container) {
                         }
                     }
                     this.damageTimerView.visible = true;
+                    this.damageTimerView.updateBackgroundFront(targetColor);
                     this.damageTimerView.setProgressBar(this.generateDamageNormal, targetColor);
                 }
             } else {
@@ -30306,7 +30307,7 @@ var _CanvasRenderer = __webpack_require__(36);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
-var _WebGLRenderer = __webpack_require__(44);
+var _WebGLRenderer = __webpack_require__(45);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -33030,7 +33031,7 @@ module.exports = function (TO_STRING) {
 "use strict";
 
 var create = __webpack_require__(55);
-var descriptor = __webpack_require__(41);
+var descriptor = __webpack_require__(42);
 var setToStringTag = __webpack_require__(60);
 var IteratorPrototype = {};
 
@@ -33251,7 +33252,7 @@ var META = __webpack_require__(176).KEY;
 var $fails = __webpack_require__(33);
 var shared = __webpack_require__(58);
 var setToStringTag = __webpack_require__(60);
-var uid = __webpack_require__(42);
+var uid = __webpack_require__(43);
 var wks = __webpack_require__(28);
 var wksExt = __webpack_require__(61);
 var wksDefine = __webpack_require__(62);
@@ -33261,7 +33262,7 @@ var anObject = __webpack_require__(32);
 var isObject = __webpack_require__(27);
 var toIObject = __webpack_require__(24);
 var toPrimitive = __webpack_require__(49);
-var createDesc = __webpack_require__(41);
+var createDesc = __webpack_require__(42);
 var _create = __webpack_require__(55);
 var gOPNExt = __webpack_require__(179);
 var $GOPD = __webpack_require__(64);
@@ -33480,7 +33481,7 @@ setToStringTag(global.JSON, 'JSON', true);
 /* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(42)('meta');
+var META = __webpack_require__(43)('meta');
 var isObject = __webpack_require__(27);
 var has = __webpack_require__(23);
 var setDesc = __webpack_require__(21).f;
@@ -37314,11 +37315,11 @@ function mapCanvasBlendModesToPixi() {
 
 exports.__esModule = true;
 
-var _ObjectRenderer2 = __webpack_require__(43);
+var _ObjectRenderer2 = __webpack_require__(44);
 
 var _ObjectRenderer3 = _interopRequireDefault(_ObjectRenderer2);
 
-var _WebGLRenderer = __webpack_require__(44);
+var _WebGLRenderer = __webpack_require__(45);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -38504,7 +38505,7 @@ var _WebGLManager2 = __webpack_require__(37);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
-var _RenderTarget = __webpack_require__(45);
+var _RenderTarget = __webpack_require__(46);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
@@ -39168,7 +39169,7 @@ var _pixiGlCore = __webpack_require__(13);
 
 var _const = __webpack_require__(7);
 
-var _RenderTarget = __webpack_require__(45);
+var _RenderTarget = __webpack_require__(46);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
@@ -42163,11 +42164,11 @@ var _utils = __webpack_require__(8);
 
 var _const = __webpack_require__(7);
 
-var _ObjectRenderer2 = __webpack_require__(43);
+var _ObjectRenderer2 = __webpack_require__(44);
 
 var _ObjectRenderer3 = _interopRequireDefault(_ObjectRenderer2);
 
-var _WebGLRenderer = __webpack_require__(44);
+var _WebGLRenderer = __webpack_require__(45);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -42628,7 +42629,7 @@ exports.default = PrimitiveShader;
 exports.__esModule = true;
 exports.default = buildPoly;
 
-var _buildLine = __webpack_require__(46);
+var _buildLine = __webpack_require__(47);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -42719,7 +42720,7 @@ function buildPoly(graphicsData, webGLData, webGLDataNativeLines) {
 exports.__esModule = true;
 exports.default = buildRectangle;
 
-var _buildLine = __webpack_require__(46);
+var _buildLine = __webpack_require__(47);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -42804,7 +42805,7 @@ var _earcut = __webpack_require__(125);
 
 var _earcut2 = _interopRequireDefault(_earcut);
 
-var _buildLine = __webpack_require__(46);
+var _buildLine = __webpack_require__(47);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -42961,7 +42962,7 @@ function quadraticBezierCurve(fromX, fromY, cpX, cpY, toX, toY) {
 exports.__esModule = true;
 exports.default = buildCircle;
 
-var _buildLine = __webpack_require__(46);
+var _buildLine = __webpack_require__(47);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -60261,6 +60262,9 @@ var MergeScreen = function (_Screen) {
                 _this.enemiesSystem.onParticles.add(_this.addParticles.bind(_this));
                 _this.enemiesSystem.onPopLabel.add(_this.popLabelDamage.bind(_this));
                 _this.enemiesSystem.onGetResources.add(_this.addResourceParticles.bind(_this));
+                _this.enemiesSystem.onChangeEnemySet.add(function (set) {
+                        _this.spaceBackground.setTopColor(set.color);
+                });
 
                 _this.mergeSystem1.addSystem(_this.enemiesSystem);
                 _this.mergeSystem1.addSystem(_this.resourceSystem);
@@ -60280,15 +60284,15 @@ var MergeScreen = function (_Screen) {
 
                 _this.statsList = new _UIList2.default();
                 _this.statsList.w = 120;
-                _this.statsList.h = 180;
+                _this.statsList.h = 140;
                 _this.container.addChild(_this.statsList);
 
-                _this.resourcesContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('large-square-pattern'), 20, 20, 20, 5);
+                _this.resourcesContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('grid1'), 20, 20, 20, 5);
                 _this.resourcesContainer.width = _this.statsList.w;
                 _this.resourcesContainer.height = 40;
 
                 _this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
-                _this.resourcesLabel.style.fontSize = 12;
+                _this.resourcesLabel.style.fontSize = 10;
                 _utils2.default.centerObject(_this.resourcesLabel, _this.resourcesContainer);
                 _this.resourcesLabel.x -= 10;
                 _this.resourcesContainer.addChild(_this.resourcesLabel);
@@ -60297,51 +60301,51 @@ var MergeScreen = function (_Screen) {
                 _this.coinTexture = new PIXI.Sprite.from('coin');
                 _this.resourcesLabel.addChild(_this.coinTexture);
                 _this.coinTexture.scale.set(_this.resourcesContainer.height / _this.coinTexture.height * 0.5);
-                _this.coinTexture.x = -25;
+                _this.coinTexture.x = -30;
                 _this.coinTexture.y = -3;
 
-                _this.rpsContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('large-square-pattern-green'), 20, 20, 20, 5);
+                _this.rpsContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('grid1'), 20, 20, 20, 5);
                 _this.rpsContainer.width = _this.statsList.w;
                 _this.rpsContainer.height = 40;
                 _this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
-                _this.rpsLabel.style.fontSize = 12;
+                _this.rpsLabel.style.fontSize = 10;
                 _this.rpsContainer.addChild(_this.rpsLabel);
                 _this.statsList.addElement(_this.rpsContainer);
 
                 _this.resourcesTexture = new PIXI.Sprite.from('drill-small');
                 _this.resourcesTexture.scale.set(_this.rpsContainer.height / _this.resourcesTexture.height * 0.5);
-                _this.resourcesTexture.x = -25;
+                _this.resourcesTexture.x = -30;
                 _this.resourcesTexture.y = -3;
                 _this.rpsLabel.addChild(_this.resourcesTexture);
 
-                _this.dpsContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('large-square-pattern-orange'), 20, 20, 20, 5);
+                _this.dpsContainer = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('grid1'), 20, 20, 20, 5);
                 _this.dpsContainer.width = _this.statsList.w;
                 _this.dpsContainer.height = 40;
 
                 _this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
-                _this.dpsLabel.style.fontSize = 12;
+                _this.dpsLabel.style.fontSize = 10;
                 _this.dpsContainer.addChild(_this.dpsLabel);
                 _this.statsList.addElement(_this.dpsContainer);
 
                 _this.damageTexture = new PIXI.Sprite.from('bullets');
                 _this.dpsLabel.addChild(_this.damageTexture);
                 _this.damageTexture.scale.set(_this.dpsContainer.height / _this.damageTexture.height * 0.5);
-                _this.damageTexture.x = -25;
+                _this.damageTexture.x = -30;
                 _this.damageTexture.y = -3;
 
-                _this.shardsCounter = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('large-square-pattern-purple'), 20, 20, 20, 5);
+                _this.shardsCounter = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('grid1'), 20, 20, 20, 5);
                 _this.shardsCounter.width = _this.statsList.w;
                 _this.shardsCounter.height = 40;
 
                 _this.shardsLabel = new PIXI.Text('0', LABELS.LABEL1);
-                _this.shardsLabel.style.fontSize = 12;
+                _this.shardsLabel.style.fontSize = 10;
                 _this.shardsCounter.addChild(_this.shardsLabel);
                 _this.statsList.addElement(_this.shardsCounter);
 
                 _this.shardsTexture = new PIXI.Sprite.from('shards');
                 _this.shardsLabel.addChild(_this.shardsTexture);
                 _this.shardsTexture.scale.set(_this.shardsCounter.height / _this.shardsTexture.height * 0.5);
-                _this.shardsTexture.x = -25;
+                _this.shardsTexture.x = -30;
                 _this.shardsTexture.y = -3;
 
                 _this.statsList.updateVerticalList();
@@ -60447,18 +60451,19 @@ var MergeScreen = function (_Screen) {
                         _this.openPopUp(_this.mergeItemsShop);
                 });
 
-                _this.sellEverything = new _UIButton2.default(0x002299, 'portraitFemale', 0xFFFFFF, buttonSize, buttonSize, 'square-pattern1-green');
+                _this.sellEverything = new _TimeBonusButton2.default('portraitFemale', buttonSize);
                 _this.sellEverything.updateIconScale(0.9);
+                _this.sellEverything.setDescription("");
                 _this.sellEverything.newItem = new PIXI.Sprite.fromFrame('new_item');
                 _this.sellEverything.newItem.scale.set(0.7);
                 _this.sellEverything.newItem.anchor.set(0);
                 _this.sellEverything.newItem.position.set(-buttonSize / 2);
                 _this.sellEverything.newItem.visible = true;
                 _this.sellEverything.addChild(_this.sellEverything.newItem);
-                _this.sellEverything.onClick.add(function () {
-                        _this.resetAll();
-                        //this.openPopUp(this.mergeItemsShop)
-                });
+                // this.sellEverything.onClick.add(() => {
+                //     this.resetAll();
+                //     //this.openPopUp(this.mergeItemsShop)
+                // })
                 _this.container.addChild(_this.sellEverything);
 
                 _this.shopButtonsList.updateHorizontalList();
@@ -60741,19 +60746,19 @@ var MergeScreen = function (_Screen) {
 
                         this.resourcesLabel.text = _utils2.default.formatPointsLabel(window.gameEconomy.currentResources);
                         _utils2.default.centerObject(this.resourcesLabel, this.resourcesContainer);
-                        this.resourcesLabel.x += 10;
+                        this.resourcesLabel.x = 40;
 
                         this.rpsLabel.text = _utils2.default.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps) + '/s';
                         _utils2.default.centerObject(this.rpsLabel, this.rpsContainer);
-                        this.rpsLabel.x += 10;
+                        this.rpsLabel.x = 40;
 
                         this.dpsLabel.text = _utils2.default.formatPointsLabel(this.mergeSystem1.dps) + '/s';
                         _utils2.default.centerObject(this.dpsLabel, this.dpsContainer);
-                        this.dpsLabel.x += 10;
+                        this.dpsLabel.x = 40;
 
                         this.shardsLabel.text = _utils2.default.formatPointsLabel(window.gameModifyers.permanentBonusData.shards);
                         _utils2.default.centerObject(this.shardsLabel, this.shardsCounter);
-                        this.shardsLabel.x += 10;
+                        this.shardsLabel.x = 40;
 
                         this.timestamp = Date.now() / 1000 | 0;
 
@@ -60792,8 +60797,9 @@ var MergeScreen = function (_Screen) {
                         //     this.statsList.y = config.height - this.statsList.h - 20
 
                         // }
-                        this.statsList.x = config.width - this.statsList.w;
-                        this.statsList.y = 80;
+                        // this.statsList.x = config.width - this.statsList.w
+                        // this.statsList.y = 150
+                        this.statsList.y = config.height - this.statsList.h - 120;
                         this.shopButtonsList.x = config.width / 2 - this.shopButtonsList.w / 2 + 40;
                         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 20;
                         this.helperButtonList.x = 0;
@@ -60870,7 +60876,7 @@ var _EnemyProgressionView = __webpack_require__(344);
 
 var _EnemyProgressionView2 = _interopRequireDefault(_EnemyProgressionView);
 
-var _ProgressBar = __webpack_require__(47);
+var _ProgressBar = __webpack_require__(41);
 
 var _ProgressBar2 = _interopRequireDefault(_ProgressBar);
 
@@ -60910,6 +60916,7 @@ var EnemySystem = function () {
         this.onNextEnemy = new _signals2.default();
         this.onParticles = new _signals2.default();
         this.onGetResources = new _signals2.default();
+        this.onChangeEnemySet = new _signals2.default();
 
         this.mainEnemy = new _StandardEnemy2.default();
         this.container.addChild(this.mainEnemy);
@@ -60921,8 +60928,6 @@ var EnemySystem = function () {
         this.baseEnemies.list.forEach(function (element) {
             _this.allEnemies[element.id] = element;
         });
-        this.currentEnemySetID = this.baseEnemies.levels[0].available[1];
-        this.currentEnemySetIDNext = this.baseEnemies.levels[0].available[2];
 
         this.enemiesIds = [];
 
@@ -60944,8 +60949,8 @@ var EnemySystem = function () {
 
         this.invokeBossBattle = new _UIButton2.default(0xFFFFFF, TILE_ASSSETS_POOL['image-Figh'], 0xFFFFFF, 120, 40, 'boss-button');
         this.container.addChild(this.invokeBossBattle);
-        this.invokeBossBattle.x = -230;
-        this.invokeBossBattle.y = 145;
+        this.invokeBossBattle.x = 240;
+        this.invokeBossBattle.y = 50;
         this.invokeBossBattle.onClick.add(function () {
             _this.invokeBoss();
         });
@@ -60960,10 +60965,13 @@ var EnemySystem = function () {
         this.nextBoss = 10;
         this.bossGap = 10;
 
-        this.enemyLifeBar = new _ProgressBar2.default({ width: 200, height: 18 }, 4, 4);
+        this.enemyLifeBar = new _ProgressBar2.default({ width: 150, height: 15 }, 4, 4);
+        this.enemyLifeBar.updateBackgroundFront(0xff0000);
+        this.enemyLifeBar.updateBackgroundColor(0x990000);
+
         this.container.addChild(this.enemyLifeBar);
         this.enemyLifeBar.pivot.x = this.enemyLifeBar.width / 2;
-        this.enemyLifeBar.y = -5;
+        this.enemyLifeBar.y = -2;
 
         this.bossBattleTimer = new _ProgressBar2.default({ width: 200, height: 12 }, 3, 3);
         this.container.addChild(this.bossBattleTimer);
@@ -60978,7 +60986,7 @@ var EnemySystem = function () {
         this.bossTimerLabel.y = this.bossBattleTimer.y - 3;
 
         this.label = new PIXI.Text('', LABELS.LABEL1);
-        this.label.style.fontSize = 12;
+        this.label.style.fontSize = 10;
         this.label.style.stroke = 0;
         this.label.style.strokeThickness = 3;
         this.container.addChild(this.label);
@@ -60998,14 +61006,22 @@ var EnemySystem = function () {
 
         this.updateLevelView();
         this.mainEnemy.setAsEnemy(this.getNextEnemySprite());
+
+        setTimeout(function () {
+            _this.onChangeEnemySet.dispatch(_this.currentEnemySet);
+        }, 10);
     }
 
     (0, _createClass3.default)(EnemySystem, [{
         key: 'sortNextEnemy',
         value: function sortNextEnemy() {
             var levelID = Math.floor(this.enemyLevel / 10);
-            this.currentEnemySetID = this.enemiesIds[levelID];
-            this.currentEnemySet = this.allEnemies[this.currentEnemySetID];
+            if (this.enemiesIds[levelID] != this.currentEnemySetID) {
+                this.currentEnemySetID = this.enemiesIds[levelID];
+
+                this.currentEnemySet = this.allEnemies[this.currentEnemySetID];
+                this.onChangeEnemySet.dispatch(this.currentEnemySet);
+            }
 
             this.enemyProgressionView.setEnemySet(this.currentEnemySet, this.allEnemies[this.enemiesIds[levelID + 1]]);
         }
@@ -61327,6 +61343,7 @@ var EnemyProgressionView = function (_PIXI$Container) {
                 _this.addChild(_this.bossCounter);
 
                 _this.bossCounter.x = 250;
+                _this.bossCounter.y = 22;
 
                 return _this;
         }
@@ -64157,9 +64174,9 @@ var MergeSystem = function () {
             var maxPos = 0;
             this.pieceGeneratorsList.forEach(function (piece) {
                 if (piece.visible) {
-                    piece.x = (piece.width + _this5.slotSize.distance) * accumPiece;
+                    piece.x = (piece.backShape.width + _this5.slotSize.distance) * accumPiece;
                     accumPiece++;
-                    maxPos = piece.x + piece.width;
+                    maxPos = piece.x + piece.backShape.width;
                 }
             });
             this.uiContainer.x = this.wrapper.x + this.wrapper.width / 2 - maxPos * this.uiContainer.scale.x / 2;
@@ -64224,7 +64241,7 @@ var _MergeTile2 = __webpack_require__(83);
 
 var _MergeTile3 = _interopRequireDefault(_MergeTile2);
 
-var _ProgressBar = __webpack_require__(47);
+var _ProgressBar = __webpack_require__(41);
 
 var _ProgressBar2 = _interopRequireDefault(_ProgressBar);
 
@@ -64249,27 +64266,21 @@ var ChargerTile = function (_MergeTile) {
 
         var _this = (0, _possibleConstructorReturn3.default)(this, (ChargerTile.__proto__ || (0, _getPrototypeOf2.default)(ChargerTile)).call(this, i, j, size, lockIcon));
 
-        _this.backShape.texture = PIXI.Texture.fromFrame('backTilesRound');
+        _this.backShape.texture = PIXI.Texture.fromFrame('backTilesSquare');
 
         _this.defaultChargeTime = standardChargeTime;
         _this.currentChargeTime = _this.defaultChargeTime * Math.random();
 
         _this.onCompleteCharge = new _signals2.default();
 
-        _this.levelBar = new _UIBar2.default();
-        _this.addChild(_this.levelBar);
-        _this.levelBar.scale.set(0.3);
+        _this.levelBar = new _ProgressBar2.default({ width: size, height: 12 }, 3, 3);
+        _this.levelBar.updateBackgroundColor(0x20516c);
+        _this.levelBar.updateBackgroundFront(0x00ffff);
+        _this.levelBar.x = 0;
+        _this.levelBar.y = size;
+        _this.container.addChild(_this.levelBar);
+        //this.levelBar.rotation = Math.PI * 0.5
 
-        _this.levelBar.y = size - 20;
-        _this.levelBar.x = size / 2 - _this.levelBar.width / 2 + 12;
-
-        _this.circleCounter = new _CircleCounter2.default(size / 2, size / 2);
-        _this.container.addChildAt(_this.circleCounter, 0);
-        _this.circleCounter.alpha = 0.5;
-        _this.circleCounter.build();
-
-        _this.circleCounter.x = size / 2;
-        _this.circleCounter.y = size / 2;
 
         _this.container.removeChild(_this.damageTimerView);
 
@@ -64289,10 +64300,12 @@ var ChargerTile = function (_MergeTile) {
                 } else {
                     this.tileSprite.visible = false;
                 }
-                this.levelBar.updatePowerBar(1 - this.currentChargeTime / this.defaultChargeTime);
-                this.circleCounter.update(1 - this.currentChargeTime / this.defaultChargeTime);
+                this.levelBar.setProgressBar(1 - this.currentChargeTime / this.defaultChargeTime);
+                this.levelBar.visible = true;
+
+                //this.circleCounter.update(1-(this.currentChargeTime / this.defaultChargeTime))
             }
-            this.levelBar.visible = false;
+            //this.levelBar.visible = false;
 
             this.label.visible = this.tileSprite.visible;
         }
@@ -64303,13 +64316,13 @@ var ChargerTile = function (_MergeTile) {
             this.tileData = null;
             this.currentChargeTime = this.defaultChargeTime;
             this.levelBar.visible = false;
-            this.levelBar.updatePowerBar(0, 0, true);
-            this.circleCounter.update(0, true);
+            this.levelBar.setProgressBar(0, 0, true);
         }
     }, {
         key: 'completeCharge',
         value: function completeCharge() {
             this.isCharged = true;
+            this.levelBar.visible = false;
             this.tileSprite.visible = true;
             this.onCompleteCharge.dispatch();
         }
@@ -65192,6 +65205,10 @@ var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
+var _ProgressBar = __webpack_require__(41);
+
+var _ProgressBar2 = _interopRequireDefault(_ProgressBar);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -65267,12 +65284,12 @@ var ResourceTile = function (_MergeTile) {
         _this.label.visible = false;
         _this.currentCollect = 0;
 
-        _this.levelBar = new _UIBar2.default();
-        _this.addChild(_this.levelBar);
-        _this.levelBar.scale.set(0.3);
-
-        _this.levelBar.y = size - 20;
-        _this.levelBar.x = size / 2 - _this.levelBar.width / 2 + 12;
+        _this.levelBar = new _ProgressBar2.default({ width: 64, height: 12 }, 3, 3);
+        _this.levelBar.updateBackgroundFront(0x00FF00);
+        _this.levelBar.updateBackgroundColor(0x20552c);
+        _this.levelBar.y = size / 2 + 30;
+        _this.levelBar.x = size / 2;
+        _this.container.addChild(_this.levelBar);
 
         _this.particleCounter = 0;
 
@@ -65317,8 +65334,9 @@ var ResourceTile = function (_MergeTile) {
                 this.sin += delta * Math.min(15 * window.gameModifyers.modifyersData.drillSpeed * 0.1, 40);
                 this.drillSin += delta * Math.min(5 * window.gameModifyers.modifyersData.drillSpeed * 0.1, 40);
                 this.levelBar.visible = true;
-                this.levelBar.updatePowerBar(this.generateResourceNormal, 0, true);
+                this.levelBar.setProgressBar(this.generateResourceNormal, 0, true);
 
+                this.levelBar.x = this.resourceReadyToCollectSprite.x - 32;
                 //this.circleCounter.update(this.generateResourceNormal, true)
 
                 this.costLabelContainer.visible = false;
@@ -65432,7 +65450,7 @@ var ResourceTile = function (_MergeTile) {
             this.tileData = null;
             this.currentChargeTime = this.defaultChargeTime;
             this.levelBar.visible = true;
-            this.levelBar.updatePowerBar(0, 0, true);
+            this.levelBar.setProgressBar(0, 0, true);
         }
     }, {
         key: 'completeCharge',
@@ -65500,7 +65518,7 @@ var ResourceTile = function (_MergeTile) {
             this.readyToCollect = false;
             this.resourceReadyToCollectSprite.alpha = 0;
             this.generateResourceNormal = 0;
-            this.levelBar.updatePowerBar(this.generateResourceNormal, 0);
+            this.levelBar.setProgressBar(this.generateResourceNormal, 0);
         }
     }, {
         key: 'onMouseMoveOver',
@@ -65775,6 +65793,14 @@ var SpaceBackground = function (_PIXI$Container) {
 				_this.tiledBackground.height = 5000;
 				_this.tiledBackground.anchor.set(0.5);
 
+				_this.baseTopGradientBlack = new PIXI.Sprite.fromFrame('base-gradient');
+				_this.addChild(_this.baseTopGradientBlack);
+				_this.baseTopGradientBlack.anchor.x = 0.5;
+				_this.baseTopGradientBlack.anchor.y = 1;
+				_this.baseTopGradientBlack.rotation = Math.PI;
+				_this.baseTopGradientBlack.tint = 0;
+				_this.baseTopGradientBlack.alpha = 1;
+
 				_this.tiledBackground2 = new PIXI.TilingSprite(PIXI.Texture.fromFrame('seamless-starfield-texture', 256, 256));
 				_this.addChild(_this.tiledBackground2);
 				_this.tiledBackground2.width = 5000;
@@ -65791,14 +65817,14 @@ var SpaceBackground = function (_PIXI$Container) {
 				_this.baseTopGradient.anchor.y = 1;
 				_this.baseTopGradient.rotation = Math.PI;
 				_this.baseTopGradient.tint = 0x550033; //0x371f52
-				_this.baseTopGradient.alpha = 0.7;
+				_this.baseTopGradient.alpha = 0.3;
 
 				_this.middleGradient = new PIXI.Sprite.fromFrame('bigblur');
 				_this.addChild(_this.middleGradient);
 				_this.middleGradient.anchor.x = 0.5;
 				_this.middleGradient.anchor.y = 0.5;
 				_this.middleGradient.rotation = Math.PI;
-				_this.middleGradient.tint = 0x10145d; //0x0d5956
+				_this.middleGradient.tint = 0x1014aa; //0x0d5956
 				_this.middleGradient.alpha = 0.5;
 
 				_this.baseGradient = new PIXI.Sprite.fromFrame('base-gradient');
@@ -65806,7 +65832,7 @@ var SpaceBackground = function (_PIXI$Container) {
 				_this.baseGradient.anchor.x = 0.5;
 				_this.baseGradient.anchor.y = 1;
 				_this.baseGradient.alpha = 0.5;
-				_this.baseGradient.tint = 0;
+				_this.baseGradient.tint = 0x1014aa;
 				// this.backShape = new PIXI.Sprite.fromFrame('background_space')
 				// this.addChild(this.backShape);
 				// this.backShape.anchor.x = 0.5
@@ -65829,10 +65855,17 @@ var SpaceBackground = function (_PIXI$Container) {
 				};
 
 				window.fxSpeed = 1;
+
 				return _this;
 		}
 
 		(0, _createClass3.default)(SpaceBackground, [{
+				key: 'setTopColor',
+				value: function setTopColor(color) {
+						//utils.killColorTween(this.baseTopGradient);
+						_utils2.default.addColorTween(this.baseTopGradient, this.baseTopGradient.tint, color, 5, 0.5);
+				}
+		}, {
 				key: 'resize',
 				value: function resize(innerResolution, scale) {
 						if (innerResolution && innerResolution.width && innerResolution.height) {
@@ -65849,6 +65882,8 @@ var SpaceBackground = function (_PIXI$Container) {
 								this.baseGradient.width = innerResolution.width * 4;
 								this.baseTopGradient.width = innerResolution.width * 4;
 
+								this.baseTopGradientBlack.width = this.baseTopGradient.width;
+								this.baseTopGradientBlack.y = this.baseTopGradient.y;
 								// this.starsContainer.x = innerResolution.width / 2
 								// this.starsContainer.y = innerResolution.height / 2
 						}
@@ -66273,7 +66308,7 @@ var _UIButton = __webpack_require__(31);
 
 var _UIButton2 = _interopRequireDefault(_UIButton);
 
-var _ProgressBar = __webpack_require__(47);
+var _ProgressBar = __webpack_require__(41);
 
 var _ProgressBar2 = _interopRequireDefault(_ProgressBar);
 
@@ -66322,7 +66357,7 @@ var TimeBonusButton = function (_PIXI$Container) {
         //this.bonusTimer = new CircleCounter(10,10)
         _this.addChild(_this.bonusTimer);
         _this.bonusTimer.rotation = Math.PI * 0.5;
-
+        _this.bonusTimer.visible = false;
         _this.activeTimer = 0;
         _this.bonusTime = 120;
 
@@ -66337,6 +66372,15 @@ var TimeBonusButton = function (_PIXI$Container) {
     }
 
     (0, _createClass3.default)(TimeBonusButton, [{
+        key: 'updateIconScale',
+        value: function updateIconScale(scale) {
+            this.mainButton.updateIconScale(scale);
+            this.mainButton.icon.x = 0;
+            this.mainButton.icon.y = 0;
+            this.videoSprite.x = 8;
+            this.videoSprite.y = 15;
+        }
+    }, {
         key: 'update',
         value: function update(delta) {
             if (this.activeTimer > 0) {

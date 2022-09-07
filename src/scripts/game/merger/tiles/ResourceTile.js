@@ -5,6 +5,7 @@ import MergeTile from './MergeTile';
 import Signals from 'signals';
 import UIBar from '../../ui/uiElements/UIBar';
 import utils from '../../../utils';
+import ProgressBar from '../ProgressBar';
 
 export default class ResourceTile extends MergeTile {
     constructor(i, j, size, lockIcon) {
@@ -82,13 +83,12 @@ export default class ResourceTile extends MergeTile {
         this.label.visible = false
         this.currentCollect = 0;
 
-
-        this.levelBar = new UIBar();
-        this.addChild(this.levelBar)
-        this.levelBar.scale.set(0.3)
-
-        this.levelBar.y = size - 20
-        this.levelBar.x = size / 2 - this.levelBar.width / 2 + 12
+        this.levelBar = new ProgressBar({ width: 64, height: 12 }, 3, 3)
+        this.levelBar.updateBackgroundFront(0x00FF00)
+        this.levelBar.updateBackgroundColor(0x20552c)
+        this.levelBar.y = size/2 + 30
+        this.levelBar.x = size / 2
+        this.container.addChild(this.levelBar)
 
         this.particleCounter = 0
 
@@ -128,10 +128,10 @@ export default class ResourceTile extends MergeTile {
             this.sin += delta * Math.min(15 * window.gameModifyers.modifyersData.drillSpeed * 0.1, 40)
             this.drillSin += delta * Math.min(5 * window.gameModifyers.modifyersData.drillSpeed * 0.1, 40)
             this.levelBar.visible = true;
-            this.levelBar.updatePowerBar(this.generateResourceNormal, 0, true);
+            this.levelBar.setProgressBar(this.generateResourceNormal, 0, true);
 
 
-
+            this.levelBar.x = this.resourceReadyToCollectSprite.x - 32
             //this.circleCounter.update(this.generateResourceNormal, true)
 
             this.costLabelContainer.visible = false;
@@ -229,7 +229,7 @@ export default class ResourceTile extends MergeTile {
         this.tileData = null;
         this.currentChargeTime = this.defaultChargeTime;
         this.levelBar.visible = true;
-        this.levelBar.updatePowerBar(0, 0, true);
+        this.levelBar.setProgressBar(0, 0, true);
     }
     completeCharge() {
         this.onCompleteCharge.dispatch();
@@ -292,7 +292,7 @@ export default class ResourceTile extends MergeTile {
         this.readyToCollect = false;
         this.resourceReadyToCollectSprite.alpha = 0
         this.generateResourceNormal = 0
-        this.levelBar.updatePowerBar(this.generateResourceNormal, 0);
+        this.levelBar.setProgressBar(this.generateResourceNormal, 0);
     }
     onMouseMoveOver(forced = false) {
         this.overState()

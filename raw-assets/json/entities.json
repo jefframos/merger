@@ -29,6 +29,7 @@
             ],
             "list": [
                 {
+                    "color":"0x9308e9",
                     "portrait": "portrait (2)",
                     "id": "e1v1",
                     "prefix": "ship$_e1_v1",
@@ -36,6 +37,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0x00ffff",
                     "portrait": "portrait (18)",
                     "id": "e1v2",
                     "prefix": "ship$_e1_v2",
@@ -43,6 +45,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0xFF00ff",
                     "portrait": "portrait (16)",
                     "id": "e1v3",
                     "prefix": "ship$_e1_v3",
@@ -50,6 +53,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0x22ff99",
                     "portrait": "portrait (15)",
                     "id": "e2v1",
                     "prefix": "ship$_e2_v1",
@@ -57,6 +61,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0xFF00ff",
                     "portrait": "portrait (1)",
                     "id": "e2v2",
                     "prefix": "ship$_e2_v2",
@@ -64,6 +69,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0xe98208",
                     "portrait": "portrait (19)",
                     "id": "e2v3",
                     "prefix": "ship$_e2_v3",
@@ -71,6 +77,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0x000000",
                     "portrait": "portrait (4)",
                     "id": "e3v1",
                     "prefix": "ship$_e3_v1",
@@ -78,6 +85,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0x220022",
                     "portrait": "portrait (20)",
                     "id": "e3v2",
                     "prefix": "ship$_e3_v2",
@@ -85,6 +93,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0x880088",
                     "portrait": "portrait (17)",
                     "id": "e3v3",
                     "prefix": "ship$_e3_v3",
@@ -92,6 +101,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0xFF0000",
                     "portrait": "portrait (12)",
                     "id": "b1v1",
                     "prefix": "Boss_ship$_b1_v1",
@@ -99,6 +109,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0xFF0099",
                     "portrait": "portrait (13)",
                     "id": "b1v2",
                     "prefix": "Boss_ship$_b1_v2",
@@ -106,6 +117,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0x0000aa",
                     "portrait": "portrait (8)",
                     "id": "b2v1",
                     "prefix": "Boss_ship$_b2_v1",
@@ -113,6 +125,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0xFF0099",
                     "portrait": "portrait (10)",
                     "id": "b2v2",
                     "prefix": "Boss_ship$_b2_v2",
@@ -120,6 +133,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0x33ff00",
                     "portrait": "portrait (7)",
                     "id": "b2v3",
                     "prefix": "Boss_ship$_b2_v3",
@@ -127,6 +141,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0x0e1e6f",
                     "portrait": "portrait (3)",
                     "id": "b3v1",
                     "prefix": "Boss_ship$_b3_v1",
@@ -134,6 +149,7 @@
                     "min": 1
                 },
                 {
+                    "color":"0xFF0099",
                     "portrait": "portrait (11)",
                     "id": "b3v2",
                     "prefix": "Boss_ship$_b3_v2",

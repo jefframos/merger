@@ -16,6 +16,7 @@ export default class EnemySystem {
         this.onNextEnemy = new Signals();
         this.onParticles = new Signals();
         this.onGetResources = new Signals();
+        this.onChangeEnemySet = new Signals();
 
         this.mainEnemy = new StandardEnemy();
         this.container.addChild(this.mainEnemy);
@@ -27,8 +28,6 @@ export default class EnemySystem {
         this.baseEnemies.list.forEach(element => {
             this.allEnemies[element.id] = element;
         });
-        this.currentEnemySetID = this.baseEnemies.levels[0].available[1]
-        this.currentEnemySetIDNext = this.baseEnemies.levels[0].available[2]
 
 
         this.enemiesIds = []
@@ -52,8 +51,8 @@ export default class EnemySystem {
 
         this.invokeBossBattle = new UIButton1(0xFFFFFF, TILE_ASSSETS_POOL['image-Figh'], 0xFFFFFF, 120, 40, 'boss-button')
         this.container.addChild(this.invokeBossBattle)
-        this.invokeBossBattle.x = -230
-        this.invokeBossBattle.y = 145
+        this.invokeBossBattle.x = 240
+        this.invokeBossBattle.y = 50
         this.invokeBossBattle.onClick.add(() => {
             this.invokeBoss()
         })
@@ -68,10 +67,13 @@ export default class EnemySystem {
         this.nextBoss = 10;
         this.bossGap = 10;
 
-        this.enemyLifeBar = new ProgressBar({ width: 200, height: 18 }, 4, 4);
+        this.enemyLifeBar = new ProgressBar({ width: 150, height: 15 }, 4, 4);
+        this.enemyLifeBar.updateBackgroundFront(0xff0000)
+        this.enemyLifeBar.updateBackgroundColor(0x990000)
+
         this.container.addChild(this.enemyLifeBar)
         this.enemyLifeBar.pivot.x = this.enemyLifeBar.width / 2
-        this.enemyLifeBar.y = -5
+        this.enemyLifeBar.y = -2
 
 
         this.bossBattleTimer = new ProgressBar({ width: 200, height: 12 }, 3, 3);
@@ -88,7 +90,7 @@ export default class EnemySystem {
 
 
         this.label = new PIXI.Text('', LABELS.LABEL1);
-        this.label.style.fontSize = 12
+        this.label.style.fontSize = 10
         this.label.style.stroke = 0
         this.label.style.strokeThickness = 3
         this.container.addChild(this.label)
@@ -110,12 +112,21 @@ export default class EnemySystem {
         this.updateLevelView();
         this.mainEnemy.setAsEnemy(this.getNextEnemySprite());
 
+        setTimeout(() => {            
+            this.onChangeEnemySet.dispatch(this.currentEnemySet);
+        }, 10);
+
        
     }
     sortNextEnemy(){
         let levelID = Math.floor(this.enemyLevel / 10) 
-        this.currentEnemySetID = this.enemiesIds[levelID];
-        this.currentEnemySet = this.allEnemies[this.currentEnemySetID]
+        if(this.enemiesIds[levelID] != this.currentEnemySetID){
+            this.currentEnemySetID = this.enemiesIds[levelID];
+            
+            this.currentEnemySet = this.allEnemies[this.currentEnemySetID]
+            this.onChangeEnemySet.dispatch(this.currentEnemySet);
+        }
+
 
         this.enemyProgressionView.setEnemySet(this.currentEnemySet, this.allEnemies[this.enemiesIds[levelID + 1]])
         

@@ -104,7 +104,7 @@ export default class ProgressBar extends PIXI.Container {
         value = Math.max(value, 0);
         //this.loadingBarFill.visible = value > 0.075
         this.currentValue = value;
-        this.loadingBarFill.tint = color;
+        this.loadingBarFill.tint = this.currentColor;
         this.loadingBarFill.width =  (this.sizeWidth - this.border * 2  - this.padding) * value + this.border ;
 
     }

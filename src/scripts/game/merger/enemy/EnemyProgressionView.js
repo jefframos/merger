@@ -26,6 +26,7 @@ export default class EnemyProgressionView extends PIXI.Container {
         this.addChild(this.bossCounter)
 
         this.bossCounter.x = 250
+        this.bossCounter.y = 22
 
     }
     setEnemySet(enemySet){

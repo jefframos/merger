@@ -20,6 +20,13 @@ export default class SpaceBackground extends PIXI.Container {
 		this.tiledBackground.height = 5000
 		this.tiledBackground.anchor.set(0.5)
 
+		this.baseTopGradientBlack = new PIXI.Sprite.fromFrame('base-gradient')
+		this.addChild(this.baseTopGradientBlack);
+		this.baseTopGradientBlack.anchor.x = 0.5
+		this.baseTopGradientBlack.anchor.y = 1
+		this.baseTopGradientBlack.rotation = Math.PI
+		this.baseTopGradientBlack.tint = 0
+		this.baseTopGradientBlack.alpha = 1
 
 		this.tiledBackground2 = new PIXI.TilingSprite(PIXI.Texture.fromFrame('seamless-starfield-texture', 256, 256))
 		this.addChild(this.tiledBackground2);
@@ -33,13 +40,14 @@ export default class SpaceBackground extends PIXI.Container {
 		this.backgroundShape.alpha = 0.5
 
 
+
 		this.baseTopGradient = new PIXI.Sprite.fromFrame('base-gradient')
 		this.addChild(this.baseTopGradient);
 		this.baseTopGradient.anchor.x = 0.5
 		this.baseTopGradient.anchor.y = 1
 		this.baseTopGradient.rotation = Math.PI
 		this.baseTopGradient.tint = 0x550033//0x371f52
-		this.baseTopGradient.alpha = 0.7
+		this.baseTopGradient.alpha = 0.3
 
 
 		this.middleGradient = new PIXI.Sprite.fromFrame('bigblur')
@@ -47,7 +55,7 @@ export default class SpaceBackground extends PIXI.Container {
 		this.middleGradient.anchor.x = 0.5
 		this.middleGradient.anchor.y = 0.5
 		this.middleGradient.rotation = Math.PI
-		this.middleGradient.tint = 0x10145d//0x0d5956
+		this.middleGradient.tint = 0x1014aa//0x0d5956
 		this.middleGradient.alpha = 0.5
 
 		this.baseGradient = new PIXI.Sprite.fromFrame('base-gradient')
@@ -55,7 +63,7 @@ export default class SpaceBackground extends PIXI.Container {
 		this.baseGradient.anchor.x = 0.5
 		this.baseGradient.anchor.y = 1
 		this.baseGradient.alpha = 0.5
-		this.baseGradient.tint = 0
+		this.baseGradient.tint = 0x1014aa
 		// this.backShape = new PIXI.Sprite.fromFrame('background_space')
 		// this.addChild(this.backShape);
 		// this.backShape.anchor.x = 0.5
@@ -81,6 +89,12 @@ export default class SpaceBackground extends PIXI.Container {
 
 
 		window.fxSpeed = 1;
+
+
+	}
+	setTopColor(color) {
+		//utils.killColorTween(this.baseTopGradient);
+		utils.addColorTween(this.baseTopGradient, this.baseTopGradient.tint, color, 5, 0.5)
 	}
 
 	resize(innerResolution, scale) {
@@ -98,7 +112,8 @@ export default class SpaceBackground extends PIXI.Container {
 			this.baseGradient.width = innerResolution.width * 4
 			this.baseTopGradient.width = innerResolution.width * 4
 
-
+			this.baseTopGradientBlack.width = this.baseTopGradient.width
+			this.baseTopGradientBlack.y = this.baseTopGradient.y
 			// this.starsContainer.x = innerResolution.width / 2
 			// this.starsContainer.y = innerResolution.height / 2
 		}

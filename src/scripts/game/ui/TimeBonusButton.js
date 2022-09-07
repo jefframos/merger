@@ -41,7 +41,7 @@ export default class TimeBonusButton extends PIXI.Container {
         //this.bonusTimer = new CircleCounter(10,10)
         this.addChild(this.bonusTimer)
         this.bonusTimer.rotation = Math.PI * 0.5
-
+        this.bonusTimer.visible = false;
         this.activeTimer = 0;
         this.bonusTime = 120;
 
@@ -52,6 +52,13 @@ export default class TimeBonusButton extends PIXI.Container {
         this.bonusLabel.x = buttonSize / 2 - this.bonusLabel.width
         this.bonusLabel.y = -buttonSize / 2 - this.bonusLabel.height - 2
         this.addChild(this.bonusLabel);
+    }
+    updateIconScale(scale){
+        this.mainButton.updateIconScale(scale)
+        this.mainButton.icon.x = 0
+        this.mainButton.icon.y = 0
+        this.videoSprite.x = 8
+        this.videoSprite.y = 15
     }
     update(delta) {
         if (this.activeTimer > 0) {

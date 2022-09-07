@@ -149,7 +149,7 @@ export default class MergeTile extends PIXI.Container {
         dateTimeStamp = Date.now()
         if (this.generateDamageTime > 0) {
             if (this.updatedDamageTimestamp) {
-                let targetColor = 0xf2cb0d
+                let targetColor = 0xff810a
                 this.generateDamage = dateTimeStamp - this.updatedDamageTimestamp
                 let calcTiime = (this.generateDamageTime / window.TIME_SCALE ) * 1000
                 if (this.generateDamage > calcTiime) {
@@ -170,6 +170,7 @@ export default class MergeTile extends PIXI.Container {
                     
                 }
                 this.damageTimerView.visible = true
+                this.damageTimerView.updateBackgroundFront(targetColor)
                 this.damageTimerView.setProgressBar(this.generateDamageNormal, targetColor)
             }
         } else {

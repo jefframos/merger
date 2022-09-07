@@ -187,6 +187,9 @@ export default class MergeScreen extends Screen {
         this.enemiesSystem.onParticles.add(this.addParticles.bind(this));
         this.enemiesSystem.onPopLabel.add(this.popLabelDamage.bind(this));
         this.enemiesSystem.onGetResources.add(this.addResourceParticles.bind(this));
+        this.enemiesSystem.onChangeEnemySet.add((set)=>{
+            this.spaceBackground.setTopColor(set.color)
+        });
 
         this.mergeSystem1.addSystem(this.enemiesSystem);
         this.mergeSystem1.addSystem(this.resourceSystem);
@@ -206,17 +209,17 @@ export default class MergeScreen extends Screen {
 
         this.statsList = new UIList()
         this.statsList.w = 120
-        this.statsList.h = 180
+        this.statsList.h = 140
         this.container.addChild(this.statsList)
 
 
         this.resourcesContainer = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('large-square-pattern'), 20, 20, 20, 5)
+            PIXI.Texture.fromFrame('grid1'), 20, 20, 20, 5)
         this.resourcesContainer.width = this.statsList.w
         this.resourcesContainer.height = 40
 
         this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
-        this.resourcesLabel.style.fontSize = 12
+        this.resourcesLabel.style.fontSize = 10
         utils.centerObject(this.resourcesLabel, this.resourcesContainer)
         this.resourcesLabel.x -= 10
         this.resourcesContainer.addChild(this.resourcesLabel)
@@ -225,58 +228,58 @@ export default class MergeScreen extends Screen {
         this.coinTexture = new PIXI.Sprite.from('coin')
         this.resourcesLabel.addChild(this.coinTexture)
         this.coinTexture.scale.set(this.resourcesContainer.height / this.coinTexture.height * 0.5)
-        this.coinTexture.x = -25
+        this.coinTexture.x = -30
         this.coinTexture.y = -3
 
 
 
         this.rpsContainer = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('large-square-pattern-green'), 20, 20, 20, 5)
+            PIXI.Texture.fromFrame('grid1'), 20, 20, 20, 5)
         this.rpsContainer.width = this.statsList.w
         this.rpsContainer.height = 40
         this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
-        this.rpsLabel.style.fontSize = 12
+        this.rpsLabel.style.fontSize = 10
         this.rpsContainer.addChild(this.rpsLabel)
         this.statsList.addElement(this.rpsContainer)
 
         this.resourcesTexture = new PIXI.Sprite.from('drill-small')
         this.resourcesTexture.scale.set(this.rpsContainer.height / this.resourcesTexture.height * 0.5)
-        this.resourcesTexture.x = -25
+        this.resourcesTexture.x = -30
         this.resourcesTexture.y = -3
         this.rpsLabel.addChild(this.resourcesTexture)
 
 
         this.dpsContainer = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('large-square-pattern-orange'), 20, 20, 20, 5)
+            PIXI.Texture.fromFrame('grid1'), 20, 20, 20, 5)
         this.dpsContainer.width = this.statsList.w
         this.dpsContainer.height = 40
 
         this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
-        this.dpsLabel.style.fontSize = 12
+        this.dpsLabel.style.fontSize = 10
         this.dpsContainer.addChild(this.dpsLabel)
         this.statsList.addElement(this.dpsContainer)
 
         this.damageTexture = new PIXI.Sprite.from('bullets')
         this.dpsLabel.addChild(this.damageTexture)
         this.damageTexture.scale.set(this.dpsContainer.height / this.damageTexture.height * 0.5)
-        this.damageTexture.x = -25
+        this.damageTexture.x = -30
         this.damageTexture.y = -3
 
 
         this.shardsCounter = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('large-square-pattern-purple'), 20, 20, 20, 5)
+            PIXI.Texture.fromFrame('grid1'), 20, 20, 20, 5)
         this.shardsCounter.width = this.statsList.w
         this.shardsCounter.height = 40
 
         this.shardsLabel = new PIXI.Text('0', LABELS.LABEL1);
-        this.shardsLabel.style.fontSize = 12
+        this.shardsLabel.style.fontSize = 10
         this.shardsCounter.addChild(this.shardsLabel)
         this.statsList.addElement(this.shardsCounter)
 
         this.shardsTexture = new PIXI.Sprite.from('shards')
         this.shardsLabel.addChild(this.shardsTexture)
         this.shardsTexture.scale.set(this.shardsCounter.height / this.shardsTexture.height * 0.5)
-        this.shardsTexture.x = -25
+        this.shardsTexture.x = -30
         this.shardsTexture.y = -3
 
 
@@ -388,18 +391,19 @@ export default class MergeScreen extends Screen {
         })
 
 
-        this.sellEverything = new UIButton1(0x002299, 'portraitFemale', 0xFFFFFF, buttonSize, buttonSize, 'square-pattern1-green')
+        this.sellEverything = new TimeBonusButton('portraitFemale', buttonSize)
         this.sellEverything.updateIconScale(0.9)
+        this.sellEverything.setDescription("")
         this.sellEverything.newItem = new PIXI.Sprite.fromFrame('new_item')
         this.sellEverything.newItem.scale.set(0.7)
         this.sellEverything.newItem.anchor.set(0)
         this.sellEverything.newItem.position.set(-buttonSize / 2)
         this.sellEverything.newItem.visible = true;
         this.sellEverything.addChild(this.sellEverything.newItem)
-        this.sellEverything.onClick.add(() => {
-            this.resetAll();
-            //this.openPopUp(this.mergeItemsShop)
-        })
+        // this.sellEverything.onClick.add(() => {
+        //     this.resetAll();
+        //     //this.openPopUp(this.mergeItemsShop)
+        // })
         this.container.addChild(this.sellEverything)
 
         this.shopButtonsList.updateHorizontalList();
@@ -657,19 +661,19 @@ export default class MergeScreen extends Screen {
 
         this.resourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources);
         utils.centerObject(this.resourcesLabel, this.resourcesContainer)
-        this.resourcesLabel.x += 10
+        this.resourcesLabel.x = 40
 
         this.rpsLabel.text = utils.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps) + '/s';
         utils.centerObject(this.rpsLabel, this.rpsContainer)
-        this.rpsLabel.x += 10
+        this.rpsLabel.x = 40
 
         this.dpsLabel.text = utils.formatPointsLabel(this.mergeSystem1.dps) + '/s';
         utils.centerObject(this.dpsLabel, this.dpsContainer)
-        this.dpsLabel.x += 10
+        this.dpsLabel.x = 40
 
         this.shardsLabel.text = utils.formatPointsLabel(window.gameModifyers.permanentBonusData.shards);
         utils.centerObject(this.shardsLabel, this.shardsCounter)
-        this.shardsLabel.x += 10
+        this.shardsLabel.x = 40
 
         this.timestamp = (Date.now() / 1000 | 0);
 
@@ -708,8 +712,9 @@ export default class MergeScreen extends Screen {
         //     this.statsList.y = config.height - this.statsList.h - 20
 
         // }
-        this.statsList.x = config.width - this.statsList.w
-        this.statsList.y = 80
+        // this.statsList.x = config.width - this.statsList.w
+        // this.statsList.y = 150
+        this.statsList.y = config.height - this.statsList.h - 120
         this.shopButtonsList.x = config.width / 2 - this.shopButtonsList.w / 2 + 40
         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 20
         this.helperButtonList.x = 0

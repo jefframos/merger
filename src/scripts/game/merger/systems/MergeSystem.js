@@ -647,9 +647,9 @@ export default class MergeSystem {
         let maxPos = 0
         this.pieceGeneratorsList.forEach(piece => {
             if (piece.visible) {
-                piece.x = (piece.width + this.slotSize.distance) * accumPiece
+                piece.x = (piece.backShape.width + this.slotSize.distance) * accumPiece
                 accumPiece++
-                maxPos = piece.x + piece.width
+                maxPos = piece.x + piece.backShape.width
             }
         });
         this.uiContainer.x = this.wrapper.x + this.wrapper.width / 2 - (maxPos * this.uiContainer.scale.x) / 2
