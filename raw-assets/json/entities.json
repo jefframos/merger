@@ -160,6 +160,7 @@
         },
         "list": [
             {
+                "type": "damage",
                 "nameID": "entity_starship_01",
                 "imageSrc": "ship01",
                 "displayName": "Ship - 01",
@@ -172,6 +173,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_02",
                 "imageSrc": "ship02",
                 "displayName": "Ship - 02",
@@ -184,6 +186,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_03",
                 "imageSrc": "ship03",
                 "displayName": "Ship - 03",
@@ -196,6 +199,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_04",
                 "imageSrc": "ship04",
                 "displayName": "Ship - 04",
@@ -208,6 +212,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_05",
                 "imageSrc": "ship05",
                 "displayName": "Ship - 05",
@@ -220,6 +225,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_06",
                 "imageSrc": "ship06",
                 "displayName": "Ship - 06",
@@ -232,6 +238,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_07",
                 "imageSrc": "ship07",
                 "displayName": "Ship - 07",
@@ -244,6 +251,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_08",
                 "imageSrc": "ship08",
                 "displayName": "Ship - 08",
@@ -256,6 +264,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_09",
                 "imageSrc": "ship09",
                 "displayName": "Ship - 09",
@@ -268,6 +277,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_10",
                 "imageSrc": "ship10",
                 "displayName": "Ship - 10",
@@ -280,6 +290,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_11",
                 "imageSrc": "ship11",
                 "displayName": "Ship - 11",
@@ -292,6 +303,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_12",
                 "imageSrc": "ship12",
                 "displayName": "Ship - 12",
@@ -304,6 +316,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_13",
                 "imageSrc": "ship13",
                 "displayName": "Ship - 13",
@@ -316,6 +329,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_14",
                 "imageSrc": "ship14",
                 "displayName": "Ship - 14",
@@ -328,6 +342,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_15",
                 "imageSrc": "ship15",
                 "displayName": "Ship - 15",
@@ -340,6 +355,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_16",
                 "imageSrc": "ship16",
                 "displayName": "Ship - 16",
@@ -352,6 +368,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_17",
                 "imageSrc": "ship17",
                 "displayName": "Ship - 17",
@@ -364,6 +381,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_18",
                 "imageSrc": "ship18",
                 "displayName": "Ship - 18",
@@ -376,6 +394,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_19",
                 "imageSrc": "ship19",
                 "displayName": "Ship - 19",
@@ -388,6 +407,7 @@
                 "levelMax": 500
             },
             {
+                "type": "damage",
                 "nameID": "entity_starship_20",
                 "imageSrc": "ship20",
                 "displayName": "Ship - 20",

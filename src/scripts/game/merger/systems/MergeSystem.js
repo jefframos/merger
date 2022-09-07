@@ -222,7 +222,14 @@ export default class MergeSystem {
         piece.onCompleteCharge.add((slot) => {
 
             //upgrade this
-            piece.addEntity(this.dataTiles[0]);
+            let id = 0;
+            if(this.boardLevel > 8){
+                id = Math.floor(Math.random() * 3);
+            }
+            else if(this.boardLevel > 4){
+                id = Math.floor(Math.random() * 2);
+            }
+            piece.addEntity(this.dataTiles[id]);
 
             this.sortAutoMerge(piece)
         });

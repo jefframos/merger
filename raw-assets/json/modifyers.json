@@ -1,10 +1,12 @@
 {
     "modifyers": [
         {
+            "type": "resources",
+            "modifyerIcon": "drill-small",
             "nameID": "drill_speed",
             "displayName": "Drill speed",
             "imageSrc": "drill",
-            "tileImageSrc": "asteroid (2)",
+            "tileImageSrc": "drill-icon",
             "initialCost": 1000,
             "costCoefficient": 1.43,
             "initialTime": 1,
@@ -15,10 +17,12 @@
             "levelMax": 100
         },
         {
+            "type": "resources",
+            "modifyerIcon": "coin",
             "nameID": "resources",
             "displayName": "Resources amount",
             "imageSrc": "drill",
-            "tileImageSrc": "asteroid (2)",
+            "tileImageSrc": "coin-white",
             "initialCost": 20000,
             "costCoefficient": 1.53,
             "initialTime": 1,
@@ -29,10 +33,12 @@
             "levelMax": 100
         },
         {
+            "type": "bullets",
+            "modifyerIcon": "fast-arrow",
             "nameID": "attack_speed",
             "displayName": "Attack Speed",
             "imageSrc": "drill",
-            "tileImageSrc": "asteroid (2)",
+            "tileImageSrc": "fast-arrow",
             "initialCost": 1000000,
             "costCoefficient": 1.95,
             "initialTime": 1,
@@ -43,10 +49,12 @@
             "levelMax": 100        
         },
         {
+            "type": "bullets",
+            "modifyerIcon": "bullets",
             "nameID": "attack_damage",
             "displayName": "ship Damage",
             "imageSrc": "drill",
-            "tileImageSrc": "asteroid (2)",
+            "tileImageSrc": "bullets-large",
             "initialCost": 1000000,
             "costCoefficient": 2.55,
             "initialTime": 1,
@@ -57,10 +65,12 @@
             "levelMax": 100
         },
         {
+            "type": "resources",
+            "modifyerIcon": "spiky-field",
             "nameID": "extra_generators",
             "displayName": "Ship Generator",
             "imageSrc": "drill",
-            "tileImageSrc": "asteroid (2)",
+            "tileImageSrc": "spiky-field-plus",
             "initialCost": 10000000000000,
             "costCoefficient": 100,
             "initialTime": 1,
@@ -73,10 +83,12 @@
             "quantifyMessage":"Total"
         },
         {
+            "type": "resources",
+            "modifyerIcon": "active_engine",
             "nameID": "auto_place_ships",
             "displayName": "Auto Merge Ship",
             "imageSrc": "drill",
-            "tileImageSrc": "asteroid (2)",
+            "tileImageSrc": "active_engine",
             "initialCost": 10000000000000000000000,
             "costCoefficient": 1,
             "initialTime": 1,

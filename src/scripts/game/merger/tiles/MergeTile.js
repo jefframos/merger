@@ -254,7 +254,7 @@ export default class MergeTile extends PIXI.Container {
         this.updatedDamageTimestamp = (Date.now() / 1000 | 0);
         this.tileSprite.texture = PIXI.Texture.from(this.tileData.getTexture());
         this.updatePosition()
-        this.entityScale = 1//Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
+        this.entityScale = 0.9//Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
         this.tileSprite.anchor.set(0.5)
         this.sin = Math.random();
         this.label.text = this.tileData.getValue()

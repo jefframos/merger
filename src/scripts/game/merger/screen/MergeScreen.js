@@ -116,7 +116,9 @@ export default class MergeScreen extends Screen {
 
 
             mergeData.currentLevel = window.gameModifyers.getLevel(mergeData);
-
+            console.log(window.baseModifyers.modifyers[index].type)
+            mergeData.type = window.baseModifyers.modifyers[index].type
+            mergeData.modifyerIcon = window.baseModifyers.modifyers[index].modifyerIcon
             this.rawModifyers.push(mergeData)
         }
 
@@ -124,7 +126,7 @@ export default class MergeScreen extends Screen {
         this.rawMergeDataList = []
         for (let index = 0; index < window.baseEntities.mergeEntities.list.length; index++) {
             let mergeData = new MergerData(window.baseEntities.mergeEntities.list[index], index)
-            mergeData.type = 'damage'
+            mergeData.type = window.baseEntities.mergeEntities.list[index].type
             this.rawMergeDataList.push(mergeData)
         }
 

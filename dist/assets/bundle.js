@@ -22873,7 +22873,7 @@ var MergeTile = function (_PIXI$Container) {
             this.updatedDamageTimestamp = Date.now() / 1000 | 0;
             this.tileSprite.texture = PIXI.Texture.from(this.tileData.getTexture());
             this.updatePosition();
-            this.entityScale = 1; //Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
+            this.entityScale = 0.9; //Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
             this.tileSprite.anchor.set(0.5);
             this.sin = Math.random();
             this.label.text = this.tileData.getValue();
@@ -59698,7 +59698,7 @@ module.exports = exports["default"];
 /* 337 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/asteroids/asteroids.json","image/pattern2/pattern2.json","image/particles/particles.json","image/entities/entities.json","image/background/background.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
+module.exports = {"default":["image/asteroids/asteroids.json","image/pattern2/pattern2.json","image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 338 */
@@ -60192,14 +60192,16 @@ var MergeScreen = function (_Screen) {
                         var mergeData = new _MergerData2.default(window.baseModifyers.modifyers[index], index);
 
                         mergeData.currentLevel = window.gameModifyers.getLevel(mergeData);
-
+                        console.log(window.baseModifyers.modifyers[index].type);
+                        mergeData.type = window.baseModifyers.modifyers[index].type;
+                        mergeData.modifyerIcon = window.baseModifyers.modifyers[index].modifyerIcon;
                         _this.rawModifyers.push(mergeData);
                 }
 
                 _this.rawMergeDataList = [];
                 for (var _index = 0; _index < window.baseEntities.mergeEntities.list.length; _index++) {
                         var _mergeData = new _MergerData2.default(window.baseEntities.mergeEntities.list[_index], _index);
-                        _mergeData.type = 'damage';
+                        _mergeData.type = window.baseEntities.mergeEntities.list[_index].type;
                         _this.rawMergeDataList.push(_mergeData);
                 }
 
@@ -61064,7 +61066,6 @@ var EnemySystem = function () {
 
             if (this.enemyDeathTimer > 0) {
                 this.enemyDeathTimer -= delta;
-                this.mainEnemy.alpha = 0;
                 this.updateVisibleUI();
                 return;
             } else if (this.enemyDeathTimer < 0.5) {
@@ -61121,9 +61122,9 @@ var EnemySystem = function () {
             this.updateEnemyLife(true);
             this.inABossBattle = true;
             this.mainEnemy.setAsBoss(this.getNextBossSprite());
-            this.mainEnemy.alpha = 0;
             this.bossTimer = this.bossDefaultTimer;
             this.enemyDeathTimer = 2;
+            this.mainEnemy.alpha = 0;
             this.updateLevelView();
             this.calcNextBoss();
         }
@@ -61150,6 +61151,7 @@ var EnemySystem = function () {
                 this.inABossBattle = false;
             }
             this.enemyDeathTimer = 1;
+            this.mainEnemy.alpha = 0;
             COOKIE_MANAGER.saveEnemyLevel(this.enemyLevel);
             this.updateEnemyLife();
             this.updateLevelView();
@@ -62119,7 +62121,7 @@ var ShopItem = function (_UIList) {
                         this.levelBar.visible = false;
                         this.attributesList['c_cost'].visible = false;
                         this.attributesList['c_value'].visible = false;
-                        this.levelLabel.text = 'Disable';
+                        this.levelLabel.text = '';
                     } else {
 
                         this.levelLabel.text = this.itemData.rawData.quantifyMessage + '\n' + this.itemData.currentLevel;
@@ -62138,12 +62140,18 @@ var ShopItem = function (_UIList) {
             var image = this.itemData.rawData.tileImageSrc ? this.itemData.rawData.tileImageSrc : this.itemData.rawData.imageSrc;
             this.itemIcon.texture = new PIXI.Texture.from(image);
             this.descriptionLabel.text = this.itemData.rawData.displayName;
-            var types = [{ name: 'cost', icon: 'coin' }, { name: 'value', icon: 'icon_increase' }];
+
+            console.log(this.itemData.type);
+            var iconType = this.itemData.type == 'damage' ? 'bullets' : 'coin';
+            if (this.itemData.modifyerIcon) {
+                iconType = this.itemData.modifyerIcon;
+            }
+            var types = [{ name: 'cost', icon: iconType }, { name: 'value', icon: 'icon_increase' }];
 
             if (!this.attributesList) {
                 this.attributesList = new PIXI.Container();
                 //this.attributesList.w = this.descriptionContainer.listScl * this.w * 0.9;
-                //this.attributesList.h = this.h * 0.75
+                //this.attributesList.h = this.h * 0.5
 
                 this.descriptionContainer.addChild(this.attributesList);
 
@@ -62155,11 +62163,11 @@ var ShopItem = function (_UIList) {
                     var attIcon = new PIXI.Sprite.from(element.icon);
                     attIcon.scale.set(20 / attIcon.width);
                     var attValue = new PIXI.Text(element.name, LABELS.LABEL1);
-                    attValue.style.fontSize = 12;
+                    attValue.style.fontSize = 10;
                     attContainer.addChild(attIcon);
                     attContainer.addChild(attValue);
                     attIcon.x = 100 * count;
-                    attValue.scale.set(15 / attValue.height);
+                    attValue.scale.set(12 / attValue.height);
                     attValue.x = attIcon.x + attIcon.width + 5;
                     attValue.y = attIcon.y + attIcon.height / 2 - attValue.height / 2;
 
@@ -63713,7 +63721,13 @@ var MergeSystem = function () {
             piece.onCompleteCharge.add(function (slot) {
 
                 //upgrade this
-                piece.addEntity(_this2.dataTiles[0]);
+                var id = 0;
+                if (_this2.boardLevel > 8) {
+                    id = Math.floor(Math.random() * 3);
+                } else if (_this2.boardLevel > 4) {
+                    id = Math.floor(Math.random() * 2);
+                }
+                piece.addEntity(_this2.dataTiles[id]);
 
                 _this2.sortAutoMerge(piece);
             });

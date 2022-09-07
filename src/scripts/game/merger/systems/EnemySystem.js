@@ -161,7 +161,6 @@ export default class EnemySystem {
 
         if (this.enemyDeathTimer > 0) {
             this.enemyDeathTimer -= delta;
-            this.mainEnemy.alpha = 0;
             this.updateVisibleUI();
             return;
         } else if (this.enemyDeathTimer < 0.5) {
@@ -213,9 +212,9 @@ export default class EnemySystem {
         this.updateEnemyLife(true);
         this.inABossBattle = true;
         this.mainEnemy.setAsBoss(this.getNextBossSprite());
-        this.mainEnemy.alpha = 0;
         this.bossTimer = this.bossDefaultTimer;
         this.enemyDeathTimer = 2;
+        this.mainEnemy.alpha = 0;
         this.updateLevelView();
         this.calcNextBoss();
 
@@ -236,6 +235,7 @@ export default class EnemySystem {
             this.inABossBattle = false;
         }
         this.enemyDeathTimer = 1;
+        this.mainEnemy.alpha = 0;
         COOKIE_MANAGER.saveEnemyLevel(this.enemyLevel);
         this.updateEnemyLife();
         this.updateLevelView();
