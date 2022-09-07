@@ -3,7 +3,7 @@
         "enemies": {
             "levels": [
                 {
-                    "available":[
+                    "available": [
                         "e1v1",
                         "e1v2",
                         "e1v3",
@@ -13,6 +13,17 @@
                         "e3v1",
                         "e3v2",
                         "e3v3"
+                    ]
+                },
+                {
+                    "available": [
+                        "b1v1",
+                        "b1v2",
+                        "b2v1",
+                        "b2v2",
+                        "b2v3",
+                        "b3v1",
+                        "b3v2"
                     ]
                 }
             ],

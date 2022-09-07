@@ -54,8 +54,8 @@ export default class ResourceSystem {
         this.rps = 0;
     }
     resetSystem(){
-        this.dataTiles.forEach(element => {
-            element
+        this.resourceSlots.forEach(element => {
+            element.resetTile();
         })
     }
     loadData(){

@@ -2,99 +2,107 @@
 
 "asteroid (1).png":
 {
-	"frame": {"x":1,"y":571,"w":348,"h":348},
+	"frame": {"x":147,"y":207,"w":60,"h":46},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":176,"y":176,"w":348,"h":348},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":60,"h":46},
+	"sourceSize": {"w":62,"h":48}
 },
 "asteroid (2).png":
 {
-	"frame": {"x":1608,"y":546,"w":290,"h":292},
+	"frame": {"x":77,"y":77,"w":72,"h":72},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":205,"y":205,"w":290,"h":292},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":72,"h":72},
+	"sourceSize": {"w":74,"h":74}
 },
 "asteroid (3).png":
 {
-	"frame": {"x":701,"y":571,"w":348,"h":310},
-	"rotated": true,
+	"frame": {"x":1,"y":1,"w":74,"h":74},
+	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":176,"y":195,"w":348,"h":310},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":74,"h":74},
+	"sourceSize": {"w":76,"h":76}
 },
 "asteroid (4).png":
 {
-	"frame": {"x":1662,"y":1,"w":250,"h":232},
-	"rotated": true,
+	"frame": {"x":1,"y":77,"w":74,"h":74},
+	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":225,"y":233,"w":250,"h":232},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":74,"h":74},
+	"sourceSize": {"w":76,"h":76}
 },
 "asteroid (5).png":
 {
-	"frame": {"x":1013,"y":571,"w":348,"h":310},
-	"rotated": true,
+	"frame": {"x":77,"y":1,"w":74,"h":74},
+	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":176,"y":195,"w":348,"h":310},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":74,"h":74},
+	"sourceSize": {"w":76,"h":76}
 },
 "asteroid (6).png":
 {
-	"frame": {"x":1325,"y":546,"w":281,"h":296},
+	"frame": {"x":1,"y":153,"w":74,"h":74},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":204,"y":202,"w":281,"h":296},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":74,"h":74},
+	"sourceSize": {"w":76,"h":76}
 },
 "asteroid (7).png":
 {
-	"frame": {"x":351,"y":571,"w":348,"h":348},
+	"frame": {"x":153,"y":71,"w":72,"h":68},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":176,"y":176,"w":348,"h":348},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":72,"h":68},
+	"sourceSize": {"w":74,"h":70}
 },
 "asteroid (8).png":
 {
-	"frame": {"x":1141,"y":1,"w":519,"h":543},
+	"frame": {"x":153,"y":1,"w":74,"h":68},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":103,"y":54,"w":519,"h":543},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":74,"h":68},
+	"sourceSize": {"w":76,"h":70}
 },
 "asteroid (9).png":
 {
-	"frame": {"x":571,"y":1,"w":568,"h":568},
-	"rotated": false,
+	"frame": {"x":77,"y":151,"w":74,"h":68},
+	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":78,"y":54,"w":568,"h":568},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":74,"h":68},
+	"sourceSize": {"w":76,"h":70}
 },
 "asteroid (10).png":
 {
-	"frame": {"x":1,"y":1,"w":568,"h":568},
+	"frame": {"x":151,"y":141,"w":70,"h":64},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":78,"y":54,"w":568,"h":568},
-	"sourceSize": {"w":700,"h":700}
+	"spriteSourceSize": {"x":1,"y":1,"w":70,"h":64},
+	"sourceSize": {"w":72,"h":66}
 },
 "drill.png":
 {
-	"frame": {"x":1662,"y":253,"w":140,"h":88},
+	"frame": {"x":209,"y":207,"w":47,"h":36},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":47,"h":36},
+	"sourceSize": {"w":49,"h":38}
+},
+"drill2.png":
+{
+	"frame": {"x":1,"y":229,"w":27,"h":18},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":2,"y":2,"w":140,"h":88},
-	"sourceSize": {"w":144,"h":92}
+	"spriteSourceSize": {"x":1,"y":1,"w":27,"h":18},
+	"sourceSize": {"w":29,"h":20}
 }},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "asteroids.png",
 	"format": "RGBA8888",
-	"size": {"w":1899,"h":920},
+	"size": {"w":246,"h":255},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:c140070c1f983d3e4a12320ff2966e85:6c8797a93e00f10ef5e89fa1035ab488:3cb2167982f406a3d6627570b02f9be7$"
+	"smartupdate": "$TexturePacker:SmartUpdate:b01aa3370c941817e1bbd1d30e382ca0:b7fc88c45652134df9f5167b90794de9:3cb2167982f406a3d6627570b02f9be7$"
 }
 }

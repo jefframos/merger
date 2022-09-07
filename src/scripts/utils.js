@@ -144,6 +144,77 @@ export default
             }
             return value
         },
+        trimMatrix2(piecesOP, ignoreBlocker = false) {
+            if (piecesOP.length <= 0) {
+                return;
+            }
+            let pieces = this.cloneMatrix(piecesOP)
+            let colCounters = [];
+            let lineCounters = [];
+            for (let i = 0; i < pieces.length; i++) {
+                colCounters.push(0);
+            }
+            for (let i = 0; i < pieces[0].length; i++) {
+                lineCounters.push(0);
+            }
+            for (let i = 0; i < pieces.length; i++) {
+                for (let j = 0; j < pieces[i].length; j++) {
+                    const element = pieces[i][j];
+                    if (element && element.visible) {
+                        lineCounters[j]++;
+                        colCounters[i]++;
+                    }
+                }
+            }
+
+            let padding = { left: 0, right: 0, top: 0, bottom: 0 }
+
+
+            for (let i = 0; i < lineCounters.length; i++) {
+                const element = lineCounters[i];
+                if (!element) {
+                    padding.left++;
+                } else {
+                    break;
+                }
+            }
+            for (let i = lineCounters.length - 1; i >= 0; i--) {
+                const element = lineCounters[i];
+                if (!element) {
+                    padding.right++;
+                } else {
+                    break;
+                }
+            }
+
+            for (let i = 0; i < colCounters.length; i++) {
+                const element = colCounters[i];
+                if (!element) {
+                    padding.top++;
+                } else {
+                    break;
+                }
+            }
+            for (let i = colCounters.length - 1; i >= 0; i--) {
+                const element = colCounters[i];
+                if (!element) {
+                    padding.bottom++;
+                } else {
+                    break;
+                }
+            }
+
+            pieces.splice(0, padding.top);
+            pieces.splice(pieces.length - padding.bottom, padding.bottom);
+
+            for (let i = 0; i < pieces.length; i++) {
+                pieces[i].splice(0, padding.left);
+                pieces[i].splice(pieces[i].length - padding.right, padding.right);
+            }
+
+
+            return padding
+        },
         trimMatrix(piecesOP, ignoreBlocker = false) {
             if (piecesOP.length <= 0) {
                 return;

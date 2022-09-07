@@ -44,7 +44,7 @@ export default class EnemyProgressionView extends PIXI.Container {
         }
 
         if(isBoss){
-            this.prevLevelContainer.addSprite(this.enemySet.portrait)
+            //this.prevLevelContainer.addSprite(this.enemySet.portrait)
         }else{
             this.prevLevelContainer.removeSprite()
         }
@@ -55,17 +55,20 @@ export default class EnemyProgressionView extends PIXI.Container {
         this.currentLevelContainer.updateLevel(nextLevel, isBoss)
 
         if(isBoss){
+            this.bossCounter.updateLevel(this.enemySystem.nextBoss - 10)
             this.currentLevelContainer.addSprite(this.enemySet.portrait)
         }else{
             this.currentLevelContainer.removeSprite()
+            this.bossCounter.updateLevel(this.enemySystem.nextBoss)
         }
 
 
         nextLevel = this.enemySystem.enemyLevel + 1
         isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;
         this.nextLevelContainer.updateLevel(nextLevel, isBoss)
-        this.bossCounter.updateLevel(this.enemySystem.nextBoss)
 
+        //console.log(this.enemySystem.nextBoss)
+        
         if(isBoss){
             this.nextLevelContainer.addSprite(this.enemySet.portrait)
         }else{

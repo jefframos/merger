@@ -97,6 +97,7 @@ export default class CookieManager {
 		this.storeObject('resources', this.resources)
 	}
 	pickResource(mergeData) {
+		console.log(this.resources)
 		this.resources.entities[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
 		this.resources.entities[mergeData.rawData.nameID].latestResourceCollect = Date.now() / 1000 | 0
 		this.resources.entities[mergeData.rawData.nameID].pendingResource = 0

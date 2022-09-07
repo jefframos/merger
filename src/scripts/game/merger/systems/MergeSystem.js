@@ -27,7 +27,7 @@ export default class MergeSystem {
         this.container.addChild(this.slotsContainer)
 
         this.dataTiles = dataTiles;
-        let matrix = utils.cloneMatrix(data.gameMap)
+        this.matrix = utils.cloneMatrix(data.gameMap)
 
         this.pieceGeneratorsList = [];
 
@@ -62,10 +62,10 @@ export default class MergeSystem {
         this.virtualSlots = [];
         this.slots = [];
 
-        for (var i = 0; i < matrix.length; i++) {
+        for (var i = 0; i < this.matrix.length; i++) {
             let temp = []
             let temp2 = []
-            for (var j = 0; j < matrix[i].length; j++) {
+            for (var j = 0; j < this.matrix[i].length; j++) {
                 temp.push(0)
                 temp2.push(0)
             }
@@ -73,11 +73,13 @@ export default class MergeSystem {
             this.virtualSlots.push(temp2);
         }
 
-        for (var i = 0; i < matrix.length; i++) {
-            for (var j = 0; j < matrix[i].length; j++) {
-                let slotID = matrix[i][j];
+        for (var i = 0; i < this.matrix.length; i++) {
+            for (var j = 0; j < this.matrix[i].length; j++) {
+                let slotID = this.matrix[i][j];
+                this.addSlot(i, j);
+                this.virtualSlots[i][j].visible = false;
                 if (slotID == 0) {
-                    this.addSlot(i, j);
+                    this.virtualSlots[i][j].visible = true;
                 }
             }
         }
@@ -125,55 +127,19 @@ export default class MergeSystem {
         this.boardLevel = 0;
         this.latest = 0;
 
-        // for (var i = 0; i < matrix.length; i++) {
-        //         for (var j = 0; j < matrix[i].length; j++) {
-        //             let slotID = matrix[i][j];
-        //             if (slotID == 0) {
-        //                 this.addSlot(i, j);
-        //             }
-        //         }
-        //     }
 
         for (var i = 0; i < this.slots.length; i++) {
             for (var j = 0; j < this.slots[i].length; j++) {
                 if (this.slots[i][j]) {
-
                     let slot = this.slots[i][j];
-                    if (slot.parent) {
-                        slot.parent.removeChild(slot)
-                    }
-                    this.slots[i][j] = null;
                     if (window.baseConfigGame.gameMap[i][j] <= this.boardLevel) {
-                        this.addSlot(i, j);
+                        slot.visible = true;
                     }
                 }
             }
         }
 
         this.updateTotalGenerators();
-   
-        // this.virtualSlots = [];
-        // this.slots = [];
-
-        // for (var i = 0; i < matrix.length; i++) {
-        //     let temp = []
-        //     let temp2 = []
-        //     for (var j = 0; j < matrix[i].length; j++) {
-        //         temp.push(0)
-        //         temp2.push(0)
-        //     }
-        //     this.slots.push(temp);
-        //     this.virtualSlots.push(temp2);
-        // }
-
-        // for (var i = 0; i < matrix.length; i++) {
-        //     for (var j = 0; j < matrix[i].length; j++) {
-        //         let slotID = matrix[i][j];
-        //         if (slotID == 0) {
-        //             this.addSlot(i, j);
-        //         }
-        //     }
-        // }
 
         COOKIE_MANAGER.resetBoard();
         console.log( COOKIE_MANAGER.getBoard())
@@ -318,8 +284,9 @@ export default class MergeSystem {
         for (let index = 0; index < window.baseConfigGame.gameMap.length; index++) {
             for (let j = 0; j < window.baseConfigGame.gameMap[index].length; j++) {
                 if (window.baseConfigGame.gameMap[index][j] <= this.boardLevel) {
+                    this.virtualSlots[index][j].visible = true;
                     if (this.virtualSlots[index][j] == 0) {
-                        this.addSlot(index, j);
+                        //this.addSlot(index, j);
                         this.latest++;
                     }
                 }
@@ -523,14 +490,14 @@ export default class MergeSystem {
         let firstAvailable = null;
         for (var i = 0; i < this.slots.length; i++) {
             for (var j = 0; j < this.slots[i].length; j++) {
-                if (this.slots[i][j] && this.slots[i][j].tileData) {
+                if (this.slots[i][j] && this.slots[i][j].tileData && this.slots[i][j].visible) {
                     let slot = this.slots[i][j];
-                    if (slot.tileData.getValue() == piece.tileData.getValue()) {
+                    if ( slot.tileData.getValue() == piece.tileData.getValue()) {
                         firstAvailable = this.slots[i][j];
                         break;
                     }
 
-                } else if (!firstAvailable) {
+                } else if (!firstAvailable && this.slots[i][j].visible) {
                     firstAvailable = this.slots[i][j];
                 }
             }
@@ -623,7 +590,7 @@ export default class MergeSystem {
 
         let clone = utils.cloneMatrix(this.slots)
 
-        let trimmed = utils.trimMatrix(clone);
+        let trimmed = utils.trimMatrix2(clone);
         let sides = trimmed.left + trimmed.right
         let ups = trimmed.top + trimmed.bottom;
 
@@ -668,6 +635,8 @@ export default class MergeSystem {
     updateGridPosition() {
 
         utils.resizeToFitARCap(this.wrapper, this.container, this.fixedSize)
+
+        //console.log(this.container, this.fixedSize)
 
         this.container.x = this.wrapper.x + this.wrapper.width / 2 - (this.fixedSize.width * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.x;;
         this.container.y = this.wrapper.y + this.wrapper.height / 2 - (this.fixedSize.height * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.y;

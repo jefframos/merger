@@ -103,8 +103,10 @@ export default class ResourceTile extends MergeTile {
         this.drillSin = Math.random() * 3.14 * 2
     }
     resetTile() {
-        if (this.targetData){
+        if (this.targetData) {
             this.setTargetData(this.targetData)
+            this.removeEntity();
+            this.readyToCollect = false;
         }
     }
     update(delta, timestamp) {
@@ -167,7 +169,9 @@ export default class ResourceTile extends MergeTile {
         if (this.targetData.rawData.tileImageSrc) {
             this.resourceSource.texture = PIXI.Texture.fromFrame(this.targetData.rawData.tileImageSrc)
             this.resourceSource.visible = true;
-            this.resourceSource.scale.set(this.size / this.resourceSource.width)
+            this.resourceSource.scale.set(this.size / this.resourceSource.width * this.resourceSource.scale.x * 0.6)
+            this.resourceSource.scale.set(1)
+            this.resourceSource.x = this.backSlot.height / 2
         }
         this.updatePriceLabel(utils.formatPointsLabel(this.targetData.rawData.initialCost))
         this.initialCost = this.targetData.rawData.initialCost
@@ -184,12 +188,13 @@ export default class ResourceTile extends MergeTile {
 
         if (this.tileData) {
             if (this.tileData.isRight) {
-
                 this.positionOffset.x = 60 + this.entityScale + Math.cos(this.drillSin) * 4
+                this.tileSprite.scale.x = Math.abs(this.tileSprite.scale.x) 
+
             } else {
 
                 this.positionOffset.x = -60 - this.entityScale + Math.cos(this.drillSin) * 4
-
+                this.positionOffset.y = -this.tileSprite.height * (1 - this.tileSprite.anchor.y)
                 this.tileSprite.scale.x = Math.abs(this.tileSprite.scale.x) * -1
             }
         }
@@ -203,17 +208,18 @@ export default class ResourceTile extends MergeTile {
         this.resourceSource.y = this.backSlot.height / 2 + Math.sin(this.sin) * 5
     }
     enterAnimation() {
-        this.entityScale = this.size / this.tileSprite.width * 0.4
-        TweenLite.to(this.tileSprite.scale, 0.5, {
-            x: this.tileData.isRight ? this.entityScale : -this.entityScale,
-            y: this.entityScale,
-            ease: Elastic.easeOut,
-            onComplete: () => {
-                this.animSprite = true;
-            }
+        this.tileSprite.anchor.set(0.5, 0.8)
+        this.entityScale = this.size / this.tileSprite.width * 0.5 * this.tileSprite.scale.x
+        this.tileSprite.scale.set(this.entityScale)
+        this.tileSprite.alpha = 0
+        this.animSprite = true;
+        this.updatePosition();
+        TweenLite.to(this.tileSprite, 0.25, {
+            alpha:1
         })
     }
     updateResource(delta, dateTimeStamp) {
+        if (!this.tileData) return;
         if (this.readyToCollect && !this.tileData.shouldAccumulateResources()) {
             return;
         }

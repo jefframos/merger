@@ -388,8 +388,8 @@ export default class MergeScreen extends Screen {
         })
 
 
-        this.sellEverything = new UIButton1(0x002299, 'shards', 0xFFFFFF, buttonSize, buttonSize, 'square-pattern1-green')
-        this.sellEverything.updateIconScale(0.7)
+        this.sellEverything = new UIButton1(0x002299, 'portraitFemale', 0xFFFFFF, buttonSize, buttonSize, 'square-pattern1-green')
+        this.sellEverything.updateIconScale(0.9)
         this.sellEverything.newItem = new PIXI.Sprite.fromFrame('new_item')
         this.sellEverything.newItem.scale.set(0.7)
         this.sellEverything.newItem.anchor.set(0)
@@ -510,6 +510,9 @@ export default class MergeScreen extends Screen {
     }
     resetAll(){
         window.gameModifyers.addShards(10);
+        window.gameEconomy.resetAll();
+        COOKIE_MANAGER.resetProgression();
+
         this.systemsList.forEach(element => {
             if(element.resetSystem){
                 element.resetSystem()
@@ -517,7 +520,8 @@ export default class MergeScreen extends Screen {
         });
 
         window.gameEconomy.resetAll();
-        COOKIE_MANAGER.resetProgression();
+        window.gameEconomy.addResources(4)
+
     }
     refreshToggles() {
         let toggleValue = window.gameModifyers.modifyersData.autoCollectResource
