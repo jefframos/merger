@@ -18,12 +18,13 @@ export default class ChargerTile extends MergeTile {
 
 
 
-        this.levelBar = new ProgressBar({ width: size, height: 12 }, 3, 3)
+        this.levelBar = new ProgressBar({ width: size/2, height: 10 }, 3, 3)
         this.levelBar.updateBackgroundColor(0x20516c)
         this.levelBar.updateBackgroundFront(0x00ffff)
-        this.levelBar.x = 0
-        this.levelBar.y = size
+        this.levelBar.x = size/4
+        this.levelBar.y = size - 10
         this.container.addChild(this.levelBar)
+        
         //this.levelBar.rotation = Math.PI * 0.5
 
 

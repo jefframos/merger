@@ -223,11 +223,15 @@ export default class MergeSystem {
 
             //upgrade this
             let id = 0;
-            if(this.boardLevel > 8){
-                id = Math.floor(Math.random() * 3);
+            if(this.boardLevel > 4){
+                id = Math.min(Math.floor(Math.random() * this.boardLevel / 3), 5);
             }
-            else if(this.boardLevel > 4){
-                id = Math.floor(Math.random() * 2);
+
+            if(id > 0){
+                id = Math.min(Math.floor(Math.random() * this.boardLevel / 3), 5);
+            }
+            if(id > 0){
+                id = Math.min(Math.floor(Math.random() * this.boardLevel / 3), 5);
             }
             piece.addEntity(this.dataTiles[id]);
 

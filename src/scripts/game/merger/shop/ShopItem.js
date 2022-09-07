@@ -339,7 +339,6 @@ export default class ShopItem extends UIList {
                     this.levelLabel.text = ''
 
                 } else {
-
                     this.levelLabel.text = this.itemData.rawData.quantifyMessage + '\n' + this.itemData.currentLevel
                 }
             }

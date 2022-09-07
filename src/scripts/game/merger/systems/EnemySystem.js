@@ -69,7 +69,7 @@ export default class EnemySystem {
 
         this.enemyLifeBar = new ProgressBar({ width: 150, height: 15 }, 4, 4);
         this.enemyLifeBar.updateBackgroundFront(0xff0000)
-        this.enemyLifeBar.updateBackgroundColor(0x990000)
+        this.enemyLifeBar.updateBackgroundColor(0x330000)
 
         this.container.addChild(this.enemyLifeBar)
         this.enemyLifeBar.pivot.x = this.enemyLifeBar.width / 2
@@ -77,6 +77,8 @@ export default class EnemySystem {
 
 
         this.bossBattleTimer = new ProgressBar({ width: 200, height: 12 }, 3, 3);
+        this.bossBattleTimer.updateBackgroundFront(0xff9000)
+        this.bossBattleTimer.updateBackgroundColor(0x331000)
         this.container.addChild(this.bossBattleTimer)
         this.bossBattleTimer.pivot.x = this.bossBattleTimer.width / 2
         this.bossBattleTimer.y = 15
@@ -176,6 +178,8 @@ export default class EnemySystem {
             if (this.bossTimer <= 0) {
                 this.bankBoss();
             }
+        }else{
+            this.bossTimerLabel.text = '';
         }
         this.updateVisibleUI();
 

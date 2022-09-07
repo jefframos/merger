@@ -18,6 +18,7 @@ import UIButton1 from '../../ui/UIButton1';
 import utils from '../../../utils';
 import UIList from '../../ui/uiElements/UIList';
 import TimeBonusButton from '../../ui/TimeBonusButton';
+import PrizeSystem from '../systems/PrizeSystem';
 
 export default class MergeScreen extends Screen {
     constructor(label) {
@@ -85,6 +86,9 @@ export default class MergeScreen extends Screen {
         this.mergeSystemContainer = new PIXI.Container()
         this.container.addChild(this.mergeSystemContainer);
 
+        this.prizeContainer = new PIXI.Container()
+        this.container.addChild(this.prizeContainer);
+
         this.resourcesContainer = new PIXI.Container()
         this.container.addChild(this.resourcesContainer);
 
@@ -144,6 +148,10 @@ export default class MergeScreen extends Screen {
             this.allRawResources.push(mergeData)
         }
 
+        this.prizeSystem = new PrizeSystem({
+            mainContainer: this.prizeContainer
+        })
+
         this.mergeSystem1 = new MergeSystem({
             mainContainer: this.mergeSystemContainer,
             uiContainer: this.uiContainer,
@@ -166,6 +174,7 @@ export default class MergeScreen extends Screen {
         }, window.baseEnemies);
 
         this.addSystem(this.mergeSystem1)
+        this.addSystem(this.prizeSystem)
         this.addSystem(this.resourceSystem)
         this.addSystem(this.resourceSystemRight)
         this.addSystem(this.enemiesSystem)
@@ -189,13 +198,14 @@ export default class MergeScreen extends Screen {
         this.enemiesSystem.onParticles.add(this.addParticles.bind(this));
         this.enemiesSystem.onPopLabel.add(this.popLabelDamage.bind(this));
         this.enemiesSystem.onGetResources.add(this.addResourceParticles.bind(this));
-        this.enemiesSystem.onChangeEnemySet.add((set)=>{
+        this.enemiesSystem.onChangeEnemySet.add((set) => {
             this.spaceBackground.setTopColor(set.color)
         });
 
         this.mergeSystem1.addSystem(this.enemiesSystem);
         this.mergeSystem1.addSystem(this.resourceSystem);
         this.mergeSystem1.addSystem(this.resourceSystemRight);
+        this.mergeSystem1.addSystem(this.prizeSystem);
 
         this.entityDragSprite = new PIXI.Sprite.from('');
         this.addChild(this.entityDragSprite);
@@ -329,10 +339,8 @@ export default class MergeScreen extends Screen {
 
         this.autoCollectToggle = new UIButton1(0x002299, 'shards')
         this.helperButtonList.addElement(this.autoCollectToggle)
-        this.autoCollectToggle.onClick.add(() => {
-            let toggleValue = !window.gameModifyers.modifyersData.autoCollectResource
-            window.gameModifyers.addShards(10)
-
+        this.autoCollectToggle.onClick.add(() => {            
+            window.gameModifyers.addShards(Math.max(10, window.gameModifyers.permanentBonusData.shards * 0.2));
             this.refreshToggles();
 
         })
@@ -342,7 +350,7 @@ export default class MergeScreen extends Screen {
         this.container.addChild(this.helperButtonList)
 
         this.helperButtonList.visible = false
-
+        this.helperButtonList.scale.set(0.5)
         let buttonSize = 80
         this.shopButtonsList = new UIList();
         this.shopButtonsList.w = buttonSize * 6 + 15;
@@ -470,21 +478,21 @@ export default class MergeScreen extends Screen {
         this.container.addChild(timeBonus)
         timeBonus.x = 40
         timeBonus.y = 100
-        timeBonus.setParams(window.gameModifyers.bonusData,'generateTimerBonus', 1, 5)
+        timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5)
         timeBonus.setDescription('+ships')
-        
+
         let damageBonus = new TimeBonusButton('bullets-large')
         this.container.addChild(damageBonus)
         damageBonus.x = 120
         damageBonus.y = 100
-        damageBonus.setParams(window.gameModifyers.bonusData,'damageBonus', 1, 10, 30)
+        damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30)
         damageBonus.setDescription('+damage')
-        
+
         let speedBonus = new TimeBonusButton('fast-arrow')
         this.container.addChild(speedBonus)
         speedBonus.x = 40
         speedBonus.y = 180
-        speedBonus.setParams(window.gameModifyers.bonusData,'damageSpeed', 1, 10, 30)
+        speedBonus.setParams(window.gameModifyers.bonusData, 'damageSpeed', 1, 10, 30)
         speedBonus.setDescription('+speed')
 
         this.bonusTimers = [];
@@ -492,9 +500,9 @@ export default class MergeScreen extends Screen {
         this.bonusTimers.push(damageBonus);
         this.bonusTimers.push(speedBonus);
 
-        this.shopButtonsList.addElement(timeBonus)     
-        this.shopButtonsList.addElement(damageBonus)     
-        this.shopButtonsList.addElement(speedBonus)     
+        this.shopButtonsList.addElement(timeBonus)
+        this.shopButtonsList.addElement(damageBonus)
+        this.shopButtonsList.addElement(speedBonus)
         this.shopButtonsList.updateHorizontalList();
 
         this.savedEconomy = COOKIE_MANAGER.getEconomy();
@@ -514,13 +522,13 @@ export default class MergeScreen extends Screen {
 
         //this.mergeItemsShop.show()
     }
-    resetAll(){
+    resetAll() {
         window.gameModifyers.addShards(10);
         window.gameEconomy.resetAll();
         COOKIE_MANAGER.resetProgression();
 
         this.systemsList.forEach(element => {
-            if(element.resetSystem){
+            if (element.resetSystem) {
                 element.resetSystem()
             }
         });

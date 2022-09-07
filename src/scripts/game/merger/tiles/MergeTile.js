@@ -84,10 +84,10 @@ export default class MergeTile extends PIXI.Container {
         window.gameModifyers.onUpdateModifyers.add(this.updateModifyers.bind(this))
 
 
-        this.damageTimerView = new ProgressBar({width:40, height:12}, 3,3)
+        this.damageTimerView = new ProgressBar({width:55, height:12}, 3,3)
         this.damageTimerView.updateBackgroundColor(0x20516c)
         this.damageTimerView.x = 0
-        this.damageTimerView.y = 40
+        this.damageTimerView.y = 98
         //this.damageTimerView = new CircleCounter(10,10)
         this.container.addChild(this.damageTimerView)
         this.damageTimerView.rotation = -Math.PI * 0.5
