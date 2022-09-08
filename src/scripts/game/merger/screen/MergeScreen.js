@@ -23,14 +23,14 @@ import PrizeSystem from '../systems/PrizeSystem';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
-        let a = ''
-        for (let index = 1; index <= 20; index++) {
-            console.log(Math.pow(1.1, index * 0.5))
+        // let a = ''
+        // for (let index = 1; index <= 20; index++) {
+        //     console.log(Math.pow(1.1, index * 0.5))
 
-            a += (Math.pow(1.1, index * 0.5) + 0.28).toFixed(3) + ',\n'
-        }
+        //     a += (Math.pow(1.1, index * 0.5) + 0.28).toFixed(3) + ',\n'
+        // }
 
-        console.log(a)
+        // console.log(a)
 
         window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
         window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
@@ -119,7 +119,7 @@ export default class MergeScreen extends Screen {
         this.dataTiles = []
         this.dataResourcesTiles = []
 
-
+this.allMergeData = [];
         this.rawModifyers = []
         for (let index = 0; index < window.baseModifyers.modifyers.length; index++) {
             let mergeData = new MergerData(window.baseModifyers.modifyers[index], index)
@@ -130,16 +130,18 @@ export default class MergeScreen extends Screen {
             mergeData.type = window.baseModifyers.modifyers[index].type
             mergeData.modifyerIcon = window.baseModifyers.modifyers[index].modifyerIcon
             this.rawModifyers.push(mergeData)
+            this.allMergeData.push(mergeData)
         }
-
-
+        
+        
         this.rawMergeDataList = []
         for (let index = 0; index < window.baseEntities.mergeEntities.list.length; index++) {
             let mergeData = new MergerData(window.baseEntities.mergeEntities.list[index], index)
             mergeData.type = window.baseEntities.mergeEntities.list[index].type
             this.rawMergeDataList.push(mergeData)
+            this.allMergeData.push(mergeData)
         }
-
+        
         this.rawMergeResourceList = []
         this.allRawResources = []
         this.rawMergeResourceListRight = []
@@ -152,6 +154,7 @@ export default class MergeScreen extends Screen {
                 this.rawMergeResourceList.push(mergeData)
             }
             this.allRawResources.push(mergeData)
+            this.allMergeData.push(mergeData)
         }
 
         this.prizeSystem = new PrizeSystem({
@@ -527,18 +530,28 @@ export default class MergeScreen extends Screen {
         //this.mergeItemsShop.show()
     }
     resetAll() {
-        window.gameModifyers.addShards(10);
         window.gameEconomy.resetAll();
         COOKIE_MANAGER.resetProgression();
-
+        
         this.systemsList.forEach(element => {
             if (element.resetSystem) {
                 element.resetSystem()
             }
         });
-
+        this.allMergeData.forEach(element => {
+            element.reset();
+        });
+        COOKIE_MANAGER.resetProgression();
         window.gameEconomy.resetAll();
+
+        this.bonusTimers.forEach(element => {
+            if (element.stop) {
+                element.stop()
+            }
+        });
+
         window.gameEconomy.addResources(4)
+        window.gameModifyers.addShards(10);
 
     }
     refreshToggles() {

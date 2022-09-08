@@ -81,7 +81,6 @@ export default class PrizeSystem {
             this.remove();
             this.currentTimer = this.timer;
         } else {
-            console.log(this.targets)
             this.currentTarget = this.targets[this.currentTargetId];
         }
     }

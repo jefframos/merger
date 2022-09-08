@@ -65,6 +65,10 @@ export default class TimeBonusButton extends PIXI.Container {
         this.videoSprite.x = 8
         this.videoSprite.y = 15
     }
+    stop(){
+        this.activeTimer = 0;
+        this.targetObject[this.param] = this.defaultValue;
+    }
     update(delta) {
         if (this.activeTimer > 0) {
             this.bonusTimer.visible = true;

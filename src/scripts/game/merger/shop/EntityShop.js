@@ -130,6 +130,8 @@ export default class EntityShop extends PIXI.Container {
 
         let currentResources = COOKIE_MANAGER.getResources();
 
+        console.log(currentResources)
+
         let currentEntities = []
         for (const key in currentResources.entities) {
             const element = currentResources.entities[key];

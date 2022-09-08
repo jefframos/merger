@@ -13,6 +13,9 @@ export default class MergerData {
         this.resourceAccum = true;
       
     }
+    reset(){
+        this.currentLevel = 1;
+    }
     shouldAccumulateResources() {
         return this.resourceAccum;
     }
