@@ -269,7 +269,7 @@ Object.keys(_math).forEach(function (key) {
   });
 });
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 Object.defineProperty(exports, 'glCore', {
   enumerable: true,
@@ -2338,7 +2338,7 @@ var _isNan2 = _interopRequireDefault(_isNan);
 
 var _resizeToFitMaxAR$res;
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -3032,6 +3032,34 @@ module.exports = exports['default'];
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = {
+	width: 750 * 0.8,
+	height: 1334 * 0.8,
+	webgl: true,
+	effectsLayer: null,
+	colors: {
+		background: 0x000000
+	},
+	rendererOptions: {
+		//pixi rendererOptions
+		resolution: 2, //window.devicePixelRatio,
+		antialias: true,
+		backgroundColor: 0x000000
+	},
+	levels: []
+};
+module.exports = exports["default"];
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var gl = {
     createContext:          __webpack_require__(196),
     setVertexAttribArrays:  __webpack_require__(98),
@@ -3058,34 +3086,6 @@ if (typeof window !== 'undefined')
     window.PIXI.glCore = gl;
 }
 
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.default = {
-	width: 750 * 0.8,
-	height: 1334 * 0.8,
-	webgl: true,
-	effectsLayer: null,
-	colors: {
-		background: 0x000000
-	},
-	rendererOptions: {
-		//pixi rendererOptions
-		resolution: 2, //window.devicePixelRatio,
-		antialias: true,
-		backgroundColor: 0x000000
-	},
-	levels: []
-};
-module.exports = exports["default"];
 
 /***/ }),
 /* 15 */
@@ -14822,7 +14822,7 @@ exports.default = WebGLManager;
 
 exports.__esModule = true;
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _settings = __webpack_require__(10);
 
@@ -15628,7 +15628,7 @@ var _validateContext2 = _interopRequireDefault(_validateContext);
 
 var _utils = __webpack_require__(8);
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
@@ -16408,7 +16408,7 @@ var _settings = __webpack_require__(10);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22090,7 +22090,7 @@ var _UpgradesToggles = __webpack_require__(353);
 
 var _UpgradesToggles2 = _interopRequireDefault(_UpgradesToggles);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -22147,8 +22147,16 @@ var EntityShop = function (_PIXI$Container) {
         _this.tiledBackground2.tileScale.set(0.2);
         _this.tiledBackground2.alpha = 0.1;
 
-        _this.title = new PIXI.Text('RESOURCES', LABELS.LABEL1);
-        _this.title.style.fontSize = 48;
+        _this.title = new PIXI.Text('Resources Upgrades', LABELS.LABEL1);
+        _this.title.style.fontSize = 24;
+
+        _this.portrait = new PIXI.Sprite.fromFrame('portraitMale');
+        _this.container.addChild(_this.portrait);
+        _this.portrait.scale.set(0.65);
+        _this.portrait.anchor.set(0, 1);
+        _this.portrait.x = 20;
+        _this.portrait.y = 102;
+
         _this.container.addChild(_this.title);
 
         _this.shopList = new _ShopList2.default({ w: _this.size.w, h: _this.size.h * 0.8 }, 6);
@@ -22230,7 +22238,8 @@ var EntityShop = function (_PIXI$Container) {
         key: 'posShow',
         value: function posShow() {
             _utils2.default.centerObject(this.title, this.container);
-            this.title.y = 30;
+            //this.title.x = 140
+            this.title.y = 40;
         }
     }, {
         key: 'show',
@@ -22357,7 +22366,7 @@ var _signals = __webpack_require__(9);
 
 var _signals2 = _interopRequireDefault(_signals);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -27971,7 +27980,7 @@ exports.default = TextureMatrix;
 
 exports.__esModule = true;
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
@@ -32645,6 +32654,9 @@ var StandardEnemy = function (_PIXI$Container) {
             this.sin += delta;
             this.sin %= Math.PI * 2;
             this.updatePosition();
+
+            this.currentAngle = Math.atan2(this.positionOffset.y, this.positionOffset.x) * 0.1;
+            this.enemySprite.rotation = utils.lerp(this.enemySprite.rotation, this.currentAngle, 0.002);
         }
     }, {
         key: 'setAsBoss',
@@ -32909,7 +32921,7 @@ function tryStuff() {
 "use strict";
 
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -37444,7 +37456,7 @@ var _settings2 = _interopRequireDefault(_settings);
 
 var _utils = __webpack_require__(8);
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
@@ -38186,7 +38198,7 @@ exports.default = MaskManager;
 exports.__esModule = true;
 exports.default = extractUniformsFromSrc;
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
@@ -39264,7 +39276,7 @@ function calculateSpriteMatrix(outputMatrix, filterArea, textureSize, sprite) {
 
 exports.__esModule = true;
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _const = __webpack_require__(7);
 
@@ -40116,7 +40128,7 @@ function generateSampleSrc(maxTextures) {
 exports.__esModule = true;
 exports.default = checkMaxIfStatmentsInShader;
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
@@ -42529,7 +42541,7 @@ _WebGLRenderer2.default.registerPlugin('graphics', GraphicsRenderer);
 
 exports.__esModule = true;
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
@@ -52096,7 +52108,7 @@ var _core = __webpack_require__(4);
 
 var core = _interopRequireWildcard(_core);
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
@@ -54116,7 +54128,7 @@ exports.default = ParticleShader;
 
 exports.__esModule = true;
 
-var _pixiGlCore = __webpack_require__(13);
+var _pixiGlCore = __webpack_require__(14);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
@@ -59797,7 +59809,7 @@ module.exports = exports["default"];
 /* 338 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/asteroids/asteroids.json","image/particles/particles.json","image/pattern2/pattern2.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
+module.exports = {"default":["image/particles/particles.json","image/asteroids/asteroids.json","image/pattern2/pattern2.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 339 */
@@ -59846,7 +59858,7 @@ var _ScreenManager2 = __webpack_require__(371);
 
 var _ScreenManager3 = _interopRequireDefault(_ScreenManager2);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -60426,7 +60438,7 @@ var MergeScreen = function (_Screen) {
                 _this.rpsContainer.addChild(_this.rpsLabel);
                 _this.statsList.addElement(_this.rpsContainer);
 
-                _this.resourcesTexture = new PIXI.Sprite.from('drill-small');
+                _this.resourcesTexture = new PIXI.Sprite.from('coin-s');
                 _this.resourcesTexture.scale.set(_this.rpsContainer.height / _this.resourcesTexture.height * 0.5);
                 _this.resourcesTexture.x = -30;
                 _this.resourcesTexture.y = -3;
@@ -60441,7 +60453,7 @@ var MergeScreen = function (_Screen) {
                 _this.dpsContainer.addChild(_this.dpsLabel);
                 _this.statsList.addElement(_this.dpsContainer);
 
-                _this.damageTexture = new PIXI.Sprite.from('bullets');
+                _this.damageTexture = new PIXI.Sprite.from('bullets-s');
                 _this.dpsLabel.addChild(_this.damageTexture);
                 _this.damageTexture.scale.set(_this.dpsContainer.height / _this.damageTexture.height * 0.5);
                 _this.damageTexture.x = -30;
@@ -60636,24 +60648,15 @@ var MergeScreen = function (_Screen) {
                 });
 
                 var timeBonus = new _TimeBonusButton2.default();
-                _this.container.addChild(timeBonus);
-                timeBonus.x = 40;
-                timeBonus.y = 100;
                 timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5);
-                timeBonus.setDescription('+ships');
+                timeBonus.setDescription('>>ships');
 
                 var damageBonus = new _TimeBonusButton2.default('bullets-large');
-                _this.container.addChild(damageBonus);
-                damageBonus.x = 120;
-                damageBonus.y = 100;
                 damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30);
                 damageBonus.setDescription('+damage');
 
                 var speedBonus = new _TimeBonusButton2.default('fast-arrow');
-                _this.container.addChild(speedBonus);
-                speedBonus.x = 40;
-                speedBonus.y = 180;
-                speedBonus.setParams(window.gameModifyers.bonusData, 'damageSpeed', 1, 10, 30);
+                speedBonus.setParams(window.gameModifyers.bonusData, 'gameSpeed', 1, 5, 30);
                 speedBonus.setDescription('+speed');
 
                 _this.bonusTimers = [];
@@ -60662,8 +60665,8 @@ var MergeScreen = function (_Screen) {
                 _this.bonusTimers.push(speedBonus);
 
                 _this.shopButtonsList.addElement(timeBonus);
-                _this.shopButtonsList.addElement(damageBonus);
-                _this.shopButtonsList.addElement(speedBonus);
+                //this.shopButtonsList.addElement(damageBonus)
+                //this.shopButtonsList.addElement(speedBonus)
                 _this.shopButtonsList.updateHorizontalList();
 
                 _this.savedEconomy = COOKIE_MANAGER.getEconomy();
@@ -60681,6 +60684,7 @@ var MergeScreen = function (_Screen) {
                         _this.standardPopUpShow(params);
                 }
 
+                _this.forcePauseSystemsTimer = 0.5;
                 //this.mergeItemsShop.show()
                 return _this;
         }
@@ -60838,17 +60842,21 @@ var MergeScreen = function (_Screen) {
         }, {
                 key: 'update',
                 value: function update(delta) {
-
                         this.bonusTimers.forEach(function (element) {
                                 if (element.update) {
                                         element.update(delta);
                                 }
                         });
-                        delta *= window.TIME_SCALE;
+                        delta *= window.TIME_SCALE * window.gameModifyers.bonusData.gameSpeed;
 
-                        this.mergeSystem1.updateSystems(delta);
+                        if (this.forcePauseSystemsTimer > 0) {
+                                this.forcePauseSystemsTimer -= delta;
+                        } else {
+
+                                this.mergeSystem1.updateSystems(delta);
+                                this.particleSystem.update(delta);
+                        }
                         // this.mergeSystem1.update(delta);
-                        this.particleSystem.update(delta);
 
                         this.uiPanels.forEach(function (element) {
                                 if (element.update) {
@@ -61004,7 +61012,7 @@ var _UIButton = __webpack_require__(31);
 
 var _UIButton2 = _interopRequireDefault(_UIButton);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -63171,7 +63179,8 @@ var GameModifyers = function () {
             resourceBonus: 1,
             damageSpeed: 1,
             resourceSpeed: 1,
-            generateTimerBonus: 1
+            generateTimerBonus: 1,
+            gameSpeed: 1
         };
 
         this.permanentBonusData = this.modifyersData.permanentBonusData;
@@ -63335,7 +63344,7 @@ var GeneralShop = function (_EntityShop) {
         value: function show() {
             var _this2 = this;
 
-            this.title.text = "GENERAL";
+            this.title.text = "General Upgrades";
             this.visible = true;
             this.currentItens.forEach(function (element) {
                 element.updatePreviewValue(_this2.toggles.currentActiveValue);
@@ -63426,7 +63435,7 @@ var MergeItemsShop = function (_EntityShop) {
         key: 'show',
         value: function show() {
             this.visible = true;
-            this.title.text = "SHIPS";
+            this.title.text = "Spaceship Upgrades";
             var currentResources = COOKIE_MANAGER.getBoard();
             var currentEntities = [];
             for (var key in currentResources.entities) {
@@ -63492,7 +63501,7 @@ var _signals = __webpack_require__(9);
 
 var _signals2 = _interopRequireDefault(_signals);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -63867,8 +63876,6 @@ var MergeSystem = function () {
                     }
                 }
             }
-
-            this.updateBottomPosition();
         }
     }, {
         key: 'addSlot',
@@ -64186,6 +64193,7 @@ var MergeSystem = function () {
             this.currentResolution.height = resolution.height;
 
             this.updateGridPosition();
+            this.updateBottomPosition();
         }
     }, {
         key: 'updateGridPosition',
@@ -64680,7 +64688,7 @@ var _signals = __webpack_require__(9);
 
 var _signals2 = _interopRequireDefault(_signals);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -64924,7 +64932,7 @@ var _signals = __webpack_require__(9);
 
 var _signals2 = _interopRequireDefault(_signals);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -65792,7 +65800,7 @@ var _utils = __webpack_require__(12);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -66117,7 +66125,7 @@ var _UIButton = __webpack_require__(31);
 
 var _UIButton2 = _interopRequireDefault(_UIButton);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(13);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -66474,6 +66482,18 @@ var _createClass2 = __webpack_require__(2);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
+var _gsap = __webpack_require__(17);
+
+var _gsap2 = _interopRequireDefault(_gsap);
+
+var _config = __webpack_require__(13);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _utils = __webpack_require__(12);
+
+var _utils2 = _interopRequireDefault(_utils);
+
 var _StandardEnemy = __webpack_require__(152);
 
 var _StandardEnemy2 = _interopRequireDefault(_StandardEnemy);
@@ -66494,32 +66514,134 @@ var PrizeSystem = function () {
         this.entity.interactive = true;
         this.entity.buttonMode = true;
 
+        this.helpIcon = new PIXI.Sprite.from('icon-help');
+        this.helpIcon.anchor.set(0.5);
+        this.helpIcon.scale.set(0.5);
+        this.helpIcon.y = 30;
+        this.entity.enemySprite.addChild(this.helpIcon);
+
         this.entity.on('mouseup', this.click.bind(this)).on('touchend', this.click.bind(this));
+
+        this.currentTimer = 5;
+        this.timer = 5;
+
+        this.velocity = {
+            x: 0,
+            y: 0
+        };
+
+        this.inMovement = false;
+
+        this.targets = [{
+            x: -200,
+            y: -100
+        }, {
+            x: 0,
+            y: 240
+        }, {
+            x: _config2.default.width / 2,
+            y: 235
+        }, {
+            x: _config2.default.width,
+            y: 240
+        }, {
+            x: _config2.default.width + 300,
+            y: -100
+        }];
+
+        this.currentTargetId = 0;
+        this.currentAngle = 0;
+
+        this.currentTarget = this.targets[this.currentTargetId];
+        this.speed = 20;
+
+        this.spawn();
     }
 
     (0, _createClass3.default)(PrizeSystem, [{
-        key: 'click',
+        key: "spawn",
+        value: function spawn() {
+
+            this.entity.setAsEnemy('Ship' + Math.ceil(Math.random() * 6) + '_chest');
+
+            this.currentTargetId = 0;
+            this.currentTarget = this.targets[this.currentTargetId];
+            this.entity.x = this.currentTarget.x;
+            this.entity.y = this.currentTarget.y;
+            this.entity.visible = true;
+            this.entity.alpha = 1;
+            this.inMovement = true;
+            this.nextTarget();
+        }
+    }, {
+        key: "nextTarget",
+        value: function nextTarget() {
+            this.currentTargetId++;
+            if (this.currentTargetId >= this.targets.length) {
+                this.remove();
+                this.currentTimer = this.timer;
+            } else {
+                console.log(this.targets);
+                this.currentTarget = this.targets[this.currentTargetId];
+            }
+        }
+    }, {
+        key: "remove",
+        value: function remove() {
+            var _this = this;
+
+            _gsap2.default.to(this.entity, 1, {
+                alpha: 0, onComplete: function onComplete() {
+                    _this.entity.visible = false;
+                }
+            });
+            this.inMovement = false;
+        }
+    }, {
+        key: "click",
         value: function click() {
             console.log("Collect2");
+            this.remove();
+            this.currentTimer = this.timer;
         }
     }, {
-        key: 'resize',
+        key: "resize",
         value: function resize() {}
     }, {
-        key: 'update',
+        key: "update",
         value: function update(delta) {
+            if (this.inMovement) {
+                //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
+                //this.currentAngle = Math.atan2(this.entity.y - this.currentTarget.y, this.entity.x - this.currentTarget.x) //- Math.PI/2 // 180 * 3.14;
+                this.currentAngle = Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x);
 
-            this.entity.update(delta);
+                this.entity.rotation = _utils2.default.lerp(this.entity.rotation, this.currentAngle, 0.005);
+                this.helpIcon.rotation = -this.entity.rotation - this.entity.enemySprite.rotation;
+                this.velocity.x = _utils2.default.lerp(this.velocity.x, Math.cos(this.currentAngle) * this.speed, 0.05);
+                this.velocity.y = _utils2.default.lerp(this.velocity.y, Math.sin(this.currentAngle) * this.speed, 0.05);
+                this.entity.update(delta);
+                this.entity.x += this.velocity.x * delta;
+                this.entity.y += this.velocity.y * delta;
+                //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
+                if (_utils2.default.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 4) {
+                    this.nextTarget();
+                }
+            } else if (this.currentTimer > 0) {
+                this.currentTimer -= delta;
+                if (this.currentTimer <= 0) {
+                    this.spawn();
+                }
+            }
         }
     }, {
-        key: 'updateMouse',
+        key: "updateMouse",
         value: function updateMouse(e) {}
     }]);
     return PrizeSystem;
 }();
 
 exports.default = PrizeSystem;
-module.exports = exports['default'];
+module.exports = exports["default"];
 
 /***/ }),
 /* 371 */

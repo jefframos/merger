@@ -45,8 +45,16 @@ export default class EntityShop extends PIXI.Container {
         this.tiledBackground2.tileScale.set(0.2)
         this.tiledBackground2.alpha = 0.1
 
-        this.title = new PIXI.Text('RESOURCES', LABELS.LABEL1);
-        this.title.style.fontSize = 48
+        this.title = new PIXI.Text('Resources Upgrades', LABELS.LABEL1);
+        this.title.style.fontSize = 24
+
+        this.portrait = new PIXI.Sprite.fromFrame('portraitMale');
+        this.container.addChild(this.portrait);
+        this.portrait.scale.set(0.65)
+        this.portrait.anchor.set(0, 1)
+        this.portrait.x = 20
+        this.portrait.y = 102
+
         this.container.addChild(this.title);
 
         this.shopList = new ShopList({ w: this.size.w, h: this.size.h * 0.8 }, 6)
@@ -114,7 +122,8 @@ export default class EntityShop extends PIXI.Container {
     }
     posShow() {
         utils.centerObject(this.title, this.container)
-        this.title.y = 30
+        //this.title.x = 140
+        this.title.y = 40
     }
     show() {
         this.visible = true;

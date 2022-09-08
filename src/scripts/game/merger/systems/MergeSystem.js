@@ -338,7 +338,7 @@ export default class MergeSystem {
             }
         }
 
-        this.updateBottomPosition();
+        
     }
     addSlot(i, j) {
         console.log("add slot")
@@ -641,6 +641,7 @@ export default class MergeSystem {
         this.currentResolution.height = resolution.height;
 
         this.updateGridPosition();
+        this.updateBottomPosition();
 
     }
     updateGridPosition() {

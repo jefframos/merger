@@ -254,7 +254,7 @@ export default class MergeScreen extends Screen {
         this.rpsContainer.addChild(this.rpsLabel)
         this.statsList.addElement(this.rpsContainer)
 
-        this.resourcesTexture = new PIXI.Sprite.from('drill-small')
+        this.resourcesTexture = new PIXI.Sprite.from('coin-s')
         this.resourcesTexture.scale.set(this.rpsContainer.height / this.resourcesTexture.height * 0.5)
         this.resourcesTexture.x = -30
         this.resourcesTexture.y = -3
@@ -271,7 +271,7 @@ export default class MergeScreen extends Screen {
         this.dpsContainer.addChild(this.dpsLabel)
         this.statsList.addElement(this.dpsContainer)
 
-        this.damageTexture = new PIXI.Sprite.from('bullets')
+        this.damageTexture = new PIXI.Sprite.from('bullets-s')
         this.dpsLabel.addChild(this.damageTexture)
         this.damageTexture.scale.set(this.dpsContainer.height / this.damageTexture.height * 0.5)
         this.damageTexture.x = -30
@@ -339,7 +339,7 @@ export default class MergeScreen extends Screen {
 
         this.autoCollectToggle = new UIButton1(0x002299, 'shards')
         this.helperButtonList.addElement(this.autoCollectToggle)
-        this.autoCollectToggle.onClick.add(() => {            
+        this.autoCollectToggle.onClick.add(() => {
             window.gameModifyers.addShards(Math.max(10, window.gameModifyers.permanentBonusData.shards * 0.2));
             this.refreshToggles();
 
@@ -475,24 +475,15 @@ export default class MergeScreen extends Screen {
         });
 
         let timeBonus = new TimeBonusButton()
-        this.container.addChild(timeBonus)
-        timeBonus.x = 40
-        timeBonus.y = 100
         timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5)
-        timeBonus.setDescription('+ships')
+        timeBonus.setDescription('>>ships')
 
         let damageBonus = new TimeBonusButton('bullets-large')
-        this.container.addChild(damageBonus)
-        damageBonus.x = 120
-        damageBonus.y = 100
         damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30)
         damageBonus.setDescription('+damage')
 
         let speedBonus = new TimeBonusButton('fast-arrow')
-        this.container.addChild(speedBonus)
-        speedBonus.x = 40
-        speedBonus.y = 180
-        speedBonus.setParams(window.gameModifyers.bonusData, 'damageSpeed', 1, 10, 30)
+        speedBonus.setParams(window.gameModifyers.bonusData, 'gameSpeed', 1, 5, 30)
         speedBonus.setDescription('+speed')
 
         this.bonusTimers = [];
@@ -501,8 +492,8 @@ export default class MergeScreen extends Screen {
         this.bonusTimers.push(speedBonus);
 
         this.shopButtonsList.addElement(timeBonus)
-        this.shopButtonsList.addElement(damageBonus)
-        this.shopButtonsList.addElement(speedBonus)
+        //this.shopButtonsList.addElement(damageBonus)
+        //this.shopButtonsList.addElement(speedBonus)
         this.shopButtonsList.updateHorizontalList();
 
         this.savedEconomy = COOKIE_MANAGER.getEconomy();
@@ -520,6 +511,7 @@ export default class MergeScreen extends Screen {
             this.standardPopUpShow(params)
         }
 
+        this.forcePauseSystemsTimer = 0.5;
         //this.mergeItemsShop.show()
     }
     resetAll() {
@@ -651,17 +643,22 @@ export default class MergeScreen extends Screen {
         this.addEvents();
     }
     update(delta) {
-
         this.bonusTimers.forEach(element => {
             if (element.update) {
                 element.update(delta)
             }
         });
-        delta *= window.TIME_SCALE;
+        delta *= window.TIME_SCALE * window.gameModifyers.bonusData.gameSpeed;
+        
+        if (this.forcePauseSystemsTimer > 0) {
+            this.forcePauseSystemsTimer -= delta;
+            
+        }else{
 
-        this.mergeSystem1.updateSystems(delta)
+            this.mergeSystem1.updateSystems(delta)
+            this.particleSystem.update(delta)
+        }
         // this.mergeSystem1.update(delta);
-        this.particleSystem.update(delta)
 
         this.uiPanels.forEach(element => {
             if (element.update) {

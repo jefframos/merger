@@ -20,7 +20,8 @@ export default class GameModifyers {
             resourceBonus: 1,
             damageSpeed: 1,
             resourceSpeed: 1,
-            generateTimerBonus : 1
+            generateTimerBonus : 1,
+            gameSpeed: 1
         }
 
         this.permanentBonusData = this.modifyersData.permanentBonusData
