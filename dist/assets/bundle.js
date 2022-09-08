@@ -22250,6 +22250,8 @@ var EntityShop = function (_PIXI$Container) {
 
             var currentResources = COOKIE_MANAGER.getResources();
 
+            console.log(currentResources);
+
             var currentEntities = [];
             for (var key in currentResources.entities) {
                 var element = currentResources.entities[key];
@@ -22861,7 +22863,7 @@ var MergeTile = function (_PIXI$Container) {
             }
             this.generateDamageTime = this.tileData.getGenerateDamageTime() || 0;
 
-            console.log(this.generateDamageTime);
+            //console.log(this.generateDamageTime)
             this.generateResourceTime = this.tileData.getGenerateResourceTime() || 0;
         }
     }, {
@@ -59809,7 +59811,7 @@ module.exports = exports["default"];
 /* 338 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/asteroids/asteroids.json","image/pattern2/pattern2.json","image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
+module.exports = {"default":["image/pattern2/pattern2.json","image/asteroids/asteroids.json","image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 339 */
@@ -60219,16 +60221,16 @@ var MergeScreen = function (_Screen) {
         function MergeScreen(label) {
                 (0, _classCallCheck3.default)(this, MergeScreen);
 
+                // let a = ''
+                // for (let index = 1; index <= 20; index++) {
+                //     console.log(Math.pow(1.1, index * 0.5))
+
+                //     a += (Math.pow(1.1, index * 0.5) + 0.28).toFixed(3) + ',\n'
+                // }
+
+                // console.log(a)
+
                 var _this = (0, _possibleConstructorReturn3.default)(this, (MergeScreen.__proto__ || (0, _getPrototypeOf2.default)(MergeScreen)).call(this, label));
-
-                var a = '';
-                for (var index = 1; index <= 20; index++) {
-                        console.log(Math.pow(1.1, index * 0.5));
-
-                        a += (Math.pow(1.1, index * 0.5) + 0.28).toFixed(3) + ',\n';
-                }
-
-                console.log(a);
 
                 window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
                 window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
@@ -60314,36 +60316,40 @@ var MergeScreen = function (_Screen) {
                 _this.dataTiles = [];
                 _this.dataResourcesTiles = [];
 
+                _this.allMergeData = [];
                 _this.rawModifyers = [];
-                for (var _index = 0; _index < window.baseModifyers.modifyers.length; _index++) {
-                        var mergeData = new _MergerData2.default(window.baseModifyers.modifyers[_index], _index);
+                for (var index = 0; index < window.baseModifyers.modifyers.length; index++) {
+                        var mergeData = new _MergerData2.default(window.baseModifyers.modifyers[index], index);
 
                         mergeData.currentLevel = window.gameModifyers.getLevel(mergeData);
-                        console.log(window.baseModifyers.modifyers[_index].type);
-                        mergeData.type = window.baseModifyers.modifyers[_index].type;
-                        mergeData.modifyerIcon = window.baseModifyers.modifyers[_index].modifyerIcon;
+                        console.log(window.baseModifyers.modifyers[index].type);
+                        mergeData.type = window.baseModifyers.modifyers[index].type;
+                        mergeData.modifyerIcon = window.baseModifyers.modifyers[index].modifyerIcon;
                         _this.rawModifyers.push(mergeData);
+                        _this.allMergeData.push(mergeData);
                 }
 
                 _this.rawMergeDataList = [];
-                for (var _index2 = 0; _index2 < window.baseEntities.mergeEntities.list.length; _index2++) {
-                        var _mergeData = new _MergerData2.default(window.baseEntities.mergeEntities.list[_index2], _index2);
-                        _mergeData.type = window.baseEntities.mergeEntities.list[_index2].type;
+                for (var _index = 0; _index < window.baseEntities.mergeEntities.list.length; _index++) {
+                        var _mergeData = new _MergerData2.default(window.baseEntities.mergeEntities.list[_index], _index);
+                        _mergeData.type = window.baseEntities.mergeEntities.list[_index].type;
                         _this.rawMergeDataList.push(_mergeData);
+                        _this.allMergeData.push(_mergeData);
                 }
 
                 _this.rawMergeResourceList = [];
                 _this.allRawResources = [];
                 _this.rawMergeResourceListRight = [];
-                for (var _index3 = 0; _index3 < window.baseResources.generators.length; _index3++) {
-                        var _mergeData2 = new _MergerData2.default(window.baseResources.generators[_index3][0], _index3);
-                        if (_index3 % 2 == 0) {
+                for (var _index2 = 0; _index2 < window.baseResources.generators.length; _index2++) {
+                        var _mergeData2 = new _MergerData2.default(window.baseResources.generators[_index2][0], _index2);
+                        if (_index2 % 2 == 0) {
                                 _mergeData2.isRight = true;
                                 _this.rawMergeResourceListRight.push(_mergeData2);
                         } else {
                                 _this.rawMergeResourceList.push(_mergeData2);
                         }
                         _this.allRawResources.push(_mergeData2);
+                        _this.allMergeData.push(_mergeData2);
                 }
 
                 _this.prizeSystem = new _PrizeSystem2.default({
@@ -60660,7 +60666,7 @@ var MergeScreen = function (_Screen) {
                 });
 
                 var timeBonus = new _TimeBonusButton2.default();
-                timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 30);
+                timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5);
                 timeBonus.setDescription('>>ships');
 
                 var damageBonus = new _TimeBonusButton2.default('bullets-large');
@@ -60704,18 +60710,48 @@ var MergeScreen = function (_Screen) {
         (0, _createClass3.default)(MergeScreen, [{
                 key: 'resetAll',
                 value: function resetAll() {
-                        window.gameModifyers.addShards(10);
+
+                        var progression = COOKIE_MANAGER.getProgression();
+                        var shards = 10;
+
+                        var rps = Math.max(1, (this.resourceSystem.rps + this.resourceSystemRight.rps) * 0.01);
+                        var dps = Math.max(1, this.mergeSystem1.dps * 0.01) / (2000 / (progression.currentEnemyLevel + 1));
+                        var res = 1; //Math.max(1, window.gameEconomy.currentResources)
+                        console.log(rps, dps, res);
+                        var calc = shards + rps * res * dps;
+                        var shardsCalc = Math.max(shards * 0.5, 1);
+                        shards = 2 * Math.pow(1.02, progression.currentEnemyLevel * 1.2) * shardsCalc * shardsCalc; //calc;
+
+                        console.log("SHARDS", shards);
+                        shards = Math.max(shards, 10);
+
                         window.gameEconomy.resetAll();
                         COOKIE_MANAGER.resetProgression();
+                        window.gameModifyers.resetModifyers();
 
                         this.systemsList.forEach(function (element) {
                                 if (element.resetSystem) {
                                         element.resetSystem();
                                 }
                         });
-
+                        this.allMergeData.forEach(function (element) {
+                                element.reset();
+                        });
+                        this.bonusTimers.forEach(function (element) {
+                                if (element.stop) {
+                                        element.stop();
+                                }
+                        });
+                        COOKIE_MANAGER.resetProgression();
                         window.gameEconomy.resetAll();
+
                         window.gameEconomy.addResources(4);
+
+                        //window.gameModifyers.permanentBonusData.shards        
+
+                        window.gameModifyers.addShards(Math.round(shards));
+                        this.particleSystem.killAll();
+                        this.forcePauseSystemsTimer = 0.5;
                 }
         }, {
                 key: 'refreshToggles',
@@ -61169,6 +61205,8 @@ var EnemySystem = function () {
             this.updateLevelView();
             this.enemyLevel = 0;
             COOKIE_MANAGER.saveEnemyLevel(1);
+            this.lockOnLevel = false;
+            this.inABossBattle = false;
             this.nextEnemy();
         }
     }, {
@@ -63176,7 +63214,7 @@ var GameModifyers = function () {
         this.modifyersData = COOKIE_MANAGER.getModifyers();
         this.onUpdateModifyers = new _signals2.default();
 
-        var defaultModifyers = {
+        this.defaultModifyers = {
             drillSpeed: 1,
             resourcesMultiplier: 1,
             damageMultiplier: 1,
@@ -63200,11 +63238,23 @@ var GameModifyers = function () {
     }
 
     (0, _createClass3.default)(GameModifyers, [{
+        key: 'resetModifyers',
+        value: function resetModifyers() {
+            for (var key in this.defaultModifyers) {
+                if (Object.hasOwnProperty.call(this.defaultModifyers, key)) {
+                    this.modifyersData[key] = this.defaultModifyers[key];
+                }
+            }
+            console.log(this.modifyersData);
+            this.onUpdateModifyers.dispatch();
+            COOKIE_MANAGER.updateModifyers(this.modifyersData);
+        }
+    }, {
         key: 'addShards',
         value: function addShards(value) {
             this.permanentBonusData.shards += value;
             this.modifyersData.permanentBonusData = this.permanentBonusData;
-            console.log(this.modifyersData.permanentBonusData);
+            //console.log(this.modifyersData.permanentBonusData)
             this.onUpdateModifyers.dispatch();
             COOKIE_MANAGER.updateModifyers(this.modifyersData);
         }
@@ -63648,8 +63698,15 @@ var MergeSystem = function () {
                 }
             }
 
+            this.updateTotalGenerators();
+
+            COOKIE_MANAGER.resetBoard();
+            console.log(COOKIE_MANAGER.getBoard());
+            this.loadData();
+
             this.boardLevel = 0;
             this.latest = 0;
+            this.maxTilePlaced = 0;
 
             for (var i = 0; i < this.slots.length; i++) {
                 for (var j = 0; j < this.slots[i].length; j++) {
@@ -63657,22 +63714,20 @@ var MergeSystem = function () {
                         var slot = this.slots[i][j];
                         if (window.baseConfigGame.gameMap[i][j] <= this.boardLevel) {
                             slot.visible = true;
+                        } else {
+                            slot.visible = false;
                         }
+                        this.virtualSlots[i][j].visible = slot.visible;
                     }
                 }
             }
-
-            this.updateTotalGenerators();
-
-            COOKIE_MANAGER.resetBoard();
-            console.log(COOKIE_MANAGER.getBoard());
-            this.loadData();
+            this.updateAllData();
         }
     }, {
         key: 'loadData',
         value: function loadData() {
             this.savedProgression = COOKIE_MANAGER.getBoard();
-            this.boardLevel = -1;
+            this.boardLevel = 1;
             this.levelUp(this.savedProgression.currentBoardLevel, true);
 
             for (var key in this.savedProgression.entities) {
@@ -63792,6 +63847,7 @@ var MergeSystem = function () {
     }, {
         key: 'sortAutoMerge',
         value: function sortAutoMerge(piece) {
+            if (!piece.tileData) return;
             if (window.gameModifyers.modifyersData.autoMerge > 1) {
                 this.autoPlace(piece);
                 this.autoMerge();
@@ -63831,7 +63887,7 @@ var MergeSystem = function () {
         value: function levelUp(nextLevel) {
             var ignoreSave = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-
+            //console.log(nextLevel)
             if (this.boardLevel != nextLevel) {
                 this.boardLevel = nextLevel;
                 if (!ignoreSave) {
@@ -64089,6 +64145,7 @@ var MergeSystem = function () {
                 }, 10);
             }
 
+            if (firstAvailable && firstAvailable.tileData) {}
             this.releaseEntity(firstAvailable);
 
             //this.autoMerge();
@@ -64530,7 +64587,7 @@ var MergerData = function () {
         rawData.id = index;
         rawData.value = pow;
         rawData.texture = tex;
-        rawData.initialDamage = 2 * Math.pow(1.2, index * 16);
+        rawData.initialDamage = 2 * Math.pow(1.2, index * 14);
         this.rawData = rawData;
 
         this.currentLevel = 1;
@@ -64538,6 +64595,11 @@ var MergerData = function () {
     }
 
     (0, _createClass3.default)(MergerData, [{
+        key: "reset",
+        value: function reset() {
+            this.currentLevel = 1;
+        }
+    }, {
         key: "shouldAccumulateResources",
         value: function shouldAccumulateResources() {
             return this.resourceAccum;
@@ -64807,7 +64869,18 @@ var ParticleSystem = function (_PIXI$Container) {
         }
     }, {
         key: 'kill',
-        value: function kill() {}
+        value: function kill() {
+            if (this.particles && this.particles.length) {
+                for (var i = this.particles.length - 1; i >= 0; i--) {
+                    var coin = this.particles[i];
+                    if (coin.parent) {
+                        coin.parent.removeChild(coin);
+                    }
+                    window.COINS_POOL.push(coin);
+                }
+            }
+            this.particles = [];
+        }
     }, {
         key: 'popLabel',
         value: function popLabel(pos, label) {
@@ -64851,6 +64924,9 @@ var ParticleSystem = function (_PIXI$Container) {
                 }
             });
         }
+    }, {
+        key: 'killAll',
+        value: function killAll() {}
     }, {
         key: 'show',
         value: function show(position) {
@@ -66446,6 +66522,12 @@ var TimeBonusButton = function (_PIXI$Container) {
             this.videoSprite.y = 15;
         }
     }, {
+        key: 'stop',
+        value: function stop() {
+            this.activeTimer = 0;
+            this.targetObject[this.param] = this.defaultValue;
+        }
+    }, {
         key: 'update',
         value: function update(delta) {
             if (this.activeTimer > 0) {
@@ -66568,7 +66650,7 @@ var PrizeSystem = function () {
             x: _config2.default.width,
             y: 240
         }, {
-            x: _config2.default.width + 300,
+            x: _config2.default.width + 200,
             y: -100
         }];
 
@@ -66604,7 +66686,6 @@ var PrizeSystem = function () {
                 this.remove();
                 this.currentTimer = this.timer;
             } else {
-                console.log(this.targets);
                 this.currentTarget = this.targets[this.currentTargetId];
             }
         }
@@ -66636,9 +66717,9 @@ var PrizeSystem = function () {
             if (this.inMovement) {
                 //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
                 //this.currentAngle = Math.atan2(this.entity.y - this.currentTarget.y, this.entity.x - this.currentTarget.x) //- Math.PI/2 // 180 * 3.14;
-                this.currentAngle = Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x);
+                this.currentAngle = _utils2.default.lerp(this.currentAngle, Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x), 0.01);
 
-                this.entity.rotation = _utils2.default.lerp(this.entity.rotation, this.currentAngle, 0.005);
+                this.entity.rotation = _utils2.default.lerp(this.entity.rotation, this.currentAngle, 0.002);
                 this.helpIcon.rotation = -this.entity.rotation - this.entity.enemySprite.rotation;
                 this.velocity.x = _utils2.default.lerp(this.velocity.x, Math.cos(this.currentAngle) * this.speed, 0.05);
                 this.velocity.y = _utils2.default.lerp(this.velocity.y, Math.sin(this.currentAngle) * this.speed, 0.05);
@@ -66646,7 +66727,7 @@ var PrizeSystem = function () {
                 this.entity.x += this.velocity.x * delta;
                 this.entity.y += this.velocity.y * delta;
                 //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
-                if (_utils2.default.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 4) {
+                if (_utils2.default.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 2) {
                     this.nextTarget();
                 }
             } else if (this.currentTimer > 0) {

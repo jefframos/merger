@@ -2,7 +2,7 @@
     "baseGame": {
         "order": -1,
         "general":{
-            "entityGeneratorBaseTime":10,
+            "entityGeneratorBaseTime":8,
             "giftGenerateTime":60
         },
         "modifyersData":"modifyers",

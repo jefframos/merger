@@ -178,7 +178,7 @@
                 "imageSrc": "ship02",
                 "displayName": "Ship - 02",
                 "damageCoeficient": 1.1,
-                "initialDamage": 10,
+                "initialDamage": 0.6,
                 "initialCost": 147,
                 "costCoefficient":  1.380,
                 "timeCoeficient": 1,

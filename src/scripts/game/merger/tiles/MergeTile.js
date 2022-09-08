@@ -235,7 +235,7 @@ export default class MergeTile extends PIXI.Container {
         }
         this.generateDamageTime = this.tileData.getGenerateDamageTime() || 0;
 
-        console.log(this.generateDamageTime)
+        //console.log(this.generateDamageTime)
         this.generateResourceTime = this.tileData.getGenerateResourceTime() || 0;
     }
     addEntity(tileData) {

@@ -4,7 +4,7 @@ export default class GameModifyers {
         this.modifyersData = COOKIE_MANAGER.getModifyers();
         this.onUpdateModifyers = new Signals();
 
-        let defaultModifyers = {
+        this.defaultModifyers = {
             drillSpeed: 1,
             resourcesMultiplier: 1,
             damageMultiplier: 1,
@@ -28,10 +28,21 @@ export default class GameModifyers {
 
 
     }
+    resetModifyers(){
+        for (const key in this.defaultModifyers) {
+            if (Object.hasOwnProperty.call(this.defaultModifyers, key)) {
+                this.modifyersData[key] = this.defaultModifyers[key];
+                
+            }
+        }
+        console.log(this.modifyersData)
+        this.onUpdateModifyers.dispatch();
+        COOKIE_MANAGER.updateModifyers(this.modifyersData)
+    }
     addShards(value){
         this.permanentBonusData.shards += value;
         this.modifyersData.permanentBonusData = this.permanentBonusData
-        console.log(this.modifyersData.permanentBonusData)
+        //console.log(this.modifyersData.permanentBonusData)
         this.onUpdateModifyers.dispatch();
         COOKIE_MANAGER.updateModifyers(this.modifyersData)
     }

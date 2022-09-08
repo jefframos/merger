@@ -50,7 +50,7 @@ export default class PrizeSystem {
             y: 240
         },
         {
-            x: config.width + 300,
+            x: config.width + 200,
             y: -100
         }]
 
@@ -105,9 +105,9 @@ export default class PrizeSystem {
         if (this.inMovement) {
             //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
             //this.currentAngle = Math.atan2(this.entity.y - this.currentTarget.y, this.entity.x - this.currentTarget.x) //- Math.PI/2 // 180 * 3.14;
-            this.currentAngle = Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x);
+            this.currentAngle = utils.lerp(this.currentAngle,Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x), 0.01);
 
-            this.entity.rotation = utils.lerp(this.entity.rotation, this.currentAngle, 0.005)
+            this.entity.rotation = utils.lerp(this.entity.rotation, this.currentAngle, 0.002)
             this.helpIcon.rotation = - this.entity.rotation - this.entity.enemySprite.rotation
             this.velocity.x = utils.lerp(this.velocity.x, Math.cos(this.currentAngle) * this.speed, 0.05)
             this.velocity.y = utils.lerp(this.velocity.y, Math.sin(this.currentAngle) * this.speed, 0.05)
@@ -115,7 +115,7 @@ export default class PrizeSystem {
             this.entity.x += this.velocity.x * delta;
             this.entity.y += this.velocity.y * delta;
             //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
-            if (utils.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 4) {
+            if (utils.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 2) {
                 this.nextTarget();
             }
         } else if (this.currentTimer > 0) {

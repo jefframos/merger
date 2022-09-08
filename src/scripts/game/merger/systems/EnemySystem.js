@@ -137,6 +137,8 @@ export default class EnemySystem {
         this.updateLevelView();
         this.enemyLevel = 0
         COOKIE_MANAGER.saveEnemyLevel(1);
+        this.lockOnLevel = false;
+        this.inABossBattle = false;
         this.nextEnemy();
     }
     loadData() {

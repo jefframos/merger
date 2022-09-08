@@ -490,7 +490,7 @@ this.allMergeData = [];
         });
 
         let timeBonus = new TimeBonusButton()
-        timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 30)
+        timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5)
         timeBonus.setDescription('>>ships')
 
         let damageBonus = new TimeBonusButton('bullets-large')
@@ -530,8 +530,24 @@ this.allMergeData = [];
         //this.mergeItemsShop.show()
     }
     resetAll() {
+
+        let progression = COOKIE_MANAGER.getProgression()
+        let shards = 10;
+        
+        let rps = Math.max(1, (this.resourceSystem.rps + this.resourceSystemRight.rps) * 0.01)
+        let dps = Math.max(1, this.mergeSystem1.dps * 0.01) / (2000 / (progression.currentEnemyLevel+1))
+        let res = 1//Math.max(1, window.gameEconomy.currentResources)
+        console.log(rps,dps,res)
+        let calc = shards + rps * res * dps
+        let shardsCalc = Math.max((shards * 0.5), 1)
+        shards = 2 * Math.pow(1.02, progression.currentEnemyLevel * 1.2) * shardsCalc * shardsCalc//calc;
+
+        console.log("SHARDS", shards)
+        shards = Math.max(shards,10)
+
         window.gameEconomy.resetAll();
         COOKIE_MANAGER.resetProgression();
+        window.gameModifyers.resetModifyers();
         
         this.systemsList.forEach(element => {
             if (element.resetSystem) {
@@ -541,17 +557,24 @@ this.allMergeData = [];
         this.allMergeData.forEach(element => {
             element.reset();
         });
-        COOKIE_MANAGER.resetProgression();
-        window.gameEconomy.resetAll();
-
         this.bonusTimers.forEach(element => {
             if (element.stop) {
                 element.stop()
             }
         });
+        COOKIE_MANAGER.resetProgression();
+        window.gameEconomy.resetAll();
+
 
         window.gameEconomy.addResources(4)
-        window.gameModifyers.addShards(10);
+
+       
+        
+        //window.gameModifyers.permanentBonusData.shards        
+        
+        window.gameModifyers.addShards(Math.round(shards));
+        this.particleSystem.killAll();
+        this.forcePauseSystemsTimer = 0.5;
 
     }
     refreshToggles() {

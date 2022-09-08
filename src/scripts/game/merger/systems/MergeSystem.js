@@ -123,9 +123,16 @@ export default class MergeSystem {
             }
         }
 
+        
+        this.updateTotalGenerators();
+        
+        COOKIE_MANAGER.resetBoard();
+        console.log( COOKIE_MANAGER.getBoard())
+        this.loadData();
+
         this.boardLevel = 0;
         this.latest = 0;
-
+        this.maxTilePlaced = 0;
 
         for (var i = 0; i < this.slots.length; i++) {
             for (var j = 0; j < this.slots[i].length; j++) {
@@ -133,20 +140,18 @@ export default class MergeSystem {
                     let slot = this.slots[i][j];
                     if (window.baseConfigGame.gameMap[i][j] <= this.boardLevel) {
                         slot.visible = true;
+                    }else{
+                        slot.visible = false;
                     }
+                    this.virtualSlots[i][j].visible = slot.visible;
                 }
             }
         }
-
-        this.updateTotalGenerators();
-
-        COOKIE_MANAGER.resetBoard();
-        console.log( COOKIE_MANAGER.getBoard())
-        this.loadData();
+        this.updateAllData();
     }
     loadData() {
         this.savedProgression = COOKIE_MANAGER.getBoard();
-        this.boardLevel = -1
+        this.boardLevel = 1
         this.levelUp(this.savedProgression.currentBoardLevel, true)
 
         for (const key in this.savedProgression.entities) {
@@ -251,6 +256,7 @@ export default class MergeSystem {
         }
     }
     sortAutoMerge(piece) {
+        if(!piece.tileData)return;
         if (window.gameModifyers.modifyersData.autoMerge > 1) {
             this.autoPlace(piece);
             this.autoMerge()
@@ -280,8 +286,7 @@ export default class MergeSystem {
         this.updateAllData()
     }
     levelUp(nextLevel, ignoreSave = false) {
-
-
+        //console.log(nextLevel)
         if (this.boardLevel != nextLevel) {
             this.boardLevel = nextLevel;
             if (!ignoreSave) {
@@ -524,6 +529,9 @@ export default class MergeSystem {
             }, 10);
         }
 
+        if(firstAvailable && firstAvailable.tileData){
+
+        }
         this.releaseEntity(firstAvailable)
 
         //this.autoMerge();
