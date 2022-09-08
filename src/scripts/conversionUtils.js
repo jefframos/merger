@@ -48,7 +48,7 @@ export default
             }
             else if (tempPoints.toString().length > 4) {
                 let tempRound = Math.floor(tempPoints)
-                tempPoints = tempPoints.toFixed(4 - tempRound.toString().length - 1)
+                tempPoints = tempPoints.toFixed(Math.max(4 - tempRound.toString().length - 1, 0))
             }
 
 

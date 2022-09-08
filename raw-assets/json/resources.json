@@ -41,7 +41,7 @@
                 "imageSrc": "drill",
                 "tileImageSrc": "asteroid (3)",
                 "initialCost": 800,
-                "costCoefficient": 1.155,
+                "costCoefficient": 1.16,
                 "initialTime": 20,
                 "initialRevenue": 10000,
                 "coefficientProductivity": 1.18,
@@ -57,7 +57,7 @@
                 "imageSrc": "drill",
                 "tileImageSrc": "asteroid (4)",
                 "initialCost": 80600,
-                "costCoefficient": 1.162,
+                "costCoefficient": 1.2,
                 "initialTime": 60,
                 "initialRevenue": 500000,
                 "coefficientProductivity": 1.191,
@@ -73,10 +73,10 @@
                 "imageSrc": "drill",
                 "tileImageSrc": "asteroid (5)",
                 "initialCost": 1000000,
-                "costCoefficient": 1.168,
+                "costCoefficient": 1.25,
                 "initialTime": 150,
                 "initialRevenue": 35000000,
-                "coefficientProductivity": 1.192,
+                "coefficientProductivity": 1.22,
                 "initialProductivity": 2160,
                 "levelMax": 500
             }
@@ -89,10 +89,10 @@
                 "imageSrc": "drill",
                 "tileImageSrc": "asteroid (6)",
                 "initialCost": 5000000000,
-                "costCoefficient": 1.15,
+                "costCoefficient": 1.30,
                 "initialTime": 250,
                 "initialRevenue": 420000000,
-                "coefficientProductivity": 1.175,
+                "coefficientProductivity": 1.25,
                 "initialProductivity": 2160,
                 "levelMax": 500
             }
@@ -105,10 +105,10 @@
                 "imageSrc": "drill",
                 "tileImageSrc": "asteroid (7)",
                 "initialCost": 700000000000,
-                "costCoefficient": 1.15,
+                "costCoefficient": 1.35,
                 "initialTime": 500,
                 "initialRevenue": 550000000000,
-                "coefficientProductivity": 1.181,
+                "coefficientProductivity": 1.3,
                 "initialProductivity": 2160,
                 "levelMax": 500
             }
@@ -121,10 +121,10 @@
                 "imageSrc": "drill",
                 "tileImageSrc": "asteroid (8)",
                 "initialCost": 90000000000000,
-                "costCoefficient": 1.149,
+                "costCoefficient": 1.49,
                 "initialTime": 650,
                 "initialRevenue": 85500000000000,
-                "coefficientProductivity": 1.186,
+                "coefficientProductivity": 1.35,
                 "initialProductivity": 2160,
                 "levelMax": 500
             }
@@ -137,10 +137,10 @@
                 "imageSrc": "drill",
                 "tileImageSrc": "asteroid (9)",
                 "initialCost": 1020000000000000,
-                "costCoefficient": 1.156,
+                "costCoefficient": 1.56,
                 "initialTime": 825,
                 "initialRevenue": 120550650000000,
-                "coefficientProductivity": 1.194,
+                "coefficientProductivity": 1.40,
                 "initialProductivity": 2160,
                 "levelMax": 500
             }
@@ -153,10 +153,10 @@
                 "imageSrc": "drill",
                 "tileImageSrc": "asteroid (10)",
                 "initialCost": 5000000000000000000,
-                "costCoefficient": 1.164,
+                "costCoefficient": 1.64,
                 "initialTime": 1000,
                 "initialRevenue": 8031205506500000000,
-                "coefficientProductivity": 1.197,
+                "coefficientProductivity": 1.50,
                 "initialProductivity": 2160,
                 "levelMax": 500
             }

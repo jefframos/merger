@@ -23,8 +23,14 @@ import PrizeSystem from '../systems/PrizeSystem';
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
+        let a = ''
+        for (let index = 1; index <= 20; index++) {
+            console.log(Math.pow(1.1, index * 0.5))
 
+            a += (Math.pow(1.1, index * 0.5) + 0.28).toFixed(3) + ',\n'
+        }
 
+        console.log(a)
 
         window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
         window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
@@ -324,7 +330,10 @@ export default class MergeScreen extends Screen {
         this.addCash = new UIButton1(0x002299, 'coin')
         this.helperButtonList.addElement(this.addCash)
         this.addCash.onClick.add(() => {
-            window.gameEconomy.addResources(80000000000000000000000000000000000000000000000000000000000000)
+            window.gameEconomy.addResources(
+                80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+                * 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+                * 400000000000000000000000)
         })
 
         this.autoMergeToggle = new UIButton1(0x002299, 'auto-merge')
@@ -410,6 +419,9 @@ export default class MergeScreen extends Screen {
         this.sellEverything.newItem.position.set(-buttonSize / 2)
         this.sellEverything.newItem.visible = true;
         this.sellEverything.addChild(this.sellEverything.newItem)
+        this.sellEverything.addCallback(()=>{
+            this.resetAll();
+        })
         // this.sellEverything.onClick.add(() => {
         //     this.resetAll();
         //     //this.openPopUp(this.mergeItemsShop)
@@ -475,7 +487,7 @@ export default class MergeScreen extends Screen {
         });
 
         let timeBonus = new TimeBonusButton()
-        timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5)
+        timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 30)
         timeBonus.setDescription('>>ships')
 
         let damageBonus = new TimeBonusButton('bullets-large')
@@ -511,7 +523,7 @@ export default class MergeScreen extends Screen {
             this.standardPopUpShow(params)
         }
 
-        this.forcePauseSystemsTimer = 0.5;
+        this.forcePauseSystemsTimer = 0.05;
         //this.mergeItemsShop.show()
     }
     resetAll() {
@@ -606,9 +618,13 @@ export default class MergeScreen extends Screen {
             quantParticles = 1
         }
 
-        let coinPosition = this.coinTexture.getGlobalPosition();
+        let coinPosition = this.coinTexture.parent.getGlobalPosition();
+
+        let frontLayer = this.frontLayer.getGlobalPosition();
+
         for (let index = 0; index < quantParticles; index++) {
-            customData.target = { x: coinPosition.x + 80, y: coinPosition.y, timer: 0.2 + Math.random() * 0.75 }
+            customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }
+            customData.ignoreMatchRotation = true;
             this.particleSystem.show(toLocal, 1, customData)
         }
 
@@ -649,11 +665,11 @@ export default class MergeScreen extends Screen {
             }
         });
         delta *= window.TIME_SCALE * window.gameModifyers.bonusData.gameSpeed;
-        
+
         if (this.forcePauseSystemsTimer > 0) {
             this.forcePauseSystemsTimer -= delta;
-            
-        }else{
+
+        } else {
 
             this.mergeSystem1.updateSystems(delta)
             this.particleSystem.update(delta)

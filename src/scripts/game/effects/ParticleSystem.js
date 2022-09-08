@@ -185,7 +185,9 @@ export default class ParticleSystem extends PIXI.Container
             {
                 coin.timer = coin.target.timer;
                 coin.speed = coin.target.speed | 500;
-                coin.matchRotation = (coin.target.matchRotation != undefined ? coin.target.matchRotation : true);
+                if(!customData.ignoreMatchRotation){
+                    coin.matchRotation = (coin.target.matchRotation != undefined ? coin.target.matchRotation : true);
+                }
             }
             coin.scale.set(config.height / (coin.height * coin.scale.y) * (scl))
             let force = {

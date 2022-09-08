@@ -29,8 +29,10 @@ export default class TimeBonusButton extends PIXI.Container {
         //this.shopButtonsList.addElement(this.mainButton)
         this.mainButton.onClick.add(() => {
             this.activeTimer = this.bonusTime
-
-            console.log(this.targetObject)
+            if(this.callback){
+                this.callback();
+            }
+            //console.log(this.targetObject)
         })
 
 
@@ -52,6 +54,9 @@ export default class TimeBonusButton extends PIXI.Container {
         this.bonusLabel.x = buttonSize / 2 - this.bonusLabel.width
         this.bonusLabel.y = -buttonSize / 2 - this.bonusLabel.height - 2
         this.addChild(this.bonusLabel);
+    }
+    addCallback(callback){
+        this.callback = callback
     }
     updateIconScale(scale){
         this.mainButton.updateIconScale(scale)

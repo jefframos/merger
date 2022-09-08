@@ -88,7 +88,7 @@ export default class EntityShop extends PIXI.Container {
         this.isPossibleBuy = false;
 
         setTimeout(() => {
-            
+
             this.updateToggleValue();
         }, 500);
     }
@@ -113,7 +113,7 @@ export default class EntityShop extends PIXI.Container {
             element.updatePreviewValue(this.toggles.currentActiveValue)
 
             if (!this.isPossibleBuy && !element.isLocked) {
-                this.isPossibleBuy = element.canBuyOne();                
+                this.isPossibleBuy = element.canBuyOne();
             }
         });
 
@@ -178,9 +178,9 @@ export default class EntityShop extends PIXI.Container {
         this.shopList.x = this.size.w * 0.025
 
 
-if(skipCheck){
-    return;
-}
+        if (skipCheck) {
+            return;
+        }
         let currentResources = COOKIE_MANAGER.getResources();
 
         let currentEntities = []

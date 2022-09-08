@@ -87,7 +87,6 @@ export default class MergeSystem {
         this.addPieceGenerator();
         this.addPieceGenerator();
         this.addPieceGenerator();
-        this.addPieceGenerator();
         this.adjustSlotsPosition();
 
         this.entityDragSprite = new PIXI.Sprite.from('');
@@ -338,7 +337,7 @@ export default class MergeSystem {
             }
         }
 
-        
+        this.updateBottomPosition();
     }
     addSlot(i, j) {
         console.log("add slot")

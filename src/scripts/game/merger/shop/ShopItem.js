@@ -119,11 +119,9 @@ export default class ShopItem extends UIList {
         this.previewValue = 1;
         this.unlockItem();
         this.currentTogglePreviewValue = 1;
-
         //console.log("adicionar aqui botoes pra auto generate and auto collect");
-
-
     }
+    
     lockItem() {
         if (this.itemData) {
             if (this.itemData.rawData.type == "resource") {

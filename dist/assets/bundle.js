@@ -54802,7 +54802,7 @@ exports.default = {
             // console.log(tempPoints + temp);
         } else if (tempPoints.toString().length > 4) {
             var tempRound = Math.floor(tempPoints);
-            tempPoints = tempPoints.toFixed(4 - tempRound.toString().length - 1);
+            tempPoints = tempPoints.toFixed(Math.max(4 - tempRound.toString().length - 1, 0));
         }
 
         tempPoints = this.cleanString(tempPoints);
@@ -59809,7 +59809,7 @@ module.exports = exports["default"];
 /* 338 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/particles/particles.json","image/asteroids/asteroids.json","image/pattern2/pattern2.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
+module.exports = {"default":["image/asteroids/asteroids.json","image/pattern2/pattern2.json","image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 339 */
@@ -60221,6 +60221,15 @@ var MergeScreen = function (_Screen) {
 
                 var _this = (0, _possibleConstructorReturn3.default)(this, (MergeScreen.__proto__ || (0, _getPrototypeOf2.default)(MergeScreen)).call(this, label));
 
+                var a = '';
+                for (var index = 1; index <= 20; index++) {
+                        console.log(Math.pow(1.1, index * 0.5));
+
+                        a += (Math.pow(1.1, index * 0.5) + 0.28).toFixed(3) + ',\n';
+                }
+
+                console.log(a);
+
                 window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
                 window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
                 window.baseEnemies = PIXI.loader.resources[window.baseConfigGame.entitiesData].data.mergeEntities.enemies;
@@ -60306,29 +60315,29 @@ var MergeScreen = function (_Screen) {
                 _this.dataResourcesTiles = [];
 
                 _this.rawModifyers = [];
-                for (var index = 0; index < window.baseModifyers.modifyers.length; index++) {
-                        var mergeData = new _MergerData2.default(window.baseModifyers.modifyers[index], index);
+                for (var _index = 0; _index < window.baseModifyers.modifyers.length; _index++) {
+                        var mergeData = new _MergerData2.default(window.baseModifyers.modifyers[_index], _index);
 
                         mergeData.currentLevel = window.gameModifyers.getLevel(mergeData);
-                        console.log(window.baseModifyers.modifyers[index].type);
-                        mergeData.type = window.baseModifyers.modifyers[index].type;
-                        mergeData.modifyerIcon = window.baseModifyers.modifyers[index].modifyerIcon;
+                        console.log(window.baseModifyers.modifyers[_index].type);
+                        mergeData.type = window.baseModifyers.modifyers[_index].type;
+                        mergeData.modifyerIcon = window.baseModifyers.modifyers[_index].modifyerIcon;
                         _this.rawModifyers.push(mergeData);
                 }
 
                 _this.rawMergeDataList = [];
-                for (var _index = 0; _index < window.baseEntities.mergeEntities.list.length; _index++) {
-                        var _mergeData = new _MergerData2.default(window.baseEntities.mergeEntities.list[_index], _index);
-                        _mergeData.type = window.baseEntities.mergeEntities.list[_index].type;
+                for (var _index2 = 0; _index2 < window.baseEntities.mergeEntities.list.length; _index2++) {
+                        var _mergeData = new _MergerData2.default(window.baseEntities.mergeEntities.list[_index2], _index2);
+                        _mergeData.type = window.baseEntities.mergeEntities.list[_index2].type;
                         _this.rawMergeDataList.push(_mergeData);
                 }
 
                 _this.rawMergeResourceList = [];
                 _this.allRawResources = [];
                 _this.rawMergeResourceListRight = [];
-                for (var _index2 = 0; _index2 < window.baseResources.generators.length; _index2++) {
-                        var _mergeData2 = new _MergerData2.default(window.baseResources.generators[_index2][0], _index2);
-                        if (_index2 % 2 == 0) {
+                for (var _index3 = 0; _index3 < window.baseResources.generators.length; _index3++) {
+                        var _mergeData2 = new _MergerData2.default(window.baseResources.generators[_index3][0], _index3);
+                        if (_index3 % 2 == 0) {
                                 _mergeData2.isRight = true;
                                 _this.rawMergeResourceListRight.push(_mergeData2);
                         } else {
@@ -60503,7 +60512,7 @@ var MergeScreen = function (_Screen) {
                 _this.addCash = new _UIButton2.default(0x002299, 'coin');
                 _this.helperButtonList.addElement(_this.addCash);
                 _this.addCash.onClick.add(function () {
-                        window.gameEconomy.addResources(80000000000000000000000000000000000000000000000000000000000000);
+                        window.gameEconomy.addResources(80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 * 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 * 400000000000000000000000);
                 });
 
                 _this.autoMergeToggle = new _UIButton2.default(0x002299, 'auto-merge');
@@ -60584,6 +60593,9 @@ var MergeScreen = function (_Screen) {
                 _this.sellEverything.newItem.position.set(-buttonSize / 2);
                 _this.sellEverything.newItem.visible = true;
                 _this.sellEverything.addChild(_this.sellEverything.newItem);
+                _this.sellEverything.addCallback(function () {
+                        _this.resetAll();
+                });
                 // this.sellEverything.onClick.add(() => {
                 //     this.resetAll();
                 //     //this.openPopUp(this.mergeItemsShop)
@@ -60648,7 +60660,7 @@ var MergeScreen = function (_Screen) {
                 });
 
                 var timeBonus = new _TimeBonusButton2.default();
-                timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5);
+                timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 30);
                 timeBonus.setDescription('>>ships');
 
                 var damageBonus = new _TimeBonusButton2.default('bullets-large');
@@ -60684,7 +60696,7 @@ var MergeScreen = function (_Screen) {
                         _this.standardPopUpShow(params);
                 }
 
-                _this.forcePauseSystemsTimer = 0.5;
+                _this.forcePauseSystemsTimer = 0.05;
                 //this.mergeItemsShop.show()
                 return _this;
         }
@@ -60802,9 +60814,13 @@ var MergeScreen = function (_Screen) {
                                 quantParticles = 1;
                         }
 
-                        var coinPosition = this.coinTexture.getGlobalPosition();
+                        var coinPosition = this.coinTexture.parent.getGlobalPosition();
+
+                        var frontLayer = this.frontLayer.getGlobalPosition();
+
                         for (var index = 0; index < quantParticles; index++) {
-                                customData.target = { x: coinPosition.x + 80, y: coinPosition.y, timer: 0.2 + Math.random() * 0.75 };
+                                customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 };
+                                customData.ignoreMatchRotation = true;
                                 this.particleSystem.show(toLocal, 1, customData);
                         }
 
@@ -61913,10 +61929,7 @@ var ShopItem = function (_UIList) {
         _this.previewValue = 1;
         _this.unlockItem();
         _this.currentTogglePreviewValue = 1;
-
         //console.log("adicionar aqui botoes pra auto generate and auto collect");
-
-
         return _this;
     }
 
@@ -63597,7 +63610,6 @@ var MergeSystem = function () {
         this.addPieceGenerator();
         this.addPieceGenerator();
         this.addPieceGenerator();
-        this.addPieceGenerator();
         this.adjustSlotsPosition();
 
         this.entityDragSprite = new PIXI.Sprite.from('');
@@ -63876,6 +63888,8 @@ var MergeSystem = function () {
                     }
                 }
             }
+
+            this.updateBottomPosition();
         }
     }, {
         key: 'addSlot',
@@ -64879,7 +64893,9 @@ var ParticleSystem = function (_PIXI$Container) {
                 if (coin.target) {
                     coin.timer = coin.target.timer;
                     coin.speed = coin.target.speed | 500;
-                    coin.matchRotation = coin.target.matchRotation != undefined ? coin.target.matchRotation : true;
+                    if (!customData.ignoreMatchRotation) {
+                        coin.matchRotation = coin.target.matchRotation != undefined ? coin.target.matchRotation : true;
+                    }
                 }
                 coin.scale.set(_config2.default.height / (coin.height * coin.scale.y) * scl);
                 var force = {
@@ -66388,8 +66404,10 @@ var TimeBonusButton = function (_PIXI$Container) {
         //this.shopButtonsList.addElement(this.mainButton)
         _this.mainButton.onClick.add(function () {
             _this.activeTimer = _this.bonusTime;
-
-            console.log(_this.targetObject);
+            if (_this.callback) {
+                _this.callback();
+            }
+            //console.log(this.targetObject)
         });
 
         _this.bonusTimer = new _ProgressBar2.default({ width: 64, height: 12 }, 3, 3);
@@ -66414,6 +66432,11 @@ var TimeBonusButton = function (_PIXI$Container) {
     }
 
     (0, _createClass3.default)(TimeBonusButton, [{
+        key: 'addCallback',
+        value: function addCallback(callback) {
+            this.callback = callback;
+        }
+    }, {
         key: 'updateIconScale',
         value: function updateIconScale(scale) {
             this.mainButton.updateIconScale(scale);
