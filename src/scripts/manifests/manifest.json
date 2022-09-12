@@ -4,8 +4,8 @@
         "image/particles/particles.json",
         "image/asteroids/asteroids.json",
         "image/background/background.json",
-        "image/entities/entities.json",
         "image/pattern/pattern.json",
+        "image/entities/entities.json",
         "image/portraits/portraits.json",
         "image/enemies/enemies.json",
         "image/ui/ui.json"

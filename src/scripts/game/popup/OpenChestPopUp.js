@@ -136,7 +136,7 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.openChestContainer.visible = false;
         this.toRemove = false;
         this.onShow.dispatch(this);
-
+        this.portrait.texture = new PIXI.Texture.fromFrame('portraitChest' + Math.ceil(Math.random()*3))
         if (param) {
             this.confirmCallback = param.onConfirm;
             this.cancelCallback = param.onCancel;
@@ -147,7 +147,10 @@ export default class OpenChestPopUp extends PIXI.Container {
         //this.readyLabel.text = param ? param.label : ''
         this.readyLabel.pivot.x = this.readyLabel.width / 2;
         
-
+        this.background.alpha = 0.5
+        this.container.alpha = 1
+        this.popUp.scale.x = 1
+        this.popUp.scale.y = 1
     }
     afterHide() {
 

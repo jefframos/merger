@@ -59518,17 +59518,17 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 var assets = [{
-	"id": "entities",
-	"url": "assets/json\\entities.json"
-}, {
-	"id": "resources",
-	"url": "assets/json\\resources.json"
-}, {
 	"id": "baseGameConfig",
 	"url": "assets/json\\baseGameConfig.json"
 }, {
+	"id": "entities",
+	"url": "assets/json\\entities.json"
+}, {
 	"id": "modifyers",
 	"url": "assets/json\\modifyers.json"
+}, {
+	"id": "resources",
+	"url": "assets/json\\resources.json"
 }];
 
 exports.default = assets;
@@ -59820,7 +59820,7 @@ module.exports = exports["default"];
 /* 338 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/pattern2/pattern2.json","image/particles/particles.json","image/asteroids/asteroids.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
+module.exports = {"default":["image/pattern2/pattern2.json","image/particles/particles.json","image/asteroids/asteroids.json","image/background/background.json","image/pattern/pattern.json","image/entities/entities.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 339 */
@@ -64608,7 +64608,7 @@ var MergerData = function () {
         rawData.id = index;
         rawData.value = pow;
         rawData.texture = tex;
-        rawData.initialDamage = 2 * Math.pow(1.2, index * 14);
+        rawData.initialDamage = 2 * Math.pow(1.3, index * 14 + index * index * index * 0.1);
         this.rawData = rawData;
 
         this.currentLevel = 1;
@@ -66975,7 +66975,7 @@ var OpenChestPopUp = function (_PIXI$Container) {
             this.openChestContainer.visible = false;
             this.toRemove = false;
             this.onShow.dispatch(this);
-
+            this.portrait.texture = new PIXI.Texture.fromFrame('portraitChest' + Math.ceil(Math.random() * 3));
             if (param) {
                 this.confirmCallback = param.onConfirm;
                 this.cancelCallback = param.onCancel;
@@ -66985,6 +66985,11 @@ var OpenChestPopUp = function (_PIXI$Container) {
             }
             //this.readyLabel.text = param ? param.label : ''
             this.readyLabel.pivot.x = this.readyLabel.width / 2;
+
+            this.background.alpha = 0.5;
+            this.container.alpha = 1;
+            this.popUp.scale.x = 1;
+            this.popUp.scale.y = 1;
         }
     }, {
         key: 'afterHide',
