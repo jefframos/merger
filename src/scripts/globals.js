@@ -56,6 +56,15 @@ window.LABELS.LABEL1 = {
     align: 'center',
     fontWeight: '800'
 }
+window.LABELS.LABEL_CHEST = {
+    fontFamily: 'retro_computerregular',
+    fontSize: '18px',
+    fill: 0xFFFFFF,
+    align: 'center',
+    fontWeight: '800',
+    stroke:0xbb00bb,
+    strokeThickness:4,
+}
 window.LABELS.LABEL_STATS = {
     fontFamily: 'retro_computerregular',
     fontSize: '14px',

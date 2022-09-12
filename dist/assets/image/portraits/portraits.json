@@ -2,15 +2,15 @@
 
 "portrait (1).png":
 {
-	"frame": {"x":281,"y":1,"w":138,"h":127},
-	"rotated": true,
+	"frame": {"x":141,"y":399,"w":138,"h":127},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":127},
 	"sourceSize": {"w":140,"h":129}
 },
 "portrait (2).png":
 {
-	"frame": {"x":141,"y":664,"w":116,"h":136},
+	"frame": {"x":281,"y":529,"w":116,"h":136},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":116,"h":136},
@@ -26,15 +26,15 @@
 },
 "portrait (4).png":
 {
-	"frame": {"x":279,"y":678,"w":128,"h":133},
-	"rotated": false,
+	"frame": {"x":1,"y":656,"w":128,"h":133},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":128,"h":133},
 	"sourceSize": {"w":130,"h":135}
 },
 "portrait (7).png":
 {
-	"frame": {"x":1,"y":137,"w":138,"h":133},
+	"frame": {"x":281,"y":1,"w":138,"h":133},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":133},
@@ -42,7 +42,7 @@
 },
 "portrait (8).png":
 {
-	"frame": {"x":1,"y":272,"w":138,"h":131},
+	"frame": {"x":1,"y":137,"w":138,"h":131},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":131},
@@ -50,7 +50,7 @@
 },
 "portrait (9).png":
 {
-	"frame": {"x":141,"y":137,"w":138,"h":133},
+	"frame": {"x":281,"y":136,"w":138,"h":133},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":133},
@@ -66,7 +66,7 @@
 },
 "portrait (11).png":
 {
-	"frame": {"x":141,"y":272,"w":138,"h":129},
+	"frame": {"x":141,"y":137,"w":138,"h":129},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":129},
@@ -74,7 +74,7 @@
 },
 "portrait (12).png":
 {
-	"frame": {"x":1,"y":405,"w":138,"h":128},
+	"frame": {"x":281,"y":271,"w":138,"h":128},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":128},
@@ -82,15 +82,15 @@
 },
 "portrait (13).png":
 {
-	"frame": {"x":281,"y":267,"w":138,"h":126},
-	"rotated": true,
+	"frame": {"x":281,"y":401,"w":138,"h":126},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":126},
 	"sourceSize": {"w":140,"h":128}
 },
 "portrait (14).png":
 {
-	"frame": {"x":141,"y":782,"w":116,"h":133},
+	"frame": {"x":277,"y":776,"w":116,"h":133},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":116,"h":133},
@@ -98,7 +98,7 @@
 },
 "portrait (15).png":
 {
-	"frame": {"x":141,"y":534,"w":138,"h":128},
+	"frame": {"x":1,"y":270,"w":138,"h":128},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":128},
@@ -106,7 +106,7 @@
 },
 "portrait (16).png":
 {
-	"frame": {"x":141,"y":403,"w":138,"h":129},
+	"frame": {"x":141,"y":268,"w":138,"h":129},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":129},
@@ -114,7 +114,7 @@
 },
 "portrait (17).png":
 {
-	"frame": {"x":281,"y":141,"w":127,"h":124},
+	"frame": {"x":132,"y":894,"w":127,"h":124},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":127,"h":124},
@@ -122,15 +122,15 @@
 },
 "portrait (18).png":
 {
-	"frame": {"x":281,"y":407,"w":138,"h":126},
-	"rotated": true,
+	"frame": {"x":1,"y":400,"w":138,"h":126},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":126},
 	"sourceSize": {"w":140,"h":128}
 },
 "portrait (19).png":
 {
-	"frame": {"x":1,"y":663,"w":138,"h":125},
+	"frame": {"x":141,"y":528,"w":138,"h":125},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":125},
@@ -138,35 +138,62 @@
 },
 "portrait (20).png":
 {
-	"frame": {"x":1,"y":535,"w":138,"h":126},
+	"frame": {"x":1,"y":528,"w":138,"h":126},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":138,"h":126},
 	"sourceSize": {"w":140,"h":128}
 },
+"portraitChest1.png":
+{
+	"frame": {"x":281,"y":647,"w":134,"h":127},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":134,"h":127},
+	"sourceSize": {"w":136,"h":129}
+},
+"portraitChest2.png":
+{
+	"frame": {"x":1,"y":894,"w":124,"h":129},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":124,"h":129},
+	"sourceSize": {"w":126,"h":131}
+},
+"portraitChest3.png":
+{
+	"frame": {"x":141,"y":655,"w":134,"h":123},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":134,"h":123},
+	"sourceSize": {"w":136,"h":125}
+},
 "portraitFemale.png":
 {
-	"frame": {"x":281,"y":547,"w":118,"h":129},
-	"rotated": false,
+	"frame": {"x":261,"y":894,"w":118,"h":129},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":118,"h":129},
 	"sourceSize": {"w":120,"h":131}
 },
 "portraitMale.png":
 {
-	"frame": {"x":1,"y":790,"w":104,"h":133},
+	"frame": {"x":1,"y":786,"w":104,"h":133},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":104,"h":133},
 	"sourceSize": {"w":106,"h":135}
 }},
+"animations": {
+	"portraitChest": ["portraitChest1.png","portraitChest2.png","portraitChest3.png"]
+},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "portraits.png",
 	"format": "RGBA8888",
-	"size": {"w":409,"h":899},
+	"size": {"w":420,"h":1019},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:ee8124bf70e7a5a3942d87e4bd772309:dc24a30331ed8c9ceb667f85bc8c6d0c:b2f80d7af41902736d3ed02ec88e31a6$"
+	"smartupdate": "$TexturePacker:SmartUpdate:5fb334be8a333267bc0505586eac46dc:2c75a4fb0a1a01c6dc283070098288d4:b2f80d7af41902736d3ed02ec88e31a6$"
 }
 }

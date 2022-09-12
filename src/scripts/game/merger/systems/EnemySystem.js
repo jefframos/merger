@@ -228,7 +228,8 @@ export default class EnemySystem {
     }
     getNextEnemySprite() {
         var pref = this.currentEnemySet.prefix;
-        var id = Math.floor(Math.random() * this.currentEnemySet.max) + this.currentEnemySet.min;
+        var id = Math.floor(Math.random() * this.currentEnemySet.max - 1) + this.currentEnemySet.min;
+        id = Math.max(id,1)
         return pref.replace("$", id);
     }
     getNextBossSprite() {

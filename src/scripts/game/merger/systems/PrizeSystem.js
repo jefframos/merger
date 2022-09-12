@@ -2,6 +2,7 @@ import TweenMax from "gsap";
 import config from "../../../config";
 import utils from "../../../utils";
 import StandardEnemy from "../enemy/StandardEnemy";
+import Signals from 'signals';
 
 export default class PrizeSystem {
     constructor(containers, data, dataTiles) {
@@ -18,8 +19,15 @@ export default class PrizeSystem {
         this.helpIcon = new PIXI.Sprite.from('icon-help');
         this.helpIcon.anchor.set(0.5)
         this.helpIcon.scale.set(0.5)
-        this.helpIcon.y = 30
+        this.helpIcon.y = -30
         this.entity.enemySprite.addChild(this.helpIcon)
+
+        this.helpLabel = new PIXI.Text('HELP', LABELS.LABEL_CHEST);
+        this.helpLabel.style.fontSize = 24
+        this.helpLabel.style.fill = 0xffffff
+        this.helpLabel.x = 30
+        this.helpLabel.y = - 10
+        this.helpIcon.addChild(this.helpLabel)
 
         this.entity.on('mouseup', this.click.bind(this)).on('touchend', this.click.bind(this));
 
@@ -35,7 +43,7 @@ export default class PrizeSystem {
 
         this.targets = [{
             x: -200,
-            y: -100
+            y: 0
         },
         {
             x: 0,
@@ -61,6 +69,9 @@ export default class PrizeSystem {
         this.speed = 20
 
         this.spawn()
+
+        this.onCollect = new Signals();
+
     }
     spawn() {
 
@@ -93,7 +104,7 @@ export default class PrizeSystem {
         this.inMovement = false;
     }
     click() {
-        console.log("Collect2")
+        this.onCollect.dispatch(this);
         this.remove();
         this.currentTimer = this.timer;
 

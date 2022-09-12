@@ -19,6 +19,7 @@ import utils from '../../../utils';
 import UIList from '../../ui/uiElements/UIList';
 import TimeBonusButton from '../../ui/TimeBonusButton';
 import PrizeSystem from '../systems/PrizeSystem';
+import OpenChestPopUp from '../../popup/OpenChestPopUp';
 
 export default class MergeScreen extends Screen {
     constructor(label) {
@@ -211,6 +212,9 @@ this.allMergeData = [];
             this.spaceBackground.setTopColor(set.color)
         });
 
+        this.prizeSystem.onCollect.add((prize)=>{
+            this.openPopUp(this.openChestPopUp, prize)
+        })
         this.mergeSystem1.addSystem(this.enemiesSystem);
         this.mergeSystem1.addSystem(this.resourceSystem);
         this.mergeSystem1.addSystem(this.resourceSystemRight);
@@ -461,10 +465,15 @@ this.allMergeData = [];
         this.standardPopUp = new StandardPop('any', this.screenManager)
         this.uiLayer.addChild(this.standardPopUp)
 
+
+        this.openChestPopUp = new OpenChestPopUp('chest', this.screenManager)
+        this.uiLayer.addChild(this.openChestPopUp)
+
         this.uiPanels.push(this.entityShop)
         this.uiPanels.push(this.mergeItemsShop)
         this.uiPanels.push(this.generalShop)
         this.uiPanels.push(this.standardPopUp)
+        this.uiPanels.push(this.openChestPopUp)
 
         this.entityShop.onPossiblePurchase.add((canBuy) => {
             this.openShop.newItem.visible = canBuy;
