@@ -46,7 +46,11 @@ export default class PrizeSystem {
             y: 0
         },
         {
-            x: 0,
+            x: 150,
+            y: 140
+        },
+        {
+            x: 150,
             y: 240
         },
         {
@@ -72,6 +76,10 @@ export default class PrizeSystem {
 
         this.onCollect = new Signals();
 
+    }
+    resetSystem(){
+        this.remove();
+        this.currentTimer = this.timer;
     }
     spawn() {
 
@@ -126,7 +134,7 @@ export default class PrizeSystem {
             this.entity.x += this.velocity.x * delta;
             this.entity.y += this.velocity.y * delta;
             //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
-            if (utils.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 2) {
+            if (this.entity.x > this.currentTarget.x + 100 || this.entity.y < -500 || utils.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 2) {
                 this.nextTarget();
             }
         } else if (this.currentTimer > 0) {

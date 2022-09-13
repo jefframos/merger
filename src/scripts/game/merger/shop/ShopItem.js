@@ -298,8 +298,13 @@ export default class ShopItem extends UIList {
 
 
         let isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax - 1;
+        
         if (this.itemData.rawData.quantify && this.itemData.rawData.quantifyBoolean) {
             isMax = this.itemData.currentLevel > 1;
+        }
+
+        if (this.itemData.rawData.quantify && !this.itemData.rawData.quantifyBoolean) {
+            isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax;
         }
         this.levelLabel.text = 'Level\n' + this.itemData.currentLevel
         // this.itemData = GAME_DATA.getUpdatedItem(this.itemData.dataType, this.itemData.id)

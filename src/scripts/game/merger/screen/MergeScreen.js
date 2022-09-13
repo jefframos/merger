@@ -20,6 +20,8 @@ import UIList from '../../ui/uiElements/UIList';
 import TimeBonusButton from '../../ui/TimeBonusButton';
 import PrizeSystem from '../systems/PrizeSystem';
 import OpenChestPopUp from '../../popup/OpenChestPopUp';
+import StandardEnemy from '../enemy/StandardEnemy';
+import SpaceStation from '../../ui/SpaceStation';
 
 export default class MergeScreen extends Screen {
     constructor(label) {
@@ -120,7 +122,7 @@ export default class MergeScreen extends Screen {
         this.dataTiles = []
         this.dataResourcesTiles = []
 
-this.allMergeData = [];
+        this.allMergeData = [];
         this.rawModifyers = []
         for (let index = 0; index < window.baseModifyers.modifyers.length; index++) {
             let mergeData = new MergerData(window.baseModifyers.modifyers[index], index)
@@ -133,8 +135,8 @@ this.allMergeData = [];
             this.rawModifyers.push(mergeData)
             this.allMergeData.push(mergeData)
         }
-        
-        
+
+
         this.rawMergeDataList = []
         for (let index = 0; index < window.baseEntities.mergeEntities.list.length; index++) {
             let mergeData = new MergerData(window.baseEntities.mergeEntities.list[index], index)
@@ -142,7 +144,7 @@ this.allMergeData = [];
             this.rawMergeDataList.push(mergeData)
             this.allMergeData.push(mergeData)
         }
-        
+
         this.rawMergeResourceList = []
         this.allRawResources = []
         this.rawMergeResourceListRight = []
@@ -212,7 +214,7 @@ this.allMergeData = [];
             this.spaceBackground.setTopColor(set.color)
         });
 
-        this.prizeSystem.onCollect.add((prize)=>{
+        this.prizeSystem.onCollect.add((prize) => {
             this.openPopUp(this.openChestPopUp, prize)
         })
         this.mergeSystem1.addSystem(this.enemiesSystem);
@@ -233,7 +235,7 @@ this.allMergeData = [];
         this.on('mousemove', this.onMouseMove.bind(this)).on('touchmove', this.onMouseMove.bind(this));
 
         this.statsList = new UIList()
-        this.statsList.w = 120
+        this.statsList.w = 100
         this.statsList.h = 140
         this.container.addChild(this.statsList)
 
@@ -253,7 +255,7 @@ this.allMergeData = [];
         this.coinTexture = new PIXI.Sprite.from('coin')
         this.resourcesLabel.addChild(this.coinTexture)
         this.coinTexture.scale.set(this.resourcesContainer.height / this.coinTexture.height * 0.5)
-        this.coinTexture.x = -30
+        this.coinTexture.x = -23
         this.coinTexture.y = -3
 
 
@@ -269,7 +271,7 @@ this.allMergeData = [];
 
         this.resourcesTexture = new PIXI.Sprite.from('coin-s')
         this.resourcesTexture.scale.set(this.rpsContainer.height / this.resourcesTexture.height * 0.5)
-        this.resourcesTexture.x = -30
+        this.resourcesTexture.x = -23
         this.resourcesTexture.y = -3
         this.rpsLabel.addChild(this.resourcesTexture)
 
@@ -287,7 +289,7 @@ this.allMergeData = [];
         this.damageTexture = new PIXI.Sprite.from('bullets-s')
         this.dpsLabel.addChild(this.damageTexture)
         this.damageTexture.scale.set(this.dpsContainer.height / this.damageTexture.height * 0.5)
-        this.damageTexture.x = -30
+        this.damageTexture.x = -23
         this.damageTexture.y = -3
 
 
@@ -304,7 +306,7 @@ this.allMergeData = [];
         this.shardsTexture = new PIXI.Sprite.from('shards')
         this.shardsLabel.addChild(this.shardsTexture)
         this.shardsTexture.scale.set(this.shardsCounter.height / this.shardsTexture.height * 0.5)
-        this.shardsTexture.x = -30
+        this.shardsTexture.x = -23
         this.shardsTexture.y = -3
 
 
@@ -343,13 +345,11 @@ this.allMergeData = [];
                 * 400000000000000000000000)
         })
 
-        this.autoMergeToggle = new UIButton1(0x002299, 'auto-merge')
-        this.helperButtonList.addElement(this.autoMergeToggle)
-        this.autoMergeToggle.onClick.add(() => {
-            let toggleValue = window.gameModifyers.modifyersData.autoMerge + 1
-            toggleValue %= 2
-            window.gameModifyers.saveBoolModifyers('autoMerge', toggleValue)
-            this.refreshToggles();
+
+        this.addRandomShip = new UIButton1(0x002299, 'ship01')
+        this.helperButtonList.addElement(this.addRandomShip)
+        this.addRandomShip.onClick.add(() => {
+            this.mergeSystem1.addShipBasedOnMax()
         })
 
 
@@ -369,7 +369,7 @@ this.allMergeData = [];
         this.helperButtonList.scale.set(0.5)
         let buttonSize = 80
         this.shopButtonsList = new UIList();
-        this.shopButtonsList.w = buttonSize * 6 + 15;
+        this.shopButtonsList.w = buttonSize * 4 + 15;
         this.shopButtonsList.h = buttonSize;
         this.container.addChild(this.shopButtonsList)
 
@@ -377,8 +377,9 @@ this.allMergeData = [];
 
 
 
-        this.openSettingsShop = new UIButton1(0x002299, 'shop', 0xFFFFFF, buttonSize, buttonSize)
+        this.openSettingsShop = new UIButton1(0x002299, 'stationIcon', 0xFFFFFF, buttonSize, buttonSize)
         this.openSettingsShop.updateIconScale(0.5)
+        this.openSettingsShop.addBadge('icon_increase')
         this.openSettingsShop.newItem = new PIXI.Sprite.fromFrame('new_item')
         this.openSettingsShop.newItem.scale.set(0.7)
         this.openSettingsShop.newItem.anchor.set(0)
@@ -390,7 +391,8 @@ this.allMergeData = [];
             this.openPopUp(this.generalShop)
         })
 
-        this.openShop = new UIButton1(0x002299, 'drill-icon', 0xFFFFFF, buttonSize, buttonSize)
+        this.openShop = new UIButton1(0x002299, 'asteroid (2)', 0xFFFFFF, buttonSize, buttonSize)
+        this.openShop.addBadge('icon_increase')
         this.openShop.updateIconScale(0.5)
         this.openShop.newItem = new PIXI.Sprite.fromFrame('new_item')
         this.openShop.newItem.scale.set(0.7)
@@ -403,8 +405,9 @@ this.allMergeData = [];
             this.openPopUp(this.entityShop)
         })
 
-        this.openMergeShop = new UIButton1(0x002299, 'spiky-field', 0xFFFFFF, buttonSize, buttonSize)
+        this.openMergeShop = new UIButton1(0x002299, 'ship01', 0xFFFFFF, buttonSize, buttonSize)
         this.openMergeShop.updateIconScale(0.5)
+        this.openMergeShop.addBadge('icon_increase')
         this.openMergeShop.newItem = new PIXI.Sprite.fromFrame('new_item')
         this.openMergeShop.newItem.scale.set(0.7)
         this.openMergeShop.newItem.anchor.set(0)
@@ -417,23 +420,23 @@ this.allMergeData = [];
         })
 
 
-        this.sellEverything = new TimeBonusButton('portraitFemale', buttonSize)
-        this.sellEverything.updateIconScale(0.9)
-        this.sellEverything.setDescription("")
-        this.sellEverything.newItem = new PIXI.Sprite.fromFrame('new_item')
-        this.sellEverything.newItem.scale.set(0.7)
-        this.sellEverything.newItem.anchor.set(0)
-        this.sellEverything.newItem.position.set(-buttonSize / 2)
-        this.sellEverything.newItem.visible = true;
-        this.sellEverything.addChild(this.sellEverything.newItem)
-        this.sellEverything.addCallback(()=>{
-            this.resetAll();
-        })
+        // this.sellEverything = new TimeBonusButton('portraitFemale', buttonSize)
+        // this.sellEverything.updateIconScale(0.9)
+        // this.sellEverything.setDescription("")
+        // this.sellEverything.newItem = new PIXI.Sprite.fromFrame('new_item')
+        // this.sellEverything.newItem.scale.set(0.7)
+        // this.sellEverything.newItem.anchor.set(0)
+        // this.sellEverything.newItem.position.set(-buttonSize / 2)
+        // this.sellEverything.newItem.visible = true;
+        // this.sellEverything.addChild(this.sellEverything.newItem)
+        // this.sellEverything.addCallback(()=>{
+        //     this.resetAll();
+        // })
         // this.sellEverything.onClick.add(() => {
         //     this.resetAll();
         //     //this.openPopUp(this.mergeItemsShop)
         // })
-        this.container.addChild(this.sellEverything)
+        //this.container.addChild(this.sellEverything)
 
         this.shopButtonsList.updateHorizontalList();
 
@@ -498,24 +501,26 @@ this.allMergeData = [];
             }
         });
 
-        let timeBonus = new TimeBonusButton()
-        timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5)
-        timeBonus.setDescription('>>ships')
+        this.timeBonus = new TimeBonusButton('speedShip', 80, 'oct-pattern1-bonus-orange')
+        this.timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5)
+        //this.timeBonus.setDescription('>>ships')
+        this.container.addChild(this.timeBonus)
 
-        let damageBonus = new TimeBonusButton('bullets-large')
-        damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30)
-        damageBonus.setDescription('+damage')
+        this.damageBonus = new TimeBonusButton('damageBonus', 80, 'oct-pattern1-bonus-orange')
+        this.damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30)
+        this.container.addChild(this.damageBonus)
+        //damageBonus.setDescription('+damage')
 
         let speedBonus = new TimeBonusButton('fast-arrow')
         speedBonus.setParams(window.gameModifyers.bonusData, 'gameSpeed', 1, 5, 30)
         speedBonus.setDescription('+speed')
 
         this.bonusTimers = [];
-        this.bonusTimers.push(timeBonus);
-        this.bonusTimers.push(damageBonus);
+        this.bonusTimers.push(this.timeBonus);
+        this.bonusTimers.push(this.damageBonus);
         this.bonusTimers.push(speedBonus);
 
-        this.shopButtonsList.addElement(timeBonus)
+        //this.shopButtonsList.addElement(timeBonus)
         //this.shopButtonsList.addElement(damageBonus)
         //this.shopButtonsList.addElement(speedBonus)
         this.shopButtonsList.updateHorizontalList();
@@ -536,28 +541,38 @@ this.allMergeData = [];
         }
 
         this.forcePauseSystemsTimer = 0.05;
+        this.spaceStation = new SpaceStation()
+        this.container.addChild(this.spaceStation);
+        this.spaceStation.onParticles.add(this.addParticles.bind(this))
+        this.spaceStation.scale.set(0.55)
+        this.spaceStation.addCallback(() => {
+            this.resetAll();
+        })
         //this.mergeItemsShop.show()
+    }
+    getShardBonusValue() {
+        let progression = COOKIE_MANAGER.getProgression()
+
+        let coef = 1.004
+        return Math.pow(Math.pow(coef, 8), Math.max(progression.currentEnemyLevel - 100, 1)) + window.gameModifyers.permanentBonusData.shards * 0.2;
     }
     resetAll() {
 
         let progression = COOKIE_MANAGER.getProgression()
         let shards = 10;
-        
-        let rps = Math.max(1, (this.resourceSystem.rps + this.resourceSystemRight.rps) * 0.01)
-        let dps = Math.max(1, this.mergeSystem1.dps * 0.01) / (2000 / (progression.currentEnemyLevel+1))
-        let res = 1//Math.max(1, window.gameEconomy.currentResources)
-        console.log(rps,dps,res)
-        let calc = shards + rps * res * dps
-        let shardsCalc = Math.max((shards * 0.5), 1)
-        shards = 2 * Math.pow(1.02, progression.currentEnemyLevel * 1.2) * shardsCalc * shardsCalc//calc;
 
-        console.log("SHARDS", shards)
-        shards = Math.max(shards,10)
+        let rps = Math.max(1, (this.resourceSystem.rps + this.resourceSystemRight.rps) * 0.01)
+        let dps = Math.max(1, this.mergeSystem1.dps * 0.01) / (2000 / (progression.currentEnemyLevel + 1))
+        let res = 1//Math.max(1, window.gameEconomy.currentResources)
+        console.log(rps, dps, res)
+
+        shards = this.getShardBonusValue()
+        shards = Math.max(shards, 10)
 
         window.gameEconomy.resetAll();
         COOKIE_MANAGER.resetProgression();
         window.gameModifyers.resetModifyers();
-        
+
         this.systemsList.forEach(element => {
             if (element.resetSystem) {
                 element.resetSystem()
@@ -576,11 +591,8 @@ this.allMergeData = [];
 
 
         window.gameEconomy.addResources(4)
-
-       
-        
         //window.gameModifyers.permanentBonusData.shards        
-        
+
         window.gameModifyers.addShards(Math.round(shards));
         this.particleSystem.killAll();
         this.forcePauseSystemsTimer = 0.5;
@@ -593,13 +605,6 @@ this.allMergeData = [];
             this.autoCollectToggle.enableState();
         } else {
             this.autoCollectToggle.disableState();
-        }
-
-        toggleValue = window.gameModifyers.modifyersData.autoMerge == 1
-        if (toggleValue) {
-            this.autoMergeToggle.enableState();
-        } else {
-            this.autoMergeToggle.disableState();
         }
     }
 
@@ -729,19 +734,19 @@ this.allMergeData = [];
 
         this.resourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources);
         utils.centerObject(this.resourcesLabel, this.resourcesContainer)
-        this.resourcesLabel.x = 40
+        this.resourcesLabel.x = 30
 
         this.rpsLabel.text = utils.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps) + '/s';
         utils.centerObject(this.rpsLabel, this.rpsContainer)
-        this.rpsLabel.x = 40
+        this.rpsLabel.x = 30
 
         this.dpsLabel.text = utils.formatPointsLabel(this.mergeSystem1.dps) + '/s';
         utils.centerObject(this.dpsLabel, this.dpsContainer)
-        this.dpsLabel.x = 40
+        this.dpsLabel.x = 30
 
         this.shardsLabel.text = utils.formatPointsLabel(window.gameModifyers.permanentBonusData.shards);
         utils.centerObject(this.shardsLabel, this.shardsCounter)
-        this.shardsLabel.x = 40
+        this.shardsLabel.x = 30
 
         this.timestamp = (Date.now() / 1000 | 0);
 
@@ -749,6 +754,8 @@ this.allMergeData = [];
 
             this.spaceBackground.update(delta)
         }
+
+        this.spaceStation.update(delta)
 
     }
     resize(resolution) {
@@ -771,8 +778,15 @@ this.allMergeData = [];
         this.resourcesWrapperRight.x = this.gridWrapper.x + this.gridWrapper.width;
         this.resourcesWrapperRight.y = this.gridWrapper.y;
 
-        this.sellEverything.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2
-        this.sellEverything.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
+
+        this.timeBonus.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2 - 50
+        this.timeBonus.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
+
+
+        this.damageBonus.x = this.timeBonus.x + 70
+        this.damageBonus.y = this.timeBonus.y + 70
+        // this.sellEverything.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2
+        // this.sellEverything.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
         // if (this.helperButtonList.visible) {
 
         //     this.statsList.y = config.height - 240
@@ -785,7 +799,7 @@ this.allMergeData = [];
         this.statsList.y = config.height - this.statsList.h - 120
         this.shopButtonsList.x = config.width / 2 - this.shopButtonsList.w / 2 + 40
         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 20
-        this.helperButtonList.x = 0
+        this.helperButtonList.x = 15
         this.helperButtonList.y = config.height - this.shopButtonsList.h - 30
 
 
@@ -800,6 +814,9 @@ this.allMergeData = [];
         this.systemsList.forEach(element => {
             element.resize(resolution);
         });
+
+        this.spaceStation.x = this.resourcesWrapper.x + 50;
+        this.spaceStation.y = this.resourcesWrapper.y + 10;
     }
 
     transitionOut(nextScreen) {

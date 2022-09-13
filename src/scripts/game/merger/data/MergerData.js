@@ -6,7 +6,10 @@ export default class MergerData {
         rawData.id = index;
         rawData.value = pow;
         rawData.texture = tex;
-        rawData.initialDamage = 2 * Math.pow(1.3, (index * 14 + (index*index*index*0.1)))
+        let scaling = index * 14 + (index*index*index*0.11);
+        scaling = Math.max(1, scaling)
+        rawData.initialDamage = 2 * Math.pow(1.3, scaling)
+        //console.log('initialDamage',rawData.initialDamage)
         this.rawData = rawData;
 
         this.currentLevel = 1;
@@ -35,13 +38,14 @@ export default class MergerData {
         return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)
     }
     getDamage(simulate = 0) {
-        return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)  * window.gameModifyers.getDamageMultiplier();
+        let mult = window.gameModifyers.getDamageMultiplier();
+        return (this.rawData.initialDamage) * Math.pow(this.rawData.damageCoeficient, this.currentLevel + simulate)  * mult;
     }
     getTexture() {
         return this.rawData.texture
     }
     getGenerateDamageTime(simulate = 0) {
-        return this.getCurrentTime() / window.gameModifyers.getAttackSpeed();
+        return this.getCurrentTime() / window.gameModifyers.getAttackSpeed() * window.gameModifyers.bonusData.damageBonus;
     }
     getGenerateResourceTime(simulate = 0) {
         return this.getCurrentTime() /  window.gameModifyers.getDrillSpeed();

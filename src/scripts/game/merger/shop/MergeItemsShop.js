@@ -18,7 +18,7 @@ export default class MergeItemsShop extends EntityShop {
     }
     show() {
         this.visible = true;
-        this.title.text = "Spaceship Upgrades"
+        this.title.text = "Spaceships"
         let currentResources = COOKIE_MANAGER.getBoard();
         let currentEntities = []
         for (const key in currentResources.entities) {

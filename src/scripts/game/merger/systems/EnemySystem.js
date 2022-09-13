@@ -29,7 +29,6 @@ export default class EnemySystem {
             this.allEnemies[element.id] = element;
         });
 
-
         this.enemiesIds = []
 
         this.enemiesIds.push(this.baseEnemies.levels[0].available[Math.floor(this.baseEnemies.levels[0].available.length * Math.random())]); 
@@ -62,7 +61,7 @@ export default class EnemySystem {
         this.enemyStartLife = 10;
         this.enemyLife = 10;
         this.enemyCurrentLife = 10;
-        this.lifeCoefficient = 1.13
+        this.lifeCoefficient = 1.11
         this.enemyLevel = 1;
         this.nextBoss = 10;
         this.bossGap = 10;
@@ -278,8 +277,9 @@ export default class EnemySystem {
     }
 
     updateEnemyLife(isBoss = false) {
+        //* (0.95 + Math.random()*0.05)
         this.enemyLife = this.enemyStartLife *
-            Math.pow(this.lifeCoefficient * this.lifeCoefficient, this.enemyLevel) *
+            Math.pow(this.lifeCoefficient * this.lifeCoefficient , this.enemyLevel) *
             (isBoss ? (this.lifeCoefficient * this.lifeCoefficient) : 1)
 
         this.enemyCurrentLife = this.enemyLife;

@@ -69,14 +69,16 @@ export default class GameModifyers {
     getLevel(data) {
         return (this.modifyersData[data.rawData.modifyer] || 1)
     }
-    getDamageMultiplier() {
-        return (this.modifyersData.damageMultiplierValue || 1) * this.bonusData.damageBonus * this.permanentBonusData.damageBonus + this.permanentBonusData.shards;
+    getDamageMultiplier() {        
+        let r = (this.modifyersData.damageMultiplierValue || 1) * this.permanentBonusData.damageBonus + this.permanentBonusData.shards;
+        r *= this.bonusData.damageBonus;
+        return r;
     }
     getResourcesMultiplier() {
         return (this.modifyersData.resourcesMultiplierValue || 1) * this.bonusData.resourceBonus * this.permanentBonusData.resourceBonus + this.permanentBonusData.shards;
     }
     getAttackSpeed() {
-        return (this.modifyersData.attackSpeedValue || 1) * this.bonusData.damageSpeed * this.permanentBonusData.damageSpeed
+        return (this.modifyersData.attackSpeedValue || 1) * this.permanentBonusData.damageSpeed
     }
     getDrillSpeed() {
         return (this.modifyersData.drillSpeedValue || 1) * this.bonusData.resourceSpeed * this.permanentBonusData.resourceSpeed

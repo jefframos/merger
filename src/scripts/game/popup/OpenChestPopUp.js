@@ -2,7 +2,9 @@ import * as PIXI from 'pixi.js';
 
 import Signals from 'signals';
 import UIButton1 from '../ui/UIButton1';
+import UILabelButton1 from '../ui/UILabelButton1';
 import config from '../../config';
+import SinglePrizeContainer from '../ui/SinglePrizeContainer';
 
 export default class OpenChestPopUp extends PIXI.Container {
     constructor(label, screenManager) {
@@ -31,7 +33,7 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.background.visible = false
 
         this.popUp = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('small-no-pattern'), 15, 15, 15, 15)
+            PIXI.Texture.fromFrame('small-no-pattern-purple'), 15, 15, 15, 15)
         this.popUp.width = this.w
         this.popUp.height = this.h
 
@@ -52,17 +54,17 @@ export default class OpenChestPopUp extends PIXI.Container {
 
 
 
-        this.readyLabel = new PIXI.Text('Choose your prize', LABELS.LABEL_CHEST);
+        this.readyLabel = new PIXI.Text('Thanks for helping us\nChoose your prize', LABELS.LABEL_CHEST);
         this.readyLabel.style.fontSize = 18
         this.readyLabel.style.fill = 0xffffff
         this.readyLabel.pivot.x = this.readyLabel.width / 2;
         this.readyLabel.y = -40
-        
+
         this.chestContainer.addChild(this.readyLabel)
 
         this.portrait = new PIXI.Sprite.fromFrame('portraitChest2')
         this.chestContainer.addChild(this.portrait)
-        this.portrait.anchor.set(0.5,1)
+        this.portrait.anchor.set(0.5, 1)
         this.portrait.y = -40
 
         this.chest1 = new PIXI.Sprite.fromFrame('chest1')
@@ -71,7 +73,7 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.chest1.scale.set(0.6)
         this.chest1.x = -75
         this.chest1.y = this.h / 2 - 120
-        
+
         this.chest1.on('mouseup', this.openNormalChest.bind(this));
         this.chest1.on('touchend', this.openNormalChest.bind(this));
         this.chest1.interactive = true;
@@ -84,24 +86,32 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.openLabel.pivot.y = this.openLabel.height / 2;
         this.openLabel.y = 65
         this.chest1.addChild(this.openLabel)
-        
-        
+
+
+
+        this.shine = new PIXI.Sprite.fromFrame('shine')
+        this.shine.anchor.set(0.5)
+        this.shine.scale.set(2.2)
+        this.shine.tint = 0xffff00
+        this.shine.y = 50
+        this.chestContainer.addChild(this.shine);
+
         this.chest2 = new PIXI.Sprite.fromFrame('chest3')
         this.chest2.anchor.set(0.5)
         this.chestContainer.addChild(this.chest2)
         this.chest2.x = 75
         this.chest2.y = this.h / 2 - 120
-        
+
         this.chest2.on('mouseup', this.openVideoChest.bind(this));
         this.chest2.on('touchend', this.openVideoChest.bind(this));
         this.chest2.interactive = true;
         this.chest2.buttonMode = true;
-        
+
         this.watchToOpen = new PIXI.Text('Open', LABELS.LABEL_CHEST);
         this.watchToOpen.style.fontSize = 14
         this.watchToOpen.style.stroke = 0x0090ff
         this.watchToOpen.style.fill = 0xffffff
-        this.watchToOpen.pivot.x = this.watchToOpen.width / 2- 30;
+        this.watchToOpen.pivot.x = this.watchToOpen.width / 2 - 30;
         this.watchToOpen.pivot.y = this.watchToOpen.height / 2;
         this.watchToOpen.y = 60
         this.chest2.addChild(this.watchToOpen)
@@ -110,33 +120,150 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.video.x = -this.video.width / 2 - 5;
         this.video.y = this.watchToOpen.height / 2;
         this.watchToOpen.addChild(this.video)
-        
+
         this.container.visible = false;
 
         this.readySin = 0;
 
+
+        this.shinePrize = new PIXI.Sprite.fromFrame('shine')
+        this.shinePrize.anchor.set(0.5)
+        this.shinePrize.scale.set(2.8)
+        this.shinePrize.tint = 0xffff00
+        this.shinePrize.alpha = 0.5
+        this.openChestContainer.addChild(this.shinePrize);
+
+
+        this.chosenChest = new PIXI.Sprite.fromFrame('chest3Open')
+        this.chosenChest.anchor.set(0.5)
+        this.openChestContainer.addChild(this.chosenChest)
+        this.chosenChest.y = 40
+
+        this.prizeShowData = {
+            distance:130,
+            total:3
+        }
+        this.prizes = []
+
+        this.prizesData = [{
+            icon:'coin-large',
+            color:0x00ff00
+        },
+        {
+            icon:'shipPrize',
+            color:0x00ffff
+        },
+        {
+            icon:'shards-large',
+            color:0xad07fb
+        }]
+        for (let index = 0; index < this.prizeShowData.total; index++) {
+            let prize = new SinglePrizeContainer();
+            this.openChestContainer.addChild(prize)
+
+            this.prizes.push(prize)
+            prize.updateIcon(this.prizesData[index].icon)
+            prize.updateLabel("20AA", this.prizesData[index].color)
+
+            prize.x = this.prizeShowData.distance * index - (this.prizeShowData.distance * this.prizeShowData.total-1 / 2);
+            prize.y = -80
+        }
+        this.shinePrize.y = -80
+        this.collectButton = new UILabelButton1(130)
+        this.collectButton.addCenterLabel("Collect")
+        this.openChestContainer.addChild(this.collectButton)
+        this.collectButton.pivot.x = this.collectButton.width / 2;
+        this.collectButton.y = 120
+        this.collectButton.onClick.add(() => {
+            this.close()
+        })
+
+
+        this.chestData = [
+            {
+                chest: 'chest1',
+                chestOpen: 'chest1Open',
+                id:0
+            },
+            {
+                chest: 'chest2',
+                chestOpen: 'chest2Open',
+                id:1
+            },
+            {
+                chest: 'chest3',
+                chestOpen: 'chest3Open',
+                id:2
+            }
+        ]
     }
     openNormalChest() {
-        this.close()
+        //this.close()
+        this.chestContainer.visible = false;
+        this.openChestContainer.visible = true;
+
+        this.chosenChest.texture = PIXI.Texture.fromFrame(this.chosenChests[0].chestOpen);
+        this.updatePrizes(this.chosenChests[0].id)
     }
     openVideoChest() {
-        this.close()
+        
+        this.chestContainer.visible = false;
+        this.openChestContainer.visible = true;
+        
+        this.chosenChest.texture = PIXI.Texture.fromFrame(this.chosenChests[1].chestOpen);
+        this.updatePrizes(this.chosenChests[1].id)
+        //this.close()
     }
+    updatePrizes(total){
+        for (let index = 0; index < this.prizes.length; index++) {
+            let prize = this.prizes[index]
+            prize.visible = false;
+        }
+        for (let index = 0; index < total+1; index++) {
+            let prize = this.prizes[index]
+            prize.visible = true;
+            prize.x = this.prizeShowData.distance * index - (this.prizeShowData.distance * total / 2);
+            prize.y = -80
+            prize.alpha = 0
+            TweenLite.to(prize, 0.3, {delay:index * 0.2 + 0.1, alpha:1})
+            TweenLite.from(prize, 0.5, {delay:index * 0.2 + 0.1, x:0, y:40, ease:Back.easeOut})
+        }
+    }
+
     update(delta) {
         this.readySin += delta * 8
         this.chest2.scale.set(Math.sin(this.readySin) * 0.05 + 0.95)
+
+        this.shine.x = this.chest2.x
+        this.shine.y = this.chest2.y
+        this.shine.rotation += delta * 5
+        this.shine.rotation %= Math.PI * 2
+
+        this.shinePrize.rotation = this.shine.rotation
     }
     show(param) {
         this.visible = true;
 
+
+        let level = Math.random() < 0.5 ? 0 : 1;
+
+        this.chosenChests = [
+            this.chestData[level], 
+
+            this.chestData[level+1]
+        ];
+
+        this.chest1.texture = PIXI.Texture.fromFrame(this.chosenChests[0].chest);
+        this.chest2.texture = PIXI.Texture.fromFrame(this.chosenChests[1].chest);
+
         this.isShowing = true;
         this.container.visible = true;
-        this.chestContainer.visible = true;
         this.background.visible = true;
+        this.chestContainer.visible = true;
         this.openChestContainer.visible = false;
         this.toRemove = false;
         this.onShow.dispatch(this);
-        this.portrait.texture = new PIXI.Texture.fromFrame('portraitChest' + Math.ceil(Math.random()*3))
+        this.portrait.texture = new PIXI.Texture.fromFrame('portraitChest' + Math.ceil(Math.random() * 3))
         if (param) {
             this.confirmCallback = param.onConfirm;
             this.cancelCallback = param.onCancel;
@@ -146,7 +273,7 @@ export default class OpenChestPopUp extends PIXI.Container {
         }
         //this.readyLabel.text = param ? param.label : ''
         this.readyLabel.pivot.x = this.readyLabel.width / 2;
-        
+
         this.background.alpha = 0.5
         this.container.alpha = 1
         this.popUp.scale.x = 1

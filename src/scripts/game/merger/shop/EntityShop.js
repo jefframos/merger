@@ -45,7 +45,7 @@ export default class EntityShop extends PIXI.Container {
         this.tiledBackground2.tileScale.set(0.2)
         this.tiledBackground2.alpha = 0.1
 
-        this.title = new PIXI.Text('Resources Upgrades', LABELS.LABEL1);
+        this.title = new PIXI.Text('Resources', LABELS.LABEL1);
         this.title.style.fontSize = 24
 
         this.portrait = new PIXI.Sprite.fromFrame('portraitMale');
@@ -53,7 +53,28 @@ export default class EntityShop extends PIXI.Container {
         this.portrait.scale.set(0.65)
         this.portrait.anchor.set(0, 1)
         this.portrait.x = 20
-        this.portrait.y = 102
+        this.portrait.y = 104
+
+
+        this.currencyContainer = new PIXI.Sprite.fromFrame('grid1');
+        this.container.addChild(this.currencyContainer);
+        this.currencyContainer.anchor.set(1, 0.5)
+       this.currencyContainer.scale.set(0.8)
+        this.currencyContainer.x = this.size.w - 25
+        this.currencyContainer.y = 60
+
+        this.currentResourcesLabel = new PIXI.Text('10AA', LABELS.LABEL1);
+        this.currentResourcesLabel.style.fontSize = 16
+        this.currentResourcesLabel.style.align = 'center'
+        this.currentResourcesLabel.pivot.y = this.currentResourcesLabel.height / 2
+        this.currentResourcesLabel.x = -this.currencyContainer.width / 2 / this.currencyContainer.scale.x - 5
+        this.currencyContainer.addChild(this.currentResourcesLabel);
+
+        this.currentCoin = new PIXI.Sprite.fromFrame('coin-large');
+        this.currencyContainer.addChild(this.currentCoin);
+        this.currentCoin.scale.set(0.65)
+        this.currentCoin.anchor.set(0.5)
+
 
         this.container.addChild(this.title);
 
@@ -86,9 +107,10 @@ export default class EntityShop extends PIXI.Container {
 
 
         this.isPossibleBuy = false;
-
+        this.updateCurrentResources();
         setTimeout(() => {
 
+            this.updateCurrentResources();
             this.updateToggleValue();
         }, 500);
     }
@@ -104,8 +126,15 @@ export default class EntityShop extends PIXI.Container {
             element.hide();
         });
     }
+    updateCurrentResources() {
+
+        this.currentResourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources)
+        this.currentResourcesLabel.pivot.x = this.currentResourcesLabel.width / 2
+    }
     moneySpent() {
         this.updateToggleValue();
+        this.updateCurrentResources();
+
     }
     updateToggleValue() {
         this.isPossibleBuy = false;
@@ -123,7 +152,7 @@ export default class EntityShop extends PIXI.Container {
     posShow() {
         utils.centerObject(this.title, this.container)
         //this.title.x = 140
-        this.title.y = 40
+        this.title.y = 48
     }
     show() {
         this.visible = true;

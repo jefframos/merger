@@ -87,6 +87,7 @@ export default class MergeSystem {
         this.addPieceGenerator();
         this.addPieceGenerator();
         this.addPieceGenerator();
+        this.addPieceGenerator();
         this.adjustSlotsPosition();
 
         this.entityDragSprite = new PIXI.Sprite.from('');
@@ -123,11 +124,11 @@ export default class MergeSystem {
             }
         }
 
-        
+
         this.updateTotalGenerators();
-        
+
         COOKIE_MANAGER.resetBoard();
-        console.log( COOKIE_MANAGER.getBoard())
+        console.log(COOKIE_MANAGER.getBoard())
         this.loadData();
 
         this.boardLevel = 0;
@@ -140,7 +141,7 @@ export default class MergeSystem {
                     let slot = this.slots[i][j];
                     if (window.baseConfigGame.gameMap[i][j] <= this.boardLevel) {
                         slot.visible = true;
-                    }else{
+                    } else {
                         slot.visible = false;
                     }
                     this.virtualSlots[i][j].visible = slot.visible;
@@ -227,14 +228,14 @@ export default class MergeSystem {
 
             //upgrade this
             let id = 0;
-            if(this.boardLevel > 4){
+            if (this.boardLevel > 4) {
                 id = Math.min(Math.floor(Math.random() * this.boardLevel / 3), 5);
             }
 
-            if(id > 0){
+            if (id > 0) {
                 id = Math.min(Math.floor(Math.random() * this.boardLevel / 3), 5);
             }
-            if(id > 0){
+            if (id > 0) {
                 id = Math.min(Math.floor(Math.random() * this.boardLevel / 3), 5);
             }
             piece.addEntity(this.dataTiles[id]);
@@ -256,7 +257,7 @@ export default class MergeSystem {
         }
     }
     sortAutoMerge(piece) {
-        if(!piece.tileData)return;
+        if (!piece.tileData) return;
         if (window.gameModifyers.modifyersData.autoMerge > 1) {
             this.autoPlace(piece);
             this.autoMerge()
@@ -345,7 +346,6 @@ export default class MergeSystem {
         this.updateBottomPosition();
     }
     addSlot(i, j) {
-        console.log("add slot")
         let slot = new MergeTile(i, j, this.slotSize.width, 'coin');
         this.slots[i][j] = slot;
 
@@ -392,7 +392,7 @@ export default class MergeSystem {
             customData.callback = this.finishDamage.bind(this, data)
             let targetPos = slot.tileSprite.getGlobalPosition()
             this.onDealDamage.dispatch(targetPos, customData, data.getDamage(), 1)
-            this.posShootingParticles(targetPos)
+            //this.posShootingParticles(targetPos)
 
         });
 
@@ -456,6 +456,31 @@ export default class MergeSystem {
 
 
     }
+    addShipBasedOnMax() {
+        let slot = this.findFirstAvailable();
+        if (!slot) {
+            return;
+        }
+        let max = Math.max(1, utils.findMax(this.slots) - 2)
+        let data = this.dataTiles[max]
+
+        //slot.removeEntity();
+        slot.addEntity(data);
+        // this.updateAllData();
+        // console.log(data,slot.id.i, slot.id.j)
+        COOKIE_MANAGER.addMergePiece(data, slot.id.i, slot.id.j)
+    }
+    findFirstAvailable() {
+        for (var i = 0; i < this.slots.length; i++) {
+            for (var j = 0; j < this.slots[i].length; j++) {
+                if (this.slots[i][j] && this.slots[i][j].visible && !this.slots[i][j].tileData) {
+                    let slot = this.slots[i][j];
+                    return slot;
+                }
+
+            }
+        }
+    }
     findMergeInBoard(piece, diff) {
         if (piece.tileData.isDirty) {
             return
@@ -507,7 +532,7 @@ export default class MergeSystem {
             for (var j = 0; j < this.slots[i].length; j++) {
                 if (this.slots[i][j] && this.slots[i][j].tileData && this.slots[i][j].visible) {
                     let slot = this.slots[i][j];
-                    if ( slot.tileData.getValue() == piece.tileData.getValue()) {
+                    if (slot.tileData.getValue() == piece.tileData.getValue()) {
                         firstAvailable = this.slots[i][j];
                         break;
                     }
@@ -529,7 +554,7 @@ export default class MergeSystem {
             }, 10);
         }
 
-        if(firstAvailable && firstAvailable.tileData){
+        if (firstAvailable && firstAvailable.tileData) {
 
         }
         this.releaseEntity(firstAvailable)

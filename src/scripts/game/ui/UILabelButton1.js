@@ -5,7 +5,7 @@ import config from '../../config';
 import utils from '../../utils';
 
 export default class UILabelButton1 extends PIXI.Container {
-    constructor(color, width = 60, height = 40) {
+    constructor(width = 60, height = 40) {
         super();
 
         this.mainContainer = new PIXI.Container();
@@ -22,10 +22,9 @@ export default class UILabelButton1 extends PIXI.Container {
 
         this.padding = 8;
         this.backShapeBorder = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('smallButton'), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame('small-no-pattern-green'), 10, 10, 10, 10)
         this.backShapeBorder.width = width + this.padding
         this.backShapeBorder.height = height + this.padding
-        this.backShapeBorder.tint = color;
 
 
 

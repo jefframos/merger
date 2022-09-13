@@ -122,7 +122,9 @@ export default class MergeTile extends PIXI.Container {
         if(autoUpdateResources){
             this.updateResource(delta, dateTimeStamp)
         }
-        this.updateDamage(delta, dateTimeStamp)
+        if(this.tileData){
+            this.updateDamage(delta, dateTimeStamp)            
+        }
     }
     updateResource(delta, dateTimeStamp) {
         if (this.generateResourceTime > 0) {
@@ -146,7 +148,10 @@ export default class MergeTile extends PIXI.Container {
         if(this.holding){
             return;
         }
-        dateTimeStamp = Date.now()
+        this.generateDamageTime = this.generateDamageTimeRaw / gameModifyers.bonusData.damageBonus
+        dateTimeStamp = Date.now();
+                this.damageTimerView.visible = true
+
         if (this.generateDamageTime > 0) {
             if (this.updatedDamageTimestamp) {
                 let targetColor = 0xff810a
@@ -155,7 +160,7 @@ export default class MergeTile extends PIXI.Container {
                 if (this.generateDamage > calcTiime) {
                     this.updatedDamageTimestamp = Date.now()//(Date.now() / 1000 | 0);
                     this.generateDamageNormal = 1;
-                    // console.log(this.generateDamage,  this.generateDamageTime,  gameModifyers.getAttackSpeed())
+                    //console.log(this.generateDamage,  this.generateDamageTime,  gameModifyers.getAttackSpeed())                    
                     this.damageReady();
                 } else {
                     if(this.generateDamageTime < 0.5){
@@ -182,6 +187,7 @@ export default class MergeTile extends PIXI.Container {
         if (!this.tileSprite || !this.tileSprite.visible || !this.tileData) {
             return;
         }
+        //console.log(this.tileSprite.alpha)
         let enemyGlobal = target.getGlobalPosition();
         let thisGlobal = this.tileSprite.getGlobalPosition();
         let angle = Math.atan2(thisGlobal.y - enemyGlobal.y, thisGlobal.x - enemyGlobal.x) - 3.14 / 2
@@ -191,7 +197,7 @@ export default class MergeTile extends PIXI.Container {
         this.onGenerateResource.dispatch(this, this.tileData);
     }
     damageReady() {
-        //console.log("sort out damage multiplier")
+        console.log("sort out damage multiplier")
         this.onGenerateDamage.dispatch(this, this.tileData);
     }
     showSprite() {
@@ -239,13 +245,13 @@ export default class MergeTile extends PIXI.Container {
         this.generateResourceTime = this.tileData.getGenerateResourceTime() || 0;
     }
     addEntity(tileData) {
-        //console.log(tileData);
         if (this.tileData) {
             return;
         } else {
             this.tileData = tileData;
         }
         this.reset();
+        this.generateDamageTimeRaw = tileData.getGenerateDamageTime() || 0;
         this.generateDamageTime = tileData.getGenerateDamageTime() || 0;
         this.generateResourceTime = tileData.getGenerateResourceTime() || 0;
         this.generateDamageTimeStamp = Date.now()//(Date.now() / 1000 | 0);
@@ -262,6 +268,7 @@ export default class MergeTile extends PIXI.Container {
         this.label.x = this.backSlot.width / 2 - this.label.width / 2;
         this.showSprite()
         this.enterAnimation()
+        console.log(this.tileData.getTexture());
 
     }
     enterAnimation(){

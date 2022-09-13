@@ -65,6 +65,15 @@ window.LABELS.LABEL_CHEST = {
     stroke:0xbb00bb,
     strokeThickness:4,
 }
+window.LABELS.LABEL_SPACESHIP = {
+    fontFamily: 'retro_computerregular',
+    fontSize: '18px',
+    fill: 0xFFFFFF,
+    align: 'center',
+    fontWeight: '800',
+    stroke:0xFFFF00,
+    strokeThickness:4,
+}
 window.LABELS.LABEL_STATS = {
     fontFamily: 'retro_computerregular',
     fontSize: '14px',

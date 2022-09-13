@@ -22,7 +22,7 @@
             "nameID": "resources",
             "displayName": "Resources amount",
             "imageSrc": "drill",
-            "tileImageSrc": "coin-p",
+            "tileImageSrc": "coin-large",
             "initialCost": 20000,
             "costCoefficient": 1.68,
             "initialTime": 1,
@@ -78,7 +78,7 @@
             "coefficientProductivity": 1,
             "initialProductivity": 1,
             "modifyer":"totalGenerators",
-            "levelMax": 4,
+            "levelMax": 3,
             "quantify":true,
             "quantifyMessage":"Total"
         },

@@ -7,7 +7,10 @@ import utils from '../../utils';
 export default class UIButton1 extends PIXI.Container {
 	constructor(color, icon, iconColor = 0xFFFFFF, width = 65, height = 65, texture = 'square-pattern1') {
 		super();
+		this.build(color, icon, iconColor, width, height, texture)
 
+	}
+	build(color, icon, iconColor = 0xFFFFFF, width = 65, height = 65, texture = 'square-pattern1') {
 		this.w = width;
 		this.h = height;
 
@@ -30,38 +33,19 @@ export default class UIButton1 extends PIXI.Container {
 		}
 		this.icon.tint = iconColor;
 
-		// this.backShape = new PIXI.Graphics();
-		// //this.backShape.lineStyle(3, color, 1);
-		// this.backShape.beginFill(color);
-		// this.backShape.drawRect(-width/2,-width/2,width,width);
-		// this.backShape.endFill();
-		// this.backShape.alpha = 1
-
-		this.padding = 8;
-		this.backShapeBorder = new PIXI.mesh.NineSlicePlane(
-			PIXI.Texture.fromFrame(texture), 30, 15, 15, 20)
-		this.backShapeBorder.width = width + this.padding
-		this.backShapeBorder.height = height + this.padding
-		this.backShapeBorder.pivot.set((width + this.padding) / 2, (height + this.padding) / 2)
-		this.backShapeBorder.tint = iconColor;
-
-		//this.backShape = PIXI.Sprite.fromFrame('largeCard.png')
+		
 		this.backShape = new PIXI.mesh.NineSlicePlane(
 			PIXI.Texture.fromFrame(texture), 30, 30, 25, 10)
 		this.backShape.width = width
 		this.backShape.height = height
 		this.backShape.pivot.set(width / 2, height / 2)
-		//this.backShape.scale.set(width / this.backShape.width);
-		//this.backShape.anchor.set(0.5)
-		// //this.backShape.tint = color;
-
-		//this.updateRotation(Math.PI * 0.25)
+		
 
 		this.icon.anchor.set(0.5);
 
 
 		this.updateIconScale();
-		//this.mainContainer.addChild(this.backShapeBorder);
+		
 		this.mainContainer.addChild(this.backShape);
 		this.mainContainer.addChild(this.icon);
 		this.addChild(this.mainContainer);
@@ -73,11 +57,20 @@ export default class UIButton1 extends PIXI.Container {
 		this.interactive = true;
 		this.buttonMode = true;
 	}
+	addBadge(texture, scale = 0.3){
+		this.badge = PIXI.Sprite.fromFrame(texture);
+		this.badge.scale.set(0.5);
+		this.badge.anchor.set(this.badge.width * scale / this.badge.width);
+		this.badge.x = this.backShape.width / 2 - this.badge.width - 10
+		this.badge.y = -this.backShape.height / 2 + this.badge.height
+		this.mainContainer.addChild(this.badge);
+
+	}
 	touchStart() {
-		this.backShape.scale.set(1.1)
+		//this.backShape.scale.set(1.1)
 	}
 	changePivot(x, y) {
-		this.backShapeBorder.pivot.set((this.w * x + this.padding) / 2, (this.h * y + this.padding) / 2)
+		
 		this.backShape.pivot.set(this.w * x / 2, this.h * y / 2)
 
 		this.icon.x = this.w * x + this.w / 2
@@ -101,15 +94,15 @@ export default class UIButton1 extends PIXI.Container {
 	}
 	addFrontShape() {
 		this.backShape.y = -10
-		this.backShapeBorder.y = 5
+		
 	}
 	resize(width, height) {
 		if (!width || !height) {
 			return
 		}
-		this.backShapeBorder.width = width + this.padding
-		this.backShapeBorder.height = height + this.padding
-		this.backShapeBorder.pivot.set((width + this.padding) / 2)
+		
+		
+		
 
 		this.backShape.width = width
 		this.backShape.height = height
@@ -127,7 +120,7 @@ export default class UIButton1 extends PIXI.Container {
 
 	}
 	updateRotation(rot, invertIcon = false) {
-		this.backShapeBorder.rotation = rot
+		
 		this.backShape.rotation = rot
 
 		if (invertIcon) {
@@ -144,7 +137,7 @@ export default class UIButton1 extends PIXI.Container {
 		this.icon.texture = texture;
 	}
 	click() {
-		this.backShape.scale.set(1)
+		//this.backShape.scale.set(1)
 
 		this.onClick.dispatch();
 		//window.SOUND_MANAGER.play('tap2', { volume: 0.5 })
@@ -163,7 +156,7 @@ export default class UIButton1 extends PIXI.Container {
 
 	}
 	updateMenuColors(textColor, backgroundColor) {
-		this.backShapeBorder.tint = backgroundColor;
+		
 		this.icon.tint = backgroundColor;
 
 		if (this.backLabelLeft) {

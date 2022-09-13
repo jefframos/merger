@@ -3,51 +3,50 @@ import * as signals from 'signals';
 
 import TweenLite from 'gsap';
 import utils from '../../utils';
-import UIButton1 from './UIButton1';
+import UIButton2 from './UIButton2';
 import ProgressBar from '../merger/ProgressBar';
 
 export default class TimeBonusButton extends PIXI.Container {
-    constructor(texture = 'spiky-field', buttonSize = 65) {
+    constructor(texture = 'spiky-field', buttonSize = 70, mainTexture = 'oct-pattern1-bonus-yellow') {
         super();
+        this.mainTexture = mainTexture;
         this.buttonSize = buttonSize;
-        this.mainButton = new UIButton1(0x002299, texture, 0xFFFFFF, buttonSize, buttonSize, 'square-pattern1-bonus')
-        this.mainButton.updateIconScale(0.5)
-        this.mainButton.icon.x -=3
-        this.mainButton.icon.y -=3
-        this.mainButton.newItem = new PIXI.Sprite.fromFrame('new_item')
-        this.mainButton.newItem.scale.set(0.7)
-        this.mainButton.newItem.anchor.set(0)
-        this.mainButton.newItem.position.set(-buttonSize / 2)
-        this.mainButton.newItem.visible = false;
-        this.mainButton.addChild(this.mainButton.newItem)
+        this.mainButton = new UIButton2(0x002299, texture, 0xFFFFFF, buttonSize, buttonSize, this.mainTexture)
+        this.mainButton.updateIconScale(0.7)
+
         this.addChild(this.mainButton)
-        
+
         this.videoSprite = new PIXI.Sprite.fromFrame('video-trim')
+        this.videoSprite.anchor.set(0.5)
         this.videoSprite.scale.set(0.5)
-        this.videoSprite.y = 8
+        this.videoSprite.x = 0
+        this.videoSprite.y = 30
         this.addChild(this.videoSprite)
         //this.shopButtonsList.addElement(this.mainButton)
         this.mainButton.onClick.add(() => {
+            if (this.activeTimer > 0) return;
             this.activeTimer = this.bonusTime
-            if(this.callback){
+            if (this.callback) {
                 this.callback();
             }
             //console.log(this.targetObject)
         })
 
-
-        this.bonusTimer = new ProgressBar({ width: 64, height: 12 }, 3, 3)
-        this.bonusTimer.updateBackgroundColor(0xffad0a)
-        this.bonusTimer.x = 30 + 12
-        this.bonusTimer.y = 32 - 65
+        this.mainButton.x = 0
+        this.mainButton.y = 0
+        this.bonusTimer = new ProgressBar({ width: 50, height: 10 }, 3, 3)
+        this.bonusTimer.updateBackgroundFront(0x44550a)
+        this.bonusTimer.updateBackgroundColor(0xffff0a)
+        this.bonusTimer.x = -25 + 50
+        this.bonusTimer.y = buttonSize * 0.5 + 5 + 10
         //this.bonusTimer = new CircleCounter(10,10)
         this.addChild(this.bonusTimer)
-        this.bonusTimer.rotation = Math.PI * 0.5
+        this.bonusTimer.rotation = Math.PI
         this.bonusTimer.visible = false;
         this.activeTimer = 0;
         this.bonusTime = 120;
 
-        this.bonusLabel = new PIXI.Text('desc', LABELS.LABEL1);
+        this.bonusLabel = new PIXI.Text('', LABELS.LABEL1);
         this.bonusLabel.style.fill = 0xffffff
         this.bonusLabel.style.aligh = 'right'
         this.bonusLabel.style.fontSize = 11
@@ -55,17 +54,15 @@ export default class TimeBonusButton extends PIXI.Container {
         this.bonusLabel.y = -buttonSize / 2 - this.bonusLabel.height - 2
         this.addChild(this.bonusLabel);
     }
-    addCallback(callback){
+    addCallback(callback) {
         this.callback = callback
     }
-    updateIconScale(scale){
+    updateIconScale(scale) {
         this.mainButton.updateIconScale(scale)
         this.mainButton.icon.x = 0
         this.mainButton.icon.y = 0
-        this.videoSprite.x = 8
-        this.videoSprite.y = 15
     }
-    stop(){
+    stop() {
         this.activeTimer = 0;
         this.targetObject[this.param] = this.defaultValue;
     }
@@ -79,7 +76,9 @@ export default class TimeBonusButton extends PIXI.Container {
             } else {
                 this.targetObject[this.param] = this.targetValue;
             }
+            this.mainButton.backShape.texture = PIXI.Texture.fromFrame('oct-pattern1-bonus-yellow')
         } else {
+            this.mainButton.backShape.texture = PIXI.Texture.fromFrame(this.mainTexture)
             this.bonusTimer.visible = false;
         }
     }
