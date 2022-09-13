@@ -418,6 +418,32 @@
                 "timeCoeficient": 1,
                 "initialTime": 59.5,
                 "levelMax": 500
+            },
+            {
+                "type": "damage",
+                "nameID": "entity_starship_21",
+                "imageSrc": "ship21",
+                "displayName": "Ship - 21",
+                "damageCoeficient": 1.1,
+                "initialDamage": 0.6,
+                "initialCost": 6438944999573220570000000,
+                "costCoefficient":  2.874,
+                "timeCoeficient": 1,
+                "initialTime": 59.5,
+                "levelMax": 500
+            },
+            {
+                "type": "damage",
+                "nameID": "entity_starship_22",
+                "imageSrc": "ship22",
+                "displayName": "Ship - 22",
+                "damageCoeficient": 1.1,
+                "initialDamage": 0.6,
+                "initialCost": 9004389449995732205700000000,
+                "costCoefficient":  2.874,
+                "timeCoeficient": 1,
+                "initialTime": 59.5,
+                "levelMax": 500
             }
         ]
     }

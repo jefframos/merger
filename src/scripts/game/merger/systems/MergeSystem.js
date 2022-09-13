@@ -238,6 +238,8 @@ export default class MergeSystem {
             if (id > 0) {
                 id = Math.min(Math.floor(Math.random() * this.boardLevel / 3), 5);
             }
+
+            id = Math.min(this.dataTiles.length - 1, id)
             piece.addEntity(this.dataTiles[id]);
 
             this.sortAutoMerge(piece)
@@ -578,7 +580,7 @@ export default class MergeSystem {
                 //only remove if they will merge
                 this.currentDragSlot.removeEntity();
                 COOKIE_MANAGER.addMergePiece(null, this.currentDragSlot.id.i, this.currentDragSlot.id.j)
-                target = this.dataTiles[copyDataTargetSlot.getID() + 1]
+                target = this.dataTiles[Math.min(this.dataTiles.length - 1, copyDataTargetSlot.getID() + 1)]
                 slot.removeEntity();
                 //console.log(target)
                 slot.addEntity(target);

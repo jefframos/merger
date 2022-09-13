@@ -22945,7 +22945,6 @@ var MergeTile = function (_PIXI$Container) {
     }, {
         key: 'damageReady',
         value: function damageReady() {
-            console.log("sort out damage multiplier");
             this.onGenerateDamage.dispatch(this, this.tileData);
         }
     }, {
@@ -23005,6 +23004,7 @@ var MergeTile = function (_PIXI$Container) {
     }, {
         key: 'addEntity',
         value: function addEntity(tileData) {
+            if (tileData == null) return;
             if (this.tileData) {
                 return;
             } else {
@@ -23028,7 +23028,6 @@ var MergeTile = function (_PIXI$Container) {
             this.label.x = this.backSlot.width / 2 - this.label.width / 2;
             this.showSprite();
             this.enterAnimation();
-            console.log(this.tileData.getTexture());
         }
     }, {
         key: 'enterAnimation',
@@ -59864,7 +59863,7 @@ module.exports = exports["default"];
 /* 338 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/particles/particles.json","image/pattern2/pattern2.json","image/asteroids/asteroids.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
+module.exports = {"default":["image/pattern2/pattern2.json","image/asteroids/asteroids.json","image/particles/particles.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 339 */
@@ -60793,8 +60792,8 @@ var MergeScreen = function (_Screen) {
                 value: function getShardBonusValue() {
                         var progression = COOKIE_MANAGER.getProgression();
 
-                        var coef = 1.004;
-                        return Math.pow(Math.pow(coef, 8), Math.max(progression.currentEnemyLevel - 100, 1)) + window.gameModifyers.permanentBonusData.shards * 0.2;
+                        var coef = 1.008;
+                        return Math.pow(Math.pow(coef, 8), Math.max(progression.currentEnemyLevel - 100, 1)) + window.gameModifyers.permanentBonusData.shards * 0.5;
                 }
         }, {
                 key: 'resetAll',
@@ -63920,6 +63919,8 @@ var MergeSystem = function () {
                 if (id > 0) {
                     id = Math.min(Math.floor(Math.random() * _this2.boardLevel / 3), 5);
                 }
+
+                id = Math.min(_this2.dataTiles.length - 1, id);
                 piece.addEntity(_this2.dataTiles[id]);
 
                 _this2.sortAutoMerge(piece);
@@ -64293,7 +64294,7 @@ var MergeSystem = function () {
                     //only remove if they will merge
                     this.currentDragSlot.removeEntity();
                     COOKIE_MANAGER.addMergePiece(null, this.currentDragSlot.id.i, this.currentDragSlot.id.j);
-                    target = this.dataTiles[copyDataTargetSlot.getID() + 1];
+                    target = this.dataTiles[Math.min(this.dataTiles.length - 1, copyDataTargetSlot.getID() + 1)];
                     slot.removeEntity();
                     //console.log(target)
                     slot.addEntity(target);

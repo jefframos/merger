@@ -553,8 +553,8 @@ export default class MergeScreen extends Screen {
     getShardBonusValue() {
         let progression = COOKIE_MANAGER.getProgression()
 
-        let coef = 1.004
-        return Math.pow(Math.pow(coef, 8), Math.max(progression.currentEnemyLevel - 100, 1)) + window.gameModifyers.permanentBonusData.shards * 0.2;
+        let coef = 1.008
+        return Math.pow(Math.pow(coef, 8), Math.max(progression.currentEnemyLevel - 100, 1)) + window.gameModifyers.permanentBonusData.shards * 0.5;
     }
     resetAll() {
 

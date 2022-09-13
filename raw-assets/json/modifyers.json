@@ -14,7 +14,7 @@
             "coefficientProductivity": 1.1,
             "initialProductivity": 1,
             "modifyer":"drillSpeed",
-            "levelMax": 100
+            "levelMax": 200
         },
         {
             "type": "resources",
@@ -30,7 +30,7 @@
             "coefficientProductivity": 1.2,
             "initialProductivity": 1,
             "modifyer":"resourcesMultiplier",
-            "levelMax": 100
+            "levelMax": 200
         },
         {
             "type": "bullets",
@@ -62,7 +62,7 @@
             "coefficientProductivity": 1.18,
             "initialProductivity": 1.08,
             "modifyer":"damageMultiplier",
-            "levelMax": 100
+            "levelMax": 200
         },
         {
             "type": "resources",
