@@ -24,7 +24,7 @@ export default class MergerScreenManager extends ScreenManager {
         this.addChild(this.backgroundContainer);
         this.setChildIndex(this.backgroundContainer, 0);
 
-       
+
 
         let vignette = new PIXI.Sprite(PIXI.Texture.from('vignette'));
         this.backgroundContainer.addChild(vignette)
@@ -84,11 +84,23 @@ export default class MergerScreenManager extends ScreenManager {
         //     }
         // }
         const urlParams = new URLSearchParams(window.location.search);
-        if(urlParams){
-            if (urlParams.get('debug')){
+        if (urlParams) {
+            if (urlParams.get('debug')) {
                 this.mergeScreen.helperButtonList.visible = true
+                window.isDebug = true;
             }
         }
+
+
+        this.isPaused = false;
+
+        window.onAdds.add(() => {
+            this.isPaused = true;
+        })
+
+        window.onStopAdds.add(() => {
+            this.isPaused = false;
+        })
 
     }
     addCoinsParticles(pos, quant = 5, customData = {}) {
@@ -129,6 +141,7 @@ export default class MergerScreenManager extends ScreenManager {
         this.showPopUp('init')
     }
     update(delta) {
+        if(this.isPaused) return;
         super.update(delta * this.timeScale);
 
         if (this.currentPopUp) {
@@ -139,7 +152,7 @@ export default class MergerScreenManager extends ScreenManager {
             this.prevPopUp = null;
         }
 
-        
+
     }
 
     toGame() {

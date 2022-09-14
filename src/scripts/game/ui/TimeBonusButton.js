@@ -32,10 +32,12 @@ export default class TimeBonusButton extends PIXI.Container {
         //this.shopButtonsList.addElement(this.mainButton)
         this.mainButton.onClick.add(() => {
             if (this.activeTimer > 0) return;
-            this.activeTimer = this.bonusTime
-            if (this.callback) {
-                this.callback();
-            }
+            // this.activeTimer = this.bonusTime
+            window.DO_REWARD(() => {
+                this.activeTimer = this.bonusTime
+            })           
+
+
             //console.log(this.targetObject)
         })
 

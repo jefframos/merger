@@ -32996,6 +32996,15 @@ var SinglePrizeContainer = function (_PIXI$Container) {
             this.iconContainer.scale.set(this.size / this.iconContainer.height * 2);
         }
     }, {
+        key: 'updateLabel2',
+        value: function updateLabel2(label) {
+            this.label.text = label;
+            this.label.style.stroke = 0;
+            this.label.pivot.x = this.label.width / 2;
+            this.label.pivot.y = this.label.height / 2;
+            this.label.y = this.size;
+        }
+    }, {
         key: 'updateLabel',
         value: function updateLabel(label) {
             var border = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0x00ffff;
@@ -33069,7 +33078,14 @@ var _MergerScreenManager = __webpack_require__(341);
 
 var _MergerScreenManager2 = _interopRequireDefault(_MergerScreenManager);
 
+var _signals = __webpack_require__(8);
+
+var _signals2 = _interopRequireDefault(_signals);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+window.onAdds = new _signals2.default.Signal();
+window.onStopAdds = new _signals2.default.Signal();
 
 window.STORAGE = new _LocalStorage2.default();
 
@@ -33082,12 +33098,87 @@ window.getCoinSound = function () {
     return 'coins_0' + Math.ceil(Math.random() * 4);
 };
 
+window.GAMEPLAY_STOP = function () {
+    if (window.GAMEPLAY_IS_STOP) {
+        return;
+    }
+    window.GAMEPLAY_IS_STOP = true;
+    PokiSDK.gameplayStop();
+};
+window.GAMEPLAY_START = function () {
+    if (!window.GAMEPLAY_IS_STOP) {
+        return;
+    }
+    window.GAMEPLAY_IS_STOP = false;
+    PokiSDK.gameplayStart();
+};
+window.DO_COMMERCIAL = function (callback, params) {
+    window.GAMEPLAY_STOP();
+
+    if (window.isDebug) {
+        window.GAMEPLAY_START();
+
+        if (callback) callback(params);
+        return;
+    }
+    window.onAdds.dispatch();
+    PokiSDK.commercialBreak().then(function () {
+        console.log("Commercial break finished, proceeding to game");
+        window.GAMEPLAY_START();
+        window.onStopAdds.dispatch();
+
+        if (callback) callback(params);
+    }).catch(function () {
+        console.log("Initialized, but the user likely has adblock");
+        window.GAMEPLAY_START();
+        window.onStopAdds.dispatch();
+
+        if (callback) callback(params);
+    });
+};
+
+window.DO_REWARD = function (callback, params) {
+    window.GAMEPLAY_STOP();
+
+    if (window.isDebug) {
+        window.GAMEPLAY_START();
+
+        if (callback) callback(params);
+        return;
+    }
+
+    window.onAdds.dispatch();
+    PokiSDK.rewardedBreak().then(function (success) {
+        if (success) {
+            window.onStopAdds.dispatch();
+            window.GAMEPLAY_START();
+            if (callback) callback(params);
+        } else {
+            window.onStopAdds.dispatch();
+            window.GAMEPLAY_START();
+            if (callback) callback(params);
+        }
+    });
+};
 // console.log(spritesheetManifest['default'][0]);
 //startLoader();
 var jsons = [];
-loadManifests();
+
+PokiSDK.init().then(function () {
+    console.log("Poki SDK successfully initialized");
+    loadManifests();
+}).catch(function () {
+    loadManifests();
+    console.log("Initialized, but the user likely has adblock");
+    // fire your function to continue to game
+});
+
+//loadManifests();
 
 function loadManifests() {
+
+    PokiSDK.gameLoadingStart();
+
     for (var i = _manifest2.default['default'].length - 1; i >= 0; i--) {
         var dest = 'assets/' + _manifest2.default['default'][i];
 
@@ -33096,6 +33187,7 @@ function loadManifests() {
     }
     PIXI.loader.load(afterLoadManifests);
 }
+PokiSDK.setDebug(false);
 
 function afterLoadManifests(evt) {
 
@@ -33174,6 +33266,7 @@ function configGame(evt) {
         var id = toGenerate[index].substring(0, 4);
         var tex = utils.generateTextureFromContainer('image-' + id, container, window.TILE_ASSSETS_POOL);
     }
+    PokiSDK.gameLoadingFinished();
 
     if (!window.screenManager) {
         window.screenManager = new _MergerScreenManager2.default();
@@ -33188,7 +33281,7 @@ function configGame(evt) {
     // screenManager.addScreen(gameScreen);
     // screenManager.forceChange('GameScreen');
     game.start();
-
+    window.GAMEPLAY_START();
     window.addEventListener("focus", myFocusFunction, true);
     window.addEventListener("blur", myBlurFunction, true);
 }
@@ -60164,7 +60257,7 @@ module.exports = exports["default"];
 /* 340 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/particles/particles.json","image/pattern2/pattern2.json","image/asteroids/asteroids.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
+module.exports = {"default":["image/asteroids/asteroids.json","image/particles/particles.json","image/pattern2/pattern2.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 341 */
@@ -60300,8 +60393,19 @@ var MergerScreenManager = function (_ScreenManager) {
         if (urlParams) {
             if (urlParams.get('debug')) {
                 _this.mergeScreen.helperButtonList.visible = true;
+                window.isDebug = true;
             }
         }
+
+        _this.isPaused = false;
+
+        window.onAdds.add(function () {
+            _this.isPaused = true;
+        });
+
+        window.onStopAdds.add(function () {
+            _this.isPaused = false;
+        });
 
         return _this;
     }
@@ -60359,6 +60463,7 @@ var MergerScreenManager = function (_ScreenManager) {
     }, {
         key: 'update',
         value: function update(delta) {
+            if (this.isPaused) return;
             (0, _get3.default)(MergerScreenManager.prototype.__proto__ || (0, _getPrototypeOf2.default)(MergerScreenManager.prototype), 'update', this).call(this, delta * this.timeScale);
 
             if (this.currentPopUp) {
@@ -60776,7 +60881,7 @@ var MergeScreen = function (_Screen) {
                 });
 
                 _this.prizeSystem.onCollect.add(function (prize) {
-                        _this.openPopUp(_this.openChestPopUp, prize);
+                        _this.openPopUp(_this.openChestPopUp, { prize: prize, onConfirm: _this.onPrizeCollected.bind(_this) });
                 });
                 _this.mergeSystem1.addSystem(_this.enemiesSystem);
                 _this.mergeSystem1.addSystem(_this.resourceSystem);
@@ -61073,7 +61178,6 @@ var MergeScreen = function (_Screen) {
                 _this.spaceStation.scale.set(0.55);
                 _this.spaceStation.addCallback(function () {
 
-                        console.log("CALLBACK");
                         var shards = _this.getShardBonusValue();
                         _this.openPopUp(_this.sellAllPopUp, { shards: shards, onConfirm: _this.resetAll.bind(_this) });
                         //this.resetAll();
@@ -61087,6 +61191,47 @@ var MergeScreen = function (_Screen) {
         }
 
         (0, _createClass3.default)(MergeScreen, [{
+                key: 'onPrizeCollected',
+                value: function onPrizeCollected(prizes) {
+                        var _this2 = this;
+
+                        if (!prizes) return;
+                        if (prizes.money > 0) {
+                                window.gameEconomy.addResources(prizes.money);
+                                var toLocal = this.particleSystem.toLocal({ x: config.width / 2, y: config.height / 2 });
+                                var customData = {};
+                                customData.texture = 'coin';
+                                customData.scale = 0.02;
+                                customData.gravity = 500;
+                                customData.alphaDecress = 0;
+                                customData.ignoreMatchRotation = true;
+                                var coinPosition = this.coinTexture.parent.getGlobalPosition();
+                                var frontLayer = this.frontLayer.getGlobalPosition();
+                                customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 };
+                                this.particleSystem.show(toLocal, 3, customData);
+                        }
+                        if (prizes.shards > 0) {
+                                window.gameModifyers.addShards(prizes.shards);
+                                setTimeout(function () {
+                                        var toLocal = _this2.particleSystem.toLocal({ x: config.width / 2, y: config.height / 2 });
+                                        var customData = {};
+                                        customData.texture = 'shards';
+                                        customData.scale = 0.025;
+                                        customData.gravity = 200;
+                                        customData.alphaDecress = 0;
+                                        customData.ignoreMatchRotation = true;
+
+                                        var coinPosition = _this2.shardsTexture.parent.getGlobalPosition();
+                                        var frontLayer = _this2.frontLayer.getGlobalPosition();
+                                        customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 };
+                                        _this2.particleSystem.show(toLocal, 3, customData);
+                                }, 50);
+                        }
+                        if (prizes.ship > 0) {
+                                this.mergeSystem1.addShipBasedOnMax(prizes.ship);
+                        }
+                }
+        }, {
                 key: 'getShardBonusValue',
                 value: function getShardBonusValue() {
                         var progression = COOKIE_MANAGER.getProgression();
@@ -61097,13 +61242,13 @@ var MergeScreen = function (_Screen) {
         }, {
                 key: 'resetAll',
                 value: function resetAll(shardsTotal) {
-                        var _this2 = this;
+                        var _this3 = this;
 
                         this.resetWhiteShape.visible = true;
                         this.resetWhiteShape.alpha = 1;
                         _gsap2.default.to(this.resetWhiteShape, 1, {
                                 delay: 0.5, alpha: 0, onComplete: function onComplete() {
-                                        _this2.resetWhiteShape.visible = false;
+                                        _this3.resetWhiteShape.visible = false;
                                 }
                         });
                         var progression = COOKIE_MANAGER.getProgression();
@@ -61146,26 +61291,26 @@ var MergeScreen = function (_Screen) {
 
                         for (var index = 0; index < 8; index++) {
                                 setTimeout(function () {
-                                        var toLocal = _this2.particleSystem.toLocal({ x: config.width / 2, y: config.height / 2 });
+                                        var toLocal = _this3.particleSystem.toLocal({ x: config.width / 2, y: config.height / 2 });
                                         var customData = {};
                                         customData.texture = 'shards';
                                         customData.scale = 0.02 + Math.random() * 0.01;
                                         customData.gravity = 200;
                                         customData.alphaDecress = 0;
-                                        var coinPosition = _this2.shardsTexture.parent.getGlobalPosition();
-                                        var frontLayer = _this2.frontLayer.getGlobalPosition();
+                                        var coinPosition = _this3.shardsTexture.parent.getGlobalPosition();
+                                        var frontLayer = _this3.frontLayer.getGlobalPosition();
                                         customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 };
-                                        _this2.particleSystem.show(toLocal, 1, customData);
+                                        _this3.particleSystem.show(toLocal, 1, customData);
                                 }, 20 * index);
                         }
 
                         setTimeout(function () {
-                                _this2.systemsList.forEach(function (element) {
+                                _this3.systemsList.forEach(function (element) {
                                         if (element.resetSystem) {
                                                 element.resetSystem();
                                         }
                                 });
-                                _this2.allMergeData.forEach(function (element) {
+                                _this3.allMergeData.forEach(function (element) {
                                         element.reset();
                                 });
                         }, 10);
@@ -61203,20 +61348,23 @@ var MergeScreen = function (_Screen) {
         }, {
                 key: 'standardPopUpShow',
                 value: function standardPopUpShow(params) {
-                        //this.standardPopUp.show(params)
                         this.openPopUp(this.standardPopUp, params);
                 }
         }, {
                 key: 'openPopUp',
                 value: function openPopUp(target, params) {
-                        this.uiPanels.forEach(function (element) {
-                                if (element.visible) {
-                                        element.hide();
-                                }
-                        });
+                        var _this4 = this;
 
-                        this.currentOpenPopUp = target;
-                        target.show(params);
+                        window.DO_COMMERCIAL(function () {
+                                _this4.uiPanels.forEach(function (element) {
+                                        if (element.visible) {
+                                                element.hide();
+                                        }
+                                });
+
+                                _this4.currentOpenPopUp = target;
+                                target.show(params);
+                        });
                 }
         }, {
                 key: 'popLabel',
@@ -64509,15 +64657,27 @@ var MergeSystem = function () {
     }, {
         key: 'addShipBasedOnMax',
         value: function addShipBasedOnMax() {
+            var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
+
             var slot = this.findFirstAvailable();
             if (!slot) {
                 return;
             }
-            var max = Math.max(1, _utils2.default.findMax(this.slots) - 2);
+            var max = Math.max(1, _utils2.default.findMax(this.slots) - value);
             var data = this.dataTiles[max];
 
             //slot.removeEntity();
             slot.addEntity(data);
+
+            var customData = {};
+            customData.forceX = 0;
+            customData.forceY = 100;
+            customData.gravity = 0;
+            customData.scale = 0.05;
+            customData.alphaDecress = 1;
+            customData.texture = 'shipPrize';
+            this.onParticles.dispatch(slot.tileSprite.getGlobalPosition(), customData, 1);
+
             // this.updateAllData();
             // console.log(data,slot.id.i, slot.id.j)
             COOKIE_MANAGER.addMergePiece(data, slot.id.i, slot.id.j);
@@ -66963,10 +67123,11 @@ var TimeBonusButton = function (_PIXI$Container) {
         //this.shopButtonsList.addElement(this.mainButton)
         _this.mainButton.onClick.add(function () {
             if (_this.activeTimer > 0) return;
-            _this.activeTimer = _this.bonusTime;
-            if (_this.callback) {
-                _this.callback();
-            }
+            // this.activeTimer = this.bonusTime
+            window.DO_REWARD(function () {
+                _this.activeTimer = _this.bonusTime;
+            });
+
             //console.log(this.targetObject)
         });
 
@@ -67249,8 +67410,8 @@ var PrizeSystem = function () {
 
         this.entity.on('mouseup', this.click.bind(this)).on('touchend', this.click.bind(this));
 
-        this.currentTimer = 5;
-        this.timer = 5;
+        this.timer = 360;
+        this.currentTimer = this.timer * Math.random();
 
         this.velocity = {
             x: 0,
@@ -67337,7 +67498,20 @@ var PrizeSystem = function () {
     }, {
         key: "click",
         value: function click() {
-            this.onCollect.dispatch(this);
+            var prize = [{
+                money: window.gameEconomy.currentResources * 0.05,
+                shards: 0,
+                ship: 0
+            }, {
+                money: window.gameEconomy.currentResources * 0.15,
+                shards: 0,
+                ship: 4
+            }, {
+                money: window.gameEconomy.currentResources * 0.2,
+                shards: Math.max(5, window.gameModifyers.permanentBonusData.shards * 0.05),
+                ship: 2
+            }];
+            this.onCollect.dispatch(prize);
             this.remove();
             this.currentTimer = this.timer;
         }
@@ -67388,7 +67562,7 @@ module.exports = exports["default"];
 
 
 Object.defineProperty(exports, "__esModule", {
-        value: true
+    value: true
 });
 
 var _getPrototypeOf = __webpack_require__(3);
@@ -67440,325 +67614,345 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var OpenChestPopUp = function (_PIXI$Container) {
-        (0, _inherits3.default)(OpenChestPopUp, _PIXI$Container);
+    (0, _inherits3.default)(OpenChestPopUp, _PIXI$Container);
 
-        function OpenChestPopUp(label, screenManager) {
-                (0, _classCallCheck3.default)(this, OpenChestPopUp);
+    function OpenChestPopUp(label, screenManager) {
+        (0, _classCallCheck3.default)(this, OpenChestPopUp);
 
-                var _this = (0, _possibleConstructorReturn3.default)(this, (OpenChestPopUp.__proto__ || (0, _getPrototypeOf2.default)(OpenChestPopUp)).call(this));
+        var _this = (0, _possibleConstructorReturn3.default)(this, (OpenChestPopUp.__proto__ || (0, _getPrototypeOf2.default)(OpenChestPopUp)).call(this));
 
-                _this.screenManager = screenManager;
-                _this.label = label;
-                _this.onShow = new _signals2.default();
-                _this.onHide = new _signals2.default();
-                _this.onConfirm = new _signals2.default();
-                _this.onClose = new _signals2.default();
+        _this.screenManager = screenManager;
+        _this.label = label;
+        _this.onShow = new _signals2.default();
+        _this.onHide = new _signals2.default();
+        _this.onConfirm = new _signals2.default();
+        _this.onClose = new _signals2.default();
 
-                _this.container = new PIXI.Container();
-                _this.chestContainer = new PIXI.Container();
-                _this.openChestContainer = new PIXI.Container();
+        _this.container = new PIXI.Container();
+        _this.chestContainer = new PIXI.Container();
+        _this.openChestContainer = new PIXI.Container();
 
-                _this.w = _config2.default.width * 0.75;
-                _this.h = _config2.default.width * 0.65;
+        _this.w = _config2.default.width * 0.75;
+        _this.h = _config2.default.width * 0.65;
 
-                _this.background = new PIXI.Graphics().beginFill(0).drawRect(-_config2.default.width * 5, -_config2.default.height * 5, _config2.default.width * 10, _config2.default.height * 10);
-                _this.addChild(_this.background);
-                _this.background.alpha = 0.5;
+        _this.background = new PIXI.Graphics().beginFill(0).drawRect(-_config2.default.width * 5, -_config2.default.height * 5, _config2.default.width * 10, _config2.default.height * 10);
+        _this.addChild(_this.background);
+        _this.background.alpha = 0.5;
 
-                _this.background.interactive = true;
-                _this.background.buttonMode = true;
-                //this.background.on('mousedown', this.confirm.bind(this)).on('touchstart', this.confirm.bind(this));
-                _this.background.visible = false;
+        _this.background.interactive = true;
+        _this.background.buttonMode = true;
+        //this.background.on('mousedown', this.confirm.bind(this)).on('touchstart', this.confirm.bind(this));
+        _this.background.visible = false;
 
-                _this.popUp = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('oct-no-pattern-purple'), 15, 15, 15, 15);
-                _this.popUp.width = _this.w;
-                _this.popUp.height = _this.h;
+        _this.popUp = new PIXI.mesh.NineSlicePlane(PIXI.Texture.fromFrame('oct-no-pattern-purple'), 15, 15, 15, 15);
+        _this.popUp.width = _this.w;
+        _this.popUp.height = _this.h;
 
-                _this.popUp.pivot.x = _this.popUp.width / 2;
-                _this.popUp.pivot.y = _this.popUp.height / 2;
-                // this.popUp.scale.set((this.size / this.popUp.width));
-                _this.popUp.alpha = 1;
-                _this.popUp.tint = 0xFFFFFF;
-                // this.popUp.blendMode = PIXI.BLEND_MODES.ADD;
+        _this.popUp.pivot.x = _this.popUp.width / 2;
+        _this.popUp.pivot.y = _this.popUp.height / 2;
+        // this.popUp.scale.set((this.size / this.popUp.width));
+        _this.popUp.alpha = 1;
+        _this.popUp.tint = 0xFFFFFF;
+        // this.popUp.blendMode = PIXI.BLEND_MODES.ADD;
 
-                _this.container.interactive = true;
-                _this.container.addChild(_this.popUp);
-                _this.container.x = 0; //-this.container.width / 2;
-                _this.container.y = 0; //-this.container.height / 2;
-                _this.addChild(_this.container);
-                _this.container.addChild(_this.chestContainer);
-                _this.container.addChild(_this.openChestContainer);
+        _this.container.interactive = true;
+        _this.container.addChild(_this.popUp);
+        _this.container.x = 0; //-this.container.width / 2;
+        _this.container.y = 0; //-this.container.height / 2;
+        _this.addChild(_this.container);
+        _this.container.addChild(_this.chestContainer);
+        _this.container.addChild(_this.openChestContainer);
 
-                _this.readyLabel = new PIXI.Text('Thanks for helping us\nChoose your prize', LABELS.LABEL_CHEST);
-                _this.readyLabel.style.fontSize = 18;
-                _this.readyLabel.style.fill = 0xffffff;
-                _this.readyLabel.pivot.x = _this.readyLabel.width / 2;
-                _this.readyLabel.y = -40;
+        _this.readyLabel = new PIXI.Text('Thanks for helping us\nChoose your prize', LABELS.LABEL_CHEST);
+        _this.readyLabel.style.fontSize = 18;
+        _this.readyLabel.style.fill = 0xffffff;
+        _this.readyLabel.pivot.x = _this.readyLabel.width / 2;
+        _this.readyLabel.y = -40;
 
-                _this.chestContainer.addChild(_this.readyLabel);
+        _this.chestContainer.addChild(_this.readyLabel);
 
-                _this.portrait = new PIXI.Sprite.fromFrame('portraitChest2');
-                _this.chestContainer.addChild(_this.portrait);
-                _this.portrait.anchor.set(0.5, 1);
-                _this.portrait.y = -40;
+        _this.portrait = new PIXI.Sprite.fromFrame('portraitChest2');
+        _this.chestContainer.addChild(_this.portrait);
+        _this.portrait.anchor.set(0.5, 1);
+        _this.portrait.y = -40;
 
-                _this.chest1 = new PIXI.Sprite.fromFrame('chest1');
-                _this.chestContainer.addChild(_this.chest1);
-                _this.chest1.anchor.set(0.5);
-                _this.chest1.scale.set(0.6);
-                _this.chest1.x = -75;
-                _this.chest1.y = _this.h / 2 - 120;
+        _this.chest1 = new PIXI.Sprite.fromFrame('chest1');
+        _this.chestContainer.addChild(_this.chest1);
+        _this.chest1.anchor.set(0.5);
+        _this.chest1.scale.set(0.6);
+        _this.chest1.x = -75;
+        _this.chest1.y = _this.h / 2 - 120;
 
-                _this.chest1.on('mouseup', _this.openNormalChest.bind(_this));
-                _this.chest1.on('touchend', _this.openNormalChest.bind(_this));
-                _this.chest1.interactive = true;
-                _this.chest1.buttonMode = true;
+        _this.chest1.on('mouseup', _this.openNormalChest.bind(_this));
+        _this.chest1.on('touchend', _this.openNormalChest.bind(_this));
+        _this.chest1.interactive = true;
+        _this.chest1.buttonMode = true;
 
-                _this.openLabel = new PIXI.Text('Open', LABELS.LABEL2);
-                _this.openLabel.style.fontSize = 22;
-                _this.openLabel.style.fill = 0xffffff;
-                _this.openLabel.pivot.x = _this.openLabel.width / 2;
-                _this.openLabel.pivot.y = _this.openLabel.height / 2;
-                _this.openLabel.y = 65;
-                _this.chest1.addChild(_this.openLabel);
+        _this.openLabel = new PIXI.Text('Open', LABELS.LABEL2);
+        _this.openLabel.style.fontSize = 22;
+        _this.openLabel.style.fill = 0xffffff;
+        _this.openLabel.pivot.x = _this.openLabel.width / 2;
+        _this.openLabel.pivot.y = _this.openLabel.height / 2;
+        _this.openLabel.y = 65;
+        _this.chest1.addChild(_this.openLabel);
 
-                _this.shine = new PIXI.Sprite.fromFrame('shine');
-                _this.shine.anchor.set(0.5);
-                _this.shine.scale.set(2.2);
-                _this.shine.tint = 0xffff00;
-                _this.shine.y = 50;
-                _this.chestContainer.addChild(_this.shine);
+        _this.shine = new PIXI.Sprite.fromFrame('shine');
+        _this.shine.anchor.set(0.5);
+        _this.shine.scale.set(2.2);
+        _this.shine.tint = 0xffff00;
+        _this.shine.y = 50;
+        _this.chestContainer.addChild(_this.shine);
 
-                _this.chest2 = new PIXI.Sprite.fromFrame('chest3');
-                _this.chest2.anchor.set(0.5);
-                _this.chestContainer.addChild(_this.chest2);
-                _this.chest2.x = 75;
-                _this.chest2.y = _this.h / 2 - 120;
+        _this.chest2 = new PIXI.Sprite.fromFrame('chest3');
+        _this.chest2.anchor.set(0.5);
+        _this.chestContainer.addChild(_this.chest2);
+        _this.chest2.x = 75;
+        _this.chest2.y = _this.h / 2 - 120;
 
-                _this.chest2.on('mouseup', _this.openVideoChest.bind(_this));
-                _this.chest2.on('touchend', _this.openVideoChest.bind(_this));
-                _this.chest2.interactive = true;
-                _this.chest2.buttonMode = true;
+        _this.chest2.on('mouseup', _this.openVideoChest.bind(_this));
+        _this.chest2.on('touchend', _this.openVideoChest.bind(_this));
+        _this.chest2.interactive = true;
+        _this.chest2.buttonMode = true;
 
-                _this.watchToOpen = new PIXI.Text('Open', LABELS.LABEL_CHEST);
-                _this.watchToOpen.style.fontSize = 14;
-                _this.watchToOpen.style.stroke = 0x0090ff;
-                _this.watchToOpen.style.fill = 0xffffff;
-                _this.watchToOpen.pivot.x = _this.watchToOpen.width / 2 - 30;
-                _this.watchToOpen.pivot.y = _this.watchToOpen.height / 2;
-                _this.watchToOpen.y = 60;
-                _this.chest2.addChild(_this.watchToOpen);
-                _this.video = new PIXI.Sprite.fromFrame('video-trim');
-                _this.video.anchor.set(0.5);
-                _this.video.x = -_this.video.width / 2 - 5;
-                _this.video.y = _this.watchToOpen.height / 2;
-                _this.watchToOpen.addChild(_this.video);
+        _this.watchToOpen = new PIXI.Text('Open', LABELS.LABEL_CHEST);
+        _this.watchToOpen.style.fontSize = 14;
+        _this.watchToOpen.style.stroke = 0x0090ff;
+        _this.watchToOpen.style.fill = 0xffffff;
+        _this.watchToOpen.pivot.x = _this.watchToOpen.width / 2 - 30;
+        _this.watchToOpen.pivot.y = _this.watchToOpen.height / 2;
+        _this.watchToOpen.y = 60;
+        _this.chest2.addChild(_this.watchToOpen);
+        _this.video = new PIXI.Sprite.fromFrame('video-trim');
+        _this.video.anchor.set(0.5);
+        _this.video.x = -_this.video.width / 2 - 5;
+        _this.video.y = _this.watchToOpen.height / 2;
+        _this.watchToOpen.addChild(_this.video);
 
-                _this.container.visible = false;
+        _this.container.visible = false;
 
-                _this.readySin = 0;
+        _this.readySin = 0;
 
-                _this.shinePrize = new PIXI.Sprite.fromFrame('shine');
-                _this.shinePrize.anchor.set(0.5);
-                _this.shinePrize.scale.set(2.8);
-                _this.shinePrize.tint = 0xffff00;
-                _this.shinePrize.alpha = 0.5;
-                _this.openChestContainer.addChild(_this.shinePrize);
+        _this.shinePrize = new PIXI.Sprite.fromFrame('shine');
+        _this.shinePrize.anchor.set(0.5);
+        _this.shinePrize.scale.set(2.8);
+        _this.shinePrize.tint = 0xffff00;
+        _this.shinePrize.alpha = 0.5;
+        _this.openChestContainer.addChild(_this.shinePrize);
 
-                _this.chosenChest = new PIXI.Sprite.fromFrame('chest3Open');
-                _this.chosenChest.anchor.set(0.5);
-                _this.openChestContainer.addChild(_this.chosenChest);
-                _this.chosenChest.y = 40;
+        _this.chosenChest = new PIXI.Sprite.fromFrame('chest3Open');
+        _this.chosenChest.anchor.set(0.5);
+        _this.openChestContainer.addChild(_this.chosenChest);
+        _this.chosenChest.y = 40;
 
-                _this.prizeShowData = {
-                        distance: 130,
-                        total: 3
-                };
-                _this.prizes = [];
+        _this.prizeShowData = {
+            distance: 130,
+            total: 3
+        };
+        _this.prizes = [];
 
-                _this.prizesData = [{
-                        icon: 'coin-large',
-                        color: 0x00ff00
-                }, {
-                        icon: 'shipPrize',
-                        color: 0x00ffff
-                }, {
-                        icon: 'shards-large',
-                        color: 0xad07fb
-                }];
-                for (var index = 0; index < _this.prizeShowData.total; index++) {
-                        var prize = new _SinglePrizeContainer2.default();
-                        _this.openChestContainer.addChild(prize);
+        _this.prizesData = [{
+            icon: 'coin-large',
+            color: 0x00ff00
+        }, {
+            icon: 'shipPrize',
+            color: 0x00ffff
+        }, {
+            icon: 'shards-large',
+            color: 0xad07fb
+        }];
+        for (var index = 0; index < _this.prizeShowData.total; index++) {
+            var prize = new _SinglePrizeContainer2.default();
+            _this.openChestContainer.addChild(prize);
 
-                        _this.prizes.push(prize);
-                        prize.updateIcon(_this.prizesData[index].icon);
-                        prize.updateLabel("20AA", _this.prizesData[index].color);
+            _this.prizes.push(prize);
+            prize.updateIcon(_this.prizesData[index].icon);
+            prize.updateLabel("20AA", _this.prizesData[index].color);
 
-                        prize.x = _this.prizeShowData.distance * index - (_this.prizeShowData.distance * _this.prizeShowData.total - 1 / 2);
-                        prize.y = -80;
-                }
-                _this.shinePrize.y = -80;
-                _this.collectButton = new _UILabelButton2.default(130);
-                _this.collectButton.addCenterLabel("Collect");
-                _this.openChestContainer.addChild(_this.collectButton);
-                _this.collectButton.pivot.x = _this.collectButton.width / 2;
-                _this.collectButton.y = 120;
-                _this.collectButton.onClick.add(function () {
-                        _this.close();
-                });
-
-                _this.chestData = [{
-                        chest: 'chest1',
-                        chestOpen: 'chest1Open',
-                        id: 0
-                }, {
-                        chest: 'chest2',
-                        chestOpen: 'chest2Open',
-                        id: 1
-                }, {
-                        chest: 'chest3',
-                        chestOpen: 'chest3Open',
-                        id: 2
-                }];
-                return _this;
+            prize.x = _this.prizeShowData.distance * index - (_this.prizeShowData.distance * _this.prizeShowData.total - 1 / 2);
+            prize.y = -80;
         }
+        _this.shinePrize.y = -80;
+        _this.collectButton = new _UILabelButton2.default(130);
+        _this.collectButton.addCenterLabel("Collect");
+        _this.openChestContainer.addChild(_this.collectButton);
+        _this.collectButton.pivot.x = _this.collectButton.width / 2;
+        _this.collectButton.y = 120;
+        _this.collectButton.onClick.add(function () {
+            _this.confirmCallback(_this.prize[_this.prizeID]);
+            _this.close();
+        });
 
-        (0, _createClass3.default)(OpenChestPopUp, [{
-                key: 'openNormalChest',
-                value: function openNormalChest() {
-                        //this.close()
-                        this.chestContainer.visible = false;
-                        this.openChestContainer.visible = true;
-
-                        this.chosenChest.texture = PIXI.Texture.fromFrame(this.chosenChests[0].chestOpen);
-                        this.updatePrizes(this.chosenChests[0].id);
-                }
+        _this.chestData = [{
+            chest: 'chest1',
+            chestOpen: 'chest1Open',
+            id: 0
         }, {
-                key: 'openVideoChest',
-                value: function openVideoChest() {
-
-                        this.chestContainer.visible = false;
-                        this.openChestContainer.visible = true;
-
-                        this.chosenChest.texture = PIXI.Texture.fromFrame(this.chosenChests[1].chestOpen);
-                        this.updatePrizes(this.chosenChests[1].id);
-                        //this.close()
-                }
+            chest: 'chest2',
+            chestOpen: 'chest2Open',
+            id: 1
         }, {
-                key: 'updatePrizes',
-                value: function updatePrizes(total) {
-                        for (var index = 0; index < this.prizes.length; index++) {
-                                var prize = this.prizes[index];
-                                prize.visible = false;
-                        }
-                        for (var _index = 0; _index < total + 1; _index++) {
-                                var _prize = this.prizes[_index];
-                                _prize.visible = true;
-                                _prize.x = this.prizeShowData.distance * _index - this.prizeShowData.distance * total / 2;
-                                _prize.y = -80;
-                                _prize.alpha = 0;
-                                TweenLite.to(_prize, 0.3, { delay: _index * 0.2 + 0.1, alpha: 1 });
-                                TweenLite.from(_prize, 0.5, { delay: _index * 0.2 + 0.1, x: 0, y: 40, ease: Back.easeOut });
-                        }
+            chest: 'chest3',
+            chestOpen: 'chest3Open',
+            id: 2
+        }];
+        return _this;
+    }
+
+    (0, _createClass3.default)(OpenChestPopUp, [{
+        key: 'openNormalChest',
+        value: function openNormalChest() {
+            this.prizes[1].updateIcon('shipPrize');
+            this.chestContainer.visible = false;
+            this.openChestContainer.visible = true;
+            this.chosenChest.texture = PIXI.Texture.fromFrame(this.chosenChests[0].chestOpen);
+            this.prizeID = this.chosenChests[0].id;
+            this.updatePrizes(this.chosenChests[0].id);
+        }
+    }, {
+        key: 'openVideoChest',
+        value: function openVideoChest() {
+            var _this2 = this;
+
+            window.DO_REWARD(function () {
+                _this2.openAfterAds();
+            });
+            //this.close()
+        }
+    }, {
+        key: 'openAfterAds',
+        value: function openAfterAds() {
+            this.chestContainer.visible = false;
+            this.openChestContainer.visible = true;
+
+            this.chosenChest.texture = PIXI.Texture.fromFrame(this.chosenChests[1].chestOpen);
+            this.prizeID = this.chosenChests[1].id;
+            if (this.prizeID == 2) {
+                this.prizes[1].updateIcon('shipPrize2');
+            } else {
+                this.prizes[1].updateIcon('shipPrize');
+            }
+            this.updatePrizes(this.chosenChests[1].id);
+        }
+    }, {
+        key: 'updatePrizes',
+        value: function updatePrizes(total) {
+            for (var index = 0; index < this.prizes.length; index++) {
+                var prize = this.prizes[index];
+                prize.visible = false;
+            }
+            this.prizes[0].updateLabel2(utils.formatPointsLabel(this.prize[this.prizeID].money));
+            this.prizes[1].updateLabel2('');
+            this.prizes[2].updateLabel2(utils.formatPointsLabel(this.prize[this.prizeID].shards));
+
+            for (var _index = 0; _index < total + 1; _index++) {
+                var _prize = this.prizes[_index];
+                _prize.visible = true;
+                _prize.x = this.prizeShowData.distance * _index - this.prizeShowData.distance * total / 2;
+                _prize.y = -80;
+                _prize.alpha = 0;
+                TweenLite.to(_prize, 0.3, { delay: _index * 0.2 + 0.1, alpha: 1 });
+                TweenLite.from(_prize, 0.5, { delay: _index * 0.2 + 0.1, x: 0, y: 40, ease: Back.easeOut });
+            }
+        }
+    }, {
+        key: 'update',
+        value: function update(delta) {
+            this.readySin += delta * 8;
+            this.chest2.scale.set(Math.sin(this.readySin) * 0.05 + 0.95);
+
+            this.shine.x = this.chest2.x;
+            this.shine.y = this.chest2.y;
+            this.shine.rotation += delta * 5;
+            this.shine.rotation %= Math.PI * 2;
+
+            this.shinePrize.rotation = this.shine.rotation;
+        }
+    }, {
+        key: 'show',
+        value: function show(param) {
+            this.visible = true;
+
+            this.prize = param.prize;
+            var level = Math.random() < 0.5 ? 0 : 1;
+
+            this.chosenChests = [this.chestData[level], this.chestData[level + 1]];
+
+            this.chest1.texture = PIXI.Texture.fromFrame(this.chosenChests[0].chest);
+            this.chest2.texture = PIXI.Texture.fromFrame(this.chosenChests[1].chest);
+
+            this.isShowing = true;
+            this.container.visible = true;
+            this.background.visible = true;
+            this.chestContainer.visible = true;
+            this.openChestContainer.visible = false;
+            this.toRemove = false;
+            this.onShow.dispatch(this);
+            this.portrait.texture = new PIXI.Texture.fromFrame('portraitChest' + Math.ceil(Math.random() * 3));
+            if (param) {
+                this.confirmCallback = param.onConfirm;
+                this.cancelCallback = param.onCancel;
+            } else {
+                this.confirmCallback = null;
+                this.cancelCallback = null;
+            }
+            //this.readyLabel.text = param ? param.label : ''
+            this.readyLabel.pivot.x = this.readyLabel.width / 2;
+
+            this.background.alpha = 0.5;
+            this.container.alpha = 1;
+            this.popUp.scale.x = 1;
+            this.popUp.scale.y = 1;
+        }
+    }, {
+        key: 'afterHide',
+        value: function afterHide() {}
+    }, {
+        key: 'hide',
+        value: function hide() {
+            var _this3 = this;
+
+            var dispatch = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+            var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+            if (!this.isShowing) {
+                return;
+            }
+            this.isShowing = false;
+
+            TweenLite.to(this.background, 0.25, { alpha: 0 });
+            TweenLite.to(this.container, 0.25, { alpha: 0 });
+            TweenLite.to(this.popUp.scale, 0.25, {
+                x: 0,
+                y: 1.5,
+                ease: Back.easeIn,
+                onComplete: function onComplete() {
+                    if (dispatch) {
+                        _this3.onHide.dispatch(_this3);
+                    }
+                    if (callback) {
+                        callback();
+                    }
+                    _this3.afterHide();
+                    _this3.toRemove = true;
+
+                    _this3.visible = false;
                 }
-        }, {
-                key: 'update',
-                value: function update(delta) {
-                        this.readySin += delta * 8;
-                        this.chest2.scale.set(Math.sin(this.readySin) * 0.05 + 0.95);
-
-                        this.shine.x = this.chest2.x;
-                        this.shine.y = this.chest2.y;
-                        this.shine.rotation += delta * 5;
-                        this.shine.rotation %= Math.PI * 2;
-
-                        this.shinePrize.rotation = this.shine.rotation;
-                }
-        }, {
-                key: 'show',
-                value: function show(param) {
-                        this.visible = true;
-
-                        var level = Math.random() < 0.5 ? 0 : 1;
-
-                        this.chosenChests = [this.chestData[level], this.chestData[level + 1]];
-
-                        this.chest1.texture = PIXI.Texture.fromFrame(this.chosenChests[0].chest);
-                        this.chest2.texture = PIXI.Texture.fromFrame(this.chosenChests[1].chest);
-
-                        this.isShowing = true;
-                        this.container.visible = true;
-                        this.background.visible = true;
-                        this.chestContainer.visible = true;
-                        this.openChestContainer.visible = false;
-                        this.toRemove = false;
-                        this.onShow.dispatch(this);
-                        this.portrait.texture = new PIXI.Texture.fromFrame('portraitChest' + Math.ceil(Math.random() * 3));
-                        if (param) {
-                                this.confirmCallback = param.onConfirm;
-                                this.cancelCallback = param.onCancel;
-                        } else {
-                                this.confirmCallback = null;
-                                this.cancelCallback = null;
-                        }
-                        //this.readyLabel.text = param ? param.label : ''
-                        this.readyLabel.pivot.x = this.readyLabel.width / 2;
-
-                        this.background.alpha = 0.5;
-                        this.container.alpha = 1;
-                        this.popUp.scale.x = 1;
-                        this.popUp.scale.y = 1;
-                }
-        }, {
-                key: 'afterHide',
-                value: function afterHide() {}
-        }, {
-                key: 'hide',
-                value: function hide() {
-                        var _this2 = this;
-
-                        var dispatch = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-                        var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
-                        if (!this.isShowing) {
-                                return;
-                        }
-                        this.isShowing = false;
-
-                        TweenLite.to(this.background, 0.25, { alpha: 0 });
-                        TweenLite.to(this.container, 0.25, { alpha: 0 });
-                        TweenLite.to(this.popUp.scale, 0.25, {
-                                x: 0,
-                                y: 1.5,
-                                ease: Back.easeIn,
-                                onComplete: function onComplete() {
-                                        if (dispatch) {
-                                                _this2.onHide.dispatch(_this2);
-                                        }
-                                        if (callback) {
-                                                callback();
-                                        }
-                                        _this2.afterHide();
-                                        _this2.toRemove = true;
-
-                                        _this2.visible = false;
-                                }
-                        });
-                }
-        }, {
-                key: 'confirm',
-                value: function confirm() {
-                        this.onConfirm.dispatch(this);
-                        this.hide();
-                }
-        }, {
-                key: 'close',
-                value: function close() {
-                        this.onClose.dispatch(this);
-                        this.hide();
-                }
-        }]);
-        return OpenChestPopUp;
+            });
+        }
+    }, {
+        key: 'confirm',
+        value: function confirm() {
+            this.onConfirm.dispatch(this);
+            this.hide();
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            this.onClose.dispatch(this);
+            this.hide();
+        }
+    }]);
+    return OpenChestPopUp;
 }(PIXI.Container);
 
 exports.default = OpenChestPopUp;
@@ -67996,13 +68190,15 @@ var SellAllPopUp = function (_PIXI$Container) {
         }, {
                 key: 'openVideoChest',
                 value: function openVideoChest() {
+                        var _this2 = this;
 
+                        window.DO_REWARD(function () {
+                                _this2.confirmCallback(_this2.totalShards);
+                                _this2.close();
+                        });
                         // this.chestContainer.visible = false;
                         // this.openChestContainer.visible = true;
                         // this.updatePrizes(0)
-                        this.confirmCallback(this.totalShards);
-
-                        this.close();
                 }
         }, {
                 key: 'updatePrizes',
@@ -68074,7 +68270,7 @@ var SellAllPopUp = function (_PIXI$Container) {
         }, {
                 key: 'hide',
                 value: function hide() {
-                        var _this2 = this;
+                        var _this3 = this;
 
                         var dispatch = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
                         var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -68093,15 +68289,15 @@ var SellAllPopUp = function (_PIXI$Container) {
                                 ease: Back.easeIn,
                                 onComplete: function onComplete() {
                                         if (dispatch) {
-                                                _this2.onHide.dispatch(_this2);
+                                                _this3.onHide.dispatch(_this3);
                                         }
                                         if (callback) {
                                                 callback();
                                         }
-                                        _this2.afterHide();
-                                        _this2.toRemove = true;
+                                        _this3.afterHide();
+                                        _this3.toRemove = true;
 
-                                        _this2.visible = false;
+                                        _this3.visible = false;
                                 }
                         });
                 }

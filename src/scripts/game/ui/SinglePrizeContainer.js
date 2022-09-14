@@ -20,6 +20,13 @@ export default class SinglePrizeContainer extends PIXI.Container {
         this.iconContainer.scale.set(this.size / this.iconContainer.height * 2)
 
     }
+    updateLabel2(label) {
+        this.label.text = label;
+        this.label.style.stroke = 0
+        this.label.pivot.x = this.label.width / 2
+        this.label.pivot.y = this.label.height / 2
+        this.label.y = this.size
+    }
     updateLabel(label, border = 0x00ffff) {
         this.label.text = label;
         this.label.style.stroke = 0

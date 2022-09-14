@@ -31,8 +31,8 @@ export default class PrizeSystem {
 
         this.entity.on('mouseup', this.click.bind(this)).on('touchend', this.click.bind(this));
 
-        this.currentTimer = 5;
-        this.timer = 5;
+        this.timer = 360;
+        this.currentTimer = this.timer * Math.random();
 
         this.velocity = {
             x: 0,
@@ -112,10 +112,26 @@ export default class PrizeSystem {
         this.inMovement = false;
     }
     click() {
-        this.onCollect.dispatch(this);
+        let prize = [
+            {
+                money: window.gameEconomy.currentResources * 0.05,
+                shards:0,
+                ship:0
+            },
+            {
+                money: window.gameEconomy.currentResources * 0.15,
+                shards:0,
+                ship:4
+            },
+            {
+                money: window.gameEconomy.currentResources * 0.2,
+                shards:Math.max(5, window.gameModifyers.permanentBonusData.shards * 0.05),
+                ship:2
+            }
+        ]
+        this.onCollect.dispatch(prize);
         this.remove();
         this.currentTimer = this.timer;
-
     }
     resize() {
 

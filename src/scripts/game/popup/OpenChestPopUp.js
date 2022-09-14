@@ -140,22 +140,22 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.chosenChest.y = 40
 
         this.prizeShowData = {
-            distance:130,
-            total:3
+            distance: 130,
+            total: 3
         }
         this.prizes = []
 
         this.prizesData = [{
-            icon:'coin-large',
-            color:0x00ff00
+            icon: 'coin-large',
+            color: 0x00ff00
         },
         {
-            icon:'shipPrize',
-            color:0x00ffff
+            icon: 'shipPrize',
+            color: 0x00ffff
         },
         {
-            icon:'shards-large',
-            color:0xad07fb
+            icon: 'shards-large',
+            color: 0xad07fb
         }]
         for (let index = 0; index < this.prizeShowData.total; index++) {
             let prize = new SinglePrizeContainer();
@@ -165,7 +165,7 @@ export default class OpenChestPopUp extends PIXI.Container {
             prize.updateIcon(this.prizesData[index].icon)
             prize.updateLabel("20AA", this.prizesData[index].color)
 
-            prize.x = this.prizeShowData.distance * index - (this.prizeShowData.distance * this.prizeShowData.total-1 / 2);
+            prize.x = this.prizeShowData.distance * index - (this.prizeShowData.distance * this.prizeShowData.total - 1 / 2);
             prize.y = -80
         }
         this.shinePrize.y = -80
@@ -175,6 +175,7 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.collectButton.pivot.x = this.collectButton.width / 2;
         this.collectButton.y = 120
         this.collectButton.onClick.add(() => {
+            this.confirmCallback(this.prize[this.prizeID]);
             this.close()
         })
 
@@ -183,50 +184,70 @@ export default class OpenChestPopUp extends PIXI.Container {
             {
                 chest: 'chest1',
                 chestOpen: 'chest1Open',
-                id:0
+                id: 0
             },
             {
                 chest: 'chest2',
                 chestOpen: 'chest2Open',
-                id:1
+                id: 1
             },
             {
                 chest: 'chest3',
                 chestOpen: 'chest3Open',
-                id:2
+                id: 2
             }
         ]
     }
     openNormalChest() {
+        this.prizes[1].updateIcon('shipPrize')
+        this.chestContainer.visible = false;
+        this.openChestContainer.visible = true;
+        this.chosenChest.texture = PIXI.Texture.fromFrame(this.chosenChests[0].chestOpen);
+        this.prizeID = this.chosenChests[0].id
+        this.updatePrizes(this.chosenChests[0].id)
+
+    }
+    openVideoChest() {
+
+        window.DO_REWARD(() => {
+            this.openAfterAds();
+        })
         //this.close()
+    }
+    openAfterAds() {
         this.chestContainer.visible = false;
         this.openChestContainer.visible = true;
 
-        this.chosenChest.texture = PIXI.Texture.fromFrame(this.chosenChests[0].chestOpen);
-        this.updatePrizes(this.chosenChests[0].id)
-    }
-    openVideoChest() {
-        
-        this.chestContainer.visible = false;
-        this.openChestContainer.visible = true;
-        
         this.chosenChest.texture = PIXI.Texture.fromFrame(this.chosenChests[1].chestOpen);
+        this.prizeID = this.chosenChests[1].id
+        if (this.prizeID == 2) {
+            this.prizes[1].updateIcon('shipPrize2')
+        } else {
+            this.prizes[1].updateIcon('shipPrize')
+        }
         this.updatePrizes(this.chosenChests[1].id)
-        //this.close()
+
     }
-    updatePrizes(total){
+    updatePrizes(total) {
         for (let index = 0; index < this.prizes.length; index++) {
             let prize = this.prizes[index]
             prize.visible = false;
+
+
+
         }
-        for (let index = 0; index < total+1; index++) {
+        this.prizes[0].updateLabel2(utils.formatPointsLabel(this.prize[this.prizeID].money))
+        this.prizes[1].updateLabel2('')
+        this.prizes[2].updateLabel2(utils.formatPointsLabel(this.prize[this.prizeID].shards))
+
+        for (let index = 0; index < total + 1; index++) {
             let prize = this.prizes[index]
             prize.visible = true;
             prize.x = this.prizeShowData.distance * index - (this.prizeShowData.distance * total / 2);
             prize.y = -80
             prize.alpha = 0
-            TweenLite.to(prize, 0.3, {delay:index * 0.2 + 0.1, alpha:1})
-            TweenLite.from(prize, 0.5, {delay:index * 0.2 + 0.1, x:0, y:40, ease:Back.easeOut})
+            TweenLite.to(prize, 0.3, { delay: index * 0.2 + 0.1, alpha: 1 })
+            TweenLite.from(prize, 0.5, { delay: index * 0.2 + 0.1, x: 0, y: 40, ease: Back.easeOut })
         }
     }
 
@@ -244,13 +265,13 @@ export default class OpenChestPopUp extends PIXI.Container {
     show(param) {
         this.visible = true;
 
-
+        this.prize = param.prize;
         let level = Math.random() < 0.5 ? 0 : 1;
 
         this.chosenChests = [
-            this.chestData[level], 
+            this.chestData[level],
 
-            this.chestData[level+1]
+            this.chestData[level + 1]
         ];
 
         this.chest1.texture = PIXI.Texture.fromFrame(this.chosenChests[0].chest);

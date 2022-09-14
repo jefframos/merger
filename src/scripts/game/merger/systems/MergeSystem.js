@@ -458,16 +458,27 @@ export default class MergeSystem {
 
 
     }
-    addShipBasedOnMax() {
+    addShipBasedOnMax(value = 2) {
         let slot = this.findFirstAvailable();
         if (!slot) {
             return;
         }
-        let max = Math.max(1, utils.findMax(this.slots) - 2)
+        let max = Math.max(1, utils.findMax(this.slots) - value)
         let data = this.dataTiles[max]
 
         //slot.removeEntity();
         slot.addEntity(data);
+
+
+        let customData = {}
+        customData.forceX = 0
+        customData.forceY = 100
+        customData.gravity = 0
+        customData.scale = 0.05
+        customData.alphaDecress = 1
+        customData.texture = 'shipPrize'
+        this.onParticles.dispatch(slot.tileSprite.getGlobalPosition(), customData, 1)
+
         // this.updateAllData();
         // console.log(data,slot.id.i, slot.id.j)
         COOKIE_MANAGER.addMergePiece(data, slot.id.i, slot.id.j)

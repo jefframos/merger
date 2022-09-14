@@ -12,8 +12,11 @@ import imageManifest from './manifests/manifest-image'
 import audioManifest from './manifests/manifest-audio'
 import spritesheetManifest from './manifests/manifest'
 import MergerScreenManager from './game/merger/screen/MergerScreenManager';
+import signals from 'signals';
 
 
+window.onAdds = new signals.Signal();
+window.onStopAdds = new signals.Signal();
 
 window.STORAGE = new LocalStorage();
 
@@ -28,14 +31,100 @@ window.getCoinSound = function () {
 }
 
 
+window.GAMEPLAY_STOP = function () {
+    if (window.GAMEPLAY_IS_STOP) {
+        return
+    }
+    window.GAMEPLAY_IS_STOP = true;
+    PokiSDK.gameplayStop();
+}
+window.GAMEPLAY_START = function () {
+    if (!window.GAMEPLAY_IS_STOP) {
+        return
+    }
+    window.GAMEPLAY_IS_STOP = false;
+    PokiSDK.gameplayStart();
+}
+window.DO_COMMERCIAL = function (callback, params) {
+    window.GAMEPLAY_STOP()
 
+    if (window.isDebug) {
+        window.GAMEPLAY_START()
 
+        if (callback) callback(params)
+        return
+    }
+    window.onAdds.dispatch();
+    PokiSDK.commercialBreak().then(
+        () => {
+            console.log("Commercial break finished, proceeding to game");
+            window.GAMEPLAY_START()
+            window.onStopAdds.dispatch();
+
+            if (callback) callback(params)
+        }
+    ).catch(
+        () => {
+            console.log("Initialized, but the user likely has adblock");
+            window.GAMEPLAY_START()
+            window.onStopAdds.dispatch();
+
+            if (callback) callback(params)
+        }
+    );
+}
+
+window.DO_REWARD = function (callback, params) {
+    window.GAMEPLAY_STOP()
+
+    if (window.isDebug) {
+        window.GAMEPLAY_START()
+
+        if (callback) callback(params)
+        return
+    }
+
+    window.onAdds.dispatch();
+    PokiSDK.rewardedBreak().then(
+        (success) => {
+            if (success) {
+                window.onStopAdds.dispatch();
+                window.GAMEPLAY_START()
+                if (callback) callback(params)
+            } else {
+                window.onStopAdds.dispatch();
+                window.GAMEPLAY_START()
+                if (callback) callback(params)
+            }
+        }
+
+    )
+}
 // console.log(spritesheetManifest['default'][0]);
 //startLoader();
 const jsons = [];
-loadManifests();
+
+PokiSDK.init().then(
+    () => {
+        console.log("Poki SDK successfully initialized");
+        loadManifests();
+
+    }
+).catch(
+    () => {
+        loadManifests();
+        console.log("Initialized, but the user likely has adblock");
+        // fire your function to continue to game
+    }
+);
+
+//loadManifests();
 
 function loadManifests() {
+
+    PokiSDK.gameLoadingStart();
+
+
     for (var i = spritesheetManifest['default'].length - 1; i >= 0; i--) {
         let dest = 'assets/' + spritesheetManifest['default'][i]
 
@@ -44,6 +133,7 @@ function loadManifests() {
     }
     PIXI.loader.load(afterLoadManifests);
 }
+PokiSDK.setDebug(false);
 
 function afterLoadManifests(evt) {
 
@@ -110,9 +200,9 @@ function configGame(evt) {
     window.RESOURCES = evt.resources;
     window.game = new Game(config);
 
-window.TILE_ASSSETS_POOL = []
+    window.TILE_ASSSETS_POOL = []
 
-    let toGenerate = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '?', '!', 'X', 'v', '+', '<', '>', 't','MAX','Fight boss', '100']
+    let toGenerate = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '?', '!', 'X', 'v', '+', '<', '>', 't', 'MAX', 'Fight boss', '100']
     for (let index = 0; index < toGenerate.length; index++) {
 
         let container = new PIXI.Container()
@@ -122,12 +212,13 @@ window.TILE_ASSSETS_POOL = []
         text.style.strokeThickness = 0
         container.addChild(text)
 
-        let id = toGenerate[index].substring(0,4)
+        let id = toGenerate[index].substring(0, 4)
         let tex = utils.generateTextureFromContainer('image-' + id, container, window.TILE_ASSSETS_POOL)
 
-    }    
-    
-    if(!window.screenManager){
+    }
+    PokiSDK.gameLoadingFinished();
+
+    if (!window.screenManager) {
         window.screenManager = new MergerScreenManager();
     }
     //window.screenManager = new HellScreenManager();
@@ -140,7 +231,7 @@ window.TILE_ASSSETS_POOL = []
     // screenManager.addScreen(gameScreen);
     // screenManager.forceChange('GameScreen');
     game.start();
-
+    window.GAMEPLAY_START()
     window.addEventListener("focus", myFocusFunction, true);
     window.addEventListener("blur", myBlurFunction, true);
 
@@ -194,7 +285,7 @@ function tryStuff() {
 
     let acc1 = 0
     let acc2 = 0
-    for (let index = 0; index < 100; index+=10) {
+    for (let index = 0; index < 100; index += 10) {
         //console.log(d.initialCost * Math.pow(d.coefficient, index))// * Math.pow(i, d.coefficient))
         //console.log(d.initialProductivity * Math.pow(d.coefficientProductivity, index))// * Math.pow(i, d.coefficient))
         let sim = d.initialProductivity * Math.pow(d.coefficientProductivity, index)

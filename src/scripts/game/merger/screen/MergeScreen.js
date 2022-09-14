@@ -215,7 +215,7 @@ export default class MergeScreen extends Screen {
         });
 
         this.prizeSystem.onCollect.add((prize) => {
-            this.openPopUp(this.openChestPopUp, prize)
+            this.openPopUp(this.openChestPopUp, { prize, onConfirm: this.onPrizeCollected.bind(this) })
         })
         this.mergeSystem1.addSystem(this.enemiesSystem);
         this.mergeSystem1.addSystem(this.resourceSystem);
@@ -534,7 +534,6 @@ export default class MergeScreen extends Screen {
         this.spaceStation.scale.set(0.55)
         this.spaceStation.addCallback(() => {
 
-            console.log("CALLBACK")
             var shards = this.getShardBonusValue()
             this.openPopUp(this.sellAllPopUp, { shards, onConfirm: this.resetAll.bind(this) })
             //this.resetAll();
@@ -545,6 +544,44 @@ export default class MergeScreen extends Screen {
         this.addChild(this.resetWhiteShape);
         this.resetWhiteShape.visible = false;
         //this.mergeItemsShop.show()
+    }
+    onPrizeCollected(prizes) {
+        if (!prizes) return;
+        if (prizes.money > 0) {
+            window.gameEconomy.addResources(prizes.money)
+            let toLocal = this.particleSystem.toLocal({ x: config.width / 2, y: config.height / 2 })
+            let customData = {};
+            customData.texture = 'coin'
+            customData.scale = 0.02
+            customData.gravity = 500
+            customData.alphaDecress = 0
+            customData.ignoreMatchRotation = true
+            let coinPosition = this.coinTexture.parent.getGlobalPosition();
+            let frontLayer = this.frontLayer.getGlobalPosition();
+            customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }
+            this.particleSystem.show(toLocal, 3, customData)
+        }
+        if (prizes.shards > 0) {
+            window.gameModifyers.addShards(prizes.shards)
+            setTimeout(() => {
+                let toLocal = this.particleSystem.toLocal({ x: config.width / 2, y: config.height / 2 })
+                let customData = {};
+                customData.texture = 'shards'
+                customData.scale = 0.025
+                customData.gravity = 200
+                customData.alphaDecress = 0
+                customData.ignoreMatchRotation = true
+
+                let coinPosition = this.shardsTexture.parent.getGlobalPosition();
+                let frontLayer = this.frontLayer.getGlobalPosition();
+                customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }
+                this.particleSystem.show(toLocal, 3, customData)
+            }, 50);
+
+        }
+        if (prizes.ship > 0) {
+            this.mergeSystem1.addShipBasedOnMax(prizes.ship)
+        }
     }
     getShardBonusValue() {
         let progression = COOKIE_MANAGER.getProgression()
@@ -607,10 +644,10 @@ export default class MergeScreen extends Screen {
                 customData.texture = 'shards'
                 customData.scale = 0.02 + Math.random() * 0.01
                 customData.gravity = 200
-                customData.alphaDecress = 0        
+                customData.alphaDecress = 0
                 let coinPosition = this.shardsTexture.parent.getGlobalPosition();
                 let frontLayer = this.frontLayer.getGlobalPosition();
-                customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }        
+                customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }
                 this.particleSystem.show(toLocal, 1, customData)
             }, 20 * index);
         }
@@ -651,18 +688,19 @@ export default class MergeScreen extends Screen {
         this.resourceSystemRight.collectStartAmount()
     }
     standardPopUpShow(params) {
-        //this.standardPopUp.show(params)
         this.openPopUp(this.standardPopUp, params)
     }
     openPopUp(target, params) {
-        this.uiPanels.forEach(element => {
-            if (element.visible) {
-                element.hide();
-            }
-        });
-
-        this.currentOpenPopUp = target;
-        target.show(params)
+        window.DO_COMMERCIAL(()=>{
+            this.uiPanels.forEach(element => {
+                if (element.visible) {
+                    element.hide();
+                }
+            });
+    
+            this.currentOpenPopUp = target;
+            target.show(params)
+        })
     }
     popLabel(targetPosition, label) {
         let toLocal = this.particleSystem.toLocal(targetPosition)
@@ -787,10 +825,10 @@ export default class MergeScreen extends Screen {
 
         let progression = COOKIE_MANAGER.getProgression()
 
-        if(progression.currentEnemyLevel > 100){
+        if (progression.currentEnemyLevel > 100) {
             this.spaceStation.visible = true;
             this.spaceStation.update(delta)
-        }else{
+        } else {
             this.spaceStation.visible = false;
         }
 

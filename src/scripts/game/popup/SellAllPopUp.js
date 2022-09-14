@@ -177,12 +177,15 @@ export default class SellAllPopUp extends PIXI.Container {
     }
     openVideoChest() {
 
+
+        window.DO_REWARD(() => {
+            this.confirmCallback(this.totalShards);
+            this.close()
+        })
         // this.chestContainer.visible = false;
         // this.openChestContainer.visible = true;
         // this.updatePrizes(0)
-        this.confirmCallback(this.totalShards);
-
-        this.close()
+        
     }
     updatePrizes(total) {
         for (let index = 0; index < this.prizes.length; index++) {
