@@ -14,23 +14,7 @@
             "coefficientProductivity": 1.1,
             "initialProductivity": 1,
             "modifyer":"drillSpeed",
-            "levelMax": 200
-        },
-        {
-            "type": "resources",
-            "modifyerIcon": "coin",
-            "nameID": "resources",
-            "displayName": "Resources amount",
-            "imageSrc": "drill",
-            "tileImageSrc": "coin-large",
-            "initialCost": 20000,
-            "costCoefficient": 1.68,
-            "initialTime": 1,
-            "initialRevenue": 1,
-            "coefficientProductivity": 1.2,
-            "initialProductivity": 1,
-            "modifyer":"resourcesMultiplier",
-            "levelMax": 200
+            "levelMax": 100
         },
         {
             "type": "bullets",
@@ -39,7 +23,7 @@
             "displayName": "Attack Speed",
             "imageSrc": "drill",
             "tileImageSrc": "fast-p",
-            "initialCost": 1000000,
+            "initialCost": 20000,
             "costCoefficient": 1.95,
             "initialTime": 1,
             "initialRevenue": 1,
@@ -47,6 +31,22 @@
             "initialProductivity": 1,
             "modifyer":"attackSpeed",
             "levelMax": 100        
+        },
+        {
+            "type": "resources",
+            "modifyerIcon": "coin",
+            "nameID": "resources",
+            "displayName": "Resources amount",
+            "imageSrc": "drill",
+            "tileImageSrc": "coin-large",
+            "initialCost": 1000000,
+            "costCoefficient": 1.68,
+            "initialTime": 1,
+            "initialRevenue": 1,
+            "coefficientProductivity": 1.2,
+            "initialProductivity": 1,
+            "modifyer":"resourcesMultiplier",
+            "levelMax": 200
         },
         {
             "type": "bullets",

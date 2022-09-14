@@ -17,7 +17,7 @@ export default class SinglePrizeContainer extends PIXI.Container {
 
         this.iconContainer.texture = PIXI.Texture.fromFrame(texture);
 
-        this.iconContainer.scale.set(this.size / this.iconContainer.height)
+        this.iconContainer.scale.set(this.size / this.iconContainer.height * 2)
 
     }
     updateLabel(label, border = 0x00ffff) {
@@ -28,4 +28,5 @@ export default class SinglePrizeContainer extends PIXI.Container {
         this.label.pivot.y = this.label.height / 2
         this.label.y = this.size
     }
+    
 }

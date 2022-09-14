@@ -36,7 +36,7 @@ export default class SpaceStation extends PIXI.Container {
         this.addChild(this.helpLabel)
 
         this.timer = 0.1
-        this.on('mouseup', this.click.bind(this)).on('touchend', this.click.bind(this));
+        this.on('mousedown', this.click.bind(this)).on('touchstart', this.click.bind(this));
         this.interactive = true;
         this.buttonMode = true;
     }

@@ -101,8 +101,11 @@ export default class ResourceTile extends MergeTile {
         this.container.removeChild(this.damageTimerView)
 
         this.drillSin = Math.random() * 3.14 * 2
+
+        this.textUpdateTimer = 0;
     }
     resetTile() {
+        this.textUpdateTimer = 0;
         if (this.targetData) {
             this.setTargetData(this.targetData)
             this.removeEntity();
@@ -114,6 +117,17 @@ export default class ResourceTile extends MergeTile {
         super.update(delta, timestamp);
         if (this.particlesDelay > 0) {
             this.particlesDelay -= delta;
+        }
+
+        if(this.readyToCollect){
+            if(this.textUpdateTimer <= 0){
+                this.readyLabel.text = utils.formatPointsLabel(this.currentCollect)
+                this.textUpdateTimer = 1
+                this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
+            }else{
+                this.textUpdateTimer -= delta;
+            }
+    
         }
         //console.log(this.generateResource ,this.generateResourceTime)
         this.collectLabelContainer.visible = this.readyToCollect
@@ -265,9 +279,7 @@ export default class ResourceTile extends MergeTile {
             COOKIE_MANAGER.addPendingResource(this.tileData, this.currentCollect)
         }
 
-        this.readyLabel.text = utils.formatPointsLabel(this.currentCollect)
-        this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
-
+       
 
         if (window.gameModifyers.modifyersData.autoCollectResource) {
 

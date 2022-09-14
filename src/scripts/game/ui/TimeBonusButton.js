@@ -14,6 +14,13 @@ export default class TimeBonusButton extends PIXI.Container {
         this.mainButton = new UIButton2(0x002299, texture, 0xFFFFFF, buttonSize, buttonSize, this.mainTexture)
         this.mainButton.updateIconScale(0.7)
 
+
+        this.shine = new PIXI.Sprite.fromFrame('shine')
+        this.shine.anchor.set(0.5)
+        this.addChild(this.shine);
+        this.shine.scale.set(1.3)
+        this.shine.tint = 0xffff00
+
         this.addChild(this.mainButton)
 
         this.videoSprite = new PIXI.Sprite.fromFrame('video-trim')
@@ -69,6 +76,9 @@ export default class TimeBonusButton extends PIXI.Container {
     update(delta) {
         if (this.activeTimer > 0) {
             this.bonusTimer.visible = true;
+            this.shine.visible = true;
+            this.shine.rotation += delta * 50
+            this.shine.rotation %= Math.PI * 2
             this.activeTimer -= delta;
             this.bonusTimer.setProgressBar(this.activeTimer / this.bonusTime);
             if (this.activeTimer <= 0) {
@@ -80,6 +90,7 @@ export default class TimeBonusButton extends PIXI.Container {
         } else {
             this.mainButton.backShape.texture = PIXI.Texture.fromFrame(this.mainTexture)
             this.bonusTimer.visible = false;
+            this.shine.visible = false;
         }
     }
     setDescription(text) {

@@ -20,6 +20,7 @@ import UIList from '../../ui/uiElements/UIList';
 import TimeBonusButton from '../../ui/TimeBonusButton';
 import PrizeSystem from '../systems/PrizeSystem';
 import OpenChestPopUp from '../../popup/OpenChestPopUp';
+import SellAllPopUp from '../../popup/SellAllPopUp';
 import StandardEnemy from '../enemy/StandardEnemy';
 import SpaceStation from '../../ui/SpaceStation';
 
@@ -116,7 +117,6 @@ export default class MergeScreen extends Screen {
 
         this.topContainer = new PIXI.Container()
         this.container.addChild(this.topContainer);
-
 
 
         this.dataTiles = []
@@ -419,25 +419,6 @@ export default class MergeScreen extends Screen {
             this.openPopUp(this.mergeItemsShop)
         })
 
-
-        // this.sellEverything = new TimeBonusButton('portraitFemale', buttonSize)
-        // this.sellEverything.updateIconScale(0.9)
-        // this.sellEverything.setDescription("")
-        // this.sellEverything.newItem = new PIXI.Sprite.fromFrame('new_item')
-        // this.sellEverything.newItem.scale.set(0.7)
-        // this.sellEverything.newItem.anchor.set(0)
-        // this.sellEverything.newItem.position.set(-buttonSize / 2)
-        // this.sellEverything.newItem.visible = true;
-        // this.sellEverything.addChild(this.sellEverything.newItem)
-        // this.sellEverything.addCallback(()=>{
-        //     this.resetAll();
-        // })
-        // this.sellEverything.onClick.add(() => {
-        //     this.resetAll();
-        //     //this.openPopUp(this.mergeItemsShop)
-        // })
-        //this.container.addChild(this.sellEverything)
-
         this.shopButtonsList.updateHorizontalList();
 
         window.TIME_SCALE = 1
@@ -472,11 +453,17 @@ export default class MergeScreen extends Screen {
         this.openChestPopUp = new OpenChestPopUp('chest', this.screenManager)
         this.uiLayer.addChild(this.openChestPopUp)
 
+
+        this.sellAllPopUp = new SellAllPopUp('sell', this.screenManager)
+        this.uiLayer.addChild(this.sellAllPopUp)
+
+
         this.uiPanels.push(this.entityShop)
         this.uiPanels.push(this.mergeItemsShop)
         this.uiPanels.push(this.generalShop)
         this.uiPanels.push(this.standardPopUp)
         this.uiPanels.push(this.openChestPopUp)
+        this.uiPanels.push(this.sellAllPopUp)
 
         this.entityShop.onPossiblePurchase.add((canBuy) => {
             this.openShop.newItem.visible = canBuy;
@@ -501,12 +488,12 @@ export default class MergeScreen extends Screen {
             }
         });
 
-        this.timeBonus = new TimeBonusButton('speedShip', 80, 'oct-pattern1-bonus-orange')
+        this.timeBonus = new TimeBonusButton('speedShip', 70, 'oct-pattern1-bonus-orange')
         this.timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5)
         //this.timeBonus.setDescription('>>ships')
         this.container.addChild(this.timeBonus)
 
-        this.damageBonus = new TimeBonusButton('damageBonus', 80, 'oct-pattern1-bonus-orange')
+        this.damageBonus = new TimeBonusButton('damageBonus', 70, 'oct-pattern1-bonus-orange')
         this.damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30)
         this.container.addChild(this.damageBonus)
         //damageBonus.setDescription('+damage')
@@ -546,8 +533,17 @@ export default class MergeScreen extends Screen {
         this.spaceStation.onParticles.add(this.addParticles.bind(this))
         this.spaceStation.scale.set(0.55)
         this.spaceStation.addCallback(() => {
-            this.resetAll();
+
+            console.log("CALLBACK")
+            var shards = this.getShardBonusValue()
+            this.openPopUp(this.sellAllPopUp, { shards, onConfirm: this.resetAll.bind(this) })
+            //this.resetAll();
         })
+
+
+        this.resetWhiteShape = new PIXI.Graphics().beginFill(0xFFFFFF).drawRect(-config.width * 4, -config.height * 4, config.width * 8, config.height * 8);
+        this.addChild(this.resetWhiteShape);
+        this.resetWhiteShape.visible = false;
         //this.mergeItemsShop.show()
     }
     getShardBonusValue() {
@@ -556,8 +552,15 @@ export default class MergeScreen extends Screen {
         let coef = 1.008
         return Math.pow(Math.pow(coef, 8), Math.max(progression.currentEnemyLevel - 100, 1)) + window.gameModifyers.permanentBonusData.shards * 0.5;
     }
-    resetAll() {
+    resetAll(shardsTotal) {
 
+        this.resetWhiteShape.visible = true;
+        this.resetWhiteShape.alpha = 1
+        TweenMax.to(this.resetWhiteShape, 1, {
+            delay: 0.5, alpha: 0, onComplete: () => {
+                this.resetWhiteShape.visible = false;
+            }
+        })
         let progression = COOKIE_MANAGER.getProgression()
         let shards = 10;
 
@@ -566,7 +569,7 @@ export default class MergeScreen extends Screen {
         let res = 1//Math.max(1, window.gameEconomy.currentResources)
         console.log(rps, dps, res)
 
-        shards = this.getShardBonusValue()
+        shards = shardsTotal//this.getShardBonusValue()
         shards = Math.max(shards, 10)
 
         window.gameEconomy.resetAll();
@@ -596,6 +599,32 @@ export default class MergeScreen extends Screen {
         window.gameModifyers.addShards(Math.round(shards));
         this.particleSystem.killAll();
         this.forcePauseSystemsTimer = 0.5;
+
+        for (let index = 0; index < 8; index++) {
+            setTimeout(() => {
+                let toLocal = this.particleSystem.toLocal({ x: config.width / 2, y: config.height / 2 })
+                let customData = {};
+                customData.texture = 'shards'
+                customData.scale = 0.02 + Math.random() * 0.01
+                customData.gravity = 200
+                customData.alphaDecress = 0        
+                let coinPosition = this.shardsTexture.parent.getGlobalPosition();
+                let frontLayer = this.frontLayer.getGlobalPosition();
+                customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }        
+                this.particleSystem.show(toLocal, 1, customData)
+            }, 20 * index);
+        }
+
+        setTimeout(() => {
+            this.systemsList.forEach(element => {
+                if (element.resetSystem) {
+                    element.resetSystem()
+                }
+            });
+            this.allMergeData.forEach(element => {
+                element.reset();
+            });
+        }, 10);
 
     }
     refreshToggles() {
@@ -744,7 +773,7 @@ export default class MergeScreen extends Screen {
         utils.centerObject(this.dpsLabel, this.dpsContainer)
         this.dpsLabel.x = 30
 
-        this.shardsLabel.text = utils.formatPointsLabel(window.gameModifyers.permanentBonusData.shards);
+        this.shardsLabel.text = 'x ' + utils.formatPointsLabel(window.gameModifyers.permanentBonusData.shards);
         utils.centerObject(this.shardsLabel, this.shardsCounter)
         this.shardsLabel.x = 30
 
@@ -755,7 +784,15 @@ export default class MergeScreen extends Screen {
             this.spaceBackground.update(delta)
         }
 
-        this.spaceStation.update(delta)
+
+        let progression = COOKIE_MANAGER.getProgression()
+
+        if(progression.currentEnemyLevel > 100){
+            this.spaceStation.visible = true;
+            this.spaceStation.update(delta)
+        }else{
+            this.spaceStation.visible = false;
+        }
 
     }
     resize(resolution) {
@@ -779,11 +816,11 @@ export default class MergeScreen extends Screen {
         this.resourcesWrapperRight.y = this.gridWrapper.y;
 
 
-        this.timeBonus.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2 - 50
+        this.timeBonus.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2 - 55
         this.timeBonus.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
 
 
-        this.damageBonus.x = this.timeBonus.x + 70
+        this.damageBonus.x = this.timeBonus.x + 60
         this.damageBonus.y = this.timeBonus.y + 70
         // this.sellEverything.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2
         // this.sellEverything.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
