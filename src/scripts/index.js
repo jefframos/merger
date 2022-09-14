@@ -189,6 +189,7 @@ function startLoader() {
 window.COOKIE_MANAGER = new CookieManager();
 function configGame(evt) {
     SOUND_MANAGER.load(audioManifest);
+    window.game = new Game(config);
     // FbManager.start()
     // console.log(CAT_LIST);
     let sotrageData = STORAGE.getObject('space-cats-game-data')
@@ -198,7 +199,6 @@ function configGame(evt) {
     //     GAME_DATA.loadData(sotrageData);
     // }
     window.RESOURCES = evt.resources;
-    window.game = new Game(config);
 
     window.TILE_ASSSETS_POOL = []
 
@@ -218,11 +218,15 @@ function configGame(evt) {
     }
     PokiSDK.gameLoadingFinished();
 
+
+
     if (!window.screenManager) {
         window.screenManager = new MergerScreenManager();
     }
     //window.screenManager = new HellScreenManager();
     game.screenManager = screenManager;
+
+    game.initialize()
     // // screenManager.timeScale = 0;
     // //create screen manager
     // //add screens

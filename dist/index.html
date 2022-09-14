@@ -9,7 +9,6 @@
   <script src="//game-cdn.poki.com/scripts/v2/poki-sdk.js"></script>
 
   <title>Space Merge</title>
-  <!-- <link rel="stylesheet" href="assets/fonts/specimen_files/specimen_stylesheet.css" type="text/css" charset="utf-8" /> -->
   <link rel="stylesheet" href="assets/fonts/stylesheet.css" type="text/css" charset="utf-8" />
   <style>
     html,
@@ -22,18 +21,17 @@
       overflow: hidden;
       text-align: center;
       background-color: black;
+      background-image: url("tex.png");
+      background-repeat: repeat;
     }
 
-    /*@font-face {
-      font-family: 'default';
-      src: url('assets/fonts/PG_Roof_Runners_active_b.eot');
-      src: url('assets/fonts/PG_Roof_Runners_active_b.eot?#iefix') format('embedded-opentype'),
-           url('assets/fonts/PG_Roof_Runners_active_b.woff') format('woff'),
-           url('assets/fonts/PG_Roof_Runners_active_b.ttf') format('truetype'),
-           url('assets/fonts/PG_Roof_Runners_active_b.svg#PG_Roof_Runners_active_b') format('svg');
-      font-weight: normal;
-      font-style: normal;
-    }*/
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 250px;
+      width: 50%;
+    }
 
     p.font-default {
       position: absolute;
@@ -45,7 +43,7 @@
 
 <body>
   <p class="font-default">P</p>
-
+  <img src="logoTransparent.png" alt="logo" class="center">
   <div id="og-game-holder"></div>
 
   <script src="assets/bundle.js" charset="utf-8"></script>

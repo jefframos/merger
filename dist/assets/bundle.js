@@ -33240,6 +33240,7 @@ function startLoader() {
 window.COOKIE_MANAGER = new _CookieManager2.default();
 function configGame(evt) {
     SOUND_MANAGER.load(_manifestAudio2.default);
+    window.game = new _Game2.default(config);
     // FbManager.start()
     // console.log(CAT_LIST);
     var sotrageData = STORAGE.getObject('space-cats-game-data');
@@ -33249,7 +33250,6 @@ function configGame(evt) {
     //     GAME_DATA.loadData(sotrageData);
     // }
     window.RESOURCES = evt.resources;
-    window.game = new _Game2.default(config);
 
     window.TILE_ASSSETS_POOL = [];
 
@@ -33273,6 +33273,8 @@ function configGame(evt) {
     }
     //window.screenManager = new HellScreenManager();
     game.screenManager = screenManager;
+
+    game.initialize();
     // // screenManager.timeScale = 0;
     // //create screen manager
     // //add screens
@@ -55949,8 +55951,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Game = function () {
         function Game(config, screenManager) {
-                var _this = this;
-
                 (0, _classCallCheck3.default)(this, Game);
 
                 this.screenManager = screenManager;
@@ -55974,21 +55974,25 @@ var Game = function () {
                 this.stage = new PIXI.Container();
                 window.renderer.stage.addChild(this.stage);
 
-                this.resize();
-
                 this.frameskip = 1;
                 this.lastUpdate = Date.now();
 
-                PIXI.ticker.shared.add(this._onTickEvent, this);
-
                 this.forceResizeTimer = 5;
 
-                setTimeout(function () {
-                        _this.resize();
-                }, 10);
+                this.resize();
         }
 
         (0, _createClass3.default)(Game, [{
+                key: 'initialize',
+                value: function initialize() {
+                        var _this = this;
+
+                        PIXI.ticker.shared.add(this._onTickEvent, this);
+                        setTimeout(function () {
+                                _this.resize();
+                        }, 10);
+                }
+        }, {
                 key: '_onTickEvent',
                 value: function _onTickEvent(deltaTime) {
                         this.dt = deltaTime / 60;
@@ -60257,7 +60261,7 @@ module.exports = exports["default"];
 /* 340 */
 /***/ (function(module, exports) {
 
-module.exports = {"default":["image/asteroids/asteroids.json","image/particles/particles.json","image/pattern2/pattern2.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
+module.exports = {"default":["image/pattern2/pattern2.json","image/particles/particles.json","image/asteroids/asteroids.json","image/background/background.json","image/entities/entities.json","image/pattern/pattern.json","image/portraits/portraits.json","image/enemies/enemies.json","image/ui/ui.json"]}
 
 /***/ }),
 /* 341 */

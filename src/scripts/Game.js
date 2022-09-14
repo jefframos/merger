@@ -18,27 +18,27 @@ export default class Game {
             width: config.width,
             height: config.height,
             resolution: Math.max(window.devicePixelRatio, 2),
-            antialias: false
+            antialias: false,
         });
         document.body.appendChild(window.renderer.view);
 
         this.stage = new PIXI.Container();
         window.renderer.stage.addChild(this.stage)
 
-        this.resize();
 
         this.frameskip = 1;
         this.lastUpdate = Date.now();
 
-        PIXI.ticker.shared.add(this._onTickEvent, this);
 
         this.forceResizeTimer = 5;
 
+        this.resize()
+    }
+    initialize(){
+        PIXI.ticker.shared.add(this._onTickEvent, this);
         setTimeout(() => {
             this.resize()
         }, 10);
-
-
     }
     _onTickEvent(deltaTime) {
         this.dt = deltaTime / 60;
