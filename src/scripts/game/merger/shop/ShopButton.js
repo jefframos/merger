@@ -53,7 +53,7 @@ export default class ShopButton extends PIXI.Container
 
             this.priceLabel = new PIXI.Text('100k',LABELS.LABEL1);
             this.priceLabel.style.fill = 0xff5566
-            this.priceLabel.style.fontSize = 12
+            this.priceLabel.style.fontSize = 18
             this.container.addChild(this.priceLabel);
             this.container.pivot.x = this.container.width / 2
             this.container.pivot.y = this.container.height / 2
@@ -117,7 +117,7 @@ export default class ShopButton extends PIXI.Container
     updateCoast(value)
     {
         this.priceLabel.text = value
-        this.priceLabel.x = this.backButton.width / 2 - this.sprite.width * 0.4
+        this.priceLabel.x = this.backButton.width / 2 - this.sprite.width * 0.7
         this.priceLabel.y = this.h / 2 - this.priceLabel.height / 2
     }
     deactiveMax()

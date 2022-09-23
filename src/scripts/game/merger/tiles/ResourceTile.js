@@ -41,10 +41,14 @@ export default class ResourceTile extends MergeTile {
         this.container.addChild(this.collectLabelContainer)
 
         this.readyLabel = new PIXI.Text('Ready', LABELS.LABEL1);
+        this.readyLabel.style.fontSize = 32
+        //this.readyLabel.style.stroke = 0xffffff
+        this.readyLabel.style.strokeThickness = 8
+        this.readyLabel.style.fill = 0xffffff//0x00ee33
         this.collectCoinIcon = new PIXI.Sprite.fromFrame('coin')
         this.collectLabelContainer.addChild(this.collectCoinIcon)
 
-        this.collectCoinIcon.scale.set(this.readyLabel.height / this.collectCoinIcon.height)
+        this.collectCoinIcon.scale.set(this.readyLabel.height / this.collectCoinIcon.height + 0.1)
         this.collectLabelContainer.addChild(this.readyLabel)
         this.readyLabel.x = this.collectCoinIcon.width + 2
         this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
@@ -53,6 +57,7 @@ export default class ResourceTile extends MergeTile {
 
         this.priceLabel = new PIXI.Text('Ready', LABELS.LABEL1);
         this.container.addChild(this.priceLabel)
+        this.priceLabel.style.fontSize = 32
         this.priceLabel.x = this.backSlot.width / 2 - this.label.width / 2;
         this.priceLabel.visible = false;
 
@@ -66,6 +71,7 @@ export default class ResourceTile extends MergeTile {
         this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern')
 
         this.initialCostLabel = new PIXI.Text('Ready', LABELS.LABEL1);
+        this.initialCostLabel.style.fontSize = 32
         this.initialCostLabel.style.stroke = 0
         this.initialCostLabel.style.strokeThickness = 6
 
@@ -114,6 +120,7 @@ export default class ResourceTile extends MergeTile {
     }
     update(delta, timestamp) {
         //console.log(timestamp)
+
         super.update(delta, timestamp);
         if (this.particlesDelay > 0) {
             this.particlesDelay -= delta;
@@ -121,7 +128,7 @@ export default class ResourceTile extends MergeTile {
 
         if(this.readyToCollect){
             if(this.textUpdateTimer <= 0){
-                this.readyLabel.text = utils.formatPointsLabel(this.currentCollect)
+                this.readyLabel.text = '+'+utils.formatPointsLabel(this.currentCollect)
                 this.textUpdateTimer = 1
                 this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
             }else{
@@ -162,9 +169,13 @@ export default class ResourceTile extends MergeTile {
             this.exclamationMark.visible = this.targetData.rawData.isFirst || window.gameEconomy.currentResources >= this.targetData.rawData.initialCost
 
             if (this.exclamationMark.visible) {
+                this.backSlot.buttonMode = true;
+                this.initialCostLabel.style.fill = 0xFFFFFF
                 this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern-green')
             } else {
-                this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern')
+                this.backSlot.buttonMode = false;
+                this.initialCostLabel.style.fill = 0xFF5533
+                this.costLabelContainer.texture = PIXI.Texture.fromFrame('large-square-pattern-grey')
             }
 
             this.sin += delta

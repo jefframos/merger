@@ -29,7 +29,7 @@ export default class GeneralShop extends EntityShop {
 
     }
     show() {
-        this.title.text = "General Upgrades"        
+        this.title.text = "General"        
         this.visible = true;
         this.currentItens.forEach(element => { 
             element.updatePreviewValue(this.toggles.currentActiveValue)

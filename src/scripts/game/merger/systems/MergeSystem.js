@@ -198,7 +198,7 @@ export default class MergeSystem {
         this.systems.push(system);
     }
     addPieceGenerator() {
-        let piece = new ChargerTile(0, 0, this.slotSize.width * 0.7, 'coin', this.gameplayData.entityGeneratorBaseTime);
+        let piece = new ChargerTile(0, 0, this.slotSize.width * 0.85, 'coin', this.gameplayData.entityGeneratorBaseTime);
         piece.isGenerator = true;
 
         let targetScale = config.height * 0.2 / piece.height
@@ -715,7 +715,7 @@ export default class MergeSystem {
         let targetScale = bottomDiff / this.slotSize.height * 0.55
         targetScale = Math.min(1, targetScale)
         this.uiContainer.scale.set(targetScale)
-        this.uiContainer.y = bottomWrapperDiff + (bottomDiff) / 2 - (this.slotSize.height * this.uiContainer.scale.y) / 2 - 20// - this.wrapper.y + this.wrapper.height //- (this.slotSize.height * this.uiContainer.scale.y) - config.height * 0.05
+        this.uiContainer.y = bottomWrapperDiff + (bottomDiff) / 2 - (this.slotSize.height * this.uiContainer.scale.y) / 2 - 25// - this.wrapper.y + this.wrapper.height //- (this.slotSize.height * this.uiContainer.scale.y) - config.height * 0.05
 
     }
 

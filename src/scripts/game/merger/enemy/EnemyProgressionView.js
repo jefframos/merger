@@ -13,7 +13,7 @@ export default class EnemyProgressionView extends PIXI.Container {
 
         this.currentLevelContainer = new EnemyProgressionSlot(25);
         this.addChild(this.currentLevelContainer)
-        //this.currentLevelContainer.setFontSize(20)
+        this.currentLevelContainer.setFontSize(22)
 
         this.nextLevelContainer = new EnemyProgressionSlot(20);
         this.addChild(this.nextLevelContainer)

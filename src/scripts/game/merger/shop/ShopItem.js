@@ -46,7 +46,7 @@ export default class ShopItem extends UIList {
 
         this.levelLabel = new PIXI.Text('LV1\n9999', LABELS.LABEL1);
         this.levelContainer.addChild(this.levelLabel);
-        this.levelLabel.style.fontSize = 12
+        this.levelLabel.style.fontSize = 18
 
         this.levelBar = new UIBar();
         this.levelContainer.addChild(this.levelBar);
@@ -63,7 +63,7 @@ export default class ShopItem extends UIList {
         this.descriptionContainer = new PIXI.Container();
 
         this.descriptionLabel = new PIXI.Text('this is a description', LABELS.LABEL1);
-        this.descriptionLabel.style.fontSize = 12
+        this.descriptionLabel.style.fontSize = 20
         this.descriptionContainer.scaleContentMax = true;
         this.descriptionContainer.listScl = 0.4;
         this.descriptionContainer.align = 0;
@@ -97,7 +97,7 @@ export default class ShopItem extends UIList {
         // this.itemIcon.scaleContent = true;
         this.infoButton.listScl = 0.1;
         this.infoButton.align = 0.5;
-        this.infoButton.fitHeight = 0.15;
+        this.infoButton.fitHeight = 0.25;
         // this.infoButton.scaleContentMax = true;
         this.elementsList.push(this.infoButton);
         this.container.addChild(this.infoButton);
@@ -374,16 +374,16 @@ export default class ShopItem extends UIList {
             let count = 0
             types.forEach(element => {
                 let attContainer = new PIXI.Container();
-                attContainer.y = 25
+                attContainer.y = 35
 
                 let attIcon = new PIXI.Sprite.from(element.icon);
                 attIcon.scale.set(20 / attIcon.width)
                 let attValue = new PIXI.Text(element.name, LABELS.LABEL1);
-                attValue.style.fontSize = 10
+                attValue.style.fontSize = 18
                 attContainer.addChild(attIcon);
                 attContainer.addChild(attValue);
                 attIcon.x = 100 * count;
-                attValue.scale.set(12 / attValue.height)
+                attValue.scale.set(20 / attValue.height)
                 attValue.x = attIcon.x + attIcon.width + 5
                 attValue.y = attIcon.y + attIcon.height / 2 - attValue.height / 2;
 

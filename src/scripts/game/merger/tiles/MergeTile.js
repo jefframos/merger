@@ -34,6 +34,7 @@ export default class MergeTile extends PIXI.Container {
 
         this.label = new PIXI.Text('', LABELS.LABEL1);
         this.container.addChild(this.label)
+        this.label.style.fontSize = 24
         this.label.x = this.backSlot.width / 2 - this.label.width / 2;
 
         this.tileSprite = new PIXI.Sprite.from('');
@@ -260,10 +261,14 @@ export default class MergeTile extends PIXI.Container {
         this.updatedDamageTimestamp = (Date.now() / 1000 | 0);
         this.tileSprite.texture = PIXI.Texture.from(this.tileData.getTexture());
         this.updatePosition()
-        this.entityScale = 0.9//Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
+        this.entityScale = 1.2//Math.abs(this.backSlot.width / this.tileData.graphicsData.baseWidth * 0.75)
         this.tileSprite.anchor.set(0.5)
         this.sin = Math.random();
-        this.label.text = this.tileData.getValue()
+        let v = this.tileData.getValue();
+        if(v > 100000){
+            v = utils.formatPointsLabel(this.tileData.getValue())
+        }
+        this.label.text = v
         //this.label.text = this.tileData.getGenerateDamageTime() +' --'+  this.tileData.rawData.initialTime
         this.label.x = this.backSlot.width / 2 - this.label.width / 2;
         this.showSprite()

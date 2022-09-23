@@ -22,7 +22,7 @@ export default class BossCounter extends PIXI.Container {
         this.levelLabel = new PIXI.Text('0',window.LABELS.LABEL2)
         this.levelLabel.style.stroke = 0xFF0045
         this.levelLabel.style.strokeThickness = 3
-        this.levelLabel.style.fontSize = 12
+        this.levelLabel.style.fontSize = 20
             this.addChild(this.levelLabel)
 
     }
@@ -30,7 +30,7 @@ export default class BossCounter extends PIXI.Container {
         this.bossSprite.texture = new PIXI.Texture.fromFrame(sprite)
     }
     updateLevel(level){
-        this.levelLabel.text = 'Level '+level
+        this.levelLabel.text = level
         this.levelLabel.pivot.x = this.levelLabel.width / 2
         this.levelLabel.y = 20
     }

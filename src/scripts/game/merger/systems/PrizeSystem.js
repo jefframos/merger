@@ -23,10 +23,10 @@ export default class PrizeSystem {
         this.entity.enemySprite.addChild(this.helpIcon)
 
         this.helpLabel = new PIXI.Text('HELP', LABELS.LABEL_CHEST);
-        this.helpLabel.style.fontSize = 24
+        this.helpLabel.style.fontSize = 54
         this.helpLabel.style.fill = 0xffffff
         this.helpLabel.x = 30
-        this.helpLabel.y = - 10
+        this.helpLabel.y = - this.helpLabel.height / 2
         this.helpIcon.addChild(this.helpLabel)
 
         this.entity.on('mouseup', this.click.bind(this)).on('touchend', this.click.bind(this));

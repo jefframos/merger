@@ -202,7 +202,7 @@ function configGame(evt) {
 
     window.TILE_ASSSETS_POOL = []
 
-    let toGenerate = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '?', '!', 'X', 'v', '+', '<', '>', 't', 'MAX', 'Fight boss', '100']
+    let toGenerate = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '?', '!', 'X', 'v', '+', '<', '>', 't', 'MAX', 'Fight BOSS', '100']
     for (let index = 0; index < toGenerate.length; index++) {
 
         let container = new PIXI.Container()

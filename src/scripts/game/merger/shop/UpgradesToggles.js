@@ -39,7 +39,7 @@ export default class UpgradesToggles extends PIXI.Container {
             }
             let toggle = new UIButton1(0xFFffff, texture, 0xFFffff, 120,65, 'large-square-pattern-green')
             toggle.changePivot(0, 0)
-            toggle.updateIconScale(0.4)
+            toggle.updateIconScale(0.7)
             toggle.disableState(0x555555)
             toggle.value = this.values[index]
             toggle.fitHeight = 0.8

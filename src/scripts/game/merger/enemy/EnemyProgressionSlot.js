@@ -25,7 +25,8 @@ export default class EnemyProgressionSlot extends PIXI.Container {
         this.levelLabel = new PIXI.Text('0', window.LABELS.LABEL2)
         this.levelLabel.style.stroke = 0xFFFF45
         this.levelLabel.style.strokeThickness = 4
-        this.levelLabel.style.fontSize = 14
+        this.levelLabel.style.fontWeight = 900
+        this.levelLabel.style.fontSize = 24
         this.addChild(this.levelLabel)
 
     }
@@ -40,7 +41,7 @@ export default class EnemyProgressionSlot extends PIXI.Container {
     updateLevel(level, isboss = false) {
         this.levelLabel.text = level
         this.levelLabel.pivot.x = this.levelLabel.width / 2
-        this.levelLabel.y = 12
+        this.levelLabel.y = 5
 
         this.levelLabel.style.stroke = isboss ? 0xff2255 :0xFFFF45
     }

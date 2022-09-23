@@ -31,7 +31,7 @@ export default class ShopLockState extends PIXI.Container {
         this.labelContainer = new PIXI.Container();
         this.infoLabel = new PIXI.Text('Unlock this upgrade at level XXXX', LABELS.LABEL2);
         this.labelContainer.addChild(this.infoLabel);
-        this.infoLabel.style.fontSize = 14
+        this.infoLabel.style.fontSize = 24
         this.infoLabel.style.fill = 0xFFFFFF
         this.labelContainer.align = 0.45;
         this.labelContainer.listScl = 0.85;

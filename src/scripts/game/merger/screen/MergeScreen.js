@@ -246,7 +246,7 @@ export default class MergeScreen extends Screen {
         this.resourcesContainer.height = 40
 
         this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
-        this.resourcesLabel.style.fontSize = 10
+        this.resourcesLabel.style.fontSize = 14
         utils.centerObject(this.resourcesLabel, this.resourcesContainer)
         this.resourcesLabel.x -= 10
         this.resourcesContainer.addChild(this.resourcesLabel)
@@ -265,7 +265,7 @@ export default class MergeScreen extends Screen {
         this.rpsContainer.width = this.statsList.w
         this.rpsContainer.height = 40
         this.rpsLabel = new PIXI.Text('', LABELS.LABEL1);
-        this.rpsLabel.style.fontSize = 10
+        this.rpsLabel.style.fontSize = 14
         this.rpsContainer.addChild(this.rpsLabel)
         this.statsList.addElement(this.rpsContainer)
 
@@ -282,7 +282,7 @@ export default class MergeScreen extends Screen {
         this.dpsContainer.height = 40
 
         this.dpsLabel = new PIXI.Text('', LABELS.LABEL1);
-        this.dpsLabel.style.fontSize = 10
+        this.dpsLabel.style.fontSize = 14
         this.dpsContainer.addChild(this.dpsLabel)
         this.statsList.addElement(this.dpsContainer)
 
@@ -299,7 +299,7 @@ export default class MergeScreen extends Screen {
         this.shardsCounter.height = 40
 
         this.shardsLabel = new PIXI.Text('0', LABELS.LABEL1);
-        this.shardsLabel.style.fontSize = 10
+        this.shardsLabel.style.fontSize = 14
         this.shardsCounter.addChild(this.shardsLabel)
         this.statsList.addElement(this.shardsCounter)
 
@@ -367,9 +367,9 @@ export default class MergeScreen extends Screen {
 
         this.helperButtonList.visible = false
         this.helperButtonList.scale.set(0.5)
-        let buttonSize = 80
+        let buttonSize = 90
         this.shopButtonsList = new UIList();
-        this.shopButtonsList.w = buttonSize * 4 + 15;
+        this.shopButtonsList.w = buttonSize * 3 + 15;
         this.shopButtonsList.h = buttonSize;
         this.container.addChild(this.shopButtonsList)
 
@@ -378,7 +378,7 @@ export default class MergeScreen extends Screen {
 
 
         this.openSettingsShop = new UIButton1(0x002299, 'stationIcon', 0xFFFFFF, buttonSize, buttonSize)
-        this.openSettingsShop.updateIconScale(0.5)
+        this.openSettingsShop.updateIconScale(0.75)
         this.openSettingsShop.addBadge('icon_increase')
         this.openSettingsShop.newItem = new PIXI.Sprite.fromFrame('new_item')
         this.openSettingsShop.newItem.scale.set(0.7)
@@ -393,7 +393,7 @@ export default class MergeScreen extends Screen {
 
         this.openShop = new UIButton1(0x002299, 'asteroid (2)', 0xFFFFFF, buttonSize, buttonSize)
         this.openShop.addBadge('icon_increase')
-        this.openShop.updateIconScale(0.5)
+        this.openShop.updateIconScale(0.75)
         this.openShop.newItem = new PIXI.Sprite.fromFrame('new_item')
         this.openShop.newItem.scale.set(0.7)
         this.openShop.newItem.anchor.set(0)
@@ -406,7 +406,7 @@ export default class MergeScreen extends Screen {
         })
 
         this.openMergeShop = new UIButton1(0x002299, 'ship01', 0xFFFFFF, buttonSize, buttonSize)
-        this.openMergeShop.updateIconScale(0.5)
+        this.openMergeShop.updateIconScale(0.75)
         this.openMergeShop.addBadge('icon_increase')
         this.openMergeShop.newItem = new PIXI.Sprite.fromFrame('new_item')
         this.openMergeShop.newItem.scale.set(0.7)
@@ -488,12 +488,12 @@ export default class MergeScreen extends Screen {
             }
         });
 
-        this.timeBonus = new TimeBonusButton('speedShip', 70, 'oct-pattern1-bonus-orange')
-        this.timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5)
+        this.timeBonus = new TimeBonusButton('speedShip', 100, 'oct-pattern1-bonus-orange')
+        this.timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5, 30)
         //this.timeBonus.setDescription('>>ships')
         this.container.addChild(this.timeBonus)
 
-        this.damageBonus = new TimeBonusButton('damageBonus', 70, 'oct-pattern1-bonus-orange')
+        this.damageBonus = new TimeBonusButton('damageBonus', 100, 'oct-pattern1-bonus-orange')
         this.damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30)
         this.container.addChild(this.damageBonus)
         //damageBonus.setDescription('+damage')
@@ -524,7 +524,7 @@ export default class MergeScreen extends Screen {
                 onConfirm: this.collectStartAmountDouble.bind(this),
                 onCancel: this.collectStartAmount.bind(this)
             }
-            this.standardPopUpShow(params)
+            //this.standardPopUpShow(params)
         }
 
         this.forcePauseSystemsTimer = 0.05;
@@ -544,6 +544,7 @@ export default class MergeScreen extends Screen {
         this.addChild(this.resetWhiteShape);
         this.resetWhiteShape.visible = false;
         //this.mergeItemsShop.show()
+
     }
     onPrizeCollected(prizes) {
         if (!prizes) return;
@@ -691,16 +692,15 @@ export default class MergeScreen extends Screen {
         this.openPopUp(this.standardPopUp, params)
     }
     openPopUp(target, params) {
-        window.DO_COMMERCIAL(()=>{
-            this.uiPanels.forEach(element => {
-                if (element.visible) {
-                    element.hide();
-                }
-            });
-    
-            this.currentOpenPopUp = target;
-            target.show(params)
-        })
+
+        this.uiPanels.forEach(element => {
+            if (element.visible) {
+                element.hide();
+            }
+        });
+
+        this.currentOpenPopUp = target;
+        target.show(params)
     }
     popLabel(targetPosition, label) {
         let toLocal = this.particleSystem.toLocal(targetPosition)
@@ -833,10 +833,15 @@ export default class MergeScreen extends Screen {
         }
 
     }
-    resize(resolution) {
-        if (!resolution || !resolution.width || !resolution.height) {
+    resize(resolution, innerResolution) {
+        if (!resolution || !resolution.width || !resolution.height || !innerResolution) {
             return;
         }
+        window.isPortrait = innerResolution.width < innerResolution.height
+        
+        console.log("PORTRAIT", window.isPortrait)
+        //console.log(resolution.width * this.screenManager.scale.x)
+        var newRes = {width: resolution.width * this.screenManager.scale.x}
         if (this.spaceBackground) {
 
             this.spaceBackground.resize(resolution, this.screenManager.scale);
@@ -845,21 +850,25 @@ export default class MergeScreen extends Screen {
             this.spaceBackground.y = config.height / 2
         }
 
+        var toGlobal = this.toLocal({x:0, y:innerResolution.height})
+
         this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2
         this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height
-
-
+        
+        
+        this.resourcesWrapper.x = Math.min(0, toGlobal.x + 150);
+        let xRightMax = this.gridWrapper.x + this.gridWrapper.width
         this.resourcesWrapper.y = this.gridWrapper.y;
-        this.resourcesWrapperRight.x = this.gridWrapper.x + this.gridWrapper.width;
+        this.resourcesWrapperRight.x = Math.max(xRightMax, -this.resourcesWrapper.x + xRightMax);
         this.resourcesWrapperRight.y = this.gridWrapper.y;
 
 
-        this.timeBonus.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2 - 55
-        this.timeBonus.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
+        this.timeBonus.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2
+        this.timeBonus.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 20
 
 
-        this.damageBonus.x = this.timeBonus.x + 60
-        this.damageBonus.y = this.timeBonus.y + 70
+        this.damageBonus.x = this.timeBonus.x
+        this.damageBonus.y = this.timeBonus.y + 120
         // this.sellEverything.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2
         // this.sellEverything.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
         // if (this.helperButtonList.visible) {
@@ -871,9 +880,18 @@ export default class MergeScreen extends Screen {
         // }
         // this.statsList.x = config.width - this.statsList.w
         // this.statsList.y = 150
+
+        if(!window.isPortrait){
+            this.statsList.scale.set(1.5)
+        }else{
+            this.statsList.scale.set(1.1)
+        }
+
+        console.log(window.isPortrai)
+        this.statsList.x = this.resourcesWrapper.x
         this.statsList.y = config.height - this.statsList.h - 120
         this.shopButtonsList.x = config.width / 2 - this.shopButtonsList.w / 2 + 40
-        this.shopButtonsList.y = config.height - this.shopButtonsList.h + 20
+        this.shopButtonsList.y = config.height - this.shopButtonsList.h + 35
         this.helperButtonList.x = 15
         this.helperButtonList.y = config.height - this.shopButtonsList.h - 30
 

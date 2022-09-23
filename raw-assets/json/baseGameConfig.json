@@ -30,7 +30,7 @@
             "distanceResources":20
         },
         "area":{
-            "bottomArea": 0.27,
+            "bottomArea": 0.25,
             "topArea": 0.13,
             "gameArea": {"w":0.7, "h":0.55},
             "resourcesArea": {"w":0.15, "h":0.6},

@@ -48,10 +48,11 @@ export default class EnemySystem {
 
         //color, icon, iconColor =0xFFFFFF, width = 40, height = 40
 
-        this.invokeBossBattle = new UIButton1(0xFFFFFF, TILE_ASSSETS_POOL['image-Figh'], 0xFFFFFF, 120, 40, 'boss-button')
+        this.invokeBossBattle = new UIButton1(0xFFFFFF, TILE_ASSSETS_POOL['image-Figh'], 0xFFFFFF, 150, 60, 'boss-button')
+        this.invokeBossBattle.updateIconScale(0.8)
         this.container.addChild(this.invokeBossBattle)
         this.invokeBossBattle.x = 240
-        this.invokeBossBattle.y = 50
+        this.invokeBossBattle.y = 60
         this.invokeBossBattle.onClick.add(() => {
             this.invokeBoss()
         })
@@ -66,7 +67,7 @@ export default class EnemySystem {
         this.nextBoss = 10;
         this.bossGap = 10;
 
-        this.enemyLifeBar = new ProgressBar({ width: 150, height: 15 }, 4, 4);
+        this.enemyLifeBar = new ProgressBar({ width: 200, height: 24 }, 4, 4);
         this.enemyLifeBar.updateBackgroundFront(0xff0000)
         this.enemyLifeBar.updateBackgroundColor(0x330000)
 
@@ -91,9 +92,9 @@ export default class EnemySystem {
 
 
         this.label = new PIXI.Text('', LABELS.LABEL1);
-        this.label.style.fontSize = 10
+        this.label.style.fontSize = 16
         this.label.style.stroke = 0
-        this.label.style.strokeThickness = 3
+        this.label.style.strokeThickness = 4
         this.container.addChild(this.label)
 
 
@@ -246,7 +247,7 @@ export default class EnemySystem {
         this.updateEnemyLife();
         this.updateLevelView();
         if (this.mainEnemy.isBoss) {
-            window.gameModifyers.addShards(1)
+            //window.gameModifyers.addShards(1)
         }
         if (bossWin) {
             this.mainEnemy.setAsEnemy(this.getNextEnemySprite());
@@ -341,6 +342,19 @@ export default class EnemySystem {
     }
 
     resize() {
+        if(!window.isPortrait){
+            this.invokeBossBattle.x = 340
+        this.invokeBossBattle.y = 90
 
+            this.enemyProgressionView.bossCounter.x = 360
+            this.enemyProgressionView.bossCounter.scale.set(1.5)
+        }else{
+            this.invokeBossBattle.x = 230
+            this.invokeBossBattle.y = 60
+            
+            this.enemyProgressionView.bossCounter.scale.set(1)
+            this.enemyProgressionView.bossCounter.x = 250
+
+        }
     }
 }

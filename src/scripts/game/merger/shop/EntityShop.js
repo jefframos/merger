@@ -46,7 +46,7 @@ export default class EntityShop extends PIXI.Container {
         this.tiledBackground2.alpha = 0.1
 
         this.title = new PIXI.Text('Resources', LABELS.LABEL1);
-        this.title.style.fontSize = 24
+        this.title.style.fontSize = 38
 
         this.portrait = new PIXI.Sprite.fromFrame('portraitMale');
         this.container.addChild(this.portrait);
@@ -59,12 +59,11 @@ export default class EntityShop extends PIXI.Container {
         this.currencyContainer = new PIXI.Sprite.fromFrame('grid1');
         this.container.addChild(this.currencyContainer);
         this.currencyContainer.anchor.set(1, 0.5)
-       this.currencyContainer.scale.set(0.8)
         this.currencyContainer.x = this.size.w - 25
         this.currencyContainer.y = 60
 
         this.currentResourcesLabel = new PIXI.Text('10AA', LABELS.LABEL1);
-        this.currentResourcesLabel.style.fontSize = 16
+        this.currentResourcesLabel.style.fontSize = 22
         this.currentResourcesLabel.style.align = 'center'
         this.currentResourcesLabel.pivot.y = this.currentResourcesLabel.height / 2
         this.currentResourcesLabel.x = -this.currencyContainer.width / 2 / this.currencyContainer.scale.x - 5
@@ -121,15 +120,17 @@ export default class EntityShop extends PIXI.Container {
         this.hide();
     }
     hide() {
-        this.visible = false;
-        this.currentItens.forEach(element => {
-            element.hide();
-        });
+        window.DO_COMMERCIAL(()=>{
+            this.visible = false;
+            this.currentItens.forEach(element => {
+                element.hide();
+            });
+        })
     }
     updateCurrentResources() {
 
         this.currentResourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources)
-        this.currentResourcesLabel.pivot.x = this.currentResourcesLabel.width / 2
+        this.currentResourcesLabel.pivot.x = this.currentResourcesLabel.width / 2 
     }
     moneySpent() {
         this.updateToggleValue();
@@ -152,7 +153,7 @@ export default class EntityShop extends PIXI.Container {
     posShow() {
         utils.centerObject(this.title, this.container)
         //this.title.x = 140
-        this.title.y = 48
+        this.title.y = 25
     }
     show() {
         this.visible = true;

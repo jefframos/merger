@@ -136,7 +136,7 @@ export default class Game {
 
             // 	//console.log(window.appScale)
 
-            // 	this.screenManager.resize(this.resolution, this.innerResolution);
+            this.screenManager.resize(this.resolution, this.innerResolution);
         }
     }
 
