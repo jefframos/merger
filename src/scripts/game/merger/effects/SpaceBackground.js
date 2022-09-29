@@ -40,6 +40,15 @@ export default class SpaceBackground extends PIXI.Container {
 		this.backgroundShape.alpha = 0.5
 
 
+		this.bottomShape = new PIXI.Graphics().beginFill(0xffffff).drawRect(-5000, 0, 10000, 10000);
+		this.addChild(this.bottomShape);
+		this.bottomShape.alpha = 0.5
+
+
+		this.topShape = new PIXI.Graphics().beginFill(0xffffff).drawRect(-5000, -10000, 10000, 10000);
+		this.addChild(this.topShape);
+		this.topShape.alpha = 0.5
+
 
 		this.baseTopGradient = new PIXI.Sprite.fromFrame('base-gradient')
 		this.addChild(this.baseTopGradient);
@@ -48,8 +57,9 @@ export default class SpaceBackground extends PIXI.Container {
 		this.baseTopGradient.rotation = Math.PI
 		this.baseTopGradient.tint = 0x550033//0x371f52
 		this.baseTopGradient.alpha = 0.3
+		this.topShape.tint = this.baseTopGradient.tint
 
-
+		
 		this.middleGradient = new PIXI.Sprite.fromFrame('bigblur')
 		this.addChild(this.middleGradient);
 		this.middleGradient.anchor.x = 0.5
@@ -57,13 +67,14 @@ export default class SpaceBackground extends PIXI.Container {
 		this.middleGradient.rotation = Math.PI
 		this.middleGradient.tint = 0x1014aa//0x0d5956
 		this.middleGradient.alpha = 0.5
-
+		
 		this.baseGradient = new PIXI.Sprite.fromFrame('base-gradient')
 		this.addChild(this.baseGradient);
 		this.baseGradient.anchor.x = 0.5
 		this.baseGradient.anchor.y = 1
 		this.baseGradient.alpha = 0.5
 		this.baseGradient.tint = 0x1014aa
+		this.bottomShape.tint = this.baseGradient.tint
 		// this.backShape = new PIXI.Sprite.fromFrame('background_space')
 		// this.addChild(this.backShape);
 		// this.backShape.anchor.x = 0.5
@@ -109,6 +120,9 @@ export default class SpaceBackground extends PIXI.Container {
 			this.baseGradient.y = innerResolution.height / 2 / globalScale
 			this.baseTopGradient.y = -innerResolution.height / 2 / globalScale
 
+			this.topShape.y  = this.baseTopGradient.y
+			this.bottomShape.y = this.baseGradient.y
+
 			this.baseGradient.width = innerResolution.width * 4
 			this.baseTopGradient.width = innerResolution.width * 4
 
@@ -121,7 +135,8 @@ export default class SpaceBackground extends PIXI.Container {
 	}
 
 	update(delta) {
-
+		this.topShape.tint = this.baseTopGradient.tint
+		this.topShape.alpha = this.baseTopGradient.alpha;
 		//console.log(this.stars)
 		if (window.fxSpeed > 1) {
 			window.fxSpeed -= delta * 5;

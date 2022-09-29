@@ -9,16 +9,7 @@ export default class UILabelButton1 extends PIXI.Container {
         super();
 
         this.mainContainer = new PIXI.Container();
-        //this.backShape = PIXI.Sprite.fromImage('./assets/images/rect.png');
-
-
-
-        // this.backShape = new PIXI.Graphics();
-
-
-
-
-
+    
 
         this.padding = 8;
         this.backShapeBorder = new PIXI.mesh.NineSlicePlane(
@@ -100,7 +91,7 @@ export default class UILabelButton1 extends PIXI.Container {
 
     }
     addLabelRight(label, color = 0xFFFFFF) {
-        this.buttonLabel = new PIXI.Text(label, { font: '18px', fill: color, align: 'left', fontWeight: '300', fontFamily: MAIN_FONT });
+        this.buttonLabel = new PIXI.Text(label, { font: '18px', fill: color, align: 'left', fontWeight: '600', fontFamily: MAIN_FONT });
         this.buttonLabel.pivot.x = 0//this.buttonLabel.width;
         this.buttonLabel.pivot.y = this.buttonLabel.height / 2;
         this.buttonLabel.x = this.mainContainer.width * 0.5 + 5;
@@ -114,7 +105,7 @@ export default class UILabelButton1 extends PIXI.Container {
         this.addChild(this.buttonLabel);
     }
     addCenterLabel(label, color = 0xFFFFFF, fit = 0) {
-        this.buttonLabel = new PIXI.Text(label, { font: '18px', fill: color, align: 'center', fontWeight: '300', fontFamily: MAIN_FONT });
+        this.buttonLabel = new PIXI.Text(label, LABELS.LABEL1);
         if(fit){
             this.buttonLabel.scale.set(this.backShapeBorder.width / this.buttonLabel.width * fit)
         }

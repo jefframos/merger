@@ -31,15 +31,15 @@ export default class EnemySystem {
 
         this.enemiesIds = []
 
-        this.enemiesIds.push(this.baseEnemies.levels[0].available[Math.floor(this.baseEnemies.levels[0].available.length * Math.random())]); 
+        this.enemiesIds.push(this.baseEnemies.levels[0].available[Math.floor(this.baseEnemies.levels[0].available.length * Math.random())]);
         for (let index = 1; index < 1000; index++) {
             let id = 0;
 
-            if(index % 5 == 0 || (index > 80 && index % 3 == 0)){
+            if (index % 5 == 0 || (index > 80 && index % 3 == 0)) {
                 id = 1
             }
             let next = this.baseEnemies.levels[id].available[Math.floor(this.baseEnemies.levels[id].available.length * Math.random())];
-            while(next == this.enemiesIds[index - 1]){
+            while (next == this.enemiesIds[index - 1]) {
                 next = this.baseEnemies.levels[id].available[Math.floor(this.baseEnemies.levels[id].available.length * Math.random())]
             }
             this.enemiesIds.push(next);
@@ -62,7 +62,7 @@ export default class EnemySystem {
         this.enemyStartLife = 10;
         this.enemyLife = 10;
         this.enemyCurrentLife = 10;
-        this.lifeCoefficient = 1.11
+        this.lifeCoefficient = 1.07
         this.enemyLevel = 1;
         this.nextBoss = 10;
         this.bossGap = 10;
@@ -104,34 +104,34 @@ export default class EnemySystem {
         this.loadData();
         this.sortNextEnemy();
         this.updateEnemyLife();
-        
+
         this.damageColors = [0xec3e3e, 0xff9000, 0xffd200]
-        
+
         this.enemyDeathTimer = 0;
         this.bossTimer = 0;
         this.bossDefaultTimer = 60;
-        
+
         this.updateLevelView();
         this.mainEnemy.setAsEnemy(this.getNextEnemySprite());
 
-        setTimeout(() => {            
+        setTimeout(() => {
             this.onChangeEnemySet.dispatch(this.currentEnemySet);
         }, 10);
 
-       
+
     }
-    sortNextEnemy(){
-        let levelID = Math.floor(this.enemyLevel / 10) 
-        if(this.enemiesIds[levelID] != this.currentEnemySetID){
+    sortNextEnemy() {
+        let levelID = Math.floor(this.enemyLevel / 10)
+        if (this.enemiesIds[levelID] != this.currentEnemySetID) {
             this.currentEnemySetID = this.enemiesIds[levelID];
-            
+
             this.currentEnemySet = this.allEnemies[this.currentEnemySetID]
             this.onChangeEnemySet.dispatch(this.currentEnemySet);
         }
 
 
         this.enemyProgressionView.setEnemySet(this.currentEnemySet, this.allEnemies[this.enemiesIds[levelID + 1]])
-        
+
     }
     resetSystem() {
         this.updateLevelView();
@@ -180,7 +180,7 @@ export default class EnemySystem {
             if (this.bossTimer <= 0) {
                 this.bankBoss();
             }
-        }else{
+        } else {
             this.bossTimerLabel.text = '';
         }
         this.updateVisibleUI();
@@ -229,7 +229,7 @@ export default class EnemySystem {
     getNextEnemySprite() {
         var pref = this.currentEnemySet.prefix;
         var id = Math.floor(Math.random() * this.currentEnemySet.max - 1) + this.currentEnemySet.min;
-        id = Math.max(id,1)
+        id = Math.max(id, 1)
         return pref.replace("$", id);
     }
     getNextBossSprite() {
@@ -280,8 +280,8 @@ export default class EnemySystem {
     updateEnemyLife(isBoss = false) {
         //* (0.95 + Math.random()*0.05)
         this.enemyLife = this.enemyStartLife *
-            Math.pow(this.lifeCoefficient * this.lifeCoefficient , this.enemyLevel) *
-            (isBoss ? (this.lifeCoefficient * this.lifeCoefficient) : 1)
+            Math.pow(this.lifeCoefficient * this.lifeCoefficient* this.lifeCoefficient, this.enemyLevel) *
+            (isBoss ? (this.lifeCoefficient * this.lifeCoefficient* this.lifeCoefficient) : 1)
 
         this.enemyCurrentLife = this.enemyLife;
     }
@@ -342,16 +342,16 @@ export default class EnemySystem {
     }
 
     resize() {
-        if(!window.isPortrait){
+        if (!window.isPortrait) {
             this.invokeBossBattle.x = 340
-        this.invokeBossBattle.y = 90
+            this.invokeBossBattle.y = 90
 
             this.enemyProgressionView.bossCounter.x = 360
             this.enemyProgressionView.bossCounter.scale.set(1.5)
-        }else{
-            this.invokeBossBattle.x = 230
-            this.invokeBossBattle.y = 60
-            
+        } else {
+            this.invokeBossBattle.x = 220
+            this.invokeBossBattle.y = 65
+
             this.enemyProgressionView.bossCounter.scale.set(1)
             this.enemyProgressionView.bossCounter.x = 250
 

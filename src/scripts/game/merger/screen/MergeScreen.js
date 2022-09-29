@@ -23,6 +23,7 @@ import OpenChestPopUp from '../../popup/OpenChestPopUp';
 import SellAllPopUp from '../../popup/SellAllPopUp';
 import StandardEnemy from '../enemy/StandardEnemy';
 import SpaceStation from '../../ui/SpaceStation';
+import BonusConfirmation from '../../popup/BonusConfirmation';
 
 export default class MergeScreen extends Screen {
     constructor(label) {
@@ -449,6 +450,8 @@ export default class MergeScreen extends Screen {
         this.standardPopUp = new StandardPop('any', this.screenManager)
         this.uiLayer.addChild(this.standardPopUp)
 
+        this.bonusPopUp = new BonusConfirmation('bonus', this.screenManager)
+        this.uiLayer.addChild(this.bonusPopUp)
 
         this.openChestPopUp = new OpenChestPopUp('chest', this.screenManager)
         this.uiLayer.addChild(this.openChestPopUp)
@@ -462,6 +465,7 @@ export default class MergeScreen extends Screen {
         this.uiPanels.push(this.mergeItemsShop)
         this.uiPanels.push(this.generalShop)
         this.uiPanels.push(this.standardPopUp)
+        this.uiPanels.push(this.bonusPopUp)
         this.uiPanels.push(this.openChestPopUp)
         this.uiPanels.push(this.sellAllPopUp)
 
@@ -488,28 +492,37 @@ export default class MergeScreen extends Screen {
             }
         });
 
-        this.timeBonus = new TimeBonusButton('speedShip', 100, 'oct-pattern1-bonus-orange')
+        this.timeBonus = new TimeBonusButton('speedShip', 100, 50, 'large-square-pattern-cyan')
         this.timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5, 30)
-        //this.timeBonus.setDescription('>>ships')
-        this.container.addChild(this.timeBonus)
+        this.timeBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
+        this.timeBonus.setDescription('++Ships', 'Increase new ships speed')
 
-        this.damageBonus = new TimeBonusButton('damageBonus', 100, 'oct-pattern1-bonus-orange')
+        this.damageBonus = new TimeBonusButton('damageBonus', 100, 50, 'large-square-pattern-cyan')
         this.damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30)
-        this.container.addChild(this.damageBonus)
-        //damageBonus.setDescription('+damage')
+        this.damageBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
+        this.damageBonus.setDescription('++Damage', 'Increase Ship Damage')
 
-        let speedBonus = new TimeBonusButton('fast-arrow')
-        speedBonus.setParams(window.gameModifyers.bonusData, 'gameSpeed', 1, 5, 30)
-        speedBonus.setDescription('+speed')
+        this.speedBonus = new TimeBonusButton('drill', 100, 50, 'large-square-pattern-cyan')
+        this.speedBonus.setParams(window.gameModifyers.bonusData, 'resourceSpeed', 1, 0.05, 30)
+        this.speedBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
+        this.speedBonus.setDescription('+Resources', 'Increase Resource Collection')
 
         this.bonusTimers = [];
         this.bonusTimers.push(this.timeBonus);
         this.bonusTimers.push(this.damageBonus);
-        this.bonusTimers.push(speedBonus);
+        this.bonusTimers.push(this.speedBonus);
 
-        //this.shopButtonsList.addElement(timeBonus)
-        //this.shopButtonsList.addElement(damageBonus)
-        //this.shopButtonsList.addElement(speedBonus)
+
+        this.bonusTimerList = new UIList();
+        this.bonusTimerList.w = 120;
+        this.bonusTimerList.h = 280;
+        this.container.addChild(this.bonusTimerList)
+        this.bonusTimerList.addElement(this.timeBonus)
+        this.bonusTimerList.addElement(this.damageBonus)
+        this.bonusTimerList.addElement(this.speedBonus)
+
+
+        this.bonusTimerList.updateVerticalList();
         this.shopButtonsList.updateHorizontalList();
 
         this.savedEconomy = COOKIE_MANAGER.getEconomy();
@@ -545,6 +558,16 @@ export default class MergeScreen extends Screen {
         this.resetWhiteShape.visible = false;
         //this.mergeItemsShop.show()
 
+    }
+    onConfirmBonus(target) {
+        this.openPopUp(this.bonusPopUp, {
+            texture: target.mainButton.icon.texture,
+            description: target.fullDescription,
+            shortDescription: target.shortDescription,
+            onConfirm: () => {
+                target.confirmBonus();
+            }
+        })
     }
     onPrizeCollected(prizes) {
         if (!prizes) return;
@@ -588,7 +611,7 @@ export default class MergeScreen extends Screen {
         let progression = COOKIE_MANAGER.getProgression()
 
         let coef = 1.008
-        return Math.pow(Math.pow(coef, 8), Math.max(progression.currentEnemyLevel - 100, 1)) + window.gameModifyers.permanentBonusData.shards * 0.5;
+        return Math.pow(Math.pow(coef, 7), Math.max(progression.currentEnemyLevel - 100, 1)) + window.gameModifyers.permanentBonusData.shards * 0.25;
     }
     resetAll(shardsTotal) {
 
@@ -838,10 +861,9 @@ export default class MergeScreen extends Screen {
             return;
         }
         window.isPortrait = innerResolution.width < innerResolution.height
-        
-        console.log("PORTRAIT", window.isPortrait)
+
         //console.log(resolution.width * this.screenManager.scale.x)
-        var newRes = {width: resolution.width * this.screenManager.scale.x}
+        var newRes = { width: resolution.width * this.screenManager.scale.x }
         if (this.spaceBackground) {
 
             this.spaceBackground.resize(resolution, this.screenManager.scale);
@@ -850,25 +872,29 @@ export default class MergeScreen extends Screen {
             this.spaceBackground.y = config.height / 2
         }
 
-        var toGlobal = this.toLocal({x:0, y:innerResolution.height})
+        var toGlobal = this.toLocal({ x: 0, y: innerResolution.height })
 
         this.gridWrapper.x = config.width / 2 - this.gridWrapper.width / 2
         this.gridWrapper.y = config.height * (1 - this.areaConfig.bottomArea) - this.gridWrapper.height
-        
-        
+
+
         this.resourcesWrapper.x = Math.min(0, toGlobal.x + 150);
         let xRightMax = this.gridWrapper.x + this.gridWrapper.width
-        this.resourcesWrapper.y = this.gridWrapper.y;
-        this.resourcesWrapperRight.x = Math.max(xRightMax, -this.resourcesWrapper.x + xRightMax);
-        this.resourcesWrapperRight.y = this.gridWrapper.y;
+        this.resourcesWrapper.y = this.gridWrapper.y - 60;
+        this.resourcesWrapperRight.x = Math.max(xRightMax, -this.resourcesWrapper.x + xRightMax) 
+        this.bonusTimerList.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2 - 12
+        
+        if(!window.isPortrait ){
+            this.resourcesWrapperRight.x-= 20;
+            this.bonusTimerList.x -=8
+        }
+        this.resourcesWrapperRight.y = this.resourcesWrapper.y;
+        this.bonusTimerList.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 40
 
 
-        this.timeBonus.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2
-        this.timeBonus.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 20
 
 
-        this.damageBonus.x = this.timeBonus.x
-        this.damageBonus.y = this.timeBonus.y + 120
+
         // this.sellEverything.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2
         // this.sellEverything.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
         // if (this.helperButtonList.visible) {
@@ -881,15 +907,14 @@ export default class MergeScreen extends Screen {
         // this.statsList.x = config.width - this.statsList.w
         // this.statsList.y = 150
 
-        if(!window.isPortrait){
+        if (!window.isPortrait) {
             this.statsList.scale.set(1.5)
-        }else{
+        } else {
             this.statsList.scale.set(1.1)
         }
 
-        console.log(window.isPortrai)
         this.statsList.x = this.resourcesWrapper.x
-        this.statsList.y = config.height - this.statsList.h - 120
+        this.statsList.y = config.height - this.statsList.h - 100
         this.shopButtonsList.x = config.width / 2 - this.shopButtonsList.w / 2 + 40
         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 35
         this.helperButtonList.x = 15

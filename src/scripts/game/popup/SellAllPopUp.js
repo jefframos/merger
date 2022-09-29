@@ -34,7 +34,7 @@ export default class SellAllPopUp extends PIXI.Container {
         this.background.visible = false
 
         this.popUp = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('oct-no-pattern-yellow'), 15, 15, 15, 15)
+            PIXI.Texture.fromFrame('oct-no-pattern-yellow'), 30, 30, 30, 30)
         this.popUp.width = this.w
         this.popUp.height = this.h
 

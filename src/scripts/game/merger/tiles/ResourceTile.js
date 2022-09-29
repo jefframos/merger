@@ -118,6 +118,7 @@ export default class ResourceTile extends MergeTile {
             this.readyToCollect = false;
         }
     }
+   
     update(delta, timestamp) {
         //console.log(timestamp)
 
@@ -266,23 +267,13 @@ export default class ResourceTile extends MergeTile {
         this.tileData.setLevel(stats.currentLevel)
 
 
-        // let timePassed = (Date.now() / 1000 | 0) - stats.latestResourceCollect
-
-
-        // let rps = this.tileData.getRPS();
-        // this.updatedDamageTimestamp = stats.latestResourceCollect
-
-        // //console.log(timePassed,  rps)
-        // let timeToCollect = this.tileData.getGenerateResourceTime()
-
-        // //console.log(Math.floor(timePassed / timeToCollect) - timePassed % timeToCollect)
-        // if (timePassed > timeToCollect) {
-        //     this.currentCollect = Math.floor(rps) * timePassed
-        //     this.resourceReady();
-        // }
     }
     resourceReady() {
         this.readyToCollect = true;
+        
+        if (window.gameModifyers.bonusData.resourceSpeed == 1) {
+            this.generateResourceTime = this.generateTimeDefault
+        }
 
         this.currentCollect += this.tileData.getResources();
 

@@ -77,10 +77,13 @@ export default class ResourceSystem {
         this.sumStart = 0;
     }
     update(delta) {
-        this.timestamp = (Date.now() / 1000 | 0);
-
+        this.timestamp = (Date.now() / 1000 | 0)
+     
+        if(window.gameModifyers.bonusData.resourceSpeed < 1){
+            delta *= 10;
+        }
         this.resourceSlots.forEach(element => {
-            element.update(delta, this.timestamp)
+            element.update(delta , this.timestamp)
         });
 
         this.rps = utils.findRPS2(this.resourceSlots)
@@ -169,7 +172,23 @@ export default class ResourceSystem {
         this.currentResolution.width = resolution.width;
         this.currentResolution.height = resolution.height;
 
-        console.log("Res")
+        console.log(window.isPortrait)
+
+        if(window.isPortrait){
+
+            this.resourceSlots.forEach(piece => {
+    
+                let targetScale = config.height * 0.2 / piece.height
+                piece.scale.set(Math.min(targetScale, 1))
+            });
+        }else{
+            this.resourceSlots.forEach(piece => {
+    
+                let targetScale = config.height * 0.3 / piece.height
+                piece.scale.set(Math.min(targetScale, 1.2))
+            });
+        }
+
 
         this.updateGridPosition();
 

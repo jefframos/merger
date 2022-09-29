@@ -8,8 +8,7 @@ export default class MergerData {
         rawData.texture = tex;
         let scaling = index * 14 + (index*index*index*0.11);
         scaling = Math.max(1, scaling)
-        rawData.initialDamage = 2 * Math.pow(1.3, scaling)
-        //console.log('initialDamage',rawData.initialDamage)
+        rawData.initialDamage = 2 * Math.pow(1.2, scaling)
         this.rawData = rawData;
 
         this.currentLevel = 1;
