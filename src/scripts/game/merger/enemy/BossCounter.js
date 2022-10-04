@@ -6,12 +6,14 @@ export default class BossCounter extends PIXI.Container {
 
         this.size = size;
 
-        this.backShape = new PIXI.Sprite.fromFrame('backTilesSmall')
-        this.backShape.width = size * 2
-        this.backShape.height = size * 2
-        this.backShape.alpha = 0.5
+
+
+        this.backShape = new PIXI.Sprite.fromFrame('circle')
+        this.backShape.width = size * 3
+        this.backShape.height = size * 3
+        this.backShape.tint = 0
         this.backShape.anchor.set(0.5)
-        //this.addChild(this.backShape)
+        this.addChild(this.backShape)
 
         this.bossSprite = new PIXI.Sprite.fromFrame('backTilesSmall')
         this.bossSprite.width = size * 2
@@ -22,7 +24,7 @@ export default class BossCounter extends PIXI.Container {
         this.levelLabel = new PIXI.Text('0',window.LABELS.LABEL2)
         this.levelLabel.style.stroke = 0xFF0045
         this.levelLabel.style.strokeThickness = 3
-        this.levelLabel.style.fontSize = 20
+        this.levelLabel.style.fontSize = 28
             this.addChild(this.levelLabel)
 
     }
@@ -32,7 +34,7 @@ export default class BossCounter extends PIXI.Container {
     updateLevel(level){
         this.levelLabel.text = level
         this.levelLabel.pivot.x = this.levelLabel.width / 2
-        this.levelLabel.y = 20
+        this.levelLabel.y = 15
     }
     setFontSize(size){
         this.levelLabel.style.fontSize = size

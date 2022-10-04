@@ -14,7 +14,7 @@ export default class EntityShop extends PIXI.Container {
         super()
         this.mainSystem = mainSystem;
         this.size = {
-            w: config.width - 20,
+            w: config.width - 10,
             h: config.height - 80
         }
 
@@ -47,7 +47,9 @@ export default class EntityShop extends PIXI.Container {
 
         this.title = new PIXI.Text('Resources', LABELS.LABEL1);
         this.title.style.fontSize = 38
-
+        this.title.style.stroke = 0
+        this.title.style.strokeThickness = 6
+        
         this.portrait = new PIXI.Sprite.fromFrame('portraitMale');
         this.container.addChild(this.portrait);
         this.portrait.scale.set(0.65)
@@ -64,6 +66,8 @@ export default class EntityShop extends PIXI.Container {
 
         this.currentResourcesLabel = new PIXI.Text('10AA', LABELS.LABEL1);
         this.currentResourcesLabel.style.fontSize = 22
+        this.currentResourcesLabel.style.stroke = 0
+        this.currentResourcesLabel.style.strokeThickness = 2
         this.currentResourcesLabel.style.align = 'center'
         this.currentResourcesLabel.pivot.y = this.currentResourcesLabel.height / 2
         this.currentResourcesLabel.x = -this.currencyContainer.width / 2 / this.currencyContainer.scale.x - 5
@@ -90,7 +94,7 @@ export default class EntityShop extends PIXI.Container {
         this.openShop.x = this.size.w - this.openShop.width
         this.openShop.y = this.size.h - this.openShop.height / 2 - 30
         this.openShop.onClick.add(() => {
-            this.hide()
+            this.hideFromClick()
         })
 
         this.toggles = new UpgradesToggles({ w: this.size.w * 0.7, h: 60 })
@@ -119,18 +123,24 @@ export default class EntityShop extends PIXI.Container {
     hideCallback() {
         this.hide();
     }
-    hide() {
-        window.DO_COMMERCIAL(()=>{
+    hideFromClick() {
+        window.DO_COMMERCIAL(() => {
             this.visible = false;
             this.currentItens.forEach(element => {
                 element.hide();
             });
         })
     }
+    hide() {
+        this.visible = false;
+        this.currentItens.forEach(element => {
+            element.hide();
+        });
+    }
     updateCurrentResources() {
 
         this.currentResourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources)
-        this.currentResourcesLabel.pivot.x = this.currentResourcesLabel.width / 2 
+        this.currentResourcesLabel.pivot.x = this.currentResourcesLabel.width / 2
     }
     moneySpent() {
         this.updateToggleValue();
@@ -142,6 +152,7 @@ export default class EntityShop extends PIXI.Container {
         this.currentItens.forEach(element => {
             element.updatePreviewValue(this.toggles.currentActiveValue)
 
+            //console.log(element.itemData.type, element.isLocked)
             if (!this.isPossibleBuy && !element.isLocked) {
                 this.isPossibleBuy = element.canBuyOne();
             }
@@ -160,7 +171,6 @@ export default class EntityShop extends PIXI.Container {
 
         let currentResources = COOKIE_MANAGER.getResources();
 
-        console.log(currentResources)
 
         let currentEntities = []
         for (const key in currentResources.entities) {
@@ -200,7 +210,7 @@ export default class EntityShop extends PIXI.Container {
 
         this.currentItens = []
         for (let index = 0; index < items.length; index++) {
-            let shopItem = new ShopItem({ w: this.size.w * 0.95, h: 90 })
+            let shopItem = new ShopItem({ w: this.size.w * 0.95, h: 120 })
             shopItem.setData(items[index])
             shopItem.nameID = items[index].rawData.nameID;
             this.currentItens.push(shopItem)
@@ -214,6 +224,7 @@ export default class EntityShop extends PIXI.Container {
             return;
         }
         let currentResources = COOKIE_MANAGER.getResources();
+        let currentShips = COOKIE_MANAGER.getBoard();
 
         let currentEntities = []
         for (const key in currentResources.entities) {
@@ -222,9 +233,18 @@ export default class EntityShop extends PIXI.Container {
                 currentEntities.push(key);
             }
         }
+
+        for (const key in currentShips.entities) {
+            const element = currentShips.entities[key];
+            if (element&& element.nameID) {
+                currentEntities.push(element.nameID);
+            }
+        }
+
         this.currentItens.forEach(element => {
             if (currentEntities.indexOf(element.nameID) > -1) {
                 element.unlockItem();
+
             } else {
                 element.lockItem();
             }

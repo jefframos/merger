@@ -20,8 +20,8 @@ export default class BonusConfirmation extends PIXI.Container {
         this.container = new PIXI.Container();
         this.chestContainer = new PIXI.Container();
 
-        this.w = config.width * 0.8;
-        this.h = 250;
+        this.w = config.width * 0.85;
+        this.h = 300;
 
         this.background = new PIXI.Graphics().beginFill(0).drawRect(-config.width * 5, -config.height * 5, config.width * 10, config.height * 10)
         this.addChild(this.background)
@@ -73,11 +73,12 @@ export default class BonusConfirmation extends PIXI.Container {
 
         this.readySin = 0;
 
-        this.collectButton = new UILabelButton1(130)
-        this.collectButton.addCenterLabel("Confirm")
+        this.collectButton = new UILabelButton1(130,60)
+        this.collectButton.addVideoIcon()
+        this.collectButton.addCenterLabel("Activate")
         this.chestContainer.addChild(this.collectButton)
         this.collectButton.pivot.x = this.collectButton.width / 2;
-        this.collectButton.y = 50
+        this.collectButton.y = 60
         this.collectButton.onClick.add(() => {
             this.confirmCallback();
             this.close()
@@ -95,6 +96,8 @@ export default class BonusConfirmation extends PIXI.Container {
 
         this.labelTitle = new PIXI.Text('Video Reward', LABELS.LABEL1);
         this.labelTitle.style.fontSize = 32
+        this.labelTitle.style.stroke = 0
+        this.labelTitle.style.strokeThickness = 6
         this.labelTitle.x = - this.labelTitle.width / 2
         this.labelTitle.y = -this.h / 2 + 30
         this.chestContainer.addChild(this.labelTitle)
@@ -126,12 +129,12 @@ export default class BonusConfirmation extends PIXI.Container {
     }
     show(param) {
 
-        this.labelTitle.text = param.shortDescription;
+        this.labelTitle.text = param.shortDescription+' Bonus';
         this.labelTitle.x = - this.labelTitle.width / 2
         this.visible = true;
-        this.textBox.updateText("Watch a small video to get\n"+param.description);
+        this.textBox.updateText(param.description);
         this.icon.texture = param.texture;
-        this.icon.scale.set((this.textBox.height - 30) / this.icon.height * this.icon.scale.x)
+        this.icon.scale.set((60) / this.icon.height * this.icon.scale.x)
 
         this.isShowing = true;
         this.textBox.x = -this.textBox.width / 2

@@ -3,6 +3,7 @@ export default class GameModifyers {
     constructor() {
         this.modifyersData = COOKIE_MANAGER.getModifyers();
         this.onUpdateModifyers = new Signals();
+        this.onActiveBonus = new Signals();
 
         this.defaultModifyers = {
             drillSpeed: 1,
@@ -21,12 +22,18 @@ export default class GameModifyers {
             damageSpeed: 1,
             resourceSpeed: 1,
             generateTimerBonus : 1,
-            gameSpeed: 1
+            gameSpeed: 1,
+            autoMerge: 1,
+            autoCollectResource: false
+
         }
 
         this.permanentBonusData = this.modifyersData.permanentBonusData
 
 
+    }
+    updateModifyer(name){
+        this.onActiveBonus.dispatch(name);
     }
     resetModifyers(){
         for (const key in this.defaultModifyers) {
@@ -35,7 +42,6 @@ export default class GameModifyers {
                 
             }
         }
-        console.log(this.modifyersData)
         this.onUpdateModifyers.dispatch();
         COOKIE_MANAGER.updateModifyers(this.modifyersData)
     }

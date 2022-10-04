@@ -7,6 +7,7 @@ import StandardEnemy from '../enemy/StandardEnemy';
 import UIButton1 from '../../ui/UIButton1';
 import config from '../../../config';
 import utils from '../../../utils';
+import UILabelButton1 from '../../ui/UILabelButton1';
 
 export default class EnemySystem {
     constructor(containers, baseEnemies) {
@@ -48,8 +49,9 @@ export default class EnemySystem {
 
         //color, icon, iconColor =0xFFFFFF, width = 40, height = 40
 
-        this.invokeBossBattle = new UIButton1(0xFFFFFF, TILE_ASSSETS_POOL['image-Figh'], 0xFFFFFF, 150, 60, 'boss-button')
-        this.invokeBossBattle.updateIconScale(0.8)
+        this.invokeBossBattle = new UILabelButton1( 150, 60, 'boss-button')
+        this.invokeBossBattle.addCenterLabel('Fight BOSS')
+        //this.invokeBossBattle.updateIconScale(0.8)
         this.container.addChild(this.invokeBossBattle)
         this.invokeBossBattle.x = 240
         this.invokeBossBattle.y = 60
@@ -341,19 +343,22 @@ export default class EnemySystem {
         this.bossTimerLabel.visible = this.bossBattleTimer.visible;
     }
 
-    resize() {
+    resize(resolution, innerResolution, wrapper) {
+        console.log(this.container.x)
         if (!window.isPortrait) {
-            this.invokeBossBattle.x = 340
-            this.invokeBossBattle.y = 90
-
-            this.enemyProgressionView.bossCounter.x = 360
+            this.enemyProgressionView.bossCounter.x = (wrapper.x + wrapper.width / 2 ) - this.container.x + 10
+            this.enemyProgressionView.bossCounter.y = 50
             this.enemyProgressionView.bossCounter.scale.set(1.5)
-        } else {
-            this.invokeBossBattle.x = 220
-            this.invokeBossBattle.y = 65
+            this.invokeBossBattle.x = this.enemyProgressionView.bossCounter.x - this.invokeBossBattle.width - this.enemyProgressionView.bossCounter.width / 2+10
+            this.invokeBossBattle.y = -18
 
+        } else {
+            this.enemyProgressionView.bossCounter.x = (wrapper.x + wrapper.width / 2 ) - this.container.x
             this.enemyProgressionView.bossCounter.scale.set(1)
-            this.enemyProgressionView.bossCounter.x = 250
+            this.invokeBossBattle.x =  this.enemyProgressionView.bossCounter.x - this.invokeBossBattle.width + this.enemyProgressionView.bossCounter.width / 2
+            this.invokeBossBattle.y = 45
+            this.enemyProgressionView.bossCounter.y = 20
+
 
         }
     }

@@ -112,6 +112,12 @@ export default class MergeSystem {
             this.dps = utils.findDPS(this.slots);
             this.rps = utils.findRPS(this.slots);
         })
+
+        window.gameModifyers.onActiveBonus.add((type) => {
+            if (type == 'autoMerge') {
+                this.findAllAutomerges()
+            }
+        })
     }
 
     resetSystem() {
@@ -128,7 +134,7 @@ export default class MergeSystem {
         this.updateTotalGenerators();
 
         COOKIE_MANAGER.resetBoard();
-        console.log(COOKIE_MANAGER.getBoard())
+
         this.loadData();
 
         this.boardLevel = 0;
@@ -159,7 +165,7 @@ export default class MergeSystem {
             const element = this.savedProgression.entities[key];
             if (element) {
                 let split = key.split(";")
-                console.log(element, split[0], split[1])
+
 
                 let found = this.findEntityByID(element.nameID)
                 if (found) {
@@ -200,10 +206,23 @@ export default class MergeSystem {
     addPieceGenerator() {
         let piece = new ChargerTile(0, 0, this.slotSize.width * 0.85, 'coin', this.gameplayData.entityGeneratorBaseTime);
         piece.isGenerator = true;
+        piece.onShowParticles.add(() => {
+            let customData = {}
+            customData.forceX = 0
+            customData.forceY = 100
+            customData.gravity = 0
+            customData.scale = 0.03
+            customData.alphaDecress = 1
+            customData.texture = 'plus'
 
+            let pos = piece.tileSprite.getGlobalPosition()
+            pos.x += Math.random() * 40 - 20
+            pos.y -= Math.random() * 40
+            this.onParticles.dispatch(pos, customData, 1)
+        })
         let targetScale = config.height * 0.2 / piece.height
         piece.scale.set(Math.min(targetScale, 1))
-        piece.addEntity(this.dataTiles[0])
+        //piece.addEntity(this.dataTiles[0])
         this.uiContainer.addChild(piece);
 
         piece.onHold.add((slot) => {
@@ -250,7 +269,7 @@ export default class MergeSystem {
         }
     }
     findAllAutomerges() {
-        if (window.gameModifyers.modifyersData.autoMerge > 1) {
+        if (window.gameModifyers.modifyersData.autoMerge > 1 || window.gameModifyers.bonusData.autoMerge > 1) {
             this.pieceGeneratorsList.forEach(element => {
                 if (element.isCharged) {
                     this.sortAutoMerge(element);
@@ -260,7 +279,7 @@ export default class MergeSystem {
     }
     sortAutoMerge(piece) {
         if (!piece.tileData) return;
-        if (window.gameModifyers.modifyersData.autoMerge > 1) {
+        if (window.gameModifyers.modifyersData.autoMerge > 1 || window.gameModifyers.bonusData.autoMerge > 1) {
             this.autoPlace(piece);
             this.autoMerge()
         }
@@ -289,7 +308,7 @@ export default class MergeSystem {
         this.updateAllData()
     }
     levelUp(nextLevel, ignoreSave = false) {
-        //console.log(nextLevel)
+
         if (this.boardLevel != nextLevel) {
             this.boardLevel = nextLevel;
             if (!ignoreSave) {
@@ -381,7 +400,7 @@ export default class MergeSystem {
             customData.texture = 'shoot'
             customData.scale = 0.002
             customData.topLimit = this.enemySystem.getEnemy().getGlobalPosition().y
-            //console.log(this.enemySystem.getEnemy().getGlobalPosition().y)
+
             customData.gravity = 0
             customData.alphaDecress = 0
             if (this.enemySystem) {
@@ -480,7 +499,7 @@ export default class MergeSystem {
         this.onParticles.dispatch(slot.tileSprite.getGlobalPosition(), customData, 1)
 
         // this.updateAllData();
-        // console.log(data,slot.id.i, slot.id.j)
+
         COOKIE_MANAGER.addMergePiece(data, slot.id.i, slot.id.j)
     }
     findFirstAvailable() {
@@ -593,7 +612,7 @@ export default class MergeSystem {
                 COOKIE_MANAGER.addMergePiece(null, this.currentDragSlot.id.i, this.currentDragSlot.id.j)
                 target = this.dataTiles[Math.min(this.dataTiles.length - 1, copyDataTargetSlot.getID() + 1)]
                 slot.removeEntity();
-                //console.log(target)
+
                 slot.addEntity(target);
                 COOKIE_MANAGER.addMergePiece(target, slot.id.i, slot.id.j)
             } else {
@@ -693,7 +712,7 @@ export default class MergeSystem {
 
         utils.resizeToFitARCap(this.wrapper, this.container, this.fixedSize)
 
-        //console.log(this.container, this.fixedSize)
+
 
         this.container.x = this.wrapper.x + this.wrapper.width / 2 - (this.fixedSize.width * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.x;;
         this.container.y = this.wrapper.y + this.wrapper.height / 2 - (this.fixedSize.height * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.y;

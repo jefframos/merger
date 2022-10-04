@@ -16,7 +16,7 @@ export default class ShopButton extends PIXI.Container
             this.backButton = new PIXI.mesh.NineSlicePlane(
                 PIXI.Texture.fromFrame('small-no-pattern'), 20, 20, 20, 20)
             this.backButton.width = 110
-            this.backButton.height = 40 
+            this.backButton.height = 60 
 
             // this.grey = new PIXI.mesh.NineSlicePlane(
             //     PIXI.Texture.fromFrame('small-no-pattern-grey'), 20, 20, 20, 20)

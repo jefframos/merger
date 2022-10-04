@@ -6,6 +6,7 @@ import UILabelButton1 from '../ui/UILabelButton1';
 import config from '../../config';
 import SinglePrizeContainer from '../ui/SinglePrizeContainer';
 import TextBox from '../ui/TextBox';
+import UIList from '../ui/uiElements/UIList';
 
 export default class SellAllPopUp extends PIXI.Container {
     constructor(label, screenManager) {
@@ -22,7 +23,7 @@ export default class SellAllPopUp extends PIXI.Container {
         this.openChestContainer = new PIXI.Container();
 
         this.w = config.width * 0.75;
-        this.h = config.width * 0.65;
+        this.h = config.height * 0.65;
 
         this.background = new PIXI.Graphics().beginFill(0).drawRect(-config.width * 5, -config.height * 5, config.width * 10, config.height * 10)
         this.addChild(this.background)
@@ -69,6 +70,7 @@ export default class SellAllPopUp extends PIXI.Container {
         this.chestContainer.addChild(this.textBox)
         this.chestContainer.addChild(this.textBoxPrize)
 
+        this.chestContainer.y = - 100
  
         this.textBoxPrize.x = 0
         this.textBoxPrize.y = 50
@@ -85,8 +87,8 @@ export default class SellAllPopUp extends PIXI.Container {
         this.chest2.anchor.set(0.5)
         this.chest2.scale.set(1.5)
         this.chestContainer.addChild(this.chest2)
-        this.chest2.x = -100
-        this.chest2.y = this.h / 2 - 120
+        this.chest2.x = 0
+        this.chest2.y = this.h / 2 - 60
 
         this.chest2.on('mouseup', this.openVideoChest.bind(this));
         this.chest2.on('touchend', this.openVideoChest.bind(this));
@@ -113,13 +115,26 @@ export default class SellAllPopUp extends PIXI.Container {
 
         this.openShop = new UIButton1(0xFFffff, window.TILE_ASSSETS_POOL['image-X'], 0xFFffff, 60, 60, 'boss-button')
         this.openShop.updateIconScale(0.5)
-        this.chestContainer.addChild(this.openShop)
+        this.container.addChild(this.openShop)
         this.openShop.x = -this.w/2 + 50
         this.openShop.y = -this.h/2 +50
         this.openShop.onClick.add(() => {
             this.close()
         })
 
+
+
+        this.plusIcons = new UIList();
+        this.plusIcons.h = 79;
+        this.plusIcons.w = 180;
+        this.container.addChild(this.plusIcons)
+        let coins = new PIXI.Sprite.fromFrame('plus-coins')
+        let damage = new PIXI.Sprite.fromFrame('plus-damage')
+        this.plusIcons.addElement(coins)
+        this.plusIcons.addElement(damage)
+        this.plusIcons.updateHorizontalList()
+        this.plusIcons.x = -this.plusIcons.w/2
+        this.plusIcons.y = -60
 
         this.shinePrize = new PIXI.Sprite.fromFrame('shine')
         this.shinePrize.anchor.set(0.5)
@@ -205,7 +220,7 @@ export default class SellAllPopUp extends PIXI.Container {
 
     update(delta) {
         this.readySin += delta * 8
-        this.chest2.scale.set(Math.sin(this.readySin) * 0.05 + 0.95 + 0.2)
+        this.chest2.scale.set(Math.sin(this.readySin) * 0.05 + 0.95 + 0.8)
 
         this.shine.x = this.chest2.x
         this.shine.y = this.chest2.y
@@ -217,12 +232,17 @@ export default class SellAllPopUp extends PIXI.Container {
     show(param) {
         this.totalShards = param.shards
         this.visible = true;
-        this.textBox.updateText("You can sell your fleet for\n\n"+utils.formatPointsLabel(param.shards)+" Shards");
+        this.textBox.updateText("You can sell your fleet for\n"+utils.formatPointsLabel(param.shards)+" Shards");
+        this.textBoxPrize.label.style.fontSize = 22
         this.textBoxPrize.label.style.fill = 0xffffff
-        this.textBoxPrize.label.style.stroke = 0x553388
-        this.textBoxPrize.label.style.strokeThickness = 4
-        this.textBoxPrize.updateText(utils.formatPointsLabel(param.shards)+'\nx Damage\nx Resources')
+        this.textBoxPrize.label.style.stroke = 0xad07fb
+        this.textBoxPrize.label.style.strokeThickness = 6
+        this.textBoxPrize.updateText('+'+utils.formatPointsLabel(param.shards)+' x All Damage\n'+'+'+utils.formatPointsLabel(param.shards)+' x All Resources')
 
+        //this.textBoxPrize.label.style.align = 'left'
+        this.textBoxPrize.background.alpha = 0
+        this.textBoxPrize.x = - this.textBoxPrize.width / 2
+        this.textBoxPrize.y = this.plusIcons.y + 80 + this.textBoxPrize.height
         this.isShowing = true;
         this.textBox.x = -this.textBox.width/2
         this.textBox.y = -this.textBox.height/2 - 10

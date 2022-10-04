@@ -125,7 +125,7 @@ export default class PrizeSystem {
             },
             {
                 money: window.gameEconomy.currentResources * 0.2,
-                shards:Math.max(5, window.gameModifyers.permanentBonusData.shards * 0.05),
+                shards:Math.max(0.1, window.gameModifyers.permanentBonusData.shards * 0.05),
                 ship:2
             }
         ]
@@ -134,7 +134,7 @@ export default class PrizeSystem {
         this.currentTimer = this.timer;
     }
     resize() {
-
+       
     }
     update(delta) {
         if (this.inMovement) {

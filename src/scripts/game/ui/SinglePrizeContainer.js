@@ -11,6 +11,7 @@ export default class SinglePrizeContainer extends PIXI.Container {
 
         this.label = new PIXI.Text('Open', LABELS.LABEL_CHEST);
         this.addChild(this.label)
+        this.label.style.fontSize = 24
 
     }
     updateIcon(texture) {

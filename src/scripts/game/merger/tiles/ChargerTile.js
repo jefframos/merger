@@ -32,6 +32,18 @@ export default class ChargerTile extends MergeTile {
 
         this.isCharged = false;
 
+        this.outState()
+
+    }
+    onMouseDown(e) {
+        super.onMouseDown(e);
+        this.currentChargeTime -= 0.2
+        if(this.currentChargeTime <= 0){
+            this.completeCharge();
+        }else{
+            
+            this.onShowParticles.dispatch()
+        }
     }
     update(delta, timeStamp){
         super.update(delta, timeStamp);
@@ -46,7 +58,13 @@ export default class ChargerTile extends MergeTile {
             this.levelBar.visible = true;
 
             //this.circleCounter.update(1-(this.currentChargeTime / this.defaultChargeTime))
+
             
+            this.backSlot.tint = 0x999999
+            this.backShape.tint = 0x999999
+        }else{
+            this.backSlot.tint = 0x00FFFF
+            this.backShape.tint = 0x00FFFF
         }
         //this.levelBar.visible = false;
 
@@ -67,5 +85,15 @@ export default class ChargerTile extends MergeTile {
     }
     lookAt(target) {
        
+    }
+    overState() {
+        // this.backSlot.tint = 0x00FFFF
+        // this.backShape.tint = 0x00FFFF
+
+    }
+    outState() {
+        // this.backSlot.tint = 0x00FFFF
+        // this.backShape.tint = 0x00FFFF
+
     }
 }

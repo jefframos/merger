@@ -79,8 +79,8 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.chest1.interactive = true;
         this.chest1.buttonMode = true;
 
-        this.openLabel = new PIXI.Text('Open', LABELS.LABEL2);
-        this.openLabel.style.fontSize = 22
+        this.openLabel = new PIXI.Text('OPEN', LABELS.LABEL2);
+        this.openLabel.style.fontSize = 24
         this.openLabel.style.fill = 0xffffff
         this.openLabel.pivot.x = this.openLabel.width / 2;
         this.openLabel.pivot.y = this.openLabel.height / 2;
@@ -107,8 +107,8 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.chest2.interactive = true;
         this.chest2.buttonMode = true;
 
-        this.watchToOpen = new PIXI.Text('Open', LABELS.LABEL_CHEST);
-        this.watchToOpen.style.fontSize = 14
+        this.watchToOpen = new PIXI.Text('OPEN', LABELS.LABEL_CHEST);
+        this.watchToOpen.style.fontSize = 24
         this.watchToOpen.style.stroke = 0x0090ff
         this.watchToOpen.style.fill = 0xffffff
         this.watchToOpen.pivot.x = this.watchToOpen.width / 2 - 30;
@@ -173,7 +173,7 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.collectButton.addCenterLabel("Collect")
         this.openChestContainer.addChild(this.collectButton)
         this.collectButton.pivot.x = this.collectButton.width / 2;
-        this.collectButton.y = 120
+        this.collectButton.y = 100
         this.collectButton.onClick.add(() => {
             this.confirmCallback(this.prize[this.prizeID]);
             this.close()
@@ -237,7 +237,7 @@ export default class OpenChestPopUp extends PIXI.Container {
 
         }
         this.prizes[0].updateLabel2(utils.formatPointsLabel(this.prize[this.prizeID].money))
-        this.prizes[1].updateLabel2('')
+        this.prizes[1].updateLabel2('New Ship')
         this.prizes[2].updateLabel2(utils.formatPointsLabel(this.prize[this.prizeID].shards))
 
         for (let index = 0; index < total + 1; index++) {

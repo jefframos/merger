@@ -5,7 +5,7 @@ import config from '../../config';
 import utils from '../../utils';
 
 export default class UILabelButton1 extends PIXI.Container {
-    constructor(width = 60, height = 40) {
+    constructor(width = 60, height = 60, tex = 'small-no-pattern-green') {
         super();
 
         this.mainContainer = new PIXI.Container();
@@ -13,7 +13,7 @@ export default class UILabelButton1 extends PIXI.Container {
 
         this.padding = 8;
         this.backShapeBorder = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('small-no-pattern-green'), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame(tex), 10, 10, 10, 10)
         this.backShapeBorder.width = width + this.padding
         this.backShapeBorder.height = height + this.padding
 
@@ -31,6 +31,14 @@ export default class UILabelButton1 extends PIXI.Container {
         this.on('touchstart', this.click.bind(this));
         this.interactive = true;
         this.buttonMode = true;
+    }
+    addVideoIcon(){
+        this.videoIcon = new PIXI.Sprite.fromFrame('video-trim');
+        this.videoIcon.anchor.set(0.5)
+        this.videoIcon.scale.set(0.65)
+        this.videoIcon.x = this.backShapeBorder.width
+        this.mainContainer.addChild(this.videoIcon);
+
     }
     addFrontShape() {
 
@@ -109,6 +117,7 @@ export default class UILabelButton1 extends PIXI.Container {
         if(fit){
             this.buttonLabel.scale.set(this.backShapeBorder.width / this.buttonLabel.width * fit)
         }
+        this.buttonLabel.style.fontSize = 24
         this.buttonLabel.pivot.x = this.buttonLabel.width / 2 * this.buttonLabel.scale.x;
         this.buttonLabel.pivot.y = this.buttonLabel.height / 2 * this.buttonLabel.scale.y;
         this.buttonLabel.x = this.backShapeBorder.width / 2 * this.buttonLabel.scale.x;

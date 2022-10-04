@@ -46,7 +46,7 @@ export default class ShopItem extends UIList {
 
         this.levelLabel = new PIXI.Text('LV1\n9999', LABELS.LABEL1);
         this.levelContainer.addChild(this.levelLabel);
-        this.levelLabel.style.fontSize = 18
+        this.levelLabel.style.fontSize = 22
 
         this.levelBar = new UIBar();
         this.levelContainer.addChild(this.levelBar);
@@ -64,6 +64,8 @@ export default class ShopItem extends UIList {
 
         this.descriptionLabel = new PIXI.Text('this is a description', LABELS.LABEL1);
         this.descriptionLabel.style.fontSize = 20
+        this.descriptionLabel.style.stroke = 0
+        this.descriptionLabel.style.strokeThickness = 6
         this.descriptionContainer.scaleContentMax = true;
         this.descriptionContainer.listScl = 0.4;
         this.descriptionContainer.align = 0;
@@ -96,8 +98,8 @@ export default class ShopItem extends UIList {
         this.infoButton.addChild(this.infoUpgrade);
         // this.itemIcon.scaleContent = true;
         this.infoButton.listScl = 0.1;
-        this.infoButton.align = 0.5;
-        this.infoButton.fitHeight = 0.25;
+        this.infoButton.align = 0.25;
+        this.infoButton.fitHeight = 0.22;
         // this.infoButton.scaleContentMax = true;
         this.elementsList.push(this.infoButton);
         this.container.addChild(this.infoButton);
@@ -119,7 +121,7 @@ export default class ShopItem extends UIList {
         this.previewValue = 1;
         this.unlockItem();
         this.currentTogglePreviewValue = 1;
-        //console.log("adicionar aqui botoes pra auto generate and auto collect");
+        
     }
     
     lockItem() {
@@ -197,11 +199,18 @@ export default class ShopItem extends UIList {
                 if (this.staticData.stats[type]) {
                     if (!this.staticData.stats[type].hideOnShop) {
                         if (leveldValues[type]) {
+                            
                             if (leveldValues[type] < 100) {
                                 this.attributesList[type].text = leveldValues[type].toFixed(2)
+                                if(this.itemData.rawData.attributeDescription){
+                                    this.attributesList[type].text += this.itemData.rawData.attributeDescription
+                                }
                             }
                             else {
                                 this.attributesList[type].text = utils.formatPointsLabel(leveldValues[type] / MAX_NUMBER);
+                                if(this.itemData.rawData.attributeDescription){
+                                    this.attributesList[type].text += this.itemData.rawData.attributeDescription
+                                }
                             }
                         }
                     }
@@ -284,10 +293,17 @@ export default class ShopItem extends UIList {
             nextRPS = this.itemData.getDPS(next)
         }
 
-        this.attributesList['cost'].text = utils.formatPointsLabel(currentRPS) + '/s'
-        //this.attributesList['value'].text = utils.formatPointsLabel(Math.ceil(nextRPS - currentRPS)) + '/s'
-        this.attributesList['value'].text = utils.formatPointsLabel(nextRPS - currentRPS) + '/s'
-        //console.log(nextRPS - currentRPS)
+        let extra = ''
+        if(!this.itemData.rawData.quantify || this.itemData.rawData.quantifyBoolean){
+            extra+='/s'
+        }
+        if(this.itemData.rawData.attributeDescription){
+            extra+=' '+this.itemData.rawData.attributeDescription
+        }
+        this.attributesList['cost'].text = utils.formatPointsLabel(currentRPS) + extra
+        //this.attributesList['value'].text = utils.formatPointsLabel(Math.ceil(nextRPS - currentRPS)) + extra
+        this.attributesList['value'].text = '+ '+utils.formatPointsLabel(nextRPS - currentRPS)
+        
         this.shopButton.updateCoast(utils.formatPointsLabel(this.realCost))
 
         if (this.realCost <= window.gameEconomy.currentResources) {
@@ -315,6 +331,8 @@ export default class ShopItem extends UIList {
             this.infoUpgrade.text = ''
             this.attributesList['c_value'].visible = false
 
+
+            
             if (this.itemData.rawData.quantify) {
 
                 this.attributesList['c_cost'].visible = false
@@ -356,7 +374,7 @@ export default class ShopItem extends UIList {
         this.itemIcon.texture = new PIXI.Texture.from(image);
         this.descriptionLabel.text = this.itemData.rawData.displayName
 
-        console.log(this.itemData.type)
+        
         let iconType = this.itemData.type == 'damage'? 'bullets':'coin' 
         if(this.itemData.modifyerIcon){
             iconType = this.itemData.modifyerIcon
@@ -379,11 +397,11 @@ export default class ShopItem extends UIList {
                 let attIcon = new PIXI.Sprite.from(element.icon);
                 attIcon.scale.set(20 / attIcon.width)
                 let attValue = new PIXI.Text(element.name, LABELS.LABEL1);
-                attValue.style.fontSize = 18
+                attValue.style.fontSize = 28
                 attContainer.addChild(attIcon);
                 attContainer.addChild(attValue);
-                attIcon.x = 100 * count;
-                attValue.scale.set(20 / attValue.height)
+                attIcon.y = 25 * count;
+                attValue.scale.set(28 / attValue.height)
                 attValue.x = attIcon.x + attIcon.width + 5
                 attValue.y = attIcon.y + attIcon.height / 2 - attValue.height / 2;
 
@@ -392,6 +410,7 @@ export default class ShopItem extends UIList {
                 //this.attributesList.elementsList.push(attContainer);
                 this.attributesList.addChild(attContainer);
 
+               
                 this.attributesList[element.name] = attValue;
                 this.attributesList["c_" + element.name] = attContainer;
                 count++

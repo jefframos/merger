@@ -11,13 +11,6 @@ export default class GeneralShop extends EntityShop {
     }
 
     confirmItemShop(item) {
-
-        if(item.rawData.modifyer){
-            console.log(item.rawData.modifyer, item.getRawResources())
-        }
-
-
-
         window.gameModifyers.saveModifyers(item.rawData.modifyer, item.currentLevel, item.getRawResources())
         // this.mainSystem.forEach(resourceSystem => {
         //     resourceSystem.findUpgrade(item)
@@ -29,7 +22,7 @@ export default class GeneralShop extends EntityShop {
 
     }
     show() {
-        this.title.text = "General"        
+        this.title.text = "Upgrades"        
         this.visible = true;
         this.currentItens.forEach(element => { 
             element.updatePreviewValue(this.toggles.currentActiveValue)

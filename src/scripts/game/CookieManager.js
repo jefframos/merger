@@ -30,10 +30,10 @@ export default class CookieManager {
 			resourcesMultiplier: 1,
 			damageMultiplier: 1,
 			attackSpeed: 1,
-			attackSpeedValue:1,
+			attackSpeedValue: 1,
 			autoMerge: 1,
-            autoCollectResource: false,
-			permanentBonusData:{
+			autoCollectResource: false,
+			permanentBonusData: {
 				damageBonus: 1,
 				resourceBonus: 1,
 				damageSpeed: 1,
@@ -58,7 +58,7 @@ export default class CookieManager {
 
 	sortCookieData(nameID, defaultData, force = false) {
 		let cookie = this.getCookie(nameID);
-		if(force){
+		if (force) {
 			cookie = null;
 		}
 		let target
@@ -97,7 +97,6 @@ export default class CookieManager {
 		this.storeObject('resources', this.resources)
 	}
 	pickResource(mergeData) {
-		console.log(this.resources)
 		this.resources.entities[mergeData.rawData.nameID].currentLevel = mergeData.currentLevel
 		this.resources.entities[mergeData.rawData.nameID].latestResourceCollect = Date.now() / 1000 | 0
 		this.resources.entities[mergeData.rawData.nameID].pendingResource = 0
@@ -174,7 +173,7 @@ export default class CookieManager {
 		this.modifyers = data;
 		this.storeObject('modifyers', this.modifyers)
 	}
-	resetProgression(){
+	resetProgression() {
 		this.sortCookieData('progression', this.defaultProgression, true)
 		this.sortCookieData('modifyers', this.defaultModifyers, true)
 		this.sortCookieData('resources', this.defaultResources, true)
@@ -192,26 +191,44 @@ export default class CookieManager {
 	getProgression() {
 		return this.getCookie('progression')
 	}
-	resetBoard(){
+	resetBoard() {
 		this.sortCookieData('board', this.defaultBoard, true)
 	}
 	getBoard() {
 		return this.getCookie('board')
 	}
 	getCookie(name) {
-		return JSON.parse(window.localStorage.getItem(name))//(result === null) ? null : result[1];
+		try {
+			return JSON.parse(window.localStorage.getItem(name))//(result === null) ? null : result[1];
+
+		} catch (e) {
+		}
 	}
 	storeObject(name, value) {
-		window.localStorage.setItem(name, JSON.stringify(value))
+
+		try {
+			window.localStorage.setItem(name, JSON.stringify(value))
+
+		} catch (e) {
+		}
 	}
 	resetCookie() {
-		for (var i in window.localStorage) {
-			window.localStorage.removeItem(i);
+		try {
+
+			for (var i in window.localStorage) {
+				window.localStorage.removeItem(i);
+			}
+		} catch (e) {
 		}
 	}
 	wipeData() {
 		this.resetCookie();
-		window.localStorage.clear();
-		window.location.reload();
+
+		try {
+
+			window.localStorage.clear();
+			window.location.reload();
+		} catch (e) {
+		}
 	}
 }

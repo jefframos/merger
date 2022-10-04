@@ -92,7 +92,7 @@ export default class ResourceTile extends MergeTile {
         this.levelBar = new ProgressBar({ width: 64, height: 12 }, 3, 3)
         this.levelBar.updateBackgroundFront(0x00FF00)
         this.levelBar.updateBackgroundColor(0x20552c)
-        this.levelBar.y = size/2 + 30
+        this.levelBar.y = size / 2 + 30
         this.levelBar.x = size / 2
         this.container.addChild(this.levelBar)
 
@@ -109,6 +109,12 @@ export default class ResourceTile extends MergeTile {
         this.drillSin = Math.random() * 3.14 * 2
 
         this.textUpdateTimer = 0;
+
+        window.gameModifyers.onActiveBonus.add((type) => {
+            if (type == 'autoCollect') {
+                this.findAutoCollect()
+            }
+        })
     }
     resetTile() {
         this.textUpdateTimer = 0;
@@ -118,7 +124,7 @@ export default class ResourceTile extends MergeTile {
             this.readyToCollect = false;
         }
     }
-   
+
     update(delta, timestamp) {
         //console.log(timestamp)
 
@@ -127,15 +133,15 @@ export default class ResourceTile extends MergeTile {
             this.particlesDelay -= delta;
         }
 
-        if(this.readyToCollect){
-            if(this.textUpdateTimer <= 0){
-                this.readyLabel.text = '+'+utils.formatPointsLabel(this.currentCollect)
+        if (this.readyToCollect) {
+            if (this.textUpdateTimer <= 0) {
+                this.readyLabel.text = '+' + utils.formatPointsLabel(this.currentCollect)
                 this.textUpdateTimer = 1
                 this.collectLabelContainer.x = this.backSlot.width / 2 - this.collectLabelContainer.width / 2;
-            }else{
+            } else {
                 this.textUpdateTimer -= delta;
             }
-    
+
         }
         //console.log(this.generateResource ,this.generateResourceTime)
         this.collectLabelContainer.visible = this.readyToCollect
@@ -215,7 +221,7 @@ export default class ResourceTile extends MergeTile {
         if (this.tileData) {
             if (this.tileData.isRight) {
                 this.positionOffset.x = 60 + this.entityScale + Math.cos(this.drillSin) * 4
-                this.tileSprite.scale.x = Math.abs(this.tileSprite.scale.x) 
+                this.tileSprite.scale.x = Math.abs(this.tileSprite.scale.x)
 
             } else {
 
@@ -241,7 +247,7 @@ export default class ResourceTile extends MergeTile {
         this.animSprite = true;
         this.updatePosition();
         TweenLite.to(this.tileSprite, 0.25, {
-            alpha:1
+            alpha: 1
         })
     }
     updateResource(delta, dateTimeStamp) {
@@ -270,7 +276,7 @@ export default class ResourceTile extends MergeTile {
     }
     resourceReady() {
         this.readyToCollect = true;
-        
+
         if (window.gameModifyers.bonusData.resourceSpeed == 1) {
             this.generateResourceTime = this.generateTimeDefault
         }
@@ -280,10 +286,13 @@ export default class ResourceTile extends MergeTile {
         if (this.tileData.getGenerateResourceTime() > 0.1) {
             COOKIE_MANAGER.addPendingResource(this.tileData, this.currentCollect)
         }
+        this.findAutoCollect();
 
-       
-
-        if (window.gameModifyers.modifyersData.autoCollectResource) {
+        //this.onGenerateResource.dispatch(this, this.tileData);
+    }
+    findAutoCollect() {
+        if (!this.readyToCollect) return;
+        if (window.gameModifyers.modifyersData.autoCollectResource || window.gameModifyers.bonusData.autoCollectResource) {
 
             let quant = 3;
             if (this.particlesDelay > 0) {
@@ -299,10 +308,12 @@ export default class ResourceTile extends MergeTile {
             //console.log(quant)
             //this.onGenerateResource.dispatch(this, this.tileData, this.currentCollect, quant, true);
             this.collectResources()
+
         }
-        //this.onGenerateResource.dispatch(this, this.tileData);
     }
     collectResources() {
+        if (!this.readyToCollect) return
+        this.onGenerateResource.dispatch(this, this.tileData, this.currentCollect, true);
         this.readyToCollect = false;
         this.resourceReadyToCollectSprite.alpha = 0
         this.generateResourceNormal = 0

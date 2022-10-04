@@ -318,7 +318,7 @@ export default class MergeScreen extends Screen {
 
         this.helperButtonList = new UIList();
         this.helperButtonList.h = 60;
-        this.helperButtonList.w = 320;
+        this.helperButtonList.w = 370;
         this.speedUpToggle = new UIButton1(0x002299, 'fast_forward_icon')
         this.helperButtonList.addElement(this.speedUpToggle)
         this.speedUpToggle.onClick.add(() => {
@@ -361,6 +361,18 @@ export default class MergeScreen extends Screen {
             this.refreshToggles();
 
         })
+
+        this.autoMergeToggle = new UIButton1(0x002299, 'auto-merge-icon')
+        this.helperButtonList.addElement(this.autoMergeToggle)
+        this.autoMergeToggle.onClick.add(() => {
+            if (window.gameModifyers.modifyersData.autoMerge == 1) {
+
+                window.gameModifyers.modifyersData.autoMerge = 2
+                window.gameModifyers.updateModifyer('autoMerge')
+            }
+            else
+                window.gameModifyers.modifyersData.autoMerge == 1
+        })
         this.refreshToggles();
 
         this.helperButtonList.updateHorizontalList();
@@ -377,6 +389,11 @@ export default class MergeScreen extends Screen {
         this.currentOpenPopUp = null;
 
 
+        this.shopsLabel = new PIXI.Text('SHOPS', LABELS.LABEL1);
+        this.container.addChild(this.shopsLabel)
+        this.shopsLabel.style.fontSize = 24
+        this.shopsLabel.style.stroke = 0x002299
+        this.shopsLabel.style.strokeThickness = 6
 
         this.openSettingsShop = new UIButton1(0x002299, 'stationIcon', 0xFFFFFF, buttonSize, buttonSize)
         this.openSettingsShop.updateIconScale(0.75)
@@ -495,31 +512,41 @@ export default class MergeScreen extends Screen {
         this.timeBonus = new TimeBonusButton('speedShip', 100, 50, 'large-square-pattern-cyan')
         this.timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5, 30)
         this.timeBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
-        this.timeBonus.setDescription('++Ships', 'Increase new ships speed')
+        this.timeBonus.setDescription('Ships', 'Increase new ships speed', true)
 
         this.damageBonus = new TimeBonusButton('damageBonus', 100, 50, 'large-square-pattern-cyan')
         this.damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30)
         this.damageBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
-        this.damageBonus.setDescription('++Damage', 'Increase Ship Damage')
+        this.damageBonus.setDescription('Damage', 'Increase Ship Damage', true)
 
         this.speedBonus = new TimeBonusButton('drill', 100, 50, 'large-square-pattern-cyan')
-        this.speedBonus.setParams(window.gameModifyers.bonusData, 'resourceSpeed', 1, 0.05, 30)
+        this.speedBonus.setParams(window.gameModifyers.bonusData, 'autoCollectResource', false, true, 120)
+        //this.speedBonus.setParams(window.gameModifyers.bonusData, 'resourceSpeed', 1, 0.05, 30)
         this.speedBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
-        this.speedBonus.setDescription('+Resources', 'Increase Resource Collection')
+        this.speedBonus.setDescription('Auto Collect', 'Auto collect resources', true)
+
+
+        this.autoMergeBonus = new TimeBonusButton('auto-merge-icon', 100, 50, 'large-square-pattern-cyan')
+        this.autoMergeBonus.setParams(window.gameModifyers.bonusData, 'autoMerge', 1, 2, 120)
+        //this.autoMergeBonus.setParams(window.gameModifyers.bonusData, 'resourceSpeed', 1, 0.05, 30)
+        this.autoMergeBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
+        this.autoMergeBonus.setDescription('Auto Merge', 'Auto place and merge new ships', true)
 
         this.bonusTimers = [];
-        this.bonusTimers.push(this.timeBonus);
         this.bonusTimers.push(this.damageBonus);
+        this.bonusTimers.push(this.timeBonus);
         this.bonusTimers.push(this.speedBonus);
+        this.bonusTimers.push(this.autoMergeBonus);
 
 
         this.bonusTimerList = new UIList();
         this.bonusTimerList.w = 120;
-        this.bonusTimerList.h = 280;
+        this.bonusTimerList.h = 320;
         this.container.addChild(this.bonusTimerList)
-        this.bonusTimerList.addElement(this.timeBonus)
         this.bonusTimerList.addElement(this.damageBonus)
+        this.bonusTimerList.addElement(this.timeBonus)
         this.bonusTimerList.addElement(this.speedBonus)
+        this.bonusTimerList.addElement(this.autoMergeBonus)
 
 
         this.bonusTimerList.updateVerticalList();
@@ -580,9 +607,11 @@ export default class MergeScreen extends Screen {
             customData.gravity = 500
             customData.alphaDecress = 0
             customData.ignoreMatchRotation = true
-            let coinPosition = this.coinTexture.parent.getGlobalPosition();
-            let frontLayer = this.frontLayer.getGlobalPosition();
-            customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }
+            let coinPosition = this.coinTexture.getGlobalPosition();
+
+            let toLocalTarget = this.particleSystem.toLocal(coinPosition)
+
+            customData.target = { x: toLocalTarget.x, y: toLocalTarget.y, timer: 0.2 + Math.random() * 0.75 }
             this.particleSystem.show(toLocal, 3, customData)
         }
         if (prizes.shards > 0) {
@@ -596,9 +625,11 @@ export default class MergeScreen extends Screen {
                 customData.alphaDecress = 0
                 customData.ignoreMatchRotation = true
 
-                let coinPosition = this.shardsTexture.parent.getGlobalPosition();
-                let frontLayer = this.frontLayer.getGlobalPosition();
-                customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }
+                let coinPosition = this.shardsTexture.getGlobalPosition();
+
+                let toLocalTarget = this.particleSystem.toLocal(coinPosition)
+
+                customData.target = { x: toLocalTarget.x, y: toLocalTarget.y, timer: 0.2 + Math.random() * 0.75 }
                 this.particleSystem.show(toLocal, 3, customData)
             }, 50);
 
@@ -670,8 +701,9 @@ export default class MergeScreen extends Screen {
                 customData.gravity = 200
                 customData.alphaDecress = 0
                 let coinPosition = this.shardsTexture.parent.getGlobalPosition();
-                let frontLayer = this.frontLayer.getGlobalPosition();
-                customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }
+                let toLocalTarget = this.particleSystem.toLocal(coinPosition)
+
+                customData.target = { x: toLocalTarget.x, y: toLocalTarget.y , timer: 0.2 + Math.random() * 0.75 }
                 this.particleSystem.show(toLocal, 1, customData)
             }, 20 * index);
         }
@@ -762,8 +794,11 @@ export default class MergeScreen extends Screen {
 
         let frontLayer = this.frontLayer.getGlobalPosition();
 
+        let toLocalTarget = this.particleSystem.toLocal(coinPosition)
+
         for (let index = 0; index < quantParticles; index++) {
-            customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }
+            //customData.target = { x: coinPosition.x - frontLayer.x, y: coinPosition.y - frontLayer.y, timer: 0.2 + Math.random() * 0.75 }
+            customData.target = { x: toLocalTarget.x, y: toLocalTarget.y, timer: 0.2 + Math.random() * 0.75 }
             customData.ignoreMatchRotation = true;
             this.particleSystem.show(toLocal, 1, customData)
         }
@@ -880,16 +915,26 @@ export default class MergeScreen extends Screen {
 
         this.resourcesWrapper.x = Math.min(0, toGlobal.x + 150);
         let xRightMax = this.gridWrapper.x + this.gridWrapper.width
-        this.resourcesWrapper.y = this.gridWrapper.y - 60;
-        this.resourcesWrapperRight.x = Math.max(xRightMax, -this.resourcesWrapper.x + xRightMax) 
+        this.resourcesWrapper.y = this.gridWrapper.y - 90;
+        this.resourcesWrapperRight.x = Math.max(xRightMax, -this.resourcesWrapper.x + xRightMax)
         this.bonusTimerList.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2 - 12
-        
-        if(!window.isPortrait ){
-            this.resourcesWrapperRight.x-= 20;
-            this.bonusTimerList.x -=8
+
+        if (!window.isPortrait) {
+            this.resourcesWrapper.y -= 60
+            this.resourcesWrapperRight.x -= 20;
+            this.bonusTimerList.x -= 8
+            this.bonusTimerList.scale.set(1.25)
+            this.shopsLabel.scale.set(1.5)
+
+        } else {
+            this.bonusTimerList.scale.set(1)
+            this.shopsLabel.scale.set(1)
         }
+
+
+
         this.resourcesWrapperRight.y = this.resourcesWrapper.y;
-        this.bonusTimerList.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 40
+        this.bonusTimerList.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 35
 
 
 
@@ -908,15 +953,28 @@ export default class MergeScreen extends Screen {
         // this.statsList.y = 150
 
         if (!window.isPortrait) {
-            this.statsList.scale.set(1.5)
+            this.statsList.scale.set(1.6)
+            this.spaceStation.x = this.resourcesWrapper.x + 180;
+            this.spaceStation.y = this.resourcesWrapper.y + 150;
+
         } else {
             this.statsList.scale.set(1.1)
+
+            this.spaceStation.x = this.resourcesWrapper.x + 50;
+            this.spaceStation.y = this.resourcesWrapper.y + 40;
         }
+
+
+
 
         this.statsList.x = this.resourcesWrapper.x
         this.statsList.y = config.height - this.statsList.h - 100
         this.shopButtonsList.x = config.width / 2 - this.shopButtonsList.w / 2 + 40
         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 35
+
+        this.shopsLabel.x = this.shopButtonsList.x - this.shopsLabel.width - 50
+        this.shopsLabel.y = this.shopButtonsList.y + 50 - this.shopsLabel.height
+
         this.helperButtonList.x = 15
         this.helperButtonList.y = config.height - this.shopButtonsList.h - 30
 
@@ -930,11 +988,10 @@ export default class MergeScreen extends Screen {
         });
 
         this.systemsList.forEach(element => {
-            element.resize(resolution);
+            element.resize(resolution, innerResolution, this.resourcesWrapperRight);
         });
 
-        this.spaceStation.x = this.resourcesWrapper.x + 50;
-        this.spaceStation.y = this.resourcesWrapper.y + 10;
+
     }
 
     transitionOut(nextScreen) {

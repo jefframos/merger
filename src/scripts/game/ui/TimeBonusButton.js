@@ -75,6 +75,9 @@ export default class TimeBonusButton extends PIXI.Container {
     confirmBonus(){
         window.DO_REWARD(() => {
             this.activeTimer = this.bonusTime
+            setTimeout(() => {
+                window.gameModifyers.updateModifyer(this.param)                
+            }, 10);
         })
 
     }
@@ -107,6 +110,9 @@ export default class TimeBonusButton extends PIXI.Container {
             this.sin += delta * 5;
             this.mainButton.y = Math.sin(this.sin) * 2
 
+
+            this.bonusLabel.y = -this.buttonHeight / 2 - this.bonusLabel.height - 2 + Math.sin(this.sin) * 2
+
             this.bonusTimer.y = this.buttonHeight * 0.5 + 9 + Math.sin(this.sin) * 2
             this.videoSprite.visible = false;
             this.seconds.visible = false;
@@ -122,12 +128,15 @@ export default class TimeBonusButton extends PIXI.Container {
             this.mainButton.y = 0
             this.sin = 0;
 
+            this.bonusLabel.y = -this.buttonHeight / 2 - this.bonusLabel.height - 2
+
             this.mainButton.icon.x = -20
         }
     }
-    setDescription(text,detail) {
+    setDescription(text,detail, addTime = false) {
         this.shortDescription = text;
-        this.fullDescription = detail;
+        let extra = addTime? '\nfor '+this.bonusTime+' seconds':'';
+        this.fullDescription = detail + extra
         this.bonusLabel.text = text;
         this.bonusLabel.x = this.buttonWidth / 2 - this.bonusLabel.width
         this.bonusLabel.y = -this.buttonHeight / 2 - this.bonusLabel.height - 2
