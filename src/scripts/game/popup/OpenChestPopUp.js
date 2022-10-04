@@ -197,6 +197,34 @@ export default class OpenChestPopUp extends PIXI.Container {
                 id: 2
             }
         ]
+        this.isShowing = false;
+        window.onSpacePressed.add(() => {
+            if (!this.isShowing ) {
+                return;
+            }
+            if (this.openChestContainer.visible) {
+                this.confirmCallback(this.prize[this.prizeID]);
+                this.close()
+            }
+            if (this.chestContainer.visible) {
+
+                this.openVideoChest();
+            }
+        })
+
+        window.onEscPressed.add(()=>{
+            if (!this.isShowing ) {
+                return;
+            }
+            if (this.openChestContainer.visible) {
+                this.confirmCallback(this.prize[this.prizeID]);
+                this.close()
+            }
+            if (this.chestContainer.visible) {
+
+                this.openNormalChest();
+            }
+        })
     }
     openNormalChest() {
         this.prizes[1].updateIcon('shipPrize')

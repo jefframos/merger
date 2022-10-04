@@ -49,7 +49,7 @@ export default class EntityShop extends PIXI.Container {
         this.title.style.fontSize = 38
         this.title.style.stroke = 0
         this.title.style.strokeThickness = 6
-        
+
         this.portrait = new PIXI.Sprite.fromFrame('portraitMale');
         this.container.addChild(this.portrait);
         this.portrait.scale.set(0.65)
@@ -116,6 +116,13 @@ export default class EntityShop extends PIXI.Container {
             this.updateCurrentResources();
             this.updateToggleValue();
         }, 500);
+
+        window.onEscPressed.add(() => {
+            if (!this.visible) {
+                return;
+            }
+           this.hideFromClick();
+        })
     }
     confirm() {
         this.hide();

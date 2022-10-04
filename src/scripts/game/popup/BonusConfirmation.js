@@ -73,7 +73,7 @@ export default class BonusConfirmation extends PIXI.Container {
 
         this.readySin = 0;
 
-        this.collectButton = new UILabelButton1(130,60)
+        this.collectButton = new UILabelButton1(130, 60)
         this.collectButton.addVideoIcon()
         this.collectButton.addCenterLabel("Activate")
         this.chestContainer.addChild(this.collectButton)
@@ -102,7 +102,27 @@ export default class BonusConfirmation extends PIXI.Container {
         this.labelTitle.y = -this.h / 2 + 30
         this.chestContainer.addChild(this.labelTitle)
 
+        this.isShowing = false;
+        window.onSpacePressed.add(() => {
+            if (!this.isShowing) {
+                return;
+            }
+            if (this.chestContainer.visible) {
 
+                this.openVideoChest();
+            }
+        })
+
+
+        window.onEscPressed.add(() => {
+            if (!this.isShowing) {
+                return;
+            }
+            if (this.chestContainer.visible) {
+
+                this.close()
+            }
+        })
     }
     openNormalChest() {
         //this.close()
@@ -129,7 +149,7 @@ export default class BonusConfirmation extends PIXI.Container {
     }
     show(param) {
 
-        this.labelTitle.text = param.shortDescription+' Bonus';
+        this.labelTitle.text = param.shortDescription + ' Bonus';
         this.labelTitle.x = - this.labelTitle.width / 2
         this.visible = true;
         this.textBox.updateText(param.description);

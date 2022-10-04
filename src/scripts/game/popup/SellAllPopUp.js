@@ -182,6 +182,20 @@ export default class SellAllPopUp extends PIXI.Container {
         this.collectButton.onClick.add(() => {
             this.close()
         })
+        this.isShowing = false
+        window.onSpacePressed.add(()=>{
+            if(!this.isShowing){
+                return;
+            }
+            this.openVideoChest();
+        })
+        window.onEscPressed.add(()=>{
+            if(!this.isShowing){
+                return;
+            }
+            this.close()
+        })
+        
        
     }
     openNormalChest() {

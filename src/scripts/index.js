@@ -265,7 +265,29 @@ function myBlurFunction() {
 }
 
 
+window.onEscPressed = new signals();
+window.onSpacePressed = new signals();
 
+window.getKey = function (e) {
+	if (e.key === "Escape") { // escape key maps to keycode `27`
+		// <DO YOUR WORK HERE>
+		window.onEscPressed.dispatch()
+		// if(this.gameRunning){
+		// 	this.inGameMenu.toggleState();
+		// }
+	}
+
+	if (e.keyCode === 32) { // escape key maps to keycode `27`
+		window.onSpacePressed.dispatch()
+		// <DO YOUR WORK HERE>
+
+	}
+}
+
+document.addEventListener('keydown', (event) => {
+	window.getKey(event);
+	event.preventDefault()
+})
 //tryStuff()
 
 function tryStuff() {

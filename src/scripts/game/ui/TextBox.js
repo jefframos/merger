@@ -1,11 +1,11 @@
 import * as PIXI from 'pixi.js';
 // import * as FILTERS from 'pixi-filters';
 export default class TextBox extends PIXI.Container {
-    constructor(padding = 10) {
+    constructor(padding = 10, tex = 'small-no-pattern') {
         super();
         this.padding = padding
         this.background = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame('small-no-pattern'), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame(tex), 10, 10, 10, 10)
         this.addChild(this.background)
 
         this.label = new PIXI.Text('Thanks for helping us\nChoose your prize', LABELS.LABEL1);

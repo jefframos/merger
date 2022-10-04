@@ -3,6 +3,8 @@ import * as PIXI from 'pixi.js';
 import Signals from 'signals';
 import UIButton1 from '../ui/UIButton1';
 import config from '../../config';
+import TextBox from '../ui/TextBox';
+import UILabelButton1 from '../ui/UILabelButton1';
 
 export default class StandardPop extends PIXI.Container
 {
@@ -18,8 +20,8 @@ export default class StandardPop extends PIXI.Container
 
         this.container = new PIXI.Container();
 
-        this.w = config.width * 0.5;
-        this.h = config.width * 0.5;
+        this.w = config.width * 0.75;
+        this.h = config.height * 0.35;
 
         this.background = new PIXI.Graphics().beginFill(0).drawRect(-config.width * 5, -config.height * 5,config.width*10, config.height * 10) 
         this.addChild(this.background)
@@ -48,30 +50,51 @@ export default class StandardPop extends PIXI.Container
         this.container.y = 0//-this.container.height / 2;
         this.addChild(this.container)
 
-     
+            
+        this.label1 = new PIXI.Text('!', LABELS.LABEL1);
+        this.label2 = new PIXI.Text('!', LABELS.LABEL1);
 
-        this.readyLabel = new PIXI.Text('!', LABELS.LABEL2);
-        this.readyLabel.style.fontSize = 14
-        this.readyLabel.style.fill = 0xffffff
+        this.coin1 = new PIXI.Sprite.fromFrame('coin-large')
+        this.coin2 = new PIXI.Sprite.fromFrame('plus-coins')
+        this.coin1.anchor.set(0.5)
+        this.coin2.anchor.set(0.5)
+        this.container.addChild(this.coin1)
+        this.container.addChild(this.coin2)
+
+
+        this.coin1.addChild(this.label1)
+        this.coin2.addChild(this.label2)
+        this.label2.style.fontSize = 24
+
+        this.readyLabel = new TextBox(40,'small-no-pattern-purple')
+         this.readyLabel.label.style.fontSize = 32
+        // this.readyLabel.style.fill = 0xffffff
         this.readyLabel.pivot.x = this.readyLabel.width / 2;
-        this.readyLabel.pivot.y = this.readyLabel.height  / 2 + 45
+        this.readyLabel.pivot.y = this.readyLabel.height  / 2
         this.container.addChild(this.readyLabel)
-        this.confirmButton = new UIButton1(null,'video-icon', 0xffffff, 85, 65, 'small-no-pattern-green')
+        this.confirmButton = new UILabelButton1(150, 80, 'small-no-pattern-green')
+        this.confirmButton.addCenterLabel('COLLECT x2')
+        this.confirmButton.addVideoIcon()
+        this.confirmButton.pivot.x = 75
+        this.confirmButton.pivot.y = 40
         this.container.addChild(this.confirmButton)
-        this.confirmButton.x = 75
-        this.confirmButton.y = this.h / 2 - 60
+        this.confirmButton.x = 90
+        this.confirmButton.y = this.h / 2 - 100
         this.confirmButton.onClick.add(()=>{
             if(this.confirmCallback){
                 this.confirmCallback()
                 this.confirm()
             }
         })
-        this.cancelButton = new UIButton1(null,'icon-close', 0xffffff, 85, 65, 'small-no-pattern-grey')
-        this.container.addChild(this.cancelButton)
-        this.cancelButton.x = -75
-        this.cancelButton.y = this.h / 2 - 60
+        this.cancelButton = new UILabelButton1(130, 70, 'small-no-pattern-grey')
+        this.cancelButton.pivot.x = 130/2
+        this.cancelButton.addCenterLabel('COLLECT')
 
-        this.cancelButton.updateIconScale(0.4)
+        this.cancelButton.pivot.y = 35
+        this.container.addChild(this.cancelButton)
+        this.cancelButton.x = -90
+        this.cancelButton.y = this.h / 2 - 100
+
         this.cancelButton.onClick.add(()=>{
             if(this.cancelCallback){
                 this.cancelCallback()
@@ -80,6 +103,13 @@ export default class StandardPop extends PIXI.Container
 
             }
         })
+
+        this.coin1.x = this.cancelButton.x
+        this.coin2.x = this.confirmButton.x
+
+
+        this.coin1.y = this.cancelButton.y - 130
+        this.coin2.y = this.coin1.y
 
         this.container.visible = false;
 
@@ -107,9 +137,20 @@ export default class StandardPop extends PIXI.Container
             this.confirmCallback = null;
             this.cancelCallback = null;
         }
-        this.readyLabel.text = param?param.label:''
+
+        this.label1.text = param.value1
+        this.label1.pivot.x = this.label1.width / 2
+        this.label1.y = 40
+
+        this.label2.text = param.value2
+        this.label2.pivot.x = this.label2.width / 2
+        this.label2.y = 40
+
+        this.readyLabel.updateText(param?param.label:'')
         this.readyLabel.pivot.x = this.readyLabel.width / 2;
-        this.readyLabel.pivot.y = this.readyLabel.height  / 2 + 45
+        this.readyLabel.pivot.y = this.readyLabel.height  / 2
+
+        this.readyLabel.y = -this.h/2
 
     }
     afterHide(){

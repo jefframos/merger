@@ -503,6 +503,9 @@ export default class MergeScreen extends Screen {
             if (this.savedResources.entities[element.rawData.nameID]) {
                 let saved = this.savedResources.entities[element.rawData.nameID];
                 let time = saved.latestResourceAdd - saved.latestResourceCollect
+                if(time < 0){
+                    time = 0.1
+                }
                 this.sumStart += time * element.getRPS();
 
                 //console.log(this.sumStart, element.getRPS(), time)
@@ -557,14 +560,16 @@ export default class MergeScreen extends Screen {
         let now = Date.now() / 1000 | 0
         let diff = now - this.savedEconomy.lastChanged
 
-        //console.log(diff, this.sumStart)
+        console.log(diff, this.sumStart)
         if (diff > 60 && this.sumStart > 10) {
             let params = {
-                label: 'your ships\ncollected\n' + utils.formatPointsLabel(this.sumStart) + '\n\nWould you like to watch\na video and double?',
+                label: 'OFFLINE MONEY' +"\n\You've earned",
+                value1: utils.formatPointsLabel(this.sumStart),
+                value2: utils.formatPointsLabel(this.sumStart*2),
                 onConfirm: this.collectStartAmountDouble.bind(this),
                 onCancel: this.collectStartAmount.bind(this)
             }
-            //this.standardPopUpShow(params)
+            this.standardPopUpShow(params)
         }
 
         this.forcePauseSystemsTimer = 0.05;
@@ -920,10 +925,10 @@ export default class MergeScreen extends Screen {
         this.bonusTimerList.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2 - 12
 
         if (!window.isPortrait) {
-            this.resourcesWrapper.y -= 60
+            this.resourcesWrapper.y -= 65
             this.resourcesWrapperRight.x -= 20;
             this.bonusTimerList.x -= 8
-            this.bonusTimerList.scale.set(1.25)
+            this.bonusTimerList.scale.set(1.2)
             this.shopsLabel.scale.set(1.5)
 
         } else {
@@ -934,7 +939,7 @@ export default class MergeScreen extends Screen {
 
 
         this.resourcesWrapperRight.y = this.resourcesWrapper.y;
-        this.bonusTimerList.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 35
+        this.bonusTimerList.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
 
 
 
