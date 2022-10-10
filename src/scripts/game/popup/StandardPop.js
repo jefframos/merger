@@ -73,7 +73,7 @@ export default class StandardPop extends PIXI.Container
         this.readyLabel.pivot.y = this.readyLabel.height  / 2
         this.container.addChild(this.readyLabel)
         this.confirmButton = new UILabelButton1(150, 80, 'small-no-pattern-green')
-        this.confirmButton.addCenterLabel('COLLECT x2')
+        this.confirmButton.addCenterLabel(window.localizationManager.getLabel('collect')+' x2')
         this.confirmButton.addVideoIcon()
         this.confirmButton.pivot.x = 75
         this.confirmButton.pivot.y = 40
@@ -88,7 +88,7 @@ export default class StandardPop extends PIXI.Container
         })
         this.cancelButton = new UILabelButton1(130, 70, 'small-no-pattern-grey')
         this.cancelButton.pivot.x = 130/2
-        this.cancelButton.addCenterLabel('COLLECT')
+        this.cancelButton.addCenterLabel(window.localizationManager.getLabel('collect'))
 
         this.cancelButton.pivot.y = 35
         this.container.addChild(this.cancelButton)

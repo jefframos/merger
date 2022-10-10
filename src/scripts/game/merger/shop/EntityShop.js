@@ -45,7 +45,7 @@ export default class EntityShop extends PIXI.Container {
         this.tiledBackground2.tileScale.set(0.2)
         this.tiledBackground2.alpha = 0.1
 
-        this.title = new PIXI.Text('Resources', LABELS.LABEL1);
+        this.title = new PIXI.Text(window.localizationManager.getLabel('resources'), LABELS.LABEL1);
         this.title.style.fontSize = 38
         this.title.style.stroke = 0
         this.title.style.strokeThickness = 6

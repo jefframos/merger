@@ -38,8 +38,8 @@ window.GAMEPLAY_STOP = function () {
     window.GAMEPLAY_IS_STOP = true;
     PokiSDK.gameplayStop();
 }
-window.GAMEPLAY_START = function () {
-    if (!window.GAMEPLAY_IS_STOP) {
+window.GAMEPLAY_START = function (force = false) {
+    if (!window.GAMEPLAY_IS_STOP && !force) {
         return
     }
     window.GAMEPLAY_IS_STOP = false;
@@ -133,7 +133,7 @@ function loadManifests() {
     }
     PIXI.loader.load(afterLoadManifests);
 }
-PokiSDK.setDebug(false);
+PokiSDK.setDebug(true);
 
 function afterLoadManifests(evt) {
 
@@ -235,7 +235,7 @@ function configGame(evt) {
     // screenManager.addScreen(gameScreen);
     // screenManager.forceChange('GameScreen');
     game.start();
-    window.GAMEPLAY_START()
+    window.GAMEPLAY_START(true)
     window.addEventListener("focus", myFocusFunction, true);
     window.addEventListener("blur", myBlurFunction, true);
 
@@ -269,6 +269,7 @@ window.onEscPressed = new signals();
 window.onSpacePressed = new signals();
 
 window.getKey = function (e) {
+    if(window.GAMEPLAY_IS_STOP) return;
 	if (e.key === "Escape") { // escape key maps to keycode `27`
 		// <DO YOUR WORK HERE>
 		window.onEscPressed.dispatch()

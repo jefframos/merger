@@ -13,10 +13,10 @@ export default class ParticleSystem extends PIXI.Container {
 
         this.particles = [];
 
-        this.maxParticles = 200;
+        this.maxParticles = 60;
 
         if (window.isMobile) {
-            this.maxParticles = 80;
+            this.maxParticles = 30;
         }
 
     }

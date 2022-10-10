@@ -75,7 +75,7 @@ export default class BonusConfirmation extends PIXI.Container {
 
         this.collectButton = new UILabelButton1(130, 60)
         this.collectButton.addVideoIcon()
-        this.collectButton.addCenterLabel("Activate")
+        this.collectButton.addCenterLabel(window.localizationManager.getLabel('activate'), true)
         this.chestContainer.addChild(this.collectButton)
         this.collectButton.pivot.x = this.collectButton.width / 2;
         this.collectButton.y = 60
@@ -149,7 +149,7 @@ export default class BonusConfirmation extends PIXI.Container {
     }
     show(param) {
 
-        this.labelTitle.text = param.shortDescription + ' Bonus';
+        this.labelTitle.text = param.shortDescription + ' '+window.localizationManager.getLabel('bonus');
         this.labelTitle.x = - this.labelTitle.width / 2
         this.visible = true;
         this.textBox.updateText(param.description);

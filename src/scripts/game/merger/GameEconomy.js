@@ -4,7 +4,11 @@ export default class GameEconomy {
     constructor() {
         this.economyData = COOKIE_MANAGER.getEconomy();
         console.log(this.economyData)
-        this.currentResources = this.economyData.resources
+        if(!this.economyData){
+            this.currentResources = 0
+        }else{
+            this.currentResources = this.economyData.resources
+        }
         this.onMoneySpent = new Signals();
     }
     resetAll(){

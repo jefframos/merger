@@ -135,7 +135,7 @@ export default class TimeBonusButton extends PIXI.Container {
     }
     setDescription(text,detail, addTime = false) {
         this.shortDescription = text;
-        let extra = addTime? '\nfor '+this.bonusTime+' seconds':'';
+        let extra = addTime? '\n'+window.localizationManager.getLabel('for')+' '+this.bonusTime+' '+window.localizationManager.getLabel('seconds'):'';
         this.fullDescription = detail + extra
         this.bonusLabel.text = text;
         this.bonusLabel.x = this.buttonWidth / 2 - this.bonusLabel.width

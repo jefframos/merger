@@ -52,4 +52,12 @@ export default class UIButton2 extends UIButton1 {
         this.interactive = true;
         this.buttonMode = true;
     }
+    addCenterLabel(label, color = 0xFFFFFF, fit = 0) {
+        this.buttonLabel = new PIXI.Text(label, LABELS.LABEL1);
+        this.buttonLabel.style.fontSize = 24
+        if(fit){
+            this.buttonLabel.scale.set(this.backShape.width / this.buttonLabel.width * fit)
+        }
+        this.addChild(this.buttonLabel);
+    }
 }

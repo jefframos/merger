@@ -28,7 +28,7 @@ export default class SpaceStation extends PIXI.Container {
         this.increase.position.set(80)
         this.addChild(this.increase);
 
-        this.helpLabel = new PIXI.Text('SELL', LABELS.LABEL_SPACESHIP);
+        this.helpLabel = new PIXI.Text(window.localizationManager.getLabel('sell', true), LABELS.LABEL_SPACESHIP);
         this.helpLabel.style.fontSize = 56
         this.helpLabel.style.fill = 0xFFFFFF
         this.helpLabel.style.strokeThickness = 6

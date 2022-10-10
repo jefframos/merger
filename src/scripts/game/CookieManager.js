@@ -160,15 +160,7 @@ export default class CookieManager {
 		this.storeObject('progression', this.progression)
 	}
 
-	createCookie(name, value, days) {
-		let sValue = JSON.stringify(value);
-		try {
-			window.localStorage.setItem(name, sValue)
-		} catch (e) {
-			// alert(sValue)
-			//  	alert(e)
-		}
-	}
+
 	updateModifyers(data) {
 		this.modifyers = data;
 		this.storeObject('modifyers', this.modifyers)
@@ -197,24 +189,30 @@ export default class CookieManager {
 	getBoard() {
 		return this.getCookie('board')
 	}
+
+	createCookie(name, value, days) {
+		let sValue = JSON.stringify(value);
+		try {
+			window.localStorage.setItem(name, sValue)
+		} catch (e) {
+		}
+	}
 	getCookie(name) {
 		try {
-			return JSON.parse(window.localStorage.getItem(name))//(result === null) ? null : result[1];
-
+			return JSON.parse(window.localStorage.getItem(name))
 		} catch (e) {
+			return this[name]
 		}
 	}
 	storeObject(name, value) {
 
 		try {
 			window.localStorage.setItem(name, JSON.stringify(value))
-
 		} catch (e) {
 		}
 	}
 	resetCookie() {
 		try {
-
 			for (var i in window.localStorage) {
 				window.localStorage.removeItem(i);
 			}
@@ -225,7 +223,6 @@ export default class CookieManager {
 		this.resetCookie();
 
 		try {
-
 			window.localStorage.clear();
 			window.location.reload();
 		} catch (e) {

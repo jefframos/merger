@@ -121,16 +121,16 @@ export default class ShopItem extends UIList {
         this.previewValue = 1;
         this.unlockItem();
         this.currentTogglePreviewValue = 1;
-        
+
     }
-    
+
     lockItem() {
         if (this.itemData) {
             if (this.itemData.rawData.type == "resource") {
-                this.lockState.setLabel("Purchase " + this.itemData.rawData.displayName + " to upgrade")
+                this.lockState.setLabel(window.localizationManager.getLabel('purchase') + ' ' + this.filterLocalized(this.itemData.rawData.displayName) + ' ' + window.localizationManager.getLabel('to-upgrade'))
                 this.lockState.setIcon(this.itemData.rawData.tileImageSrc)
             } else {
-                this.lockState.setLabel("Unlock " + this.itemData.rawData.displayName + " to upgrade")
+                this.lockState.setLabel(window.localizationManager.getLabel('unlock') + ' ' + this.filterLocalized(this.itemData.rawData.displayName) + ' ' + window.localizationManager.getLabel('to-upgrade'))
                 this.lockState.setIcon(this.itemData.rawData.imageSrc, 0.8)
             }
         }
@@ -178,7 +178,7 @@ export default class ShopItem extends UIList {
         }
         this.itemIcon.texture = PIXI.Texture.from(this.staticData.icon)
 
-        this.levelLabel.text = 'Level ' + this.itemData.level
+        this.levelLabel.text = window.localizationManager.getLabel('level') + this.itemData.level
 
         if (this.itemData.level <= 0) {
             this.attributesList.visible = false;
@@ -199,17 +199,18 @@ export default class ShopItem extends UIList {
                 if (this.staticData.stats[type]) {
                     if (!this.staticData.stats[type].hideOnShop) {
                         if (leveldValues[type]) {
-                            
+                            let desc = this.filterLocalized(this.itemData.rawData.attributeDescription);
+
                             if (leveldValues[type] < 100) {
                                 this.attributesList[type].text = leveldValues[type].toFixed(2)
-                                if(this.itemData.rawData.attributeDescription){
-                                    this.attributesList[type].text += this.itemData.rawData.attributeDescription
+                                if (desc) {
+                                    this.attributesList[type].text += desc
                                 }
                             }
                             else {
                                 this.attributesList[type].text = utils.formatPointsLabel(leveldValues[type] / MAX_NUMBER);
-                                if(this.itemData.rawData.attributeDescription){
-                                    this.attributesList[type].text += this.itemData.rawData.attributeDescription
+                                if (desc) {
+                                    this.attributesList[type].text += desc
                                 }
                             }
                         }
@@ -294,16 +295,19 @@ export default class ShopItem extends UIList {
         }
 
         let extra = ''
-        if(!this.itemData.rawData.quantify || this.itemData.rawData.quantifyBoolean){
-            extra+='/s'
+        if (!this.itemData.rawData.quantify || this.itemData.rawData.quantifyBoolean) {
+            extra += '/s'
         }
-        if(this.itemData.rawData.attributeDescription){
-            extra+=' '+this.itemData.rawData.attributeDescription
+        if (this.itemData.rawData.attributeDescription) {
+
+            let desc = this.filterLocalized(this.itemData.rawData.attributeDescription);
+
+            extra += ' ' + desc
         }
         this.attributesList['cost'].text = utils.formatPointsLabel(currentRPS) + extra
         //this.attributesList['value'].text = utils.formatPointsLabel(Math.ceil(nextRPS - currentRPS)) + extra
-        this.attributesList['value'].text = '+ '+utils.formatPointsLabel(nextRPS - currentRPS)
-        
+        this.attributesList['value'].text = '+ ' + utils.formatPointsLabel(nextRPS - currentRPS)
+
         this.shopButton.updateCoast(utils.formatPointsLabel(this.realCost))
 
         if (this.realCost <= window.gameEconomy.currentResources) {
@@ -314,7 +318,7 @@ export default class ShopItem extends UIList {
 
 
         let isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax - 1;
-        
+
         if (this.itemData.rawData.quantify && this.itemData.rawData.quantifyBoolean) {
             isMax = this.itemData.currentLevel > 1;
         }
@@ -322,17 +326,17 @@ export default class ShopItem extends UIList {
         if (this.itemData.rawData.quantify && !this.itemData.rawData.quantifyBoolean) {
             isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax;
         }
-        this.levelLabel.text = 'Level\n' + this.itemData.currentLevel
+        this.levelLabel.text = window.localizationManager.getLabel('level')+'\n' + this.itemData.currentLevel
         // this.itemData = GAME_DATA.getUpdatedItem(this.itemData.dataType, this.itemData.id)
         if (isMax) {
-            this.levelLabel.text = 'Level\n' + this.itemData.rawData.levelMax;
+            this.levelLabel.text = window.localizationManager.getLabel('level')+'\n' + this.itemData.rawData.levelMax;
             this.levelBar.updatePowerBar(1)
             this.shopButton.deactiveMax()
             this.infoUpgrade.text = ''
             this.attributesList['c_value'].visible = false
 
 
-            
+
             if (this.itemData.rawData.quantify) {
 
                 this.attributesList['c_cost'].visible = false
@@ -340,11 +344,11 @@ export default class ShopItem extends UIList {
                     this.levelBar.visible = false;
                     this.attributesList['c_cost'].visible = false
                     this.attributesList['c_value'].visible = false
-                    this.levelLabel.text = 'Enabled'
+                    this.levelLabel.text = window.localizationManager.getLabel('enabled')
 
                 } else {
 
-                    this.levelLabel.text = this.itemData.rawData.quantifyMessage + '\n' + this.itemData.currentLevel
+                    this.levelLabel.text = this.filterLocalized(this.itemData.rawData.quantifyMessage) + '\n' + this.itemData.currentLevel
                 }
 
             }
@@ -360,7 +364,7 @@ export default class ShopItem extends UIList {
                     this.levelLabel.text = ''
 
                 } else {
-                    this.levelLabel.text = this.itemData.rawData.quantifyMessage + '\n' + this.itemData.currentLevel
+                    this.levelLabel.text = this.filterLocalized(this.itemData.rawData.quantifyMessage) + '\n' + this.itemData.currentLevel
                 }
             }
         }
@@ -368,15 +372,23 @@ export default class ShopItem extends UIList {
 
         this.updateHorizontalList();
     }
+    filterLocalized(label) {
+        let desc = label;
+        if (desc && desc[0] == '$') {
+            let subs = desc.substring(1)
+            desc = window.localizationManager.getLabel(subs.toLowerCase());
+        }
+        return desc
+    }
     setData(itemData) {
         this.itemData = itemData;
         let image = this.itemData.rawData.tileImageSrc ? this.itemData.rawData.tileImageSrc : this.itemData.rawData.imageSrc
         this.itemIcon.texture = new PIXI.Texture.from(image);
-        this.descriptionLabel.text = this.itemData.rawData.displayName
+        this.descriptionLabel.text = this.filterLocalized(this.itemData.rawData.displayName)
 
-        
-        let iconType = this.itemData.type == 'damage'? 'bullets':'coin' 
-        if(this.itemData.modifyerIcon){
+
+        let iconType = this.itemData.type == 'damage' ? 'bullets' : 'coin'
+        if (this.itemData.modifyerIcon) {
             iconType = this.itemData.modifyerIcon
         }
         let types = [{ name: 'cost', icon: iconType }, { name: 'value', icon: 'icon_increase' }]
@@ -410,7 +422,7 @@ export default class ShopItem extends UIList {
                 //this.attributesList.elementsList.push(attContainer);
                 this.attributesList.addChild(attContainer);
 
-               
+
                 this.attributesList[element.name] = attValue;
                 this.attributesList["c_" + element.name] = attContainer;
                 count++

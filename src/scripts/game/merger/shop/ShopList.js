@@ -60,7 +60,6 @@ export default class ShopList extends ListScroller
     }
     hide()
     {
-        console.log('HIDDDDDDEEEEE');
         for (var i = 0; i < this.itens.length; i++)
         {
             this.itens[i].hide()

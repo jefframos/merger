@@ -13,7 +13,7 @@ export default class UILabelButton1 extends PIXI.Container {
 
         this.padding = 8;
         this.backShapeBorder = new PIXI.mesh.NineSlicePlane(
-            PIXI.Texture.fromFrame(tex), 10, 10, 10, 10)
+            PIXI.Texture.fromFrame(tex), 15, 15, 15, 15)
         this.backShapeBorder.width = width + this.padding
         this.backShapeBorder.height = height + this.padding
 
@@ -114,14 +114,17 @@ export default class UILabelButton1 extends PIXI.Container {
     }
     addCenterLabel(label, color = 0xFFFFFF, fit = 0) {
         this.buttonLabel = new PIXI.Text(label, LABELS.LABEL1);
-        if(fit){
-            this.buttonLabel.scale.set(this.backShapeBorder.width / this.buttonLabel.width * fit)
-        }
+        this.buttonLabel.style.stroke = 0
+        this.buttonLabel.style.strokeThickness = 3
         this.buttonLabel.style.fontSize = 24
-        this.buttonLabel.pivot.x = this.buttonLabel.width / 2 * this.buttonLabel.scale.x;
-        this.buttonLabel.pivot.y = this.buttonLabel.height / 2 * this.buttonLabel.scale.y;
-        this.buttonLabel.x = this.backShapeBorder.width / 2 * this.buttonLabel.scale.x;
-        this.buttonLabel.y = this.backShapeBorder.height / 2 * this.buttonLabel.scale.y;
+        if(fit){
+            this.buttonLabel.scale.set(this.buttonLabel.width/this.backShapeBorder.width  * fit)
+        }
+        setTimeout(() => {
+            
+            this.buttonLabel.x = this.backShapeBorder.width / 2 -this.buttonLabel.width/2;
+            this.buttonLabel.y = this.backShapeBorder.height / 2 -this.buttonLabel.height/2;
+        }, 10);
         this.addChild(this.buttonLabel);
     }
     updateTexture(texture) {

@@ -24,6 +24,8 @@ import SellAllPopUp from '../../popup/SellAllPopUp';
 import StandardEnemy from '../enemy/StandardEnemy';
 import SpaceStation from '../../ui/SpaceStation';
 import BonusConfirmation from '../../popup/BonusConfirmation';
+import UILabelButton1 from '../../ui/UILabelButton1';
+import LocalizationManager from '../../LocalizationManager';
 
 export default class MergeScreen extends Screen {
     constructor(label) {
@@ -37,6 +39,7 @@ export default class MergeScreen extends Screen {
 
         // console.log(a)
 
+        window.localizationManager = new LocalizationManager('EN');
         window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
         window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
         window.baseEnemies = PIXI.loader.resources[window.baseConfigGame.entitiesData].data.mergeEntities.enemies;
@@ -388,8 +391,11 @@ export default class MergeScreen extends Screen {
 
         this.currentOpenPopUp = null;
 
+        this.autoSpend = new UILabelButton1(80,40, 'large-square-pattern-green');
+        //this.container.addChild(this.autoSpend)
+        this.autoSpend.addCenterLabel(window.localizationManager.getLabel('auto-buy'), 0xffffff,0.9)
 
-        this.shopsLabel = new PIXI.Text('SHOPS', LABELS.LABEL1);
+        this.shopsLabel = new PIXI.Text(window.localizationManager.getLabel('shops'), LABELS.LABEL1);
         this.container.addChild(this.shopsLabel)
         this.shopsLabel.style.fontSize = 24
         this.shopsLabel.style.stroke = 0x002299
@@ -515,25 +521,25 @@ export default class MergeScreen extends Screen {
         this.timeBonus = new TimeBonusButton('speedShip', 100, 50, 'large-square-pattern-cyan')
         this.timeBonus.setParams(window.gameModifyers.bonusData, 'generateTimerBonus', 1, 5, 30)
         this.timeBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
-        this.timeBonus.setDescription('Ships', 'Increase new ships speed', true)
+        this.timeBonus.setDescription(window.localizationManager.getLabel('bonus4'), window.localizationManager.getLabel('bonus4desc'), true)
 
         this.damageBonus = new TimeBonusButton('damageBonus', 100, 50, 'large-square-pattern-cyan')
         this.damageBonus.setParams(window.gameModifyers.bonusData, 'damageBonus', 1, 10, 30)
         this.damageBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
-        this.damageBonus.setDescription('Damage', 'Increase Ship Damage', true)
+        this.damageBonus.setDescription(window.localizationManager.getLabel('bonus3'), window.localizationManager.getLabel('bonus3desc'), true)
 
         this.speedBonus = new TimeBonusButton('drill', 100, 50, 'large-square-pattern-cyan')
         this.speedBonus.setParams(window.gameModifyers.bonusData, 'autoCollectResource', false, true, 120)
         //this.speedBonus.setParams(window.gameModifyers.bonusData, 'resourceSpeed', 1, 0.05, 30)
         this.speedBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
-        this.speedBonus.setDescription('Auto Collect', 'Auto collect resources', true)
+        this.speedBonus.setDescription(window.localizationManager.getLabel('bonus2'), window.localizationManager.getLabel('bonus2desc'), true)
 
 
         this.autoMergeBonus = new TimeBonusButton('auto-merge-icon', 100, 50, 'large-square-pattern-cyan')
         this.autoMergeBonus.setParams(window.gameModifyers.bonusData, 'autoMerge', 1, 2, 120)
         //this.autoMergeBonus.setParams(window.gameModifyers.bonusData, 'resourceSpeed', 1, 0.05, 30)
         this.autoMergeBonus.onClickBuff.add(this.onConfirmBonus.bind(this))
-        this.autoMergeBonus.setDescription('Auto Merge', 'Auto place and merge new ships', true)
+        this.autoMergeBonus.setDescription(window.localizationManager.getLabel('bonus1'), window.localizationManager.getLabel('bonus1desc'), true)
 
         this.bonusTimers = [];
         this.bonusTimers.push(this.damageBonus);
@@ -560,10 +566,9 @@ export default class MergeScreen extends Screen {
         let now = Date.now() / 1000 | 0
         let diff = now - this.savedEconomy.lastChanged
 
-        console.log(diff, this.sumStart)
         if (diff > 60 && this.sumStart > 10) {
             let params = {
-                label: 'OFFLINE MONEY' +"\n\You've earned",
+                label: window.localizationManager.getLabel('offline-money'),
                 value1: utils.formatPointsLabel(this.sumStart),
                 value2: utils.formatPointsLabel(this.sumStart*2),
                 onConfirm: this.collectStartAmountDouble.bind(this),
@@ -741,8 +746,11 @@ export default class MergeScreen extends Screen {
         }
     }
     collectStartAmountDouble() {
-        this.resourceSystem.collectStartAmount(2)
-        this.resourceSystemRight.collectStartAmount(2)
+
+        window.DO_REWARD(() => {            
+            this.resourceSystem.collectStartAmount(2)
+            this.resourceSystemRight.collectStartAmount(2)
+        })
     }
     collectStartAmount() {
         this.resourceSystem.collectStartAmount()
@@ -980,6 +988,8 @@ export default class MergeScreen extends Screen {
         this.shopsLabel.x = this.shopButtonsList.x - this.shopsLabel.width - 50
         this.shopsLabel.y = this.shopButtonsList.y + 50 - this.shopsLabel.height
 
+        this.autoSpend.x = this.shopButtonsList.x - this.autoSpend.width - 50
+        this.autoSpend.y = this.shopButtonsList.y - 45
         this.helperButtonList.x = 15
         this.helperButtonList.y = config.height - this.shopButtonsList.h - 30
 

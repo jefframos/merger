@@ -95,7 +95,7 @@ export default class SellAllPopUp extends PIXI.Container {
         this.chest2.interactive = true;
         this.chest2.buttonMode = true;
 
-        this.watchToOpen = new PIXI.Text('SELL', LABELS.LABEL_CHEST);
+        this.watchToOpen = new PIXI.Text(window.localizationManager.getLabel('sell', true), LABELS.LABEL_CHEST);
         this.watchToOpen.style.fontSize = 14
         this.watchToOpen.style.fill = 0xffffff
         this.watchToOpen.pivot.x = this.watchToOpen.width / 2 - 30;
@@ -175,7 +175,7 @@ export default class SellAllPopUp extends PIXI.Container {
         }
         this.shinePrize.y = -80
         this.collectButton = new UILabelButton1(130)
-        this.collectButton.addCenterLabel("Collect")
+        this.collectButton.addCenterLabel(window.localizationManager.getLabel('collect'))
         this.openChestContainer.addChild(this.collectButton)
         this.collectButton.pivot.x = this.collectButton.width / 2;
         this.collectButton.y = 120
@@ -246,12 +246,12 @@ export default class SellAllPopUp extends PIXI.Container {
     show(param) {
         this.totalShards = param.shards
         this.visible = true;
-        this.textBox.updateText("You can sell your fleet for\n"+utils.formatPointsLabel(param.shards)+" Shards");
+        this.textBox.updateText(window.localizationManager.getLabel('sell-popup')+'\n'+utils.formatPointsLabel(param.shards)+" Shards");
         this.textBoxPrize.label.style.fontSize = 22
         this.textBoxPrize.label.style.fill = 0xffffff
         this.textBoxPrize.label.style.stroke = 0xad07fb
         this.textBoxPrize.label.style.strokeThickness = 6
-        this.textBoxPrize.updateText('+'+utils.formatPointsLabel(param.shards)+' x All Damage\n'+'+'+utils.formatPointsLabel(param.shards)+' x All Resources')
+        this.textBoxPrize.updateText('+'+utils.formatPointsLabel(param.shards)+' x '+window.localizationManager.getLabel('sell-popup-damage')+'\n'+'+'+utils.formatPointsLabel(param.shards)+' x '+window.localizationManager.getLabel('sell-popup-damage'))
 
         //this.textBoxPrize.label.style.align = 'left'
         this.textBoxPrize.background.alpha = 0

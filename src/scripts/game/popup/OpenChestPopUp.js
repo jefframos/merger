@@ -54,7 +54,7 @@ export default class OpenChestPopUp extends PIXI.Container {
 
 
 
-        this.readyLabel = new PIXI.Text('Thanks for helping us\nChoose your prize', LABELS.LABEL_CHEST);
+        this.readyLabel = new PIXI.Text(window.localizationManager.getLabel('help-popup'), LABELS.LABEL_CHEST);
         this.readyLabel.style.fontSize = 18
         this.readyLabel.style.fill = 0xffffff
         this.readyLabel.pivot.x = this.readyLabel.width / 2;
@@ -79,7 +79,7 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.chest1.interactive = true;
         this.chest1.buttonMode = true;
 
-        this.openLabel = new PIXI.Text('OPEN', LABELS.LABEL2);
+        this.openLabel = new PIXI.Text(window.localizationManager.getLabel('open', true), LABELS.LABEL2);
         this.openLabel.style.fontSize = 24
         this.openLabel.style.fill = 0xffffff
         this.openLabel.pivot.x = this.openLabel.width / 2;
@@ -107,7 +107,7 @@ export default class OpenChestPopUp extends PIXI.Container {
         this.chest2.interactive = true;
         this.chest2.buttonMode = true;
 
-        this.watchToOpen = new PIXI.Text('OPEN', LABELS.LABEL_CHEST);
+        this.watchToOpen = new PIXI.Text(window.localizationManager.getLabel('open', true), LABELS.LABEL_CHEST);
         this.watchToOpen.style.fontSize = 24
         this.watchToOpen.style.stroke = 0x0090ff
         this.watchToOpen.style.fill = 0xffffff
@@ -170,7 +170,7 @@ export default class OpenChestPopUp extends PIXI.Container {
         }
         this.shinePrize.y = -80
         this.collectButton = new UILabelButton1(130)
-        this.collectButton.addCenterLabel("Collect")
+        this.collectButton.addCenterLabel(window.localizationManager.getLabel('collect'))
         this.openChestContainer.addChild(this.collectButton)
         this.collectButton.pivot.x = this.collectButton.width / 2;
         this.collectButton.y = 100
@@ -265,7 +265,7 @@ export default class OpenChestPopUp extends PIXI.Container {
 
         }
         this.prizes[0].updateLabel2(utils.formatPointsLabel(this.prize[this.prizeID].money))
-        this.prizes[1].updateLabel2('New Ship')
+        this.prizes[1].updateLabel2(window.localizationManager.getLabel('new-ship'))
         this.prizes[2].updateLabel2(utils.formatPointsLabel(this.prize[this.prizeID].shards))
 
         for (let index = 0; index < total + 1; index++) {

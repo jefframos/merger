@@ -50,7 +50,7 @@ export default class EnemySystem {
         //color, icon, iconColor =0xFFFFFF, width = 40, height = 40
 
         this.invokeBossBattle = new UILabelButton1( 150, 60, 'boss-button')
-        this.invokeBossBattle.addCenterLabel('Fight BOSS')
+        this.invokeBossBattle.addCenterLabel(window.localizationManager.getLabel('boss-fight'))
         //this.invokeBossBattle.updateIconScale(0.8)
         this.container.addChild(this.invokeBossBattle)
         this.invokeBossBattle.x = 240

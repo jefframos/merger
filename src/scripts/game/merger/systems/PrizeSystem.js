@@ -22,7 +22,7 @@ export default class PrizeSystem {
         this.helpIcon.y = -30
         this.entity.enemySprite.addChild(this.helpIcon)
 
-        this.helpLabel = new PIXI.Text('HELP', LABELS.LABEL_CHEST);
+        this.helpLabel = new PIXI.Text(window.localizationManager.getLabel('help', true), LABELS.LABEL_CHEST);
         this.helpLabel.style.fontSize = 54
         this.helpLabel.style.fill = 0xffffff
         this.helpLabel.x = 30

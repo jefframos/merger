@@ -22,7 +22,7 @@ export default class GeneralShop extends EntityShop {
 
     }
     show() {
-        this.title.text = "Upgrades"        
+        this.title.text = window.localizationManager.getLabel('upgrades')       
         this.visible = true;
         this.currentItens.forEach(element => { 
             element.updatePreviewValue(this.toggles.currentActiveValue)
