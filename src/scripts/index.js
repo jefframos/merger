@@ -193,7 +193,7 @@ function startLoader() {
 window.COOKIE_MANAGER = new CookieManager();
 function configGame(evt) {
 
-    window.localizationManager = new LocalizationManager();
+    window.localizationManager = new LocalizationManager('');
 
     SOUND_MANAGER.load(audioManifest);
     window.game = new Game(config);

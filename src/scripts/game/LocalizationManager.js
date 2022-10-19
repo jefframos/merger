@@ -1,5 +1,5 @@
 export default class LocalizationManager {
-    constructor() {
+    constructor(forceLanguage) {
         this.defaultLanguage = PIXI.loader.resources['localization_EN'].data.labels
         this.currentLanguage = PIXI.loader.resources['localization_EN'].data.labels
 
@@ -8,11 +8,13 @@ export default class LocalizationManager {
         if (lang) {
             let lang2 = lang[0] + lang[1]
             lang2 = lang2.toUpperCase();
+            if(forceLanguage){
+                lang2 = forceLanguage;
+            }
             if (PIXI.loader.resources['localization_' + lang2]) {
                 let newLang = PIXI.loader.resources['localization_' + lang2];
                 if (newLang.data && newLang.data.labels) {
                     this.currentLanguage = newLang.data.labels;
-                    console.log(this.currentLanguage)
                 }
             }
 
@@ -22,7 +24,11 @@ export default class LocalizationManager {
         if (this.currentLanguage[id]) {
             return caps ? this.currentLanguage[id].toUpperCase() : this.currentLanguage[id]
         } else {
-            return "_NOT FOUND"
+            if (this.defaultLanguage[id]) {
+                return caps ? this.defaultLanguage[id].toUpperCase() : this.defaultLanguage[id]
+            } else {
+                return "_NOT FOUND"
+            }
         }
     }
 }

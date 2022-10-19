@@ -41,7 +41,7 @@ export default class GameTutorial extends PIXI.Container {
                 },
                 handOffset: { x: 0, y: 0 },
                 hitOffset: { x: -40, y: -40 },
-                textBoxOffset: { x: -40, y: -40 }
+                textBoxOffset: { x: 60, y: -40 }
             },
             {
                 text:'tutorial_4',
@@ -61,7 +61,7 @@ export default class GameTutorial extends PIXI.Container {
                 },
                 handOffset: { x: 40, y: 0 },
                 hitOffset: { x: 0, y: 0 },
-                textBoxOffset: { x: -120, y: 0 }
+                textBoxOffset: { x: -40, y: -20 }
             },
             {
                 text:'tutorial_5',
@@ -75,7 +75,7 @@ export default class GameTutorial extends PIXI.Container {
                 handMoveTo: { x: 0, y: -180 },
                 handOffset: { x: 0, y: 0 },
                 hitOffset: { x: 0, y: 0 },
-                textBoxOffset: { x: -80, y: 0 }
+                textBoxOffset: { x: 80, y: -280 }
             },
             {
                 text:'tutorial_6',
@@ -88,7 +88,7 @@ export default class GameTutorial extends PIXI.Container {
                 handMoveTo: { x: 0, y: -180 },
                 handOffset: { x: 0, y: 0 },
                 hitOffset: { x: 0, y: 0 },
-                textBoxOffset: { x: -80, y: 0 }
+                textBoxOffset: { x: 80, y: -280 }
             },
             {
                 text:'tutorial_7',
@@ -120,7 +120,7 @@ export default class GameTutorial extends PIXI.Container {
                 },
                 handOffset: { x: 40, y: 0 },
                 hitOffset: { x: 0, y: 0 },
-                textBoxOffset: { x: -120, y: 0 }
+                textBoxOffset: { x: -40, y: -20 }
             },
             {
                 text:'tutorial_9',
@@ -136,7 +136,7 @@ export default class GameTutorial extends PIXI.Container {
                 },
                 handOffset: { x: 0, y: 0 },
                 hitOffset: { x: -40, y: -40 },
-                textBoxOffset: { x: -40, y: -40 }
+                textBoxOffset: { x: 250, y: -40 }
             },
             {
                 text:'tutorial_10',
@@ -152,7 +152,7 @@ export default class GameTutorial extends PIXI.Container {
                 },
                 handOffset: { x: 40, y: 0 },
                 hitOffset: { x: 0, y: 0 },
-                textBoxOffset: { x: -120, y: 0 }
+                textBoxOffset: { x: -40, y: -20 }
             }, {
                 text:'tutorial_11',
                 targetF: () => {
@@ -184,7 +184,7 @@ export default class GameTutorial extends PIXI.Container {
                 hideHitBox: true,
                 handOffset: { x: 40, y: 0 },
                 hitOffset: { x: 0, y: 0 },
-                textBoxOffset: { x: 120, y: -200 }
+                textBoxOffset: { x: 140, y: -200 }
             },
         ]
         this.boundingButtom = new PIXI.Graphics().beginFill(0x445566).drawRect(0, 0, 140, 140);
@@ -206,6 +206,7 @@ export default class GameTutorial extends PIXI.Container {
 
         this.textBox = new TextBox(20, 'small-no-pattern-white');
         this.addChild(this.textBox);
+        this.textBox.label.style.fontSize = 22
         this.textBox.label.style.fill = 0x15376c
 
         this.textBox.updateText("Test")
