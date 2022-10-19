@@ -22,6 +22,8 @@ export default class MergeSystem {
         this.onDealDamage = new Signals();
         this.onPopLabel = new Signals();
         this.onParticles = new Signals();
+        this.onEntityMerge = new Signals();
+        this.onEntityAdd = new Signals();
 
         this.slotsContainer = new PIXI.Container();
         this.container.addChild(this.slotsContainer)
@@ -615,6 +617,9 @@ export default class MergeSystem {
 
                 slot.addEntity(target);
                 COOKIE_MANAGER.addMergePiece(target, slot.id.i, slot.id.j)
+
+                this.onEntityMerge.dispatch()
+
             } else {
 
                 if (!this.currentDragSlot.isGenerator) {
@@ -626,7 +631,9 @@ export default class MergeSystem {
                     COOKIE_MANAGER.addMergePiece(copyData, slot.id.i, slot.id.j)
                 } else {
                     //doesnt do anything coz is coming from the generator
-                    //this.currentDragSlot.addEntity(copyDataTargetSlot);                    
+                    //this.currentDragSlot.addEntity(copyDataTargetSlot);   
+                    this.onEntityAdd.dispatch()
+                    
                 }
             }
         } else {
@@ -634,6 +641,7 @@ export default class MergeSystem {
             COOKIE_MANAGER.addMergePiece(null, this.currentDragSlot.id.i, this.currentDragSlot.id.j)
             slot.addEntity(copyData);
             COOKIE_MANAGER.addMergePiece(copyData, slot.id.i, slot.id.j)
+            this.onEntityAdd.dispatch()
         }
 
 
@@ -649,6 +657,7 @@ export default class MergeSystem {
         this.draggingEntity = false;
         this.currentDragSlot = null;
         this.updateAllData();
+
 
     }
     updateTotalGenerators() {

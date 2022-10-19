@@ -25,7 +25,8 @@ import StandardEnemy from '../enemy/StandardEnemy';
 import SpaceStation from '../../ui/SpaceStation';
 import BonusConfirmation from '../../popup/BonusConfirmation';
 import UILabelButton1 from '../../ui/UILabelButton1';
-import LocalizationManager from '../../LocalizationManager';
+
+import GameTutorial from '../tutorial/GameTutorial';
 
 export default class MergeScreen extends Screen {
     constructor(label) {
@@ -39,7 +40,6 @@ export default class MergeScreen extends Screen {
 
         // console.log(a)
 
-        window.localizationManager = new LocalizationManager('EN');
         window.baseConfigGame = PIXI.loader.resources['baseGameConfig'].data.baseGame;
         window.baseEntities = PIXI.loader.resources[window.baseConfigGame.entitiesData].data;
         window.baseEnemies = PIXI.loader.resources[window.baseConfigGame.entitiesData].data.mergeEntities.enemies;
@@ -244,21 +244,21 @@ export default class MergeScreen extends Screen {
         this.container.addChild(this.statsList)
 
 
-        this.resourcesContainer = new PIXI.mesh.NineSlicePlane(
+        this.resourcesContainerLabel = new PIXI.mesh.NineSlicePlane(
             PIXI.Texture.fromFrame('grid1'), 20, 20, 20, 5)
-        this.resourcesContainer.width = this.statsList.w
-        this.resourcesContainer.height = 40
+        this.resourcesContainerLabel.width = this.statsList.w
+        this.resourcesContainerLabel.height = 40
 
         this.resourcesLabel = new PIXI.Text('', LABELS.LABEL1);
         this.resourcesLabel.style.fontSize = 14
-        utils.centerObject(this.resourcesLabel, this.resourcesContainer)
+        utils.centerObject(this.resourcesLabel, this.resourcesContainerLabel)
         this.resourcesLabel.x -= 10
-        this.resourcesContainer.addChild(this.resourcesLabel)
-        this.statsList.addElement(this.resourcesContainer)
+        this.resourcesContainerLabel.addChild(this.resourcesLabel)
+        this.statsList.addElement(this.resourcesContainerLabel)
 
         this.coinTexture = new PIXI.Sprite.from('coin')
         this.resourcesLabel.addChild(this.coinTexture)
-        this.coinTexture.scale.set(this.resourcesContainer.height / this.coinTexture.height * 0.5)
+        this.coinTexture.scale.set(this.resourcesContainerLabel.height / this.coinTexture.height * 0.5)
         this.coinTexture.x = -23
         this.coinTexture.y = -3
 
@@ -391,9 +391,9 @@ export default class MergeScreen extends Screen {
 
         this.currentOpenPopUp = null;
 
-        this.autoSpend = new UILabelButton1(80,40, 'large-square-pattern-green');
+        this.autoSpend = new UILabelButton1(80, 40, 'large-square-pattern-green');
         //this.container.addChild(this.autoSpend)
-        this.autoSpend.addCenterLabel(window.localizationManager.getLabel('auto-buy'), 0xffffff,0.9)
+        this.autoSpend.addCenterLabel(window.localizationManager.getLabel('auto-buy'), 0xffffff, 0.9)
 
         this.shopsLabel = new PIXI.Text(window.localizationManager.getLabel('shops'), LABELS.LABEL1);
         this.container.addChild(this.shopsLabel)
@@ -509,7 +509,7 @@ export default class MergeScreen extends Screen {
             if (this.savedResources.entities[element.rawData.nameID]) {
                 let saved = this.savedResources.entities[element.rawData.nameID];
                 let time = saved.latestResourceAdd - saved.latestResourceCollect
-                if(time < 0){
+                if (time < 0) {
                     time = 0.1
                 }
                 this.sumStart += time * element.getRPS();
@@ -561,6 +561,10 @@ export default class MergeScreen extends Screen {
         this.bonusTimerList.updateVerticalList();
         this.shopButtonsList.updateHorizontalList();
 
+        this.bonusTimers.forEach(element => {
+            element.x = 0
+        });
+
         this.savedEconomy = COOKIE_MANAGER.getEconomy();
 
         let now = Date.now() / 1000 | 0
@@ -570,7 +574,7 @@ export default class MergeScreen extends Screen {
             let params = {
                 label: window.localizationManager.getLabel('offline-money'),
                 value1: utils.formatPointsLabel(this.sumStart),
-                value2: utils.formatPointsLabel(this.sumStart*2),
+                value2: utils.formatPointsLabel(this.sumStart * 2),
                 onConfirm: this.collectStartAmountDouble.bind(this),
                 onCancel: this.collectStartAmount.bind(this)
             }
@@ -594,6 +598,32 @@ export default class MergeScreen extends Screen {
         this.addChild(this.resetWhiteShape);
         this.resetWhiteShape.visible = false;
         //this.mergeItemsShop.show()
+
+        this.tutorialStep = window.COOKIE_MANAGER.getStats().tutorialStep;
+
+
+        this.gameTutorial = new GameTutorial(this)
+        if (this.tutorialStep == 0) {
+            if(window.gameEconomy.currentResources > 10){
+                COOKIE_MANAGER.endTutorial(2);
+            }else{
+
+                this.startTutorial();
+                this.addChild(this.gameTutorial);
+            }
+        }
+
+        console.log(window.COOKIE_MANAGER.getStats().tutorialStep);
+
+    }
+    startTutorial() {
+        setTimeout(() => {
+
+        }, 51);
+        this.gameTutorial.start();
+
+    }
+    endTutorial() {
 
     }
     onConfirmBonus(target) {
@@ -713,7 +743,7 @@ export default class MergeScreen extends Screen {
                 let coinPosition = this.shardsTexture.parent.getGlobalPosition();
                 let toLocalTarget = this.particleSystem.toLocal(coinPosition)
 
-                customData.target = { x: toLocalTarget.x, y: toLocalTarget.y , timer: 0.2 + Math.random() * 0.75 }
+                customData.target = { x: toLocalTarget.x, y: toLocalTarget.y, timer: 0.2 + Math.random() * 0.75 }
                 this.particleSystem.show(toLocal, 1, customData)
             }, 20 * index);
         }
@@ -746,15 +776,12 @@ export default class MergeScreen extends Screen {
         }
     }
     collectStartAmountDouble() {
-
-        window.DO_REWARD(() => {            
-            this.resourceSystem.collectStartAmount(2)
-            this.resourceSystemRight.collectStartAmount(2)
+        window.DO_REWARD(() => {
+            this.resourceSystem.collectCustomStartAmount(this.sumStart * 2)
         })
     }
     collectStartAmount() {
-        this.resourceSystem.collectStartAmount()
-        this.resourceSystemRight.collectStartAmount()
+        this.resourceSystem.collectCustomStartAmount(this.sumStart)
     }
     standardPopUpShow(params) {
         this.openPopUp(this.standardPopUp, params)
@@ -854,6 +881,8 @@ export default class MergeScreen extends Screen {
         });
         delta *= window.TIME_SCALE * window.gameModifyers.bonusData.gameSpeed;
 
+        this.gameTutorial.update(delta);
+
         if (this.forcePauseSystemsTimer > 0) {
             this.forcePauseSystemsTimer -= delta;
 
@@ -871,7 +900,7 @@ export default class MergeScreen extends Screen {
         });
 
         this.resourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources);
-        utils.centerObject(this.resourcesLabel, this.resourcesContainer)
+        utils.centerObject(this.resourcesLabel, this.resourcesContainerLabel)
         this.resourcesLabel.x = 30
 
         this.rpsLabel.text = utils.formatPointsLabel(this.resourceSystem.rps + this.resourceSystemRight.rps) + '/s';
@@ -939,15 +968,19 @@ export default class MergeScreen extends Screen {
             this.bonusTimerList.scale.set(1.2)
             this.shopsLabel.scale.set(1.5)
 
+            this.resourcesWrapperRight.y = this.resourcesWrapper.y;
+            this.bonusTimerList.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
+
         } else {
             this.bonusTimerList.scale.set(1)
             this.shopsLabel.scale.set(1)
+
+            this.resourcesWrapperRight.y = this.resourcesWrapper.y;
+            this.bonusTimerList.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 30
         }
 
 
 
-        this.resourcesWrapperRight.y = this.resourcesWrapper.y;
-        this.bonusTimerList.y = this.resourcesWrapperRight.y + this.resourcesWrapperRight.height + 50
 
 
 

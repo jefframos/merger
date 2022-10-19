@@ -87,7 +87,7 @@ export default class GameModifyers {
         return (this.modifyersData.attackSpeedValue || 1) * this.permanentBonusData.damageSpeed
     }
     getDrillSpeed() {
-        return (this.modifyersData.drillSpeedValue || 1) * this.bonusData.resourceSpeed * this.permanentBonusData.resourceSpeed
+        return ((this.modifyersData.drillSpeedValue || 1)) * this.bonusData.resourceSpeed * this.permanentBonusData.resourceSpeed
     }
     getTotalGenerators() {
         return (this.modifyersData.totalGenerators || 1)

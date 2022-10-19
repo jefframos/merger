@@ -74,12 +74,16 @@ export default class TimeBonusButton extends PIXI.Container {
     }
     confirmBonus(){
         window.DO_REWARD(() => {
-            this.activeTimer = this.bonusTime
-            setTimeout(() => {
-                window.gameModifyers.updateModifyer(this.param)                
-            }, 10);
+            this.confirmConfirm()
+           
         })
 
+    }
+    confirmConfirm(){
+        this.activeTimer = this.bonusTime
+        setTimeout(() => {
+            window.gameModifyers.updateModifyer(this.param)                
+        }, 10);
     }
     addCallback(callback) {
         this.callback = callback

@@ -32,7 +32,7 @@ export default class PrizeSystem {
         this.entity.on('mouseup', this.click.bind(this)).on('touchend', this.click.bind(this));
 
         this.timer = 360;
-        this.currentTimer = this.timer * Math.random();
+        this.currentTimer = this.timer * Math.random() + 180;
 
         this.velocity = {
             x: 0,
@@ -72,8 +72,8 @@ export default class PrizeSystem {
         this.currentTarget = this.targets[this.currentTargetId];
         this.speed = 20
 
-        this.spawn()
-
+        this.remove()
+        this.entity.visible = false;
         this.onCollect = new Signals();
 
     }

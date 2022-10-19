@@ -1,7 +1,8 @@
 export default class CookieManager {
 	constructor() {
 		this.defaultStats = {
-			test: 0
+			test: 0,
+			tutorialStep:0
 		}
 		this.defaultEconomy = {
 			resources: 0,
@@ -146,6 +147,11 @@ export default class CookieManager {
 
 		this.storeObject('board', this.board)
 	}
+	endTutorial(step){
+		this.stats.tutorialStep = step;
+		this.storeObject('stats', this.stats)
+
+	}
 	saveBoardLevel(level) {
 		this.board.currentBoardLevel = level;
 		this.storeObject('board', this.board)
@@ -170,6 +176,9 @@ export default class CookieManager {
 		this.sortCookieData('modifyers', this.defaultModifyers, true)
 		this.sortCookieData('resources', this.defaultResources, true)
 		this.sortCookieData('economy', this.defaultEconomy, true)
+	}
+	getStats() {
+		return this.getCookie('stats')
 	}
 	getModifyers() {
 		return this.getCookie('modifyers')

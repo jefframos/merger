@@ -13,6 +13,10 @@ import audioManifest from './manifests/manifest-audio'
 import spritesheetManifest from './manifests/manifest'
 import MergerScreenManager from './game/merger/screen/MergerScreenManager';
 import signals from 'signals';
+import LocalizationManager from './game/LocalizationManager';
+
+
+
 
 
 window.onAdds = new signals.Signal();
@@ -188,6 +192,9 @@ function startLoader() {
 
 window.COOKIE_MANAGER = new CookieManager();
 function configGame(evt) {
+
+    window.localizationManager = new LocalizationManager();
+
     SOUND_MANAGER.load(audioManifest);
     window.game = new Game(config);
     // FbManager.start()
@@ -269,25 +276,25 @@ window.onEscPressed = new signals();
 window.onSpacePressed = new signals();
 
 window.getKey = function (e) {
-    if(window.GAMEPLAY_IS_STOP) return;
-	if (e.key === "Escape") { // escape key maps to keycode `27`
-		// <DO YOUR WORK HERE>
-		window.onEscPressed.dispatch()
-		// if(this.gameRunning){
-		// 	this.inGameMenu.toggleState();
-		// }
-	}
+    if (window.GAMEPLAY_IS_STOP) return;
+    if (e.key === "Escape") { // escape key maps to keycode `27`
+        // <DO YOUR WORK HERE>
+        window.onEscPressed.dispatch()
+        // if(this.gameRunning){
+        // 	this.inGameMenu.toggleState();
+        // }
+    }
 
-	if (e.keyCode === 32) { // escape key maps to keycode `27`
-		window.onSpacePressed.dispatch()
-		// <DO YOUR WORK HERE>
+    if (e.keyCode === 32) { // escape key maps to keycode `27`
+        window.onSpacePressed.dispatch()
+        // <DO YOUR WORK HERE>
 
-	}
+    }
 }
 
 document.addEventListener('keydown', (event) => {
-	window.getKey(event);
-	event.preventDefault()
+    window.getKey(event);
+    event.preventDefault()
 })
 //tryStuff()
 

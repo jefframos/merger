@@ -44,30 +44,30 @@ export default class ResourceSystem {
 
         this.sumStart = 0;
         this.loadData();
-        
+
         this.timestamp = (Date.now() / 1000 | 0);
 
         setTimeout(() => {
-            this.resize(config, true)           
+            this.resize(config, true)
         }, 1);
 
         this.rps = 0;
     }
-    resetSystem(){
+    resetSystem() {
         this.resourceSlots.forEach(element => {
             element.resetTile();
         })
     }
-    loadData(){
+    loadData() {
         this.dataTiles.forEach(element => {
-            if(this.savedResources.entities[element.rawData.nameID]){            
+            if (this.savedResources.entities[element.rawData.nameID]) {
                 let saved = this.savedResources.entities[element.rawData.nameID];
-                let time = saved.latestResourceAdd - saved.latestResourceCollect                
-                this.addResourceSlot(element, this.savedResources.entities[element.rawData.nameID]); 
+                let time = saved.latestResourceAdd - saved.latestResourceCollect
+                this.addResourceSlot(element, this.savedResources.entities[element.rawData.nameID]);
                 this.sumStart += time * element.getRPS();
-                
-            }else{
-                this.addResourceSlot();            
+
+            } else {
+                this.addResourceSlot();
             }
         });
     }
@@ -76,19 +76,34 @@ export default class ResourceSystem {
         COOKIE_MANAGER.resetAllCollects();
         this.sumStart = 0;
     }
+    collectCustomStartAmount(sumStart) {
+        gameEconomy.addResources(sumStart)
+        COOKIE_MANAGER.resetAllCollects();
+        this.sumStart = 0;
+    }
     update(delta) {
         this.timestamp = (Date.now() / 1000 | 0)
-     
-        if(window.gameModifyers.bonusData.resourceSpeed < 1){
+
+        if (window.gameModifyers.bonusData.resourceSpeed < 1) {
             delta *= 10;
         }
         this.resourceSlots.forEach(element => {
-            element.update(delta , this.timestamp)
+            element.update(delta, this.timestamp)
         });
 
         this.rps = utils.findRPS2(this.resourceSlots)
     }
+    purchaseSlot(slot) {
+        if (!slot.tileData) {
+            if (window.gameEconomy.hasEnoughtResources(slot.initialCost)) {
+                window.gameEconomy.useResources(slot.initialCost)
+                slot.addEntity(this.dataTiles[slot.id])
+                COOKIE_MANAGER.buyResource(this.dataTiles[slot.id])
 
+            }
+            return;
+        }
+    }
     addResourceSlot(dataToAdd, savedStats) {
         let piece = new ResourceTile(0, 0, this.resourceSlotSize.width, 'coin', this.gameplayData.entityGeneratorBaseTime);
         let targetScale = config.height * 0.2 / piece.height
@@ -105,15 +120,7 @@ export default class ResourceSystem {
             }
         });
         piece.onUp.add((slot) => {
-            if (!slot.tileData) {
-                if(window.gameEconomy.hasEnoughtResources(slot.initialCost)){
-                    window.gameEconomy.useResources(slot.initialCost)
-                    slot.addEntity(this.dataTiles[slot.id])
-                    COOKIE_MANAGER.buyResource(this.dataTiles[slot.id])
-                    
-                }
-                return;
-            }
+            this.purchaseSlot(slot);
         });
         piece.onShowParticles.add((slot) => {
             let customData = {}
@@ -146,13 +153,13 @@ export default class ResourceSystem {
         piece.id = this.resourceSlots.length;
 
         piece.setTargetData(this.dataTiles[piece.id])
-        if(this.dataTiles[piece.id].rawData.isFirst){
+        if (this.dataTiles[piece.id].rawData.isFirst) {
             piece.forcePriceToZero();
         }
         this.resourceSlots.push(piece)
 
 
-        if(dataToAdd){
+        if (dataToAdd) {
             piece.addEntity(dataToAdd);
             piece.updateSavedStats(savedStats);
         }
@@ -172,16 +179,16 @@ export default class ResourceSystem {
         this.currentResolution.width = resolution.width;
         this.currentResolution.height = resolution.height;
 
-        if(window.isPortrait){
+        if (window.isPortrait) {
 
             this.resourceSlots.forEach(piece => {
-    
+
                 let targetScale = config.height * 0.2 / 60
                 piece.scale.set(Math.min(targetScale, 1))
             });
-        }else{
+        } else {
             this.resourceSlots.forEach(piece => {
-    
+
                 let targetScale = config.height * 0.3 / 60
                 piece.scale.set(Math.min(targetScale, 1.2))
             });
@@ -191,9 +198,9 @@ export default class ResourceSystem {
         this.updateGridPosition();
 
     }
-    findUpgrade(item){
+    findUpgrade(item) {
         this.resourceSlots.forEach(element => {
-            if(element.tileData && element.tileData.id == element.id){
+            if (element.tileData && element.tileData.id == element.id) {
                 element.tileData.setLevel(item.currentLevel)
             }
         });
@@ -206,7 +213,7 @@ export default class ResourceSystem {
         this.container.x = this.wrapper.x//this.wrapper.x + this.wrapper.width / 2 - (this.fixedSize.width * this.container.scale.x) / 2 + this.slotSize.distance * this.container.scale.x;;
         this.container.y = this.wrapper.y + this.wrapper.height / 2 - (this.fixedSize.height * this.container.scale.x) / 2 + this.slotSize.distanceResources * this.container.scale.y;
 
-        
+
         for (let index = this.resourceSlots.length - 1; index >= 0; index--) {
             const element = this.resourceSlots[this.resourceSlots.length - 1 - index];
             element.y = (this.slotSize.height + this.slotSize.distanceResources) * index
@@ -220,19 +227,19 @@ export default class ResourceSystem {
 
             //if (window.isMobile) {
 
-                this.resourceSlots.forEach(element => {
-                    let globalPosition = element.getCenterPosition();
-                    if (element.tileData) {
-                        let dist = utils.distance(globalPosition.x, globalPosition.y, this.mousePosition.x, this.mousePosition.y)
-                        let scaled = (this.resourceSlotSize.height * this.container.scale.x) / 2
-                        if (dist < scaled) {
-                            element.onMouseMoveOver(true);
-                        }else{
-                            element.outState()
-                        }
+            this.resourceSlots.forEach(element => {
+                let globalPosition = element.getCenterPosition();
+                if (element.tileData) {
+                    let dist = utils.distance(globalPosition.x, globalPosition.y, this.mousePosition.x, this.mousePosition.y)
+                    let scaled = (this.resourceSlotSize.height * this.container.scale.x) / 2
+                    if (dist < scaled) {
+                        element.onMouseMoveOver(true);
+                    } else {
+                        element.outState()
                     }
-                });
-            }
+                }
+            });
+        }
         //}
 
     }

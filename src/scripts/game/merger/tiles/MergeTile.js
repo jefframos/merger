@@ -295,7 +295,6 @@ export default class MergeTile extends PIXI.Container {
     onMouseMove(e) {
 
         this.onOver.dispatch();
-
         this.isOver = true;
         if (this.holding) {
             return;
