@@ -50,7 +50,7 @@
         "sell-popup-resources": "All Resources",
         "offline-money": "OFFLINE MONEY \nYou've earned",
         "tutorial_1": "Click to buy your\nfirst asteroid",
-        "tutorial_2": "When ready, over\nyour mouse to collect",
+        "tutorial_2": "When ready, hover\nyour mouse to collect",
         "tutorial_3": "Click here to open\nthe Resources Upgrades",
         "tutorial_4": "Upgrade your\nresource collection",
         "tutorial_5": "Drag your ships\nto battlefield\n\nIf you tap on the slot to\nbuild ship faster",
@@ -60,6 +60,19 @@
         "tutorial_9": "Click here to open the\n Base Upgrades",
         "tutorial_10": "Click here to buy an\nupgrade for your Drills' speed",
         "tutorial_11": "Use your bonus to\ntemporally improve your\nships in battle or help with\nresource collection",
-        "tutorial_12": "Merge your ships and upgrade\nthem to beat the strongest\nenemies in the galaxy"
+        "tutorial_12": "Merge your ships and upgrade\nthem to beat the strongest\nenemies in the galaxy",
+
+        "mobile_tutorial_1": "Tap to buy your\nfirst asteroid",
+        "mobile_tutorial_2": "When ready, \ntap to collect",
+        "mobile_tutorial_3": "Tap here to open\nthe Resources Upgrades",
+        "mobile_tutorial_4": "Upgrade your\nresource collection",
+        "mobile_tutorial_5": "Drag your ships\nto battlefield\n\nIf you tap on the slot to\nbuild ship faster",
+        "mobile_tutorial_6": "Combine 2 ships with\nthe same number to create a\nmore powerfull ship",
+        "mobile_tutorial_7": "Tap here to open the\n Spaceship Upgrades",
+        "mobile_tutorial_8": "Upgrade your ship damage\n to improve efficency in battle",
+        "mobile_tutorial_9": "Tap here to open the\n Base Upgrades",
+        "mobile_tutorial_10": "Tap here to buy an\nupgrade for your Drills' speed",
+        "mobile_tutorial_11": "Use your bonus to\ntemporally improve your\nships in battle or help with\nresource collection",
+        "mobile_tutorial_12": "Merge your ships and upgrade\nthem to beat the strongest\nenemies in the galaxy"
     }
 }

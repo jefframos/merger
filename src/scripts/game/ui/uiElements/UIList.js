@@ -109,7 +109,13 @@ export default class UIList extends PIXI.Container {
 
     }
 
+    removeAllElements() {
+        while (this.container.children.length) {
+            this.container.removeChildAt(0)
+        }
 
+        this.elementsList = []
+    }
     updateVerticalList() {
         let listSizes = [];
         let sum = 0;

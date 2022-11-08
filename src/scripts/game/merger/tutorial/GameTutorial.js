@@ -11,7 +11,7 @@ export default class GameTutorial extends PIXI.Container {
 
         this.tutorialSteps = [
             {
-                text:'tutorial_1',
+                text: 'tutorial_1',
                 target: this.mainScreen.resourceSystemRight.resourceSlots[0].backShape,
                 callback: () => {
                     this.mainScreen.resourceSystemRight.purchaseSlot(this.mainScreen.resourceSystemRight.resourceSlots[0])
@@ -22,18 +22,23 @@ export default class GameTutorial extends PIXI.Container {
 
             },
             {
-                text:'tutorial_2',
+                text: 'tutorial_2',
                 handOffset: { x: 0, y: 30 },
                 hitOffset: { x: 0, y: 0 },
                 handMoveTo: { x: 0, y: -80 },
                 textBoxOffset: { x: -40, y: 0 },
+                onShow: () => {                    
+                    setTimeout(() => {
+                        this.next();
+                    }, 3000);
 
+                },
                 hideHitBox: true,
                 target: this.mainScreen.resourceSystemRight.resourceSlots[0].backShape,
                 event: this.mainScreen.resourceSystemRight.resourceSlots[0].onOver,
             },
             {
-                text:'tutorial_3',
+                text: 'tutorial_3',
                 target: this.mainScreen.openShop.backShape,
                 toShow: [this.mainScreen.openShop, this.mainScreen.shopButtonsList],
                 callback: () => {
@@ -44,7 +49,7 @@ export default class GameTutorial extends PIXI.Container {
                 textBoxOffset: { x: 60, y: -40 }
             },
             {
-                text:'tutorial_4',
+                text: 'tutorial_4',
                 targetF: () => {
                     return this.mainScreen.entityShop.currentItens[0].shopButton
                 },
@@ -64,7 +69,7 @@ export default class GameTutorial extends PIXI.Container {
                 textBoxOffset: { x: -40, y: -20 }
             },
             {
-                text:'tutorial_5',
+                text: 'tutorial_5',
                 target: this.mainScreen.mergeSystem1.pieceGeneratorsList[0].backShape,
                 toShow: [this.mainScreen.enemiesContainer, this.mainScreen.uiContainer, this.mainScreen.mergeSystemContainer],
                 onShow: () => {
@@ -78,7 +83,7 @@ export default class GameTutorial extends PIXI.Container {
                 textBoxOffset: { x: 80, y: -280 }
             },
             {
-                text:'tutorial_6',
+                text: 'tutorial_6',
                 target: this.mainScreen.mergeSystem1.pieceGeneratorsList[0].backShape,
                 toShow: [this.mainScreen.enemiesContainer, this.mainScreen.uiContainer, this.mainScreen.mergeSystemContainer],
                 onShow: () => {
@@ -91,7 +96,7 @@ export default class GameTutorial extends PIXI.Container {
                 textBoxOffset: { x: 80, y: -280 }
             },
             {
-                text:'tutorial_7',
+                text: 'tutorial_7',
                 target: this.mainScreen.openMergeShop.backShape,
                 toShow: [this.mainScreen.openMergeShop, this.mainScreen.shopButtonsList],
                 callback: () => {
@@ -107,7 +112,7 @@ export default class GameTutorial extends PIXI.Container {
                 textBoxOffset: { x: -40, y: -40 }
             },
             {
-                text:'tutorial_8',
+                text: 'tutorial_8',
                 targetF: () => {
                     return this.mainScreen.mergeItemsShop.currentItens[0].shopButton
                 },
@@ -123,7 +128,7 @@ export default class GameTutorial extends PIXI.Container {
                 textBoxOffset: { x: -40, y: -20 }
             },
             {
-                text:'tutorial_9',
+                text: 'tutorial_9',
                 target: this.mainScreen.openSettingsShop.backShape,
                 toShow: [this.mainScreen.openSettingsShop, this.mainScreen.shopButtonsList],
                 onShow: () => {
@@ -139,7 +144,7 @@ export default class GameTutorial extends PIXI.Container {
                 textBoxOffset: { x: 250, y: -40 }
             },
             {
-                text:'tutorial_10',
+                text: 'tutorial_10',
                 targetF: () => {
                     return this.mainScreen.generalShop.currentItens[0].shopButton
                 },
@@ -153,21 +158,22 @@ export default class GameTutorial extends PIXI.Container {
                 handOffset: { x: 40, y: 0 },
                 hitOffset: { x: 0, y: 0 },
                 textBoxOffset: { x: -40, y: -20 }
-            }, {
-                text:'tutorial_11',
-                targetF: () => {
-                    return this.mainScreen.damageBonus
-                },
-                toShow: [this.mainScreen.bonusTimerList, this.mainScreen.damageBonus],
-                callback: () => {
-                    this.mainScreen.damageBonus.confirmConfirm();
-                },
-                handOffset: { x: 0, y: 30 },
-                hitOffset: { x: -60, y: -40 },
-                textBoxOffset: { x: -120, y: 0 }
             },
+            //  {
+            //     text: 'tutorial_11',
+            //     targetF: () => {
+            //         return this.mainScreen.damageBonus
+            //     },
+            //     toShow: [this.mainScreen.bonusTimerList, this.mainScreen.damageBonus],
+            //     callback: () => {
+            //         this.mainScreen.damageBonus.confirmConfirm();
+            //     },
+            //     handOffset: { x: 0, y: 30 },
+            //     hitOffset: { x: -60, y: -40 },
+            //     textBoxOffset: { x: -120, y: 0 }
+            // },
             {
-                text:'tutorial_12',
+                text: 'tutorial_12',
                 target: this.mainScreen.mergeSystemContainer,
                 toShow: [],
                 onShow: () => {
@@ -257,6 +263,7 @@ export default class GameTutorial extends PIXI.Container {
         this.visibleList.push(this.mainScreen.speedBonus)
         this.visibleList.push(this.mainScreen.autoMergeBonus)
         this.visibleList.push(this.mainScreen.prizeContainer)
+        this.visibleList.push(this.mainScreen.bonusContainer)
 
         this.visibleList.forEach(element => {
             element.visible = false;
@@ -297,8 +304,9 @@ export default class GameTutorial extends PIXI.Container {
         if (this.tutorialStep.onShow) {
             this.tutorialStep.onShow();
         }
-       
-        this.textBox.updateText( window.localizationManager.getLabel(this.tutorialStep.text))
+
+
+        this.textBox.updateText(window.localizationManager.getLabelTutorial(this.tutorialStep.text))
         this.currentListener = null;
         if (this.tutorialStep.timer) {
             setTimeout(() => {

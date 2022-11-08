@@ -137,7 +137,7 @@ function loadManifests() {
     }
     PIXI.loader.load(afterLoadManifests);
 }
-PokiSDK.setDebug(true);
+//PokiSDK.setDebug(true);
 
 function afterLoadManifests(evt) {
 
@@ -331,3 +331,5 @@ function tryStuff() {
         //console.log(d.initialProductivity * index * mult)
     }
 }
+
+

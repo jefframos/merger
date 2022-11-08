@@ -16,6 +16,7 @@ export default class TimeBonusButton extends PIXI.Container {
         this.mainButton.updateIconScale(0.7)
         this.mainButton.icon.x = -20
         this.onClickBuff = new signals.Signal();
+        this.onCompleteBuff = new signals.Signal();
 
         this.shine = new PIXI.Sprite.fromFrame('shine')
         this.shine.anchor.set(0.5)
@@ -107,6 +108,7 @@ export default class TimeBonusButton extends PIXI.Container {
             this.bonusTimer.setProgressBar(this.activeTimer / this.bonusTime);
             if (this.activeTimer <= 0) {
                 this.targetObject[this.param] = this.defaultValue;
+                this.onCompleteBuff.dispatch(this);
             } else {
                 this.targetObject[this.param] = this.targetValue;
             }
@@ -135,6 +137,8 @@ export default class TimeBonusButton extends PIXI.Container {
             this.bonusLabel.y = -this.buttonHeight / 2 - this.bonusLabel.height - 2
 
             this.mainButton.icon.x = -20
+
+            this.visible = false;
         }
     }
     setDescription(text,detail, addTime = false) {

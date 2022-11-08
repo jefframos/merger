@@ -27,10 +27,14 @@ import BonusConfirmation from '../../popup/BonusConfirmation';
 import UILabelButton1 from '../../ui/UILabelButton1';
 
 import GameTutorial from '../tutorial/GameTutorial';
+import BonusSystem from '../systems/BonusSystem';
 
 export default class MergeScreen extends Screen {
     constructor(label) {
         super(label);
+
+        window.isPortrait = window.innerWidth < window.innerHeight
+
         // let a = ''
         // for (let index = 1; index <= 20; index++) {
         //     console.log(Math.pow(1.1, index * 0.5))
@@ -103,6 +107,8 @@ export default class MergeScreen extends Screen {
         this.prizeContainer = new PIXI.Container()
         this.container.addChild(this.prizeContainer);
 
+        this.bonusContainer = new PIXI.Container()
+
         this.resourcesContainer = new PIXI.Container()
         this.container.addChild(this.resourcesContainer);
 
@@ -168,6 +174,10 @@ export default class MergeScreen extends Screen {
             mainContainer: this.prizeContainer
         })
 
+        this.bonusSystem = new BonusSystem({
+            mainContainer: this.bonusContainer
+        })
+
         this.mergeSystem1 = new MergeSystem({
             mainContainer: this.mergeSystemContainer,
             uiContainer: this.uiContainer,
@@ -191,6 +201,7 @@ export default class MergeScreen extends Screen {
 
         this.addSystem(this.mergeSystem1)
         this.addSystem(this.prizeSystem)
+        this.addSystem(this.bonusSystem)
         this.addSystem(this.resourceSystem)
         this.addSystem(this.resourceSystemRight)
         this.addSystem(this.enemiesSystem)
@@ -221,10 +232,33 @@ export default class MergeScreen extends Screen {
         this.prizeSystem.onCollect.add((prize) => {
             this.openPopUp(this.openChestPopUp, { prize, onConfirm: this.onPrizeCollected.bind(this) })
         })
+
+        this.bonusSystem.onCollect.add((prize) => {
+
+            let bonus = Math.floor(Math.random() * this.bonusTimers.length);
+
+            let target = this.bonusTimers[bonus]
+            this.openPopUp(this.bonusPopUp, {
+                texture: target.mainButton.icon.texture,
+                description: target.fullDescription,
+                shortDescription: target.shortDescription,
+                onConfirm: () => {
+                    target.confirmBonus();
+                    target.visible = true;
+                    this.activeBonuses[target.id] = 0
+                }
+            })
+
+
+
+            //this.openPopUp(this.openChestPopUp, { prize, onConfirm: this.onPrizeCollected.bind(this) })
+        })
+
         this.mergeSystem1.addSystem(this.enemiesSystem);
         this.mergeSystem1.addSystem(this.resourceSystem);
         this.mergeSystem1.addSystem(this.resourceSystemRight);
         this.mergeSystem1.addSystem(this.prizeSystem);
+        this.mergeSystem1.addSystem(this.bonusSystem);
 
         this.entityDragSprite = new PIXI.Sprite.from('');
         this.addChild(this.entityDragSprite);
@@ -557,12 +591,29 @@ export default class MergeScreen extends Screen {
         this.bonusTimerList.addElement(this.speedBonus)
         this.bonusTimerList.addElement(this.autoMergeBonus)
 
+        this.container.addChild(this.bonusContainer);
 
         this.bonusTimerList.updateVerticalList();
         this.shopButtonsList.updateHorizontalList();
 
+
+        this.activeBonuses = []
+        let bid = 0
+        this.bonusTimers.forEach(element => {
+            element.id = bid
+            bid++
+
+            this.activeBonuses.push(1)
+        })
         this.bonusTimers.forEach(element => {
             element.x = 0
+            element.visible = false;
+
+            element.onCompleteBuff.add((target)=>{
+                console.log(target)
+
+                this.activeBonuses[target.id] = 1
+            })
         });
 
         this.savedEconomy = COOKIE_MANAGER.getEconomy();
@@ -570,7 +621,7 @@ export default class MergeScreen extends Screen {
         let now = Date.now() / 1000 | 0
         let diff = now - this.savedEconomy.lastChanged
 
-        if (diff > 60 && this.sumStart > 10) {
+        if (this.tutorialStep > 1 && diff > 60 && this.sumStart > 10) {
             let params = {
                 label: window.localizationManager.getLabel('offline-money'),
                 value1: utils.formatPointsLabel(this.sumStart),
@@ -604,9 +655,9 @@ export default class MergeScreen extends Screen {
 
         this.gameTutorial = new GameTutorial(this)
         if (this.tutorialStep == 0) {
-            if(window.gameEconomy.currentResources > 10){
+            if (window.gameEconomy.currentResources > 10) {
                 COOKIE_MANAGER.endTutorial(2);
-            }else{
+            } else {
 
                 this.startTutorial();
                 this.addChild(this.gameTutorial);
@@ -926,10 +977,13 @@ export default class MergeScreen extends Screen {
         let progression = COOKIE_MANAGER.getProgression()
 
         if (progression.currentEnemyLevel > 100) {
-            this.spaceStation.visible = true;
+            this.spaceStation.setVisible(true)
+            this.spaceStation.updateBar(0)
             this.spaceStation.update(delta)
         } else {
-            this.spaceStation.visible = false;
+            this.spaceStation.setVisible(false)
+            this.spaceStation.updateBar(progression.currentEnemyLevel)
+
         }
 
     }

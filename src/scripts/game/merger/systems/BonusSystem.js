@@ -4,13 +4,13 @@ import utils from "../../../utils";
 import StandardEnemy from "../enemy/StandardEnemy";
 import Signals from 'signals';
 
-export default class PrizeSystem {
+export default class BonusSystem {
     constructor(containers, data, dataTiles) {
         this.container = containers.mainContainer;
         this.entity = new StandardEnemy()
         this.container.addChild(this.entity);
-
-        this.entity.setAsEnemy('Ship1_chest')
+        this.entity.scale.set(0.8)
+        this.entity.setAsEnemy('chestBonus')
         this.entity.y = 100
 
         this.entity.interactive = true;
@@ -19,7 +19,8 @@ export default class PrizeSystem {
         this.helpIcon = new PIXI.Sprite.from('icon-help');
         this.helpIcon.anchor.set(0.5)
         this.helpIcon.scale.set(0.5)
-        this.helpIcon.y = -30
+        this.helpIcon.x = 30
+        this.helpIcon.y = 30
         this.entity.enemySprite.addChild(this.helpIcon)
 
         this.helpLabel = new PIXI.Text(window.localizationManager.getLabel('help', true), LABELS.LABEL_CHEST);
@@ -27,12 +28,12 @@ export default class PrizeSystem {
         this.helpLabel.style.fill = 0xffffff
         this.helpLabel.x = 30
         this.helpLabel.y = - this.helpLabel.height / 2
-        this.helpIcon.addChild(this.helpLabel)
+        //this.helpIcon.addChild(this.helpLabel)
 
         this.entity.on('mouseup', this.click.bind(this)).on('touchend', this.click.bind(this));
 
-        this.timer = 180;
-        this.currentTimer = this.timer * Math.random() + 30;
+        this.timer = 30;
+        this.currentTimer = 30;//this.timer * Math.random() + 180;
 
         this.velocity = {
             x: 0,
@@ -42,37 +43,30 @@ export default class PrizeSystem {
         this.inMovement = false;
 
         this.targets = [{
-            x: -200,
-            y: 0
+            x: config.width - 80,
+            y: config.height
         },
         {
-            x: 150,
-            y: 140
+            x: config.width - 90,
+            y: config.height - 300
         },
         {
-            x: 150,
-            y: 240
+            x: config.width - 80,
+            y: config.height
         },
         {
-            x: config.width / 2,
-            y: 235
-        },
-        {
-            x: config.width,
-            y: 240
-        },
-        {
-            x: config.width + 200,
-            y: -100
-        }]
+            x: config.width - 90,
+            y: config.height - 300
+        }
+    ]
 
         this.currentTargetId = 0;
         this.currentAngle = 0;
 
         this.currentTarget = this.targets[this.currentTargetId];
-        this.speed = 20
+        this.speed = 10
 
-        this.remove()
+        //this.remove()
         this.entity.visible = false;
         this.onCollect = new Signals();
 
@@ -83,7 +77,7 @@ export default class PrizeSystem {
     }
     spawn() {
 
-        this.entity.setAsEnemy('Ship' + Math.ceil(Math.random() * 6) + '_chest')
+        //this.entity.setAsEnemy('Ship' + Math.ceil(Math.random() * 6) + '_chest')
 
         this.currentTargetId = 0;
         this.currentTarget = this.targets[this.currentTargetId];
@@ -98,7 +92,7 @@ export default class PrizeSystem {
         this.currentTargetId++;
         if (this.currentTargetId >= this.targets.length) {
             this.remove();
-            this.currentTimer = this.timer;
+            this.currentTimer = this.timer + this.timer * Math.random();
         } else {
             this.currentTarget = this.targets[this.currentTargetId];
         }
@@ -112,24 +106,8 @@ export default class PrizeSystem {
         this.inMovement = false;
     }
     click() {
-        let prize = [
-            {
-                money: window.gameEconomy.currentResources * 0.05,
-                shards:0,
-                ship:0
-            },
-            {
-                money: window.gameEconomy.currentResources * 0.15,
-                shards:0,
-                ship:4
-            },
-            {
-                money: window.gameEconomy.currentResources * 0.2,
-                shards:Math.max(0.1, window.gameModifyers.permanentBonusData.shards * 0.05),
-                ship:2
-            }
-        ]
-        this.onCollect.dispatch(prize);
+       
+        this.onCollect.dispatch(Math.floor(Math.random() * 4));
         this.remove();
         this.currentTimer = this.timer;
     }
@@ -141,9 +119,9 @@ export default class PrizeSystem {
             //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
             //this.currentAngle = Math.atan2(this.entity.y - this.currentTarget.y, this.entity.x - this.currentTarget.x) //- Math.PI/2 // 180 * 3.14;
             this.currentAngle = utils.lerp(this.currentAngle,Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x), 0.01);
-
-            this.entity.rotation = utils.lerp(this.entity.rotation, this.currentAngle, 0.002)
-            this.helpIcon.rotation = - this.entity.rotation - this.entity.enemySprite.rotation
+            
+            //this.entity.rotation = utils.lerp(this.entity.rotation, this.currentAngle, 0.002)
+            //this.helpIcon.rotation = - this.entity.rotation - this.entity.enemySprite.rotation
             this.velocity.x = utils.lerp(this.velocity.x, Math.cos(this.currentAngle) * this.speed, 0.05)
             this.velocity.y = utils.lerp(this.velocity.y, Math.sin(this.currentAngle) * this.speed, 0.05)
             this.entity.update(delta)
@@ -151,6 +129,7 @@ export default class PrizeSystem {
             this.entity.y += this.velocity.y * delta;
             //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
             if (this.entity.x > this.currentTarget.x + 100 || this.entity.y < -500 || utils.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 2) {
+                console.log( this.currentTarget)
                 this.nextTarget();
             }
         } else if (this.currentTimer > 0) {

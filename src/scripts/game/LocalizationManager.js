@@ -3,7 +3,6 @@ export default class LocalizationManager {
         this.defaultLanguage = PIXI.loader.resources['localization_EN'].data.labels
         this.currentLanguage = PIXI.loader.resources['localization_EN'].data.labels
 
-
         let lang = navigator.language
         if (lang) {
             let lang2 = lang[0] + lang[1]
@@ -21,6 +20,23 @@ export default class LocalizationManager {
         }
     }
     getLabel(id, caps) {
+        if (this.currentLanguage[id]) {
+            return caps ? this.currentLanguage[id].toUpperCase() : this.currentLanguage[id]
+        } else {
+            if (this.defaultLanguage[id]) {
+                return caps ? this.defaultLanguage[id].toUpperCase() : this.defaultLanguage[id]
+            } else {
+                return "_NOT FOUND"
+            }
+        }
+    }
+
+    getLabelTutorial(id, caps) {
+        if(window.isPortrait){
+            if(this.currentLanguage['mobile_'+id]){
+                return caps ? this.currentLanguage['mobile_'+id].toUpperCase() : this.currentLanguage['mobile_'+id]
+            }
+        }
         if (this.currentLanguage[id]) {
             return caps ? this.currentLanguage[id].toUpperCase() : this.currentLanguage[id]
         } else {
