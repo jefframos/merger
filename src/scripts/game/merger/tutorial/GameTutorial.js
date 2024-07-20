@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js';
-import * as signals from 'signals';
 import utils from '../../../utils';
 import TextBox from '../../ui/TextBox';
 
@@ -8,6 +7,8 @@ export default class GameTutorial extends PIXI.Container {
         super();
 
         this.mainScreen = mainScreen;
+
+        this.currentTimeout = null
 
         this.tutorialSteps = [
             {
@@ -27,8 +28,8 @@ export default class GameTutorial extends PIXI.Container {
                 hitOffset: { x: 0, y: 0 },
                 handMoveTo: { x: 0, y: -80 },
                 textBoxOffset: { x: -40, y: 0 },
-                onShow: () => {                    
-                    setTimeout(() => {
+                onShow: () => {
+                    this.currentTimeout = setTimeout(() => {
                         this.next();
                     }, 3000);
 
@@ -55,11 +56,12 @@ export default class GameTutorial extends PIXI.Container {
                 },
                 toShow: [this.mainScreen.openShop, this.mainScreen.shopButtonsList],
                 onShow: () => {
+                    clearTimeout(this.currentTimeout)
                     window.gameEconomy.addResources(25);
                 },
                 callback: () => {
                     this.mainScreen.entityShop.currentItens[0].onShopItem(this.mainScreen.entityShop.currentItens[0].shopButton);
-                    setTimeout(() => {
+                    this.currentTimeout = setTimeout(() => {
                         this.mainScreen.entityShop.hide();
                     }, 150);
                     this.mainScreen.statsList.visible = true;
@@ -119,7 +121,7 @@ export default class GameTutorial extends PIXI.Container {
                 toShow: [],
                 callback: () => {
                     this.mainScreen.mergeItemsShop.currentItens[0].onShopItem(this.mainScreen.mergeItemsShop.currentItens[0].shopButton);
-                    setTimeout(() => {
+                    this.currentTimeout = setTimeout(() => {
                         this.mainScreen.mergeItemsShop.hide();
                     }, 150);
                 },
@@ -257,6 +259,7 @@ export default class GameTutorial extends PIXI.Container {
         this.visibleList.push(this.mainScreen.shopsLabel)
         this.visibleList.push(this.mainScreen.mergeSystemContainer)
         this.visibleList.push(this.mainScreen.uiContainer)
+        this.visibleList.push(this.mainScreen.helperEntity)
 
         this.visibleList.push(this.mainScreen.damageBonus)
         this.visibleList.push(this.mainScreen.timeBonus)
@@ -282,6 +285,7 @@ export default class GameTutorial extends PIXI.Container {
     }
     next() {
         console.log(this.tutorialStepID)
+        //clearTimeout(this.currentTimeout)
         this.tutorialStepID++;
         if (this.currentListener) {
             this.currentListener.remove(this.onEventNext.bind(this))

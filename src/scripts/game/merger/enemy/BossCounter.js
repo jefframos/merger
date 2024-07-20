@@ -1,12 +1,9 @@
 import * as PIXI from 'pixi.js';
-import Signals from 'signals';
 export default class BossCounter extends PIXI.Container {
     constructor(size) {
         super()
 
         this.size = size;
-
-
 
         this.backShape = new PIXI.Sprite.fromFrame('circle')
         this.backShape.width = size * 3
@@ -21,22 +18,22 @@ export default class BossCounter extends PIXI.Container {
         this.bossSprite.anchor.set(0.5)
         this.addChild(this.bossSprite)
 
-        this.levelLabel = new PIXI.Text('0',window.LABELS.LABEL2)
+        this.levelLabel = new PIXI.Text('0', window.LABELS.LABEL2)
         this.levelLabel.style.stroke = 0xFF0045
         this.levelLabel.style.strokeThickness = 3
         this.levelLabel.style.fontSize = 28
-            this.addChild(this.levelLabel)
+        this.addChild(this.levelLabel)
 
     }
-    addSprite(sprite){
+    addSprite(sprite) {
         this.bossSprite.texture = new PIXI.Texture.fromFrame(sprite)
     }
-    updateLevel(level){
+    updateLevel(level) {
         this.levelLabel.text = level
         this.levelLabel.pivot.x = this.levelLabel.width / 2
         this.levelLabel.y = 15
     }
-    setFontSize(size){
+    setFontSize(size) {
         this.levelLabel.style.fontSize = size
     }
 }

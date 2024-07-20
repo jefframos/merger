@@ -1,8 +1,7 @@
 import * as PIXI from 'pixi.js';
-import utils from '../../../utils';
 import config from '../../../config';
+import utils from '../../../utils';
 import StarParticle from './StarParticle';
-import TweenLite from 'gsap';
 
 export default class SpaceBackground extends PIXI.Container {
 	constructor() {
@@ -59,21 +58,21 @@ export default class SpaceBackground extends PIXI.Container {
 		this.baseTopGradient.alpha = 0.3
 		this.topShape.tint = this.baseTopGradient.tint
 
-		
+
 		this.middleGradient = new PIXI.Sprite.fromFrame('bigblur')
 		this.addChild(this.middleGradient);
 		this.middleGradient.anchor.x = 0.5
 		this.middleGradient.anchor.y = 0.5
 		this.middleGradient.rotation = Math.PI
-		this.middleGradient.tint = 0x1014aa//0x0d5956
+		this.middleGradient.tint = 0x6440eb//0x0d5956
 		this.middleGradient.alpha = 0.5
-		
+
 		this.baseGradient = new PIXI.Sprite.fromFrame('base-gradient')
 		this.addChild(this.baseGradient);
 		this.baseGradient.anchor.x = 0.5
 		this.baseGradient.anchor.y = 1
 		this.baseGradient.alpha = 0.5
-		this.baseGradient.tint = 0x1014aa
+		this.baseGradient.tint = 0x1a9691
 		this.bottomShape.tint = this.baseGradient.tint
 		// this.backShape = new PIXI.Sprite.fromFrame('background_space')
 		// this.addChild(this.backShape);
@@ -120,7 +119,7 @@ export default class SpaceBackground extends PIXI.Container {
 			this.baseGradient.y = innerResolution.height / 2 / globalScale
 			this.baseTopGradient.y = -innerResolution.height / 2 / globalScale
 
-			this.topShape.y  = this.baseTopGradient.y
+			this.topShape.y = this.baseTopGradient.y
 			this.bottomShape.y = this.baseGradient.y
 
 			this.baseGradient.width = innerResolution.width * 4

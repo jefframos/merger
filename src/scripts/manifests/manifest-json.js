@@ -4,16 +4,16 @@ const assets = [
 	"url":"assets/json\\asas"
 	},
 	{
-	"id":"baseGameConfig",
-	"url":"assets/json\\baseGameConfig.json"
-	},
-	{
 	"id":"entities",
 	"url":"assets/json\\entities.json"
 	},
 	{
 	"id":"localization_EN",
 	"url":"assets/json\\localization_EN.json"
+	},
+	{
+	"id":"baseGameConfig",
+	"url":"assets/json\\baseGameConfig.json"
 	},
 	{
 	"id":"localization_DE",
@@ -40,20 +40,16 @@ const assets = [
 	"url":"assets/json\\localization_KO.json"
 	},
 	{
-	"id":"localization_RU",
-	"url":"assets/json\\localization_RU.json"
-	},
-	{
 	"id":"localization_PT",
 	"url":"assets/json\\localization_PT.json"
 	},
 	{
-	"id":"localization_TR",
-	"url":"assets/json\\localization_TR.json"
+	"id":"localization_RU",
+	"url":"assets/json\\localization_RU.json"
 	},
 	{
-	"id":"localization_ZH",
-	"url":"assets/json\\localization_ZH.json"
+	"id":"localization_TR",
+	"url":"assets/json\\localization_TR.json"
 	},
 	{
 	"id":"modifyers",
@@ -62,6 +58,10 @@ const assets = [
 	{
 	"id":"resources",
 	"url":"assets/json\\resources.json"
+	},
+	{
+	"id":"localization_ZH",
+	"url":"assets/json\\localization_ZH.json"
 	}
 ];
 

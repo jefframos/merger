@@ -1,11 +1,8 @@
 import * as PIXI from 'pixi.js';
 import Signals from 'signals';
 import config from '../../config';
-import utils from '../../utils';
-export default class ChestContainer extends PIXI.Container
-{
-    constructor()
-    {
+export default class ChestContainer extends PIXI.Container {
+    constructor() {
         super();
         this.onConfirm = new Signals();
         this.container = new PIXI.Container();
@@ -19,17 +16,25 @@ export default class ChestContainer extends PIXI.Container
         chestIcon.scale.set(this.chestBubble.width / chestIcon.width * 0.75);
 
         this.quantchest = new PIXI.Text('Open a free\nchest!\n35:05',
-        {
-            fontFamily: 'blogger_sansregular',
-            fontSize: '24px',
-            fill: 0xFFFFFF,
-            align: 'center',
-            fontWeight: '800'
-        });
+            {
+                fontFamily: 'blogger_sansregular',
+                fontSize: '24px',
+                fill: 0xFFFFFF,
+                align: 'center',
+                fontWeight: '800'
+            });
         // chestIcon.x = -this.chestBubble.width * 0.15;
 
         this.quantchest.pivot.x = 0 //this.quantchest.width / 2;
         this.quantchest.pivot.y = 0 //this.quantchest.height / 2;
+
+
+        this.shine = new PIXI.Sprite.fromFrame('shine')
+        this.shine.anchor.set(0.5)
+        this.container.addChild(this.shine);
+        this.shine.scale.set(5)
+        this.shine.tint = 0xff00ff
+
 
         this.container.addChild(this.chestBubble);
         this.container.addChild(chestIcon);
@@ -47,18 +52,16 @@ export default class ChestContainer extends PIXI.Container
         // this.quantchest.scale.set((this.chestBubble.width /this.chestBubble.scale.x) / (this.quantchest.width / this.quantchest.scale.x) * 0.75)
 
         this.updateTimer();
-        this.timerInterval = setInterval(() =>
-        {
+        this.timerInterval = setInterval(() => {
             this.now = new Date().getTime();
             this.updateTimer();
         }, 1000);
 
     }
-    activeContainer()
-    {
+    activeContainer() {
         this.quantchest.text = 'OPEN YOUR\nFREE CHEST'
         this.quantchest.scale.set((this.chestBubble.width / this.chestBubble.scale.x) / (this.quantchest.width / this.quantchest.scale.x) * 0.75)
-            // this.quantchest.pivot.x = this.quantchest.width / 2;
+        // this.quantchest.pivot.x = this.quantchest.width / 2;
         this.quantchest.pivot.y = this.quantchest.height / 2;
         this.quantchest.x = -this.quantchest.width / 2;
         this.quantchest.y = this.chestBubble.height / 2 //- this.quantchest.height / 4
@@ -67,31 +70,27 @@ export default class ChestContainer extends PIXI.Container
 
         // TweenLite.to(this.container.scale, 0.75, {x:this.containerScale, y:this.containerScale, ease:Elastic.easeOut})
     }
-    updateTimer()
-    {
+    updateTimer() {
         // 	let distance = this.countDownDate - this.now;
         this.container.scale.set(this.containerScale * 0.75)
         let now = new Date();
 
         let distance = GAME_DATA.chestData.chestTime - (now - GAME_DATA.chestData.lastChestTime)
-            // console.log(GAME_DATA.chestData.chestTime, distance);
+        // console.log(GAME_DATA.chestData.chestTime, distance);
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
         // console.log(minutes, seconds);
-        if (minutes <= 0 && seconds <= 0)
-        {
+        if (minutes <= 0 && seconds <= 0) {
             clearInterval(this.timerInterval);
             this.activeContainer();
             return
         }
         this.isActive = false;
         this.chestBubble.visible = false;
-        if (seconds < 10)
-        {
+        if (seconds < 10) {
             seconds = '0' + seconds;
         }
-        if (minutes < 10)
-        {
+        if (minutes < 10) {
             minutes = '0' + minutes;
         }
         this.quantchest.text = 'FREE CHEST IN\n' + minutes + ':' + seconds
@@ -105,10 +104,8 @@ export default class ChestContainer extends PIXI.Container
         // this.quantchest.text = dist.toTimeString().replace(/.*(\d{2}:\d{2}).*/, "$1");
         // this.quantchest.text = GAME_DATA.chestData.lastChestTime.toTimeString().replace(/.*(\d{2}:\d{2}).*/, "$1");
     }
-    onChestClick()
-    {
-        if (!this.isActive)
-        {
+    onChestClick() {
+        if (!this.isActive) {
             this.shake();
             return;
         }
@@ -126,16 +123,13 @@ export default class ChestContainer extends PIXI.Container
         GAME_DATA.chestData.lastChestTime = new Date();
         this.updateTimer();
         clearInterval(this.timerInterval);
-        this.timerInterval = setInterval(() =>
-        {
+        this.timerInterval = setInterval(() => {
             this.now = new Date().getTime();
             this.updateTimer();
         }, 1000);
     }
-    update(delta)
-    {
-        if (this.isActive)
-        {
+    update(delta) {
+        if (this.isActive) {
             this.chestSin += 0.05
             this.chestSin %= Math.PI * 2;
             this.chestBackSin += 0.1;
@@ -143,13 +137,13 @@ export default class ChestContainer extends PIXI.Container
 
             this.chestBubble.rotation = this.chestBackSin
         }
+        this.shine.rotation = window.timeTotal % Math.PI * 2
         // this.container.rotation = Math.sin(this.chestSin) * 0.1 + 0.2
         // this.quantchest.rotation = -this.container.rotation
         this.container.scale.set(this.containerScale + Math.sin(this.chestSin) * 0.03, this.containerScale + Math.cos(this.chestSin) * 0.03)
     }
 
-    shake(force = 0.25, steps = 5, time = 0.4)
-    {
+    shake(force = 0.25, steps = 5, time = 0.4) {
         SOUND_MANAGER.play('boing');
         let timelinePosition = new TimelineLite();
         let positionForce = (force * -20);
@@ -157,23 +151,22 @@ export default class ChestContainer extends PIXI.Container
         let pos = [positionForce * 2, positionForce, positionForce * 2, positionForce, positionForce * 2, positionForce]
         let speed = time / pos.length;
 
-        for (var i = pos.length; i >= 0; i--)
-        {
+        for (var i = pos.length; i >= 0; i--) {
             timelinePosition.append(TweenLite.to(this.container, speed,
-            {
-                rotation: i % 2 == 0 ? 0.1 : -0.1,
-                // x: this.container.width / 2 + pos[i], //- positionForce / 2,
-                // y: 0, //Math.random() * positionForce - positionForce / 2,
-                ease: "easeNoneLinear"
-            }));
+                {
+                    rotation: i % 2 == 0 ? 0.1 : -0.1,
+                    // x: this.container.width / 2 + pos[i], //- positionForce / 2,
+                    // y: 0, //Math.random() * positionForce - positionForce / 2,
+                    ease: "easeNoneLinear"
+                }));
         };
 
         timelinePosition.append(TweenLite.to(this.container, speed,
-        {
-            rotation: 0,
-            // x: this.container.width / 2,
-            // y: 0,
-            ease: "easeeaseNoneLinear"
-        }));
+            {
+                rotation: 0,
+                // x: this.container.width / 2,
+                // y: 0,
+                ease: "easeeaseNoneLinear"
+            }));
     }
 }

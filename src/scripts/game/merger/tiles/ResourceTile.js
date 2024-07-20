@@ -1,11 +1,9 @@
 import * as PIXI from 'pixi.js';
 
-import CircleCounter from '../../ui/hudElements/CircleCounter';
-import MergeTile from './MergeTile';
 import Signals from 'signals';
-import UIBar from '../../ui/uiElements/UIBar';
 import utils from '../../../utils';
 import ProgressBar from '../ProgressBar';
+import MergeTile from './MergeTile';
 
 export default class ResourceTile extends MergeTile {
     constructor(i, j, size, lockIcon) {
@@ -82,6 +80,14 @@ export default class ResourceTile extends MergeTile {
         this.exclamationMark = new PIXI.Sprite.fromFrame('new_item')
         this.exclamationMark.anchor.set(0.5)
         this.exclamationMark.x = this.costLabelContainer.width
+
+        this.shine = new PIXI.Sprite.fromFrame('shine')
+        this.shine.anchor.set(0.5)
+        this.addChild(this.shine);
+        this.shine.scale.set(0.8)
+        this.shine.tint = 0x00ee33
+
+        this.costLabelContainer.addChild(this.shine)
         this.costLabelContainer.addChild(this.exclamationMark)
         this.costLabelContainer.addChild(this.initialCostLabel)
         //this.initialCostLabel.visible = false;
@@ -189,6 +195,12 @@ export default class ResourceTile extends MergeTile {
             this.drillSin += delta
             this.updateResourcePosition();
         }
+
+        this.shine.visible = this.exclamationMark.visible
+        this.shine.x = this.exclamationMark.x
+        this.shine.y = this.exclamationMark.y
+        this.shine.rotation = window.timeTotal % Math.PI * 2
+
 
     }
     forcePriceToZero() {

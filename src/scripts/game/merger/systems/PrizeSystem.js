@@ -1,12 +1,21 @@
 import TweenMax from "gsap";
+import Signals from 'signals';
 import config from "../../../config";
 import utils from "../../../utils";
 import StandardEnemy from "../enemy/StandardEnemy";
-import Signals from 'signals';
 
 export default class PrizeSystem {
     constructor(containers, data, dataTiles) {
         this.container = containers.mainContainer;
+
+
+        this.shine = new PIXI.Sprite.fromFrame('shine')
+        this.shine.anchor.set(0.5)
+        this.container.addChild(this.shine);
+        this.shine.scale.set(2)
+        this.shine.tint = 0xff00ff
+
+
         this.entity = new StandardEnemy()
         this.container.addChild(this.entity);
 
@@ -77,7 +86,7 @@ export default class PrizeSystem {
         this.onCollect = new Signals();
 
     }
-    resetSystem(){
+    resetSystem() {
         this.remove();
         this.currentTimer = this.timer;
     }
@@ -115,18 +124,18 @@ export default class PrizeSystem {
         let prize = [
             {
                 money: window.gameEconomy.currentResources * 0.05,
-                shards:0,
-                ship:0
+                shards: 0,
+                ship: 0
             },
             {
                 money: window.gameEconomy.currentResources * 0.15,
-                shards:0,
-                ship:4
+                shards: 0,
+                ship: 4
             },
             {
                 money: window.gameEconomy.currentResources * 0.2,
-                shards:Math.max(0.1, window.gameModifyers.permanentBonusData.shards * 0.05),
-                ship:2
+                shards: Math.max(0.1, window.gameModifyers.permanentBonusData.shards * 0.05),
+                ship: 2
             }
         ]
         this.onCollect.dispatch(prize);
@@ -134,13 +143,16 @@ export default class PrizeSystem {
         this.currentTimer = this.timer;
     }
     resize() {
-       
+
     }
     update(delta) {
+
+        this.shine.visible = this.entity.visible
+        this.shine.rotation = window.timeTotal % Math.PI * 2
         if (this.inMovement) {
             //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
             //this.currentAngle = Math.atan2(this.entity.y - this.currentTarget.y, this.entity.x - this.currentTarget.x) //- Math.PI/2 // 180 * 3.14;
-            this.currentAngle = utils.lerp(this.currentAngle,Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x), 0.01);
+            this.currentAngle = utils.lerp(this.currentAngle, Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x), 0.01);
 
             this.entity.rotation = utils.lerp(this.entity.rotation, this.currentAngle, 0.002)
             this.helpIcon.rotation = - this.entity.rotation - this.entity.enemySprite.rotation
@@ -149,6 +161,9 @@ export default class PrizeSystem {
             this.entity.update(delta)
             this.entity.x += this.velocity.x * delta;
             this.entity.y += this.velocity.y * delta;
+
+            this.shine.x = this.entity.x
+            this.shine.y = this.entity.y
             //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
             if (this.entity.x > this.currentTarget.x + 100 || this.entity.y < -500 || utils.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 2) {
                 this.nextTarget();

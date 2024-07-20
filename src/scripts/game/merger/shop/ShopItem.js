@@ -1,11 +1,11 @@
 import * as PIXI from 'pixi.js';
 
-import ShopButton from './ShopButton';
-import ShopLockState from './ShopLockState';
 import Signals from 'signals';
+import utils from '../../../utils';
 import UIBar from '../../ui/uiElements/UIBar';
 import UIList from '../../ui/uiElements/UIList';
-import utils from '../../../utils';
+import ShopButton from './ShopButton';
+import ShopLockState from './ShopLockState';
 
 export default class ShopItem extends UIList {
     constructor(rect = {
@@ -326,10 +326,10 @@ export default class ShopItem extends UIList {
         if (this.itemData.rawData.quantify && !this.itemData.rawData.quantifyBoolean) {
             isMax = this.itemData.currentLevel >= this.itemData.rawData.levelMax;
         }
-        this.levelLabel.text = window.localizationManager.getLabel('level')+'\n' + this.itemData.currentLevel
+        this.levelLabel.text = window.localizationManager.getLabel('level') + '\n' + this.itemData.currentLevel
         // this.itemData = GAME_DATA.getUpdatedItem(this.itemData.dataType, this.itemData.id)
         if (isMax) {
-            this.levelLabel.text = window.localizationManager.getLabel('level')+'\n' + this.itemData.rawData.levelMax;
+            this.levelLabel.text = window.localizationManager.getLabel('level') + '\n' + this.itemData.rawData.levelMax;
             this.levelBar.updatePowerBar(1)
             this.shopButton.deactiveMax()
             this.infoUpgrade.text = ''

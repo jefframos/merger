@@ -2,15 +2,15 @@
 
 "aiships/ship01.png":
 {
-	"frame": {"x":195,"y":834,"w":52,"h":54},
-	"rotated": true,
+	"frame": {"x":179,"y":1230,"w":52,"h":54},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":52,"h":54},
 	"sourceSize": {"w":54,"h":56}
 },
 "aiships/ship02.png":
 {
-	"frame": {"x":195,"y":771,"w":61,"h":58},
+	"frame": {"x":63,"y":1221,"w":61,"h":58},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":61,"h":58},
@@ -18,7 +18,7 @@
 },
 "aiships/ship03.png":
 {
-	"frame": {"x":1,"y":822,"w":64,"h":60},
+	"frame": {"x":1,"y":1221,"w":64,"h":60},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":64,"h":60},
@@ -26,7 +26,7 @@
 },
 "aiships/ship04.png":
 {
-	"frame": {"x":139,"y":816,"w":67,"h":54},
+	"frame": {"x":123,"y":1193,"w":67,"h":54},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":67,"h":54},
@@ -34,7 +34,7 @@
 },
 "aiships/ship05.png":
 {
-	"frame": {"x":76,"y":816,"w":61,"h":67},
+	"frame": {"x":185,"y":532,"w":61,"h":67},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":61,"h":67},
@@ -42,7 +42,7 @@
 },
 "aiships/ship06.png":
 {
-	"frame": {"x":185,"y":81,"w":67,"h":70},
+	"frame": {"x":1,"y":1152,"w":67,"h":70},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":67,"h":70},
@@ -50,7 +50,7 @@
 },
 "aiships/ship07.png":
 {
-	"frame": {"x":185,"y":150,"w":58,"h":69},
+	"frame": {"x":154,"y":1133,"w":58,"h":69},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":58,"h":69},
@@ -58,7 +58,7 @@
 },
 "aiships/ship08.png":
 {
-	"frame": {"x":84,"y":621,"w":79,"h":52},
+	"frame": {"x":168,"y":1005,"w":79,"h":52},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":79,"h":52},
@@ -66,7 +66,7 @@
 },
 "aiships/ship09.png":
 {
-	"frame": {"x":1,"y":756,"w":73,"h":64},
+	"frame": {"x":79,"y":1122,"w":73,"h":64},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":73,"h":64},
@@ -74,15 +74,15 @@
 },
 "aiships/ship10.png":
 {
-	"frame": {"x":185,"y":1,"w":70,"h":78},
-	"rotated": false,
+	"frame": {"x":1,"y":1005,"w":70,"h":78},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":70,"h":78},
 	"sourceSize": {"w":72,"h":80}
 },
 "aiships/ship11.png":
 {
-	"frame": {"x":84,"y":675,"w":76,"h":76},
+	"frame": {"x":81,"y":1044,"w":76,"h":76},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":76,"h":76},
@@ -90,15 +90,15 @@
 },
 "aiships/ship12.png":
 {
-	"frame": {"x":79,"y":753,"w":61,"h":75},
-	"rotated": true,
+	"frame": {"x":185,"y":455,"w":61,"h":75},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":61,"h":75},
 	"sourceSize": {"w":63,"h":77}
 },
 "aiships/ship13.png":
 {
-	"frame": {"x":1,"y":681,"w":76,"h":73},
+	"frame": {"x":1,"y":1077,"w":76,"h":73},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":76,"h":73},
@@ -106,7 +106,7 @@
 },
 "aiships/ship14.png":
 {
-	"frame": {"x":1,"y":603,"w":76,"h":81},
+	"frame": {"x":85,"y":966,"w":76,"h":81},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":76,"h":81},
@@ -114,23 +114,23 @@
 },
 "aiships/ship15.png":
 {
-	"frame": {"x":165,"y":634,"w":61,"h":78},
-	"rotated": true,
+	"frame": {"x":185,"y":375,"w":61,"h":78},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":61,"h":78},
 	"sourceSize": {"w":63,"h":80}
 },
 "aiships/ship16.png":
 {
-	"frame": {"x":170,"y":565,"w":79,"h":67},
-	"rotated": false,
+	"frame": {"x":180,"y":924,"w":79,"h":67},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":79,"h":67},
 	"sourceSize": {"w":81,"h":69}
 },
 "aiships/ship17.png":
 {
-	"frame": {"x":162,"y":697,"w":76,"h":72},
+	"frame": {"x":159,"y":1059,"w":76,"h":72},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":76,"h":72},
@@ -138,7 +138,7 @@
 },
 "aiships/ship18.png":
 {
-	"frame": {"x":114,"y":488,"w":100,"h":75},
+	"frame": {"x":145,"y":655,"w":100,"h":75},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":100,"h":75},
@@ -146,7 +146,7 @@
 },
 "aiships/ship19.png":
 {
-	"frame": {"x":86,"y":565,"w":82,"h":54},
+	"frame": {"x":1,"y":949,"w":82,"h":54},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":82,"h":54},
@@ -154,7 +154,7 @@
 },
 "aiships/ship20.png":
 {
-	"frame": {"x":1,"y":353,"w":127,"h":90},
+	"frame": {"x":1,"y":727,"w":127,"h":90},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":127,"h":90},
@@ -162,15 +162,15 @@
 },
 "aiships/ship21.png":
 {
-	"frame": {"x":130,"y":389,"w":97,"h":121},
-	"rotated": true,
+	"frame": {"x":130,"y":801,"w":97,"h":121},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":97,"h":121},
 	"sourceSize": {"w":99,"h":123}
 },
 "aiships/ship22.png":
 {
-	"frame": {"x":1,"y":221,"w":142,"h":130},
+	"frame": {"x":1,"y":595,"w":142,"h":130},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":142,"h":130},
@@ -178,7 +178,7 @@
 },
 "arrow.png":
 {
-	"frame": {"x":1,"y":177,"w":42,"h":171},
+	"frame": {"x":1,"y":551,"w":42,"h":171},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":67,"y":0,"w":42,"h":171},
@@ -186,15 +186,15 @@
 },
 "chests/Ship1_chest.png":
 {
-	"frame": {"x":216,"y":488,"w":65,"h":35},
-	"rotated": true,
+	"frame": {"x":179,"y":1193,"w":65,"h":35},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":65,"h":35},
 	"sourceSize": {"w":67,"h":37}
 },
 "chests/Ship2_chest.png":
 {
-	"frame": {"x":1,"y":561,"w":83,"h":40},
+	"frame": {"x":95,"y":924,"w":83,"h":40},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":83,"h":40},
@@ -202,7 +202,7 @@
 },
 "chests/Ship3_chest.png":
 {
-	"frame": {"x":1,"y":514,"w":92,"h":45},
+	"frame": {"x":1,"y":902,"w":92,"h":45},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":92,"h":45},
@@ -210,7 +210,7 @@
 },
 "chests/Ship4_chest.png":
 {
-	"frame": {"x":145,"y":335,"w":102,"h":52},
+	"frame": {"x":145,"y":601,"w":102,"h":52},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":102,"h":52},
@@ -218,7 +218,7 @@
 },
 "chests/Ship5_chest.png":
 {
-	"frame": {"x":1,"y":445,"w":111,"h":67},
+	"frame": {"x":130,"y":732,"w":111,"h":67},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":111,"h":67},
@@ -226,15 +226,15 @@
 },
 "chests/Ship6_chest.png":
 {
-	"frame": {"x":174,"y":210,"w":123,"h":81},
-	"rotated": true,
+	"frame": {"x":1,"y":819,"w":123,"h":81},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":123,"h":81},
 	"sourceSize": {"w":125,"h":83}
 },
 "cure.png":
 {
-	"frame": {"x":145,"y":221,"w":15,"h":37},
+	"frame": {"x":229,"y":801,"w":15,"h":37},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":13,"y":15,"w":15,"h":37},
@@ -242,15 +242,23 @@
 },
 "fire.png":
 {
-	"frame": {"x":145,"y":260,"w":15,"h":37},
+	"frame": {"x":229,"y":840,"w":15,"h":37},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":13,"y":15,"w":15,"h":37},
 	"sourceSize": {"w":40,"h":68}
 },
+"helpership.png":
+{
+	"frame": {"x":1,"y":1,"w":372,"h":240},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":372,"h":240},
+	"sourceSize": {"w":372,"h":240}
+},
 "spaceStation.png":
 {
-	"frame": {"x":1,"y":1,"w":182,"h":174},
+	"frame": {"x":1,"y":375,"w":182,"h":174},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":1,"w":182,"h":174},
@@ -261,11 +269,11 @@
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
-	"version": "1.0",
+	"version": "1.1",
 	"image": "entities.png",
 	"format": "RGBA8888",
-	"size": {"w":256,"h":887},
+	"size": {"w":248,"h":1286},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:3460b89ea735ec1ea564738bf34d25dc:605efffef04492ece172a1a0dc9d7139:d80676a5e85c5032e708efda4f84d8e3$"
+	"smartupdate": "$TexturePacker:SmartUpdate:937b9ed1c5bbe16567244c5bb0c2d039:37b70fbd1acfe6546564c0d6c8713b8f:d80676a5e85c5032e708efda4f84d8e3$"
 }
 }

@@ -1,10 +1,10 @@
 import * as PIXI from 'pixi.js';
 
-import ChargerTile from '../tiles/ChargerTile';
-import MergeTile from '../tiles/MergeTile';
 import Signals from 'signals';
 import config from '../../../config';
 import utils from '../../../utils';
+import ChargerTile from '../tiles/ChargerTile';
+import MergeTile from '../tiles/MergeTile';
 
 export default class MergeSystem {
     constructor(containers, data, dataTiles) {
@@ -633,7 +633,7 @@ export default class MergeSystem {
                     //doesnt do anything coz is coming from the generator
                     //this.currentDragSlot.addEntity(copyDataTargetSlot);   
                     this.onEntityAdd.dispatch()
-                    
+
                 }
             }
         } else {

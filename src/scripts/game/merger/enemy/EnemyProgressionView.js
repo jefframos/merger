@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
-import Signals from 'signals';
-import EnemyProgressionSlot from './EnemyProgressionSlot';
 import BossCounter from './BossCounter';
+import EnemyProgressionSlot from './EnemyProgressionSlot';
 export default class EnemyProgressionView extends PIXI.Container {
     constructor(enemySystem) {
         super()
@@ -22,14 +21,17 @@ export default class EnemyProgressionView extends PIXI.Container {
         this.nextLevelContainer.x = 80
 
 
+
+
         this.bossCounter = new BossCounter(30);
         this.addChild(this.bossCounter)
 
         this.bossCounter.x = 250
         this.bossCounter.y = 22
 
+
     }
-    setEnemySet(enemySet){
+    setEnemySet(enemySet) {
         this.enemySet = enemySet;
         this.bossCounter.addSprite(this.enemySet.portrait)
     }
@@ -44,21 +46,21 @@ export default class EnemyProgressionView extends PIXI.Container {
             this.prevLevelContainer.visible = false;
         }
 
-        if(isBoss){
+        if (isBoss) {
             //this.prevLevelContainer.addSprite(this.enemySet.portrait)
-        }else{
+        } else {
             this.prevLevelContainer.removeSprite()
         }
 
         nextLevel = this.enemySystem.enemyLevel
-        isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;        
+        isBoss = this.enemySystem.nextBoss == nextLevel || nextLevel == this.enemySystem.nextBoss - this.enemySystem.bossGap;
 
         this.currentLevelContainer.updateLevel(nextLevel, isBoss)
 
-        if(isBoss){
+        if (isBoss) {
             this.bossCounter.updateLevel(this.enemySystem.nextBoss - 10)
             this.currentLevelContainer.addSprite(this.enemySet.portrait)
-        }else{
+        } else {
             this.currentLevelContainer.removeSprite()
             this.bossCounter.updateLevel(this.enemySystem.nextBoss)
         }
@@ -69,10 +71,10 @@ export default class EnemyProgressionView extends PIXI.Container {
         this.nextLevelContainer.updateLevel(nextLevel, isBoss)
 
         //console.log(this.enemySystem.nextBoss)
-        
-        if(isBoss){
+
+        if (isBoss) {
             this.nextLevelContainer.addSprite(this.enemySet.portrait)
-        }else{
+        } else {
             this.nextLevelContainer.removeSprite()
         }
     }

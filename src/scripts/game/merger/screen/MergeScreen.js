@@ -1,33 +1,34 @@
 import * as PIXI from 'pixi.js';
 
-import EnemySystem from '../systems/EnemySystem';
-import EntityShop from '../shop/EntityShop';
-import GameEconomy from '../GameEconomy';
-import GameModifyers from '../GameModifyers';
-import GeneralShop from '../shop/GeneralShop';
-import MergeItemsShop from '../shop/MergeItemsShop';
-import MergeSystem from '../systems/MergeSystem';
-import MergerData from '../data/MergerData';
-import ParticleSystem from '../../effects/ParticleSystem';
-import ResourceSystem from '../systems/ResourceSystem';
-import Screen from '../../../screenManager/Screen';
-import SpaceBackground from '../effects/SpaceBackground';
-import StandardPop from '../../popup/StandardPop';
 import TweenMax from 'gsap';
-import UIButton1 from '../../ui/UIButton1';
+import Screen from '../../../screenManager/Screen';
 import utils from '../../../utils';
-import UIList from '../../ui/uiElements/UIList';
-import TimeBonusButton from '../../ui/TimeBonusButton';
-import PrizeSystem from '../systems/PrizeSystem';
+import ParticleSystem from '../../effects/ParticleSystem';
+import BonusConfirmation from '../../popup/BonusConfirmation';
 import OpenChestPopUp from '../../popup/OpenChestPopUp';
 import SellAllPopUp from '../../popup/SellAllPopUp';
-import StandardEnemy from '../enemy/StandardEnemy';
+import StandardPop from '../../popup/StandardPop';
 import SpaceStation from '../../ui/SpaceStation';
-import BonusConfirmation from '../../popup/BonusConfirmation';
+import TimeBonusButton from '../../ui/TimeBonusButton';
+import UIButton1 from '../../ui/UIButton1';
+import UIList from '../../ui/uiElements/UIList';
 import UILabelButton1 from '../../ui/UILabelButton1';
+import MergerData from '../data/MergerData';
+import SpaceBackground from '../effects/SpaceBackground';
+import GameEconomy from '../GameEconomy';
+import GameModifyers from '../GameModifyers';
+import EntityShop from '../shop/EntityShop';
+import GeneralShop from '../shop/GeneralShop';
+import MergeItemsShop from '../shop/MergeItemsShop';
+import EnemySystem from '../systems/EnemySystem';
+import MergeSystem from '../systems/MergeSystem';
+import PrizeSystem from '../systems/PrizeSystem';
+import ResourceSystem from '../systems/ResourceSystem';
 
-import GameTutorial from '../tutorial/GameTutorial';
 import BonusSystem from '../systems/BonusSystem';
+import GameTutorial from '../tutorial/GameTutorial';
+import HelperContainer from './newStuff/HelperContainer';
+import HelpMessages from './newStuff/HelpMessages';
 
 export default class MergeScreen extends Screen {
     constructor(label) {
@@ -128,6 +129,17 @@ export default class MergeScreen extends Screen {
         this.topContainer = new PIXI.Container()
         this.container.addChild(this.topContainer);
 
+        this.helperEntity = new HelperContainer()
+        this.bottomContainer.addChild(this.helperEntity)
+
+        this.helperMessage = new HelpMessages()
+        this.bottomContainer.addChild(this.helperMessage)
+
+        this.helperEntity.onConfirm.add(() => {
+            this.helperShoot()
+        })
+
+        //this.helperMessage.showMessage('BOSS')
 
         this.dataTiles = []
         this.dataResourcesTiles = []
@@ -225,6 +237,9 @@ export default class MergeScreen extends Screen {
         this.enemiesSystem.onParticles.add(this.addParticles.bind(this));
         this.enemiesSystem.onPopLabel.add(this.popLabelDamage.bind(this));
         this.enemiesSystem.onGetResources.add(this.addResourceParticles.bind(this));
+        this.enemiesSystem.onPreBoss.add(() => {
+            this.helperMessage.showMessage('INCOMING BOSS!')
+        });
         this.enemiesSystem.onChangeEnemySet.add((set) => {
             this.spaceBackground.setTopColor(set.color)
         });
@@ -609,7 +624,7 @@ export default class MergeScreen extends Screen {
             element.x = 0
             element.visible = false;
 
-            element.onCompleteBuff.add((target)=>{
+            element.onCompleteBuff.add((target) => {
                 console.log(target)
 
                 this.activeBonuses[target.id] = 1
@@ -666,6 +681,40 @@ export default class MergeScreen extends Screen {
 
         console.log(window.COOKIE_MANAGER.getStats().tutorialStep);
 
+    }
+    helperShoot() {
+        let customData = {}
+        customData.texture = 'shoot'
+        customData.scale = 0.008
+        customData.topLimit = this.enemiesSystem.getEnemy().getGlobalPosition().y
+
+        customData.gravity = 0
+        customData.alphaDecress = 0
+        if (this.enemiesSystem) {
+            let globalEnemy = this.enemiesSystem.getEnemy().getGlobalPosition()
+            customData.target = { x: globalEnemy.x, y: globalEnemy.y, timer: 0, speed: 700 }
+        }
+        customData.forceX = 0
+        customData.forceY = 300
+        customData.tint = 0xff9c00
+
+        customData.callback = () => {
+
+            if (this.mergeSystem1.dataTiles[utils.findMax(this.mergeSystem1.slots)]) {
+                this.enemiesSystem.damageEnemy(Math.ceil(this.mergeSystem1.dataTiles[utils.findMax(this.mergeSystem1.slots)].getDamage()))
+            } else {
+                this.enemiesSystem.damageEnemy(100)
+
+            }
+        }
+
+        let toLocal = new PIXI.Point(this.helperEntity.x + 150, this.helperEntity.y)
+        for (let index = 0; index < 10; index++) {
+            setTimeout(() => {
+                this.particleSystem.show(toLocal, 1, customData)
+
+            }, 80 * index);
+        }
     }
     startTutorial() {
         setTimeout(() => {
@@ -949,7 +998,8 @@ export default class MergeScreen extends Screen {
                 element.update(delta)
             }
         });
-
+        this.helperEntity.update(delta)
+        this.helperMessage.update(delta)
         this.resourcesLabel.text = utils.formatPointsLabel(window.gameEconomy.currentResources);
         utils.centerObject(this.resourcesLabel, this.resourcesContainerLabel)
         this.resourcesLabel.x = 30
@@ -974,6 +1024,14 @@ export default class MergeScreen extends Screen {
         }
 
 
+        if (this.mergeSystem1 && this.mergeSystem1.slots && this.mergeSystem1.dataTiles.length && utils.findMax(this.mergeSystem1.slots) < this.mergeSystem1.dataTiles.length) {
+            var v = utils.findMax(this.mergeSystem1.slots)
+            if (!isFinite(v)) {
+                v = 0
+            }
+            this.helperEntity.updateDamage(utils.formatPointsLabel(Math.ceil(this.mergeSystem1.dataTiles[v].getDamage())))
+        }
+
         let progression = COOKIE_MANAGER.getProgression()
 
         if (progression.currentEnemyLevel > 100) {
@@ -992,6 +1050,7 @@ export default class MergeScreen extends Screen {
             return;
         }
         window.isPortrait = innerResolution.width < innerResolution.height
+
 
         //console.log(resolution.width * this.screenManager.scale.x)
         var newRes = { width: resolution.width * this.screenManager.scale.x }
@@ -1014,6 +1073,9 @@ export default class MergeScreen extends Screen {
         this.resourcesWrapper.y = this.gridWrapper.y - 90;
         this.resourcesWrapperRight.x = Math.max(xRightMax, -this.resourcesWrapper.x + xRightMax)
         this.bonusTimerList.x = this.resourcesWrapperRight.x + this.resourcesWrapperRight.width / 2 - 12
+
+        this.helperMessage.x = this.gridWrapper.x + this.gridWrapper.width / 2
+        this.helperMessage.y = this.gridWrapper.y + this.gridWrapper.height / 2
 
         if (!window.isPortrait) {
             this.resourcesWrapper.y -= 65
@@ -1052,14 +1114,23 @@ export default class MergeScreen extends Screen {
         // this.statsList.x = config.width - this.statsList.w
         // this.statsList.y = 150
 
+
+
         if (!window.isPortrait) {
             this.statsList.scale.set(1.6)
             this.spaceStation.x = this.resourcesWrapper.x + 180;
             this.spaceStation.y = this.resourcesWrapper.y + 150;
+            this.statsList.y = config.height - this.statsList.h - 100
+            this.helperEntity.y = this.resourcesWrapper.y + this.resourcesWrapper.height
+            this.helperEntity.x = this.resourcesWrapper.x
+            this.helperEntity.scale.set(0.4)
 
         } else {
             this.statsList.scale.set(1.1)
-
+            this.statsList.y = config.height - this.statsList.h - 50
+            this.helperEntity.y = this.resourcesWrapper.y + this.resourcesWrapper.height + 5
+            this.helperEntity.x = this.resourcesWrapper.x
+            this.helperEntity.scale.set(0.35)
             this.spaceStation.x = this.resourcesWrapper.x + 50;
             this.spaceStation.y = this.resourcesWrapper.y + 40;
         }
@@ -1068,7 +1139,6 @@ export default class MergeScreen extends Screen {
 
 
         this.statsList.x = this.resourcesWrapper.x
-        this.statsList.y = config.height - this.statsList.h - 100
         this.shopButtonsList.x = config.width / 2 - this.shopButtonsList.w / 2 + 40
         this.shopButtonsList.y = config.height - this.shopButtonsList.h + 35
 

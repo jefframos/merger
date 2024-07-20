@@ -1,13 +1,20 @@
 import TweenMax from "gsap";
+import Signals from 'signals';
 import config from "../../../config";
 import utils from "../../../utils";
 import StandardEnemy from "../enemy/StandardEnemy";
-import Signals from 'signals';
 
 export default class BonusSystem {
     constructor(containers, data, dataTiles) {
         this.container = containers.mainContainer;
         this.entity = new StandardEnemy()
+
+        this.shine = new PIXI.Sprite.fromFrame('shine')
+        this.shine.anchor.set(0.5)
+        this.container.addChild(this.shine);
+        this.shine.scale.set(2)
+        this.shine.tint = 0xff00ff
+
         this.container.addChild(this.entity);
         this.entity.scale.set(0.8)
         this.entity.setAsEnemy('chestBonus')
@@ -58,7 +65,7 @@ export default class BonusSystem {
             x: config.width - 90,
             y: config.height - 300
         }
-    ]
+        ]
 
         this.currentTargetId = 0;
         this.currentAngle = 0;
@@ -71,7 +78,7 @@ export default class BonusSystem {
         this.onCollect = new Signals();
 
     }
-    resetSystem(){
+    resetSystem() {
         this.remove();
         this.currentTimer = this.timer;
     }
@@ -98,7 +105,9 @@ export default class BonusSystem {
         }
     }
     remove() {
-        TweenMax.to(this.entity, 1, {
+        //this.shine.visible = false
+
+        TweenMax.to(this.entity, 0.4, {
             alpha: 0, onComplete: () => {
                 this.entity.visible = false;
             }
@@ -106,20 +115,23 @@ export default class BonusSystem {
         this.inMovement = false;
     }
     click() {
-       
+
         this.onCollect.dispatch(Math.floor(Math.random() * 4));
         this.remove();
         this.currentTimer = this.timer;
     }
     resize() {
-       
+
     }
     update(delta) {
+
+        this.shine.visible = this.entity.visible
+
         if (this.inMovement) {
             //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
             //this.currentAngle = Math.atan2(this.entity.y - this.currentTarget.y, this.entity.x - this.currentTarget.x) //- Math.PI/2 // 180 * 3.14;
-            this.currentAngle = utils.lerp(this.currentAngle,Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x), 0.01);
-            
+            this.currentAngle = utils.lerp(this.currentAngle, Math.atan2(this.currentTarget.y - this.entity.y, this.currentTarget.x - this.entity.x), 0.01);
+
             //this.entity.rotation = utils.lerp(this.entity.rotation, this.currentAngle, 0.002)
             //this.helpIcon.rotation = - this.entity.rotation - this.entity.enemySprite.rotation
             this.velocity.x = utils.lerp(this.velocity.x, Math.cos(this.currentAngle) * this.speed, 0.05)
@@ -127,9 +139,15 @@ export default class BonusSystem {
             this.entity.update(delta)
             this.entity.x += this.velocity.x * delta;
             this.entity.y += this.velocity.y * delta;
+
+            this.shine.x = this.entity.x
+            this.shine.y = this.entity.y
+
+            this.shine.rotation = window.timeTotal % Math.PI * 2
+
             //console.log(utils.distance(this.entity.x,this.entity.y, this.currentTarget.x,this.currentTarget.y), this.speed * 2)
             if (this.entity.x > this.currentTarget.x + 100 || this.entity.y < -500 || utils.distance(this.entity.x, this.entity.y, this.currentTarget.x, this.currentTarget.y) < this.speed * 2) {
-                console.log( this.currentTarget)
+                console.log(this.currentTarget)
                 this.nextTarget();
             }
         } else if (this.currentTimer > 0) {

@@ -1,13 +1,11 @@
 import * as PIXI from 'pixi.js';
 
-import EnemyProgressionView from '../enemy/EnemyProgressionView';
-import ProgressBar from '../ProgressBar';
 import Signals from 'signals';
-import StandardEnemy from '../enemy/StandardEnemy';
-import UIButton1 from '../../ui/UIButton1';
-import config from '../../../config';
 import utils from '../../../utils';
 import UILabelButton1 from '../../ui/UILabelButton1';
+import ProgressBar from '../ProgressBar';
+import EnemyProgressionView from '../enemy/EnemyProgressionView';
+import StandardEnemy from '../enemy/StandardEnemy';
 
 export default class EnemySystem {
     constructor(containers, baseEnemies) {
@@ -18,9 +16,18 @@ export default class EnemySystem {
         this.onParticles = new Signals();
         this.onGetResources = new Signals();
         this.onChangeEnemySet = new Signals();
+        this.onPreBoss = new Signals();
 
         this.mainEnemy = new StandardEnemy();
         this.container.addChild(this.mainEnemy);
+
+
+        this.shine = new PIXI.Sprite.fromFrame('shine')
+        this.shine.anchor.set(0.5)
+        this.container.addChild(this.shine);
+        this.shine.scale.set(2)
+        this.shine.tint = 0xFF0045
+
 
         this.enemyProgressionView = new EnemyProgressionView(this);
         this.container.addChild(this.enemyProgressionView);
@@ -49,12 +56,15 @@ export default class EnemySystem {
 
         //color, icon, iconColor =0xFFFFFF, width = 40, height = 40
 
-        this.invokeBossBattle = new UILabelButton1( 150, 60, 'boss-button')
+        this.invokeBossBattle = new UILabelButton1(150, 60, 'boss-button')
         this.invokeBossBattle.addCenterLabel(window.localizationManager.getLabel('boss-fight'))
+        this.invokeBossBattle.buttonLabel.style.wordWrap = 120
         //this.invokeBossBattle.updateIconScale(0.8)
         this.container.addChild(this.invokeBossBattle)
         this.invokeBossBattle.x = 240
         this.invokeBossBattle.y = 60
+        this.invokeBossBattle.pivot.x = 75
+        this.invokeBossBattle.pivot.y = 30
         this.invokeBossBattle.onClick.add(() => {
             this.invokeBoss()
         })
@@ -163,7 +173,7 @@ export default class EnemySystem {
     update(delta) {
 
         this.invokeBossBattle.visible = this.lockOnLevel && !this.inABossBattle;
-
+        this.invokeBossBattle.scale.set(Math.sin(window.timeTotal * 10) * 0.1 + 0.9, Math.cos(window.timeTotal * 10) * 0.1 + 0.9)
 
         if (this.enemyDeathTimer > 0) {
             this.enemyDeathTimer -= delta;
@@ -191,6 +201,8 @@ export default class EnemySystem {
         this.mainEnemy.update(delta)
         this.enemyLifeBar.setProgressBar(this.enemyCurrentLife / this.enemyLife, 0xFF0000)
 
+        this.shine.visible = this.invokeBossBattle.visible
+        this.shine.rotation = window.timeTotal % Math.PI * 2
 
 
         this.updateLifeLabel();
@@ -248,7 +260,11 @@ export default class EnemySystem {
         COOKIE_MANAGER.saveEnemyLevel(this.enemyLevel);
         this.updateEnemyLife();
         this.updateLevelView();
+
+        if (this.enemyLevel > 0 && ((this.enemyLevel) % 10 == 0)) {
+        }
         if (this.mainEnemy.isBoss) {
+
             //window.gameModifyers.addShards(1)
         }
         if (bossWin) {
@@ -260,6 +276,7 @@ export default class EnemySystem {
         this.addResources();
         if (this.inABossBattle || this.enemyLevel == this.nextBoss) {
             this.setAsBos();
+            this.onPreBoss.dispatch()
         } else {
             this.mainEnemy.setAsEnemy(this.getNextEnemySprite());
         }
@@ -282,8 +299,8 @@ export default class EnemySystem {
     updateEnemyLife(isBoss = false) {
         //* (0.95 + Math.random()*0.05)
         this.enemyLife = this.enemyStartLife *
-            Math.pow(this.lifeCoefficient * this.lifeCoefficient* this.lifeCoefficient, this.enemyLevel) *
-            (isBoss ? (this.lifeCoefficient * this.lifeCoefficient* this.lifeCoefficient) : 1)
+            Math.pow(this.lifeCoefficient * this.lifeCoefficient * this.lifeCoefficient, this.enemyLevel) *
+            (isBoss ? (this.lifeCoefficient * this.lifeCoefficient * this.lifeCoefficient) : 1)
 
         this.enemyCurrentLife = this.enemyLife;
     }
@@ -344,22 +361,26 @@ export default class EnemySystem {
     }
 
     resize(resolution, innerResolution, wrapper) {
-        console.log(this.container.x)
         if (!window.isPortrait) {
-            this.enemyProgressionView.bossCounter.x = (wrapper.x + wrapper.width / 2 ) - this.container.x + 10
+            this.enemyProgressionView.bossCounter.x = (wrapper.x + wrapper.width / 2) - this.container.x + 10
             this.enemyProgressionView.bossCounter.y = 50
             this.enemyProgressionView.bossCounter.scale.set(1.5)
-            this.invokeBossBattle.x = this.enemyProgressionView.bossCounter.x - this.invokeBossBattle.width - this.enemyProgressionView.bossCounter.width / 2+10
-            this.invokeBossBattle.y = -18
+            this.invokeBossBattle.x = this.enemyProgressionView.bossCounter.x - this.invokeBossBattle.width - this.enemyProgressionView.bossCounter.width / 2 + 10 + this.invokeBossBattle.pivot.x
+            this.invokeBossBattle.y = -18 + this.invokeBossBattle.pivot.y
+
+            this.shine.scale.set(3)
 
         } else {
-            this.enemyProgressionView.bossCounter.x = (wrapper.x + wrapper.width / 2 ) - this.container.x
+            this.enemyProgressionView.bossCounter.x = (wrapper.x + wrapper.width / 2) - this.container.x
             this.enemyProgressionView.bossCounter.scale.set(1)
-            this.invokeBossBattle.x =  this.enemyProgressionView.bossCounter.x - this.invokeBossBattle.width + this.enemyProgressionView.bossCounter.width / 2
-            this.invokeBossBattle.y = 45
+            this.invokeBossBattle.x = this.enemyProgressionView.bossCounter.x - this.invokeBossBattle.width + this.enemyProgressionView.bossCounter.width / 2 + this.invokeBossBattle.pivot.x
+            this.invokeBossBattle.y = 45 + this.invokeBossBattle.pivot.y
             this.enemyProgressionView.bossCounter.y = 20
-
-
         }
+
+        this.shine.x = this.enemyProgressionView.x + this.enemyProgressionView.bossCounter.x
+        this.shine.y = this.enemyProgressionView.y + this.enemyProgressionView.bossCounter.y
+
+
     }
 }

@@ -1,4 +1,3 @@
-import config from './config';
 import * as PIXI from 'pixi.js';
 import conversionUtils from './conversionUtils';
 export default
@@ -58,7 +57,7 @@ export default
                     }
                 }
             }
-            return Math.max(...matrix)
+            return Math.max(...matrix) || 0
         },
         findDPS(target) {
             let max = 0;
@@ -102,7 +101,7 @@ export default
             if (Number.isNaN(max)) {
                 return 0
             }
-            return max* window.gameModifyers.getResourcesMultiplier()
+            return max * window.gameModifyers.getResourcesMultiplier()
         },
         generateTextureFromContainer(id, content, list) {
             if (list[id]) {
